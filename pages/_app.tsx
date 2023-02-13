@@ -1,43 +1,36 @@
-import CssBaseline from "@material-ui/core/CssBaseline"
-import { ThemeProvider } from "@material-ui/styles"
-import withRedux from "next-redux-wrapper"
-import App from "next/app"
-import React from "react"
-import { Provider } from "react-redux"
-import { MuiTheme } from "../components/MuiTheme"
-import { makeStore } from "../store/configureStore"
-import "../styles/main.css"
+import * as React from "react";
+import Head from "next/head";
+import { AppProps } from "next/app";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import theme from "../src/theme";
+import createEmotionCache from "../src/createEmotionCache";
 
-type Props = {
-  Component: React.Component
-  store: any
+import { store } from "../store/store";
+import { Provider } from "react-redux";
+
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache();
+
+interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
 }
 
-/**
- * @see https://github.com/mui-org/material-ui/blob/master/examples/nextjs-with-typescript/pages/_app.tsx
- */
-class MyApp extends App<Props> {
-  componentDidMount() {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector("#jss-server-side")
-    jssStyles?.parentNode?.removeChild(jssStyles)
-  }
-
-  render() {
-    const { store, Component, pageProps } = this.props
-
-    return (
-      <Provider store={store}>
-        <ThemeProvider theme={MuiTheme}>
+export default function MyApp(props: MyAppProps) {
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  return (
+    <Provider store={store}>
+      <CacheProvider value={emotionCache}>
+        <Head>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
+        <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <Component {...pageProps} />
         </ThemeProvider>
-      </Provider>
-    )
-  }
+      </CacheProvider>
+    </Provider>
+  );
 }
-
-export default withRedux(makeStore, {
-  debug: false,
-})(MyApp)

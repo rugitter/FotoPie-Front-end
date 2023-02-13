@@ -1,76 +1,44 @@
-# typescript-nextjs-redux-toolkit-material-ui-example
+# Next.js with TypeScript example
 
-This is a sample for `server-side rendering` using `TypeScript` , `Next.js` , `Redux Toolkit` , and `Material-UI` .
+## How to use
 
-I also used the latest features such as `createSlice` , `createAsyncThunk` , and `createEntityAdapter` .
+Download the example [or clone the repo](https://github.com/mui/material-ui):
 
-`VSCode` , `prettier` and `ESLint` provide real-time formatting, syntax checking and organizing of unused imports.
+<!-- #default-branch-switch -->
 
-これは、 `TypeScript` , `Next.js` , `Redux Toolkit` , `Material-UI` を使った `サーバーサイドレンダリング` に対応したサンプルです。
-
-`createSlice` ・ `createAsyncThunk` ・ `createEntityAdapter` といった最新機能も使ってみました。
-
-`VSCode` と `prettier` と `ESLint` によって、リアルタイムに整形と構文チェックと未使用 import の整理が行われます。
-
-## Live demo
-
-[live demo](https://typescript-nextjs-redux-toolkit-material-ui-example.now.sh/)
-
-## Features
-
-- [Visual Studio Code](https://code.visualstudio.com/)
-- [Typescript](https://www.typescriptlang.org/)
-- [Next.js](https://nextjs.org/)
-- [Material-UI](https://material-ui.com/)
-- [material-table](https://material-table.com/#/)
-- [Redux](https://redux.js.org/)
-- [Redux Toolkit](https://redux-toolkit.js.org/)
-    - [createSlice](https://redux-toolkit.js.org/api/createSlice)
-    - [createAsyncThunk](https://redux-toolkit.js.org/api/createAsyncThunk)
-    - [createEntityAdapter](https://redux-toolkit.js.org/api/createEntityAdapter)
-    - [createSelector](https://redux-toolkit.js.org/api/createSelector)
-    - It using most of the major features of the redux toolkit !!
-- [ESLint](https://eslint.org/)
-
-## Requirement
-
-- [Google Chrome](https://www.google.com/intl/ja_ALL/chrome/)
-- [Visual Studio Code](https://code.visualstudio.com/)
-- TypeScript v3.7 or higher( [require Optional Chaining](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#optional-chaining) )
-
-## Install Google Chrome addon
-
-- [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ja)
-
-## Recommended VSCode addons
-
-- [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
-- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-
-## Usage
-
-### Download and install
-
-```bash
-git clone https://github.com/treetips/typescript-nextjs-redux-toolkit-material-ui-example.git
-cd typescript-nextjs-redux-toolkit-material-ui-example
-npm i
+```sh
+curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/nextjs-with-typescript
+cd nextjs-with-typescript
 ```
 
-### Start local
+Install it and run:
 
-```bash
+```sh
+npm install
 npm run dev
 ```
 
-### Build and start production express server
+or:
 
-```bash
-npm run build
-npm start
-```
+<!-- #default-branch-switch -->
 
-## Related repository
+[![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/mui/material-ui/tree/master/examples/nextjs-with-typescript)
 
-* [typescript-nextjs-redux-material-ui-example](https://github.com/treetips/typescript-nextjs-redux-material-ui-example)
+[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/mui/material-ui/tree/master/examples/nextjs-with-typescript)
+
+## The idea behind the example
+
+The project uses [Next.js](https://github.com/vercel/next.js), which is a framework for server-rendered React apps.
+It includes `@mui/material` and its peer dependencies, including `emotion`, the default style engine in MUI v5. If you prefer, you can [use styled-components instead](https://mui.com/material-ui/guides/interoperability/#styled-components).
+
+## The link component
+
+The [example folder](https://github.com/mui/material-ui/tree/HEAD/examples/nextjs-with-typescript) provides an adapter for the use of [Next.js's Link component](https://nextjs.org/docs/api-reference/next/link) with MUI.
+More information [in the documentation](https://mui.com/material-ui/guides/routing/#next-js).
+
+## What's next?
+
+<!-- #default-branch-switch -->
+
+You now have a working example project.
+You can head back to the documentation, continuing browsing it from the [templates](https://mui.com/material-ui/getting-started/templates/) section.

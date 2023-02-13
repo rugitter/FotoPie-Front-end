@@ -1,52 +1,44 @@
-import { Typography } from "@material-ui/core"
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
-import React from "react"
-import { AppContext } from "../components/AppContext"
-import { SpacingPaper } from "../components/atoms"
-import { HeaderArticleContainer } from "../components/organisms"
-import { Layout } from "../components/templates"
-import { Page } from "../constants"
-import { changePage } from "../store/page"
+import * as React from "react";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Link from "../src/Link";
+import Copyright from "../src/Copyright";
 
-const useStyles = makeStyles((_: Theme) =>
-  createStyles({
-    root: {},
-  })
-)
+import { useSelector, useDispatch } from "react-redux";
+import { increment, decrement } from "../store/counter/counterSlice";
+import type { RootState } from "../store/store";
 
-type Props = {}
+export default function Home() {
+  const count = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch();
 
-function Index(props: Props) {
-  const classes = useStyles(props)
   return (
-    <Layout className={classes.root}>
-      <HeaderArticleContainer>
-        <SpacingPaper>
-          <Typography variant="h5">Hello Next.js 👋</Typography>
-        </SpacingPaper>
+    <Container maxWidth="lg">
+      <Box
+        sx={{
+          my: 4,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h4" component="h1" gutterBottom>
+          MUI v5 + Next.js + RTK with TypeScript example
+        </Typography>
+        <Link href="/about" color="secondary">
+          Go to the about page
+        </Link>
 
-        <SpacingPaper noPadding>
-          <Typography variant="h5">zero padding paper</Typography>
-          <Typography variant="h6">
-            This component use makeStyles refer to Theme and Props.
-          </Typography>
-        </SpacingPaper>
-      </HeaderArticleContainer>
-    </Layout>
-  )
+        <Copyright />
+
+        <div>
+          <h1>The value of count is {count}</h1>
+          <button onClick={() => dispatch(increment())}>Increment</button>
+          <button onClick={() => dispatch(decrement())}>Decrement</button>
+        </div>
+      </Box>
+    </Container>
+  );
 }
-
-/**
- * @see https://nextjs.org/docs/api-reference/data-fetching/getInitialProps
- */
-Index.getInitialProps = async (ctx: AppContext): Promise<Props> => {
-  const { store } = ctx
-  store.dispatch(
-    changePage({
-      id: Page.TOP.id,
-    })
-  )
-  return {}
-}
-
-export default Index

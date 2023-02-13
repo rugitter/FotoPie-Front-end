@@ -1,16 +1,9 @@
-import { combineReducers } from "redux"
-import { counterReducer } from "./counter"
-import { pageReducer } from "./page"
-import { todoReducer } from "./todo"
+import { combineReducers } from "redux";
 
-/**
- * Combine reducers
- * @see https://redux-toolkit.js.org/usage/usage-with-typescript
- */
-export const rootReducer = combineReducers({
-  counter: counterReducer,
-  page: pageReducer,
-  todo: todoReducer,
-})
+import counter from "./counter/counterSlice";
 
-export type RootState = ReturnType<typeof rootReducer>
+const reducers = combineReducers({
+  counter,
+});
+
+export default reducers;
