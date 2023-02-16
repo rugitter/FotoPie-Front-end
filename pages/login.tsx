@@ -56,9 +56,20 @@ export default function SignIn() {
             onSubmit={methods.handleSubmit(onSubmit)}
             sx={{ mt: 1 }}
           >
-            <FormTextField name="email" label="Email Address" id="email" />
+            <FormTextField
+              name="email"
+              label="Email Address"
+              id="email"
+              autoComplete="email"
+            />
 
-            <FormTextField name="password" label="Password" id="password" />
+            <FormTextField
+              name="password"
+              label="Password"
+              id="password"
+              type="password"
+              autoComplete="current-password"
+            />
 
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
