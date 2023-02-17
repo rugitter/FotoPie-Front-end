@@ -6,16 +6,19 @@ interface IFormTextFieldProps {
   label: string;
   name: string;
   id: string;
+  type?: string;
+  autoComplete?: string;
 }
 
 const FormTextField: FC<IFormTextFieldProps> = ({
   label,
   name,
   id,
+  type,
 }: IFormTextFieldProps) => {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext();
 
   return (
@@ -25,9 +28,12 @@ const FormTextField: FC<IFormTextFieldProps> = ({
         id={id}
         error={!!errors[name]}
         helperText={(errors[name] as FieldError)?.message ?? ""}
+        type={type}
+        disabled={isSubmitting}
         fullWidth
         margin="normal"
         variant="outlined"
+        autoFocus
         {...register(name)}
       />
     </>
