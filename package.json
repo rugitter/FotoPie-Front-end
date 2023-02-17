@@ -14,6 +14,7 @@
     "@emotion/react": "latest",
     "@emotion/server": "latest",
     "@emotion/styled": "latest",
+    "@hookform/resolvers": "^2.9.11",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
     "@next/font": "latest",
@@ -21,7 +22,9 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-redux": "^8.0.5"
+    "react-hook-form": "^7.43.1",
+    "react-redux": "^8.0.5",
+    "yup": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "latest",
