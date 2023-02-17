@@ -10,48 +10,47 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Copyright from "../src/components/Copyright";
 
-const theme = createTheme();
 
-function VerifyEmail () {
+
+export default function VerifyEmail () {
   
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-           sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+        marginTop: 8,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        }}
+      >
 
-      <Typography component="h1" variant="h6">
-        Verify Your Email Address
-      </Typography>
-    
-      <div>
-        Before proceeding, please check your email for a validation link. If you did not receive the email, 
-        <Link underline="hover" color="inherit" href='#'>
-          {'click here to request another.'}
-        </Link>
-      </div>
+        <Typography component="h1" variant="h6">
+          Verify Your Email Address
+        </Typography>
+      
+        <Alert severity='info'>
+          Before proceeding, please check your email for a validation link. If you did not receive the email, 
+          <Link 
+            underline="hover" 
+            color="inherit" 
+            href='#'>
+            {'click here to request another.'}
+          </Link>
+        </Alert>
 
         <Button
-              href="activated"
+              href="login"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Verified
+              Log In
         </Button>
         
       </Box>
       <Copyright sx={{ mt: 5 }} />
      </Container>
-    </ThemeProvider>
   )
 }
 
-export default VerifyEmail

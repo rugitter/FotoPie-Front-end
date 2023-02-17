@@ -14,67 +14,38 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useForm, SubmitHandler,FormState} from "react-hook-form";
-// import { useRouter } from 'next/router'
+import { useForm, SubmitHandler,FormState, FormProvider} from "react-hook-form";
 import Copyright from "../src/components/Copyright";
+import FormTextField from "../src/components/form/formTextField";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Schema, string, object } from "yup";
 
-
-interface FormData {
+interface IFormInput {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
 }
 
-const theme = createTheme();
 
-//Sign up main page
-function Signup() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const formSchema: Schema<IFormInput> = object({
+  firstName: string().max(15).required(),
+  lastName: string().max(15).required(),
+  email: string().email().required(),
+  password: string().min(4).max(20).required(),
+});
 
-  //Submit the form and send POST request to the server
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(`http://localhost:9090/user/create`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          password,
-        }),
-      });
+export default function SignUp() {
+  const methods = useForm<IFormInput>({
+    resolver: yupResolver(formSchema),
+  });
 
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-      //the logic to display if username exists
-    }
+  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+    console.log(data);
   };
 
-  const {
-    register,
-    formState: { errors },
-  } = useForm<FormData>();
-
-  // const onSubmit = async (data: FormData) => {
-  //   console.log(data);
-  // }
-
-  // const onError = () => {
-  //   console.log('wrong');
-  // }
-
   return (
-    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
@@ -89,109 +60,71 @@ function Signup() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  required
-                  fullWidth
-                  id="firstName"
+
+          <FormProvider {...methods}>
+            <Box 
+              component="form" 
+              onSubmit={methods.handleSubmit(onSubmit)}
+              sx={{ mt: 3 }}
+              >
+                <FormTextField
+                  name="firstName"
                   label="First Name"
-                  autoFocus
-                  {...register("firstName", {
-                    required: "First name is required",
-                    maxLength: 15,
-                  })}
-                  error={!!errors.firstName}
-                  helperText={errors.firstName?.message}
+                  id="firstName"
+                  autoComplete="fistName"
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
+
+                <FormTextField
+                  name="lastName"
                   label="Last Name"
-                  autoComplete="family-name"
-                  {...register("lastName", {
-                    required: "Last name is required",
-                    maxLength: 15,
-                  })}
-                  error={!!errors.lastName}
-                  helperText={errors.lastName?.message}
+                  id="lastName"
+                  autoComplete="lastName"
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
+
+                <FormTextField
+                  name="email"
                   label="Email Address"
+                  id="email"
                   autoComplete="email"
-                  {...register("email", {
-                    required: true,
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address",
-                    },
-                  })}
-                  error={!!errors.email}
-                  helperText={errors.email?.message}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
+
+                <FormTextField
+                  name="password"
                   label="Password"
-                  type="password"
                   id="password"
-                  autoComplete="new-password"
-                  {...register("password", {
-                    required: true,
-                    minLength: 8,
-                    maxLength: 20,
-                    pattern: {
-                      value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                      message:
-                        "Password must be at least 8 characters long and contain at least one letter and one number",
-                    },
-                  })}
-                  error={!!errors.password}
-                  helperText={errors.password?.message}
+                  type="password"
+                  autoComplete="current-password"
                 />
-              </Grid>
-              <Grid item xs={12}>
+                
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
                   }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
+           
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              > 
+                Sign UP
+                <Link href="verifyemail"></Link>
+              </Button>
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Link href="login" variant="body2">
+                    Already have an account? Log in
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            > 
-              Sign UP
-              <Link href="verifyemail"></Link>
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="login" variant="body2">
-                  Already have an account? Log in
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
+            </Box>
+          </FormProvider>
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
-    </ThemeProvider>
+    
   );
 }
-export default Signup;
+

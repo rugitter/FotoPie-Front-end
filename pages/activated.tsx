@@ -10,43 +10,40 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Copyright from "../src/components/Copyright";
 
-const theme = createTheme();
 
-function Activated () {
+export default function Activated () {
   
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-           sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+        marginTop: 8,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        }}
+      >
 
-      <Typography component="h1" variant="h6">
-        User Activation 
-      </Typography>
+        <Typography component="h1" variant="h6">
+          User Activation 
+        </Typography>
     
-      <Alert severity='success'>
-        You have been successfully activated. You can login now!
+        <Alert severity='success'>
+          You have been successfully activated. You can login now!
+        </Alert>
+
         <Button
-              href="login"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Log In
+          href="login"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Log In
         </Button>
-      </Alert>
+    
       </Box>
       <Copyright sx={{ mt: 5 }} />
-     </Container>
-    </ThemeProvider>
+    </Container>
   )
 }
 
-export default Activated
