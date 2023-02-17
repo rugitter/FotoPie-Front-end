@@ -1,6 +1,5 @@
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "../src/utils/Link";
@@ -10,16 +9,28 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Copyright from "../src/components/Copyright";
+import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Schema, string, object } from "yup";
+import FormTextField from "../src/components/form/formTextField";
 
+interface IFormInput {
+  email: string;
+  password: string;
+}
+
+const formSchema: Schema<IFormInput> = object({
+  email: string().email().required(),
+  password: string().min(4).max(20).required(),
+});
 
 export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const methods = useForm<IFormInput>({
+    resolver: yupResolver(formSchema),
+  });
+
+  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+    console.log(data);
   };
 
   return (
@@ -38,52 +49,54 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+
+        <FormProvider {...methods}>
+          <Box
+            component="form"
+            onSubmit={methods.handleSubmit(onSubmit)}
+            sx={{ mt: 1 }}
           >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+            <FormTextField
+              name="email"
+              label="Email Address"
+              id="email"
+              autoComplete="email"
+            />
+
+            <FormTextField
+              name="password"
+              label="Password"
+              id="password"
+              type="password"
+              autoComplete="current-password"
+            />
+
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Log In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        </FormProvider>
       </Box>
       <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
