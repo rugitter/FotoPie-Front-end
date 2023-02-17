@@ -15,10 +15,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm, SubmitHandler,FormState} from "react-hook-form";
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import Copyright from "../src/components/Copyright";
-
-
 
 
 interface FormData {
@@ -56,6 +54,7 @@ function Signup() {
       console.log(data);
     } catch (error) {
       console.log(error);
+      //the logic to display if username exists
     }
   };
 
@@ -63,6 +62,14 @@ function Signup() {
     register,
     formState: { errors },
   } = useForm<FormData>();
+
+  // const onSubmit = async (data: FormData) => {
+  //   console.log(data);
+  // }
+
+  // const onError = () => {
+  //   console.log('wrong');
+  // }
 
   return (
     <ThemeProvider theme={theme}>
@@ -165,13 +172,13 @@ function Signup() {
               </Grid>
             </Grid>
             <Button
-              href="pages/SignUp/activepage.tsx"
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
+            > 
+              Sign UP
+              <Link href="verifyemail"></Link>
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>

@@ -12,7 +12,7 @@ import Copyright from "../src/components/Copyright";
 
 const theme = createTheme();
 
-function Activated () {
+function VerifyEmail () {
   
   return (
     <ThemeProvider theme={theme}>
@@ -28,20 +28,25 @@ function Activated () {
         >
 
       <Typography component="h1" variant="h6">
-        User Activation 
+        Verify Your Email Address
       </Typography>
     
-      <Alert severity='success'>
-        You have been successfully activated. You can login now!
+      <div>
+        Before proceeding, please check your email for a validation link. If you did not receive the email, 
+        <Link underline="hover" color="inherit" href='#'>
+          {'click here to request another.'}
+        </Link>
+      </div>
+
         <Button
-              href="login"
+              href="activated"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Log In
+              Verified
         </Button>
-      </Alert>
+        
       </Box>
       <Copyright sx={{ mt: 5 }} />
      </Container>
@@ -49,4 +54,4 @@ function Activated () {
   )
 }
 
-export default Activated
+export default VerifyEmail
