@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -12,7 +13,9 @@ import Copyright from "../src/components/Copyright";
 import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
-import FormTextField from "../src/components/form/formTextField";
+import FormTextField from "../src/components/textField/formTextField";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 interface IFormInput {
   email: string;
@@ -21,16 +24,25 @@ interface IFormInput {
 
 const formSchema: Schema<IFormInput> = object({
   email: string().email().required(),
-  password: string().min(4).max(20).required(),
+  password: string().min(2).max(20).required(),
 });
 
 export default function SignIn() {
+  const router = useRouter();
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+    try {
+      console.log(data);
+      await axios.post(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/auth/login`, data, {
+        withCredentials: true,
+      });
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
