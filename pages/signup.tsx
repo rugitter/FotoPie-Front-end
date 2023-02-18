@@ -16,9 +16,11 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm, SubmitHandler,FormState, FormProvider} from "react-hook-form";
 import Copyright from "../src/components/Copyright";
-import FormTextField from "../src/components/form/formTextField";
+import FormTextField from "../src/components/textField/formTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 interface IFormInput {
   firstName: string;
@@ -32,16 +34,31 @@ const formSchema: Schema<IFormInput> = object({
   firstName: string().max(15).required(),
   lastName: string().max(15).required(),
   email: string().email().required(),
-  password: string().min(4).max(20).required(),
+  password: string().min(2).max(20).required(),
 });
 
 export default function SignUp() {
+
+  const router = useRouter();
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
-    console.log(data);
+
+  const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+    try {
+      const response = await axios.post(`http://localhost:9090/user/create`, data, {
+        withCredentials: true,
+      });
+      console.log(response);
+
+      if (response.status === 200) {
+        router.push("verifyemail");
+      }
+      
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
