@@ -24,7 +24,7 @@ export default function Header(props: HeaderProps) {
   const { onDrawerToggle } = props;
 
   return (
-    <React.Fragment>
+    <>
       <AppBar color="secondary" position="sticky" elevation={0}>
         <Toolbar>
           <Grid container spacing={1} alignItems="center">
@@ -67,6 +67,22 @@ export default function Header(props: HeaderProps) {
               <IconButton color="inherit" sx={{ p: 0.5 }}>
                 <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
               </IconButton>
+            </Grid>
+            <Grid item>
+              <Link
+                href="/"
+                variant="body2"
+                sx={{
+                  textDecoration: "none",
+                  color: lightColor,
+                  "&:hover": {
+                    color: "common.white",
+                  },
+                }}
+                rel="noopener noreferrer"
+              >
+                Log Out
+              </Link>
             </Grid>
           </Grid>
         </Toolbar>
@@ -118,6 +134,6 @@ export default function Header(props: HeaderProps) {
           <Tab label="Comments" />
         </Tabs>
       </AppBar>
-    </React.Fragment>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,7 +9,6 @@ import Navigator from "../src/components/AdminManage/Navigator";
 import Content from "../src/components/AdminManage/Content";
 import Header from "../src/components/AdminManage/Header";
 import { green, grey, red } from "@mui/material/colors";
-// import Theme from "../src/utils/theme";
 
 function Copyright() {
   return (
@@ -188,7 +187,7 @@ theme = {
 const drawerWidth = 256;
 
 export default function AdminManage() {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   const handleDrawerToggle = () => {

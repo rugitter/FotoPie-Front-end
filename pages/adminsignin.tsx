@@ -13,6 +13,8 @@ import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
 import FormTextField from "../src/components/form/formTextField";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 interface IFormInput {
   email: string;
@@ -25,20 +27,25 @@ const formSchema: Schema<IFormInput> = object({
 });
 
 export default function AdminSignIn() {
+  const router = useRouter();
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
   });
 
-  // const authentication = async () => {
-  //   const signInData = await fetch("http://localhost:9000/admin");
-  //   const response = await signInData.json();
-  //   if (!response.success) return;
-  //   return response;
-  // };
-
-  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
-    console.log(data);
-    // authentication();
+  const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+    try {
+      console.log(data);
+      const response = await axios.post(`http://localhost:9090/auth`, data, {
+        withCredentials: true,
+      });
+      console.log(response);
+      if (response.status === 200) {
+        // setTokenCookie(response.data.accessToken);
+        router.push("/adminmanager"); //to be conformed with backend API
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
