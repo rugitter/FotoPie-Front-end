@@ -4,9 +4,12 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        destination: 'https://api.example.com/:path*',
+        source: "/api/:path*",
+        destination: `${process.env.BACKEND_API}${process.env.BACKEND_PORT}/:path*`,
       },
-    ]
+    ];
+  },
+  env: {
+    REQUEST_TIMEOUT: 10000,
   },
 };

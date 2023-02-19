@@ -36,10 +36,15 @@ export default function SignIn() {
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
       console.log(data);
-      await axios.post(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/auth/login`, data, {
+      const response = await axios.post("api/auth/login", data, {
         withCredentials: true,
       });
-      router.push("/");
+      console.log(response);
+      if (response.status === 200) {
+        window.localStorage.setItem("accessToken", response.data.access_token);
+        window.localStorage.setItem("refreshToken", response.data.refresh_token);
+        router.push("/");
+      }
     } catch (error) {
       console.log(error);
     }
