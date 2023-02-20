@@ -34,7 +34,7 @@ export default function VerifyEmail () {
           <Link 
             // underline="hover" 
             color="inherit" 
-            href='#'>
+            href='signup'>
             {'click here to request another.'}
           </Link>
         </Alert>

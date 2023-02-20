@@ -25,33 +25,9 @@ export default function Activated() {
     axios.post( 
         'http://localhost:9090/api/user/signup', {"token":token}, config)
         .then(response => response.status)
-        .catch(err => alert('Token is expired or email already registered, please try again '));
+        .catch(err => console.log(err));
   
-    
 
-
-    
-    // fetch("http://localhost:9090/api/user/signup", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //         "token":token
-    //       }),
-    // })
-    //     .then((res: Response) => {
-    //         return res.json().then((response => {
-    //             console.log(response)
-    //             console.log(token)
-    //     }))
-    //     }
-        
-    // )
-
-  
- 
-
-
-  
   return (
     <Container component="main" maxWidth="xs">
       <Box
