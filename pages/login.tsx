@@ -15,7 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
 import FormTextField from "../src/components/textField/formTextField";
 import { useRouter } from "next/router";
-import axios from "axios";
+import axiosRequest from "../src/utils/axiosRequest";
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -43,10 +43,8 @@ export default function SignIn() {
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
-      const response = await axios.post("api/auth/login", data, {
-        withCredentials: true,
-      });
-
+      const response = await axiosRequest("/auth/login", "POST", data);
+      console.log(response);
       if (response.status === 200) {
         window.localStorage.setItem("accessToken", response.data.access_token);
         window.localStorage.setItem(
@@ -57,6 +55,8 @@ export default function SignIn() {
         // redirect to home page
         router.push("/");
       }
+
+      // TODO: handle error and set error type
     } catch (error: any) {
       setLoginError(error.message);
     }
@@ -64,6 +64,7 @@ export default function SignIn() {
 
   return (
     <Container component="main" maxWidth="xs">
+      {/*  TODO: add error message */}
       <p>{loginError}</p>
       <Box
         sx={{
