@@ -47,7 +47,7 @@ export default function SignUp() {
 
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
-      const response = await axios.post(`http://localhost:9090/user/create`, data, {
+      const response = await axios.post('http://localhost:9090/api/user/create', data, {
         withCredentials: true,
       });
       console.log(response);
@@ -57,6 +57,7 @@ export default function SignUp() {
       }
       
     } catch (error) {
+      alert('Email is already been used,please go to the login page.')
       console.log(error);
     }
   };
@@ -144,4 +145,3 @@ export default function SignUp() {
     
   );
 }
-

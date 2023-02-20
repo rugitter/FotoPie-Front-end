@@ -32,7 +32,7 @@ export default function VerifyEmail () {
         <Alert severity='info'>
           Before proceeding, please check your email for a validation link. If you did not receive the email, 
           <Link 
-            underline="hover" 
+            // underline="hover" 
             color="inherit" 
             href='#'>
             {'click here to request another.'}
@@ -53,4 +53,3 @@ export default function VerifyEmail () {
      </Container>
   )
 }
-
