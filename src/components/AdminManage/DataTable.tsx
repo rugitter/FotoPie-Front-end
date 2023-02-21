@@ -17,7 +17,7 @@ export default function DataTable() {
 
   //fetch data
   useEffect(() => {
-    axiosRequest("/admin/user", "GET").then((response) =>
+    axiosRequest("/api/admin/user", "GET").then((response) =>
       setUsers(response.data)
     );
   }, []);
