@@ -12,7 +12,7 @@ const rightLink = {
   ml: 3,
 };
 
-export default function ButtonAppBar() {
+export default function ButtonAppNoticeBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -37,6 +37,18 @@ export default function ButtonAppBar() {
               {"FotoPie"}
             </Link>
           </Typography>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Link
+              variant="h6"
+              underline="none"
+              color="inherit"
+              href="#"
+              sx={{ fontSize: 24}}
+            >
+              {"Notification Page"}
+            </Link>
+          </Typography>
+
           <Link
             variant="h6"
             underline="none"
@@ -44,23 +56,6 @@ export default function ButtonAppBar() {
             sx={{ ...rightLink, color: "secondary.main" }}
           >
             {"Notification"}
-          </Link>
-          <Link
-            color="inherit"
-            variant="h6"
-            underline="none"
-            href="login"
-            sx={rightLink}
-          >
-            {"Log in"}
-          </Link>
-          <Link
-            variant="h6"
-            underline="none"
-            href="signup"
-            sx={{ ...rightLink, color: "secondary.main" }}
-          >
-            {"Sign Up"}
           </Link>
         </Toolbar>
       </AppBar>
