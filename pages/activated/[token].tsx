@@ -8,7 +8,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Copyright from "../../src/components/Copyright"
-import axios from "axios";
 import axiosRequest from "../../src/utils/axiosRequest";
 
 export default function Activated() {
@@ -23,7 +22,7 @@ export default function Activated() {
     }
 
     axiosRequest( 
-        "user/signup", "POST", {"token":token}, config)
+        "http://localhost:9090/api/user/signup", "POST", {"token":token}, config)
         .then(response => response.status)
         .catch(err => console.log(err));
   
@@ -50,7 +49,7 @@ export default function Activated() {
         </Alert>
 
         <Button
-          href="http://localhost:3000/login"
+          href="../login"
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}

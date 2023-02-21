@@ -19,7 +19,6 @@ import Copyright from "../src/components/Copyright";
 import FormTextField from "../src/components/textField/formTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
-import axios from "axios";
 import { useRouter } from "next/router";
 import axiosRequest from "../src/utils/axiosRequest";
 
