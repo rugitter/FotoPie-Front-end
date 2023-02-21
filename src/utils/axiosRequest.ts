@@ -14,10 +14,10 @@ service.interceptors.request.use((config) => {
   return config;
 });
 
-const axiosRequest = async(
+const axiosRequest = async (
   url: string,
   method: Method,
-  submitData: object,
+  submitData?: object,
   config?: AxiosRequestConfig
 ) => {
   return await service.request({

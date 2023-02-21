@@ -1,10 +1,9 @@
-
 import Typography from "@mui/material/Typography";
 import MuiLink from "@mui/material/Link";
 
-export default function Copyright(props:any) {
+export default function Copyright(props: any) {
   return (
-<Typography
+    <Typography
       variant="body2"
       color="text.secondary"
       align="center"
