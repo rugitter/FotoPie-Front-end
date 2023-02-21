@@ -7,9 +7,9 @@ import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-// import Copyright from "";
-// import {BrowserRouter as Router, Routes, Route, useParams} from 'react-router-dom'
+import Copyright from "../../src/components/Copyright"
 import axios from "axios";
+import axiosRequest from "../../src/utils/axiosRequest";
 
 export default function Activated() {
     const router = useRouter()
@@ -22,8 +22,8 @@ export default function Activated() {
         }
     }
 
-    axios.post( 
-        'http://localhost:9090/api/user/signup', {"token":token}, config)
+    axiosRequest( 
+        "user/signup", "POST", {"token":token}, config)
         .then(response => response.status)
         .catch(err => console.log(err));
   
@@ -59,7 +59,7 @@ export default function Activated() {
         </Button>
     
       </Box>
-      {/* <Copyright sx={{ mt: 5 }} /> */}
+      <Copyright sx={{ mt: 5 }} />
     </Container>
   )
 }

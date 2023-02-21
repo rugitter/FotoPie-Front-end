@@ -21,6 +21,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
 import axios from "axios";
 import { useRouter } from "next/router";
+import axiosRequest from "../src/utils/axiosRequest";
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -50,9 +51,7 @@ export default function SignUp() {
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
-      const response = await axios.post('http://localhost:9090/api/user/create', data, {
-        withCredentials: true,
-      });
+      const response = await axiosRequest("/user/create", "POST", data);
       console.log(response);
 
       if (response.status === 200) {
