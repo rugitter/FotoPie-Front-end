@@ -12,7 +12,6 @@ export default function notification(){
         
         <Container>
             <ButtonAppNoticeBar />
-
             <BasicStack />
         </Container>
         
