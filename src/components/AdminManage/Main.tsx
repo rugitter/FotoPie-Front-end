@@ -7,10 +7,21 @@ import PermMediaOutlinedIcon from "@mui/icons-material/PhotoSizeSelectActual";
 import SettingsIcon from "@mui/icons-material/Settings";
 import StorageIcon from "@mui/icons-material/Storage";
 import DataTable from "../../utils/DataTable/DataTable";
+import axiosRequest from "../../utils/axiosRequest";
 
 const Main = () => {
   const [active, setActive] = useState("");
 
+  const getAllUser = async () =>{
+    try {
+      const response = await axiosRequest("/admin/user", "GET");
+      console.log(response);
+      
+    } catch (error) {
+      
+    }
+
+  }
   return (
     <>
       <Stack
@@ -27,7 +38,7 @@ const Main = () => {
           }}
         >
           <Box display="flex" flexDirection="column" mt="10px">
-            <Button color="primary" onClick={() => setActive("All Users")}>
+            <Button color="primary" onClick={getAllUser}>
               <PeopleIcon /> All Users
             </Button>
             <Button color="primary" onClick={() => setActive("Posts")}>

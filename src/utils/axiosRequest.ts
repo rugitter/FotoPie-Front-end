@@ -17,7 +17,7 @@ service.interceptors.request.use((config) => {
 const axiosRequest = async(
   url: string,
   method: Method,
-  submitData: object,
+  submitData?: object,
   config?: AxiosRequestConfig
 ) => {
   return await service.request({

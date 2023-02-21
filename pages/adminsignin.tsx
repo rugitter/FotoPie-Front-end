@@ -12,9 +12,10 @@ import Copyright from "../src/components/Copyright";
 import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
-import FormTextField from "../src/components/form/formTextField";
+import FormTextField from "../src/components/textField/formTextField";
 import { useRouter } from "next/router";
 import axios from "axios";
+import axiosRequest from "../src/utils/axiosRequest";
 
 interface IFormInput {
   email: string;
@@ -35,9 +36,7 @@ export default function AdminSignIn() {
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
       console.log(data);
-      const response = await axios.post(`http://localhost:9090/auth`, data, {
-        withCredentials: true,
-      });
+      const response = await axiosRequest("/admin-auth/login", "POST", data);
       console.log(response);
       if (response.status === 200) {
         // setTokenCookie(response.data.accessToken);
