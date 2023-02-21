@@ -22,7 +22,7 @@ export default function Activated() {
     }
 
     axiosRequest( 
-        "http://localhost:9090/api/user/signup", "POST", {"token":token}, config)
+        "/api/user/signup", "POST", {token})
         .then(response => response.status)
         .catch(err => console.log(err));
   
