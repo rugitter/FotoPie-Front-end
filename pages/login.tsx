@@ -15,38 +15,57 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
 import FormTextField from "../src/components/textField/formTextField";
 import { useRouter } from "next/router";
-import axios from "axios";
+import axiosRequest from "../src/utils/axiosRequest";
 
+// Define a type with the shape of the form values
 interface IFormInput {
   email: string;
   password: string;
 }
 
+// Define a schema for the form values
 const formSchema: Schema<IFormInput> = object({
   email: string().email().required(),
   password: string().min(2).max(20).required(),
 });
 
+// Define a component that renders the form
 export default function SignIn() {
+  const [loginError, setLoginError] = useState(null);
+
   const router = useRouter();
+
+  // Use the useForm hook to create a form controller
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
   });
 
+  // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
-      console.log(data);
-      await axios.post(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/auth/login`, data, {
-        withCredentials: true,
-      });
-      router.push("/");
-    } catch (error) {
-      console.log(error);
+      const response = await axiosRequest("/auth/login", "POST", data);
+      console.log(response);
+      if (response.status === 200) {
+        window.localStorage.setItem("accessToken", response.data.access_token);
+        window.localStorage.setItem(
+          "refreshToken",
+          response.data.refresh_token
+        );
+
+        // redirect to home page
+        router.push("/");
+      }
+
+      // TODO: handle error and set error type
+    } catch (error: any) {
+      setLoginError(error.message);
     }
   };
 
   return (
     <Container component="main" maxWidth="xs">
+      {/*  TODO: add error message */}
+      <p>{loginError}</p>
       <Box
         sx={{
           marginTop: 8,
