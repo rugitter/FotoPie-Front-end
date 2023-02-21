@@ -30,32 +30,25 @@ const formSchema: Schema<IFormInput> = object({
 });
 
 // Define a component that renders the form
-export default function SignIn() {
+export default function AdminSignIn() {
   const [loginError, setLoginError] = useState(null);
-
   const router = useRouter();
 
   // Use the useForm hook to create a form controller
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
   });
-
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
-      const response = await axiosRequest("/api/auth/login", "POST", data);
+      const response = await axiosRequest("/admin-auth/login", "POST", data);
       console.log(response);
       if (response.status === 200) {
         window.localStorage.setItem("accessToken", response.data.access_token);
-        window.localStorage.setItem(
-          "refreshToken",
-          response.data.refresh_token
-        );
 
-        // redirect to home page
-        router.push("/");
+        // redirect to admin manager page
+        router.push("/adminmanager");
       }
-
       // TODO: handle error and set error type
     } catch (error: any) {
       setLoginError(error.message);
@@ -78,7 +71,7 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Login
+          Admin Sign In
         </Typography>
 
         <FormProvider {...methods}>
@@ -112,17 +105,12 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Log In
+              Sign In
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>

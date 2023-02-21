@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, Method } from "axios";
 
 // create an axios instance
 const service = axios.create({
-  baseURL: "api",
+  // baseURL: "api",
   timeout: process.env.REQUEST_TIMEOUT as number | undefined,
   withCredentials: true,
 });
@@ -14,10 +14,10 @@ service.interceptors.request.use((config:any) => {
   return config;
 });
 
-const axiosRequest = async(
+const axiosRequest = async (
   url: string,
   method: Method,
-  submitData: object,
+  submitData?: object,
   config?: AxiosRequestConfig
 ) => {
   return await service.request({

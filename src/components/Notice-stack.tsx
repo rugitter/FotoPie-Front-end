@@ -8,6 +8,7 @@ import { flexbox } from '@mui/system';
 import { Big_Shoulders_Text } from '@next/font/google';
 import axios from 'axios'
 import axiosRequest from '../utils/axiosRequest';
+import {useState, useEffect} from 'react';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#28282a' : '#fff',
@@ -23,21 +24,39 @@ type User = {
   avatar: any; 
   picture: any;
 }
-  
 
 export default function BasicStack() {
-  
-  const getAvatar = async(data:User)=>{
+  const[getAvatar, setGetAvatar]= useState([]);
+  const[getUsername, setGetUsername]= useState([]);
+  const[getPost, setGetPost]= useStae([]);
+
+  useEffect(()=>{
     try{
-      const response = await axiosRequest('http://localhost/8080/api/post', "GET", data)
-      if (response.status === 200){
-        return response.data.avatar
-      }
-    
+      //Get User Avatar from User Schema
+      const userResponse = axiosRequest('/api/user',"GET");
+      const postResponse = axiosRequest('/api/post',"GET");
+      console.log(userResponse,postResponse);
+      setGetAvatar(userResponse.avatar)
+      setGetUsername(postResponse.username)
+      setGetPost(postResponse.post)
     }
-    catch(error:any){
-    console.log(error)
-    }}
+    catch (error:any){
+      console.log(error)
+    }
+
+  },[])
+
+  // const getAvatar = async(data:User)=>{
+  //   try{
+  //     const response = await axiosRequest('http://localhost/8080/api/post', "GET", data)
+  //     if (response.status === 200){
+  //       return response.data.avatar
+  //     }
+    
+  //   }
+  //   catch(error:any){
+  //   console.log(error)
+  //   }}
 
   return (
     <Box sx={{ width: '100%', marginTop:10, }}>
@@ -53,16 +72,17 @@ export default function BasicStack() {
         // alignItem:'center',
         justifyContent:'center',
         }}>
+          
             <Avatar>
-
+            {getAvatar.avatar}
             </Avatar>
-            <Typography>Username</Typography>
+            <Typography>{getUsername.username}</Typography>
             </Box>
 
             <Typography>
             Liked Your
             </Typography>
-            <Typography>Posts</Typography>
+            <Typography>{getPost.post}</Typography>
         
         </Item>
         <Item>
