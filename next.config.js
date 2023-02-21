@@ -1,5 +1,3 @@
-const { number } = require("yup");
-
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
