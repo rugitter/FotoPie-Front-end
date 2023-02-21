@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -14,41 +15,50 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
 import FormTextField from "../src/components/textField/formTextField";
 import { useRouter } from "next/router";
-import axios from "axios";
 import axiosRequest from "../src/utils/axiosRequest";
 
+// Define a type with the shape of the form values
 interface IFormInput {
   email: string;
   password: string;
 }
 
+// Define a schema for the form values
 const formSchema: Schema<IFormInput> = object({
   email: string().email().required(),
   password: string().min(2).max(20).required(),
 });
 
+// Define a component that renders the form
 export default function AdminSignIn() {
+  const [loginError, setLoginError] = useState(null);
   const router = useRouter();
+
+  // Use the useForm hook to create a form controller
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
   });
-
+  // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
-      console.log(data);
       const response = await axiosRequest("/admin-auth/login", "POST", data);
       console.log(response);
       if (response.status === 200) {
-        // setTokenCookie(response.data.accessToken);
-        router.push("/adminmanager"); //to be conformed with backend API
+        window.localStorage.setItem("accessToken", response.data.access_token);
+
+        // redirect to admin manager page
+        router.push("/adminmanager");
       }
-    } catch (error) {
-      console.log(error);
+      // TODO: handle error and set error type
+    } catch (error: any) {
+      setLoginError(error.message);
     }
   };
 
   return (
     <Container component="main" maxWidth="xs">
+      {/*  TODO: add error message */}
+      <p>{loginError}</p>
       <Box
         sx={{
           marginTop: 8,

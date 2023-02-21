@@ -1,28 +1,16 @@
-import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import Link from "@mui/material/Link";
 import Header from "../src/components/AdminManage/Header";
 import Main from "../src/components/AdminManage/Main";
+import Copyright from "../src/components/Copyright";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="primary" align="center" m="20px auto">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        FotoPie
-      </Link>{" "}
-      {new Date().getFullYear()}.
-    </Typography>
-  );
-}
-
-export default function AdminManage() {
+// Define a component that renders the form
+export default function AdminManager() {
   return (
     <>
       <Stack>
         <Header />
         <Main />
-        <Copyright />
+        <Copyright sx={{ mt: 4, mb: 4 }} />
       </Stack>
     </>
   );
