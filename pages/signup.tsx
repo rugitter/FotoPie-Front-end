@@ -22,6 +22,7 @@ import { Schema, string, object } from "yup";
 import axios from "axios";
 import { useRouter } from "next/router";
 
+// Define a type with the shape of the form values
 interface IFormInput {
   firstName: string;
   lastName: string;
@@ -29,7 +30,7 @@ interface IFormInput {
   password: string;
 }
 
-
+// Define a schema for the form values
 const formSchema: Schema<IFormInput> = object({
   firstName: string().max(15).required(),
   lastName: string().max(15).required(),
@@ -37,6 +38,7 @@ const formSchema: Schema<IFormInput> = object({
   password: string().min(2).max(20).required(),
 });
 
+// Define a component that renders the form
 export default function SignUp() {
 
   const router = useRouter();
@@ -44,7 +46,8 @@ export default function SignUp() {
     resolver: yupResolver(formSchema),
   });
 
-
+  
+  // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
       const response = await axios.post('http://localhost:9090/api/user/create', data, {
