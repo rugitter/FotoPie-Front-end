@@ -9,6 +9,8 @@ import { Big_Shoulders_Text } from '@next/font/google';
 import axios from 'axios'
 import axiosRequest from '../utils/axiosRequest';
 import {useState, useEffect} from 'react';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#28282a' : '#fff',
@@ -28,23 +30,23 @@ type User = {
 export default function BasicStack() {
   const[getAvatar, setGetAvatar]= useState([]);
   const[getUsername, setGetUsername]= useState([]);
-  const[getPost, setGetPost]= useStae([]);
+  const[getPost, setGetPost]= useState([]);
 
-  useEffect(()=>{
-    try{
-      //Get User Avatar from User Schema
-      const userResponse = axiosRequest('/api/user',"GET");
-      const postResponse = axiosRequest('/api/post',"GET");
-      console.log(userResponse,postResponse);
-      setGetAvatar(userResponse.avatar)
-      setGetUsername(postResponse.username)
-      setGetPost(postResponse.post)
-    }
-    catch (error:any){
-      console.log(error)
-    }
+  // useEffect(()=>{
+  //   try{
+  //     Get User Avatar from User Schema
+  //     const userResponse = axiosRequest('/api/user',"GET");
+  //     const postResponse = axiosRequest('/api/post',"GET");
+  //     console.log(userResponse,postResponse);
+  //     setGetAvatar(userResponse.avatar)
+  //     setGetUsername(postResponse.username)
+  //     setGetPost(postResponse.post)
+  //   }
+  //   catch (error:any){
+  //     console.log(error)
+  //   }
 
-  },[])
+  // },[])
 
   // const getAvatar = async(data:User)=>{
   //   try{
@@ -59,38 +61,59 @@ export default function BasicStack() {
   //   }}
 
   return (
-    <Box sx={{ width: '100%', marginTop:10, }}>
-      <Stack spacing={5}>
+    //<ul> {lists.map(list)=>{<li>}}
+    <Box sx={{ width: '100%', 
+    marginTop:2, }}>
+      <Stack spacing={5}
+      sx={{ 
+      dispaly: 'flex', 
+      justifyContent:'center',
+      alignItems:'center',
+      backgroundColor:'secondary' }}>
       
         <Item sx={{
         display:'flex',
-        justifyContent:'center',
-        
+        justifyContent:'space-evenly',
+        alignItems:'center',
+        width:'70%',
+        color:'secondary',
+
         }}> 
             <Box sx={{
-        display:'grid',
-        // alignItem:'center',
-        justifyContent:'center',
+        display: 'flexbox',
+        flexDirection:'row',
+        alignItem:'center',
+
         }}>
           
             <Avatar>
-            {getAvatar.avatar}
+            {/* {getAvatar.avatar} */}
             </Avatar>
-            <Typography>{getUsername.username}</Typography>
+            {/* <Typography>{getUsername.username}</Typography> */}
+            Name
             </Box>
 
             <Typography>
             Liked Your
             </Typography>
-            <Typography>{getPost.post}</Typography>
-        
+            {/* <Typography>{getPost.post}</Typography> */}
+            <Typography>
+            Post
+            </Typography>
+
+            <IconButton
+            size="small"
+            edge="end"
+            color="secondary"
+            aria-label="close"
+            sx={{position:'absolute', left:'79%'}}
+          >
+            <CloseIcon />
+            </IconButton>
         </Item>
-        <Item>
-            Liked your photo
-        </Item>
-        <Item>
-            Liked your photo
-        </Item>
+
+
+       
         
       </Stack>
     </Box>

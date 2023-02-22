@@ -5,6 +5,9 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "../utils/Link";
+import { Avatar, DialogTitle } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
+
 
 const rightLink = {
   fontSize: 16,
@@ -16,36 +19,51 @@ export default function ButtonAppNoticeBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
-          <IconButton
+        <Toolbar sx={{
+          display:'flex',
+          alignItems:'center'
+        }}>
+          <Box sx={{
+          display:'flex',
+          alignItems:'center',
+          margin:'0',
+          
+        }}>
+          {/* <IconButton
             size="large"
             edge="start"
-            color="inherit"
+            color="secondary"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 1, }}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <DialogTitle
+            color='red'
+            />
+          </IconButton> */}
+          <Link
+              variant="h6"
+              underline="none"
+              color="inherit"
+              href="#"
+              sx={{ 
+                fontSize: 24,
+                position: 'relative',
+              }}>
+           <CloseIcon color="red" src=""/>
+           </Link>
+          <img src='FotopieIcon.png' width='10%' />
+          </Box>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 0 }}>
             <Link
               variant="h6"
               underline="none"
               color="inherit"
               href="#"
-              sx={{ fontSize: 24 }}
+              sx={{ 
+                fontSize: 40
+              }}
             >
-              {"FotoPie"}
-            </Link>
-          </Typography>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link
-              variant="h6"
-              underline="none"
-              color="inherit"
-              href="#"
-              sx={{ fontSize: 24}}
-            >
-              {"Notification Page"}
+              {"Notification"}
             </Link>
           </Typography>
 
@@ -55,7 +73,6 @@ export default function ButtonAppNoticeBar() {
             href="notification"
             sx={{ ...rightLink, color: "secondary.main" }}
           >
-            {"Notification"}
           </Link>
         </Toolbar>
       </AppBar>

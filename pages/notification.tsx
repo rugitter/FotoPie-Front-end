@@ -5,13 +5,20 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import ButtonAppNoticeBar from "../src/components/TopBar-notice";
 import { Container } from "@mui/system";
 import BasicStack from "../src/components/Notice-stack";
+import ButtonAppBar from "../src/components/TopBar-notification";
 
 export default function notification(){
-    return(
-        
+
+    return( 
         <Container>
-            <ButtonAppNoticeBar />
+            <ButtonAppBar />
+
             <BasicStack />
+            <BasicStack />
+            <BasicStack />
+            <BasicStack />
+            <BasicStack />
+           
         </Container>
         
     )
