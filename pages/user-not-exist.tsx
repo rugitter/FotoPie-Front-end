@@ -7,7 +7,7 @@ function UserNotExist() {
       <h1>User Not Exist, Please Go Back and Try Again</h1>
       <div>
         <Button variant="contained">
-          <Link href="/ResetRequest">Reset Password</Link>
+          <Link href="/reset-request">Reset Password</Link>
         </Button>
       </div>
     </>

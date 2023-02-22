@@ -7,7 +7,7 @@ function InvalidToken() {
       <h2>Invalid Token</h2>
       <div>
         <Button variant="contained">
-          <Link href="/ResetRequest">Go Back</Link>
+          <Link href="/reset-request">Go Back</Link>
         </Button>
       </div>
     </>
