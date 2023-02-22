@@ -1,85 +1,76 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack'
+import Image from '../../public/background.jpg'
+import Container from '@mui/material/Container';
 
-
-const AppBarStyle = {
-  minHeight: "250px"
-  // minWidth: "100%"
-}
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0,2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
-
-export default function NavBar() {
+export default function Header() {
 
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={AppBarStyle}>
-        <Toolbar>
-       
-          <Typography  variant="subtitle2" align='center' display='inline'>
-            Start shining.<br/>
-            Start earning.<br/>
-            With your beloved shots. 
-          </Typography>
-           
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          
-        </Toolbar>
-      </AppBar>
+    <Container
+      sx={{ 
+        // flexGrow: 1,
+        // Height: 300,
+        width: '100%',
+        // mt: 12,
+        // display:'flex',
+        // justifyContent:'center',
+        // flexDirection:'column',
+        // alignItems:'center',
+        backgroundImage:`url(../../background.jpg)`,
+        // backgroundSize:'cover'
+      }}
+    >
+      <Stack
+      sx={{ 
+        flexGrow: 1,
+        Height: 300,
+        width: '100%',
+        // mt: 12,
+        display:'flex',
+        justifyContent:'center',
+        flexDirection:'column',
+        alignItems:'center',
+        backgroundImage:`url(../../background.jpg)`,
+        backgroundSize:'cover'
+      }}
+      >
+      
+        <Typography  
+          variant="subtitle2" 
+          align='center' 
+          display='inline'
+          sx={{
+            mt:12
+          }}
+        >
+          Start shining.<br/>
+          Start earning.<br/>
+          With your beloved shots. 
+        </Typography>
+        
+        <Paper
+          component="form"
+          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, mb: 12}}
+        >
 
-    </Box>
-  );
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Search..."
+            inputProps={{ 'aria-label': 'search google maps' }}
+          />
+          <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+            <SearchIcon />
+          </IconButton>
+
+        </Paper>
+      </Stack>
+    </Container>
+  )
 }

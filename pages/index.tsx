@@ -9,8 +9,15 @@ export default function Home() {
       <>
         <NavBar />
         <Header />
-        <SearchBar /> 
+        {/* <SearchBar />  */}
         <div>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias voluptatibus fuga aspernatur? Magnam cumque maiores quaerat, ipsam iure rerum porro, obcaecati enim id totam, iusto voluptas harum deleniti doloremque tempore.</p>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias voluptatibus fuga aspernatur? Magnam cumque maiores quaerat, ipsam iure rerum porro, obcaecati enim id totam, iusto voluptas harum deleniti doloremque tempore.</p>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias voluptatibus fuga aspernatur? Magnam cumque maiores quaerat, ipsam iure rerum porro, obcaecati enim id totam, iusto voluptas harum deleniti doloremque tempore.</p>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias voluptatibus fuga aspernatur? Magnam cumque maiores quaerat, ipsam iure rerum porro, obcaecati enim id totam, iusto voluptas harum deleniti doloremque tempore.</p>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias voluptatibus fuga aspernatur? Magnam cumque maiores quaerat, ipsam iure rerum porro, obcaecati enim id totam, iusto voluptas harum deleniti doloremque tempore.</p>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias voluptatibus fuga aspernatur? Magnam cumque maiores quaerat, ipsam iure rerum porro, obcaecati enim id totam, iusto voluptas harum deleniti doloremque tempore.</p>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias voluptatibus fuga aspernatur? Magnam cumque maiores quaerat, ipsam iure rerum porro, obcaecati enim id totam, iusto voluptas harum deleniti doloremque tempore.</p>
           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias voluptatibus fuga aspernatur? Magnam cumque maiores quaerat, ipsam iure rerum porro, obcaecati enim id totam, iusto voluptas harum deleniti doloremque tempore.</p>
           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias voluptatibus fuga aspernatur? Magnam cumque maiores quaerat, ipsam iure rerum porro, obcaecati enim id totam, iusto voluptas harum deleniti doloremque tempore.</p>
           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias voluptatibus fuga aspernatur? Magnam cumque maiores quaerat, ipsam iure rerum porro, obcaecati enim id totam, iusto voluptas harum deleniti doloremque tempore.</p>
