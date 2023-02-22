@@ -41,7 +41,11 @@ export default function AdminSignIn() {
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
-      const response = await axiosRequest("/admin-auth/login", "POST", data);
+      const response = await axiosRequest(
+        "/api/admin-auth/login",
+        "POST",
+        data
+      );
       console.log(response);
       if (response.status === 200) {
         window.localStorage.setItem("accessToken", response.data.access_token);
