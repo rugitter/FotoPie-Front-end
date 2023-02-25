@@ -6,71 +6,56 @@ import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack'
-import Image from '../../public/background.jpg'
-import Container from '@mui/material/Container';
 
 export default function Header() {
 
-
   return (
-    <Container
-      sx={{ 
-        // flexGrow: 1,
-        // Height: 300,
-        width: '100%',
-        // mt: 12,
-        // display:'flex',
-        // justifyContent:'center',
-        // flexDirection:'column',
-        // alignItems:'center',
-        backgroundImage:`url(../../background.jpg)`,
-        // backgroundSize:'cover'
-      }}
-    >
+
       <Stack
+      component='span'
       sx={{ 
         flexGrow: 1,
         Height: 300,
         width: '100%',
-        // mt: 12,
-        display:'flex',
-        justifyContent:'center',
-        flexDirection:'column',
-        alignItems:'center',
-        backgroundImage:`url(../../background.jpg)`,
-        backgroundSize:'cover'
       }}
       >
-      
-        <Typography  
-          variant="subtitle2" 
-          align='center' 
-          display='inline'
+
+        <Box
           sx={{
-            mt:12
+            mt:13,
+            display:'flex',
+            justifyContent:'center',
+            flexDirection:'column',
+            alignItems:'center',
           }}
         >
-          Start shining.<br/>
-          Start earning.<br/>
-          With your beloved shots. 
-        </Typography>
-        
-        <Paper
-          component="form"
-          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, mb: 12}}
-        >
+          <Typography  
+            variant="subtitle2" 
+            align='center' 
+            display='inline'   
+          >
+            Start shining.<br/>
+            Start earning.<br/>
+            With your beloved shots. 
+          </Typography>
+          <br/>
+          <Paper
+            component="form"
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, mb: 13}}
+          >
 
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Search..."
-            inputProps={{ 'aria-label': 'search google maps' }}
-          />
-          <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-            <SearchIcon />
-          </IconButton>
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search..."
+              inputProps={{ 'aria-label': 'search google maps' }}
+            />
+            <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
 
-        </Paper>
+          </Paper>
+        </Box>
       </Stack>
-    </Container>
+
   )
 }

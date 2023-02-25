@@ -10,20 +10,21 @@ import Image from "mui-image"
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useState } from 'react'
-
-
+import MenuIcon from '@mui/icons-material/Menu';
+import UploadIcon from '@mui/icons-material/Upload';
+import LoginIcon from '@mui/icons-material/Login'
 
 
 export default function Navbar() {
 
+
   const [ fix, setFix ] = useState(false);
 
   const setFixed =() => {
-    if (window.scrollY >= 250) {
+    if (window.scrollY >= 410) {
       setFix(true)
     } else {
       setFix(false)
@@ -84,18 +85,77 @@ export default function Navbar() {
     </Menu>
   );
 
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton
+          size="large"
+          color="inherit"
+        >
+          <Badge badgeContent={1} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          size="large"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton
+          size="large"
+          color="inherit"
+        > 
+          <UploadIcon />
+        </IconButton>
+        <p>Upload</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton
+          size="large"
+          color="inherit"
+        > 
+          <LoginIcon />
+        </IconButton>
+        <p>Log In</p>
+      </MenuItem>
+    </Menu>
+  );
 
   return (
     <Box 
-      sx={{ flexGrow: 1 }}
- 
+      sx={{ flexGrow: 1}}
     >
       <AppBar 
-        position="fixed"
         color='transparent'
         elevation={0}
-        z-index={0}
-      >
+        sx={{
+          position: fix? "fixed" : "relative",
+          bgcolor: fix? '#B0C4DE' : '',
+        }}
+      >       
         <Toolbar>
           {/* Logo  */}
           <Link
@@ -105,15 +165,16 @@ export default function Navbar() {
             href="/"
             sx={{ fontSize: 24 }}
           >
-            <Image src="/logo.png" 
+            <Image src="/logo2.jpg" 
+              style={{ borderRadius:10}}
               alt="Fotopie_Logo"
-              width={30}
-              height={30}
+              width={50}
+              height={50}
             />
           </Link>
      
          
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml:2}}>
             
             <Link
               variant="h6"
@@ -127,51 +188,78 @@ export default function Navbar() {
           
           </Typography>
 
-          {/* notifications */}
-          <IconButton
-              size="large"
-              color="inherit"
-            >
-              <Badge badgeContent={1} color="error">
-                <NotificationsIcon />
-              </Badge>
-          </IconButton>
-
-          {/* User Profile */}
-          <IconButton
-            size="large"
-            edge="end"
-            aria-label="account of current user"
-            aria-controls={menuId}
-            aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
-            color="inherit"
-            >
-            <AccountCircle />
-          </IconButton>
-
-          {/* Upload */}
-          <Button 
-            variant="contained" 
-            component="label"
+        <Box sx={{ flexGrow: 1 }} >
+         </Box>
+          <Box 
             sx={{
-              bgcolor: fix ? "primary.main" : "gray",
+              display: { xs: 'none', md: 'flex'},
+              flexGrow: 0.05,
+              justifyContent: 'space-between'
+              
             }}
           >
-            Upload
-            <input hidden accept="image/*" multiple type="file" />
-          </Button>
-          
-          {/* Log In  */}
-          <Button 
-            variant="contained" 
-            color="success"
-            href="login"
-          >
-            Log In
-          </Button>
+            {/* notifications */}
+            <IconButton
+                size="large"
+                color="inherit"
+              >
+                <Badge badgeContent={1} color="error">
+                  <NotificationsIcon />
+                </Badge>
+            </IconButton>
+
+            {/* User Profile */}
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+              >
+              <AccountCircle />
+            </IconButton>
+
+            {/* Upload */}
+            <Button 
+              variant="contained" 
+              href='upload'
+              sx={{
+                bgcolor: fix ? "primary.main" : "gray",
+              }}
+            >
+              {/* <UploadIcon /> */}
+              Upload
+            </Button>
+            
+            {/* Log In  */}
+            <Button 
+              variant="contained" 
+              color="success"
+              href="login"
+              sx={{
+                bgcolor: fix ? "#3CB371" : "white",
+              }}
+            >
+              Log In
+            </Button>
+          </Box>
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+          </Box>
         </Toolbar>
       </AppBar>
+      {renderMobileMenu}
       {renderMenu}
     </Box>
   );
