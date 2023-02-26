@@ -21,12 +21,12 @@ https://github.com/Go-Husky-FotoPie/FotoPie-Back-end.git
    git clone -b dev https://github.com/Go-Husky-FotoPie/FotoPie-Front-end.git
 
 2. Install dependencies:
-   cd FotoPie-Front-end
+   cd FotoPie-Front-end,
    npm install
 
 3. Add .env file
 
-4. Start the Server
+4. Start the Server:
    npm run dev
 
 #### Authors: Team Go Husky
@@ -39,7 +39,7 @@ Developers:
 - Yuchen(Evan) Ma
 - Yao Wu
 - Taiyi(Andy) Su
-- Edward
+- Kunhong(Edward) Chen
 - Olivia Cai
 - Adam Yang
 
@@ -54,4 +54,4 @@ DevOps:
 - Shelton Chin
 - Ziqi Wang
 - Shuting Xu
-- Charles
+- Charles Cheng
