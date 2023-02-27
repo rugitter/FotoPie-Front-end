@@ -45,13 +45,13 @@ interface IFormInput {
 const formSchema: Schema<IFormInput> = object({
   firstName: string().max(15).required(),
   lastName: string().max(15).required(),
-  bio: string().max(130).required(),
-  location: string().min(2).max(20).required(),
-  website: string().required(),
-  twitter: string().required(),
-  instagram: string().required(),
-  youtube: string().required(),
-  tiktok: string().required(),
+  bio: string().max(130),
+  location: string().max(20),
+  website: string(),
+  twitter: string(),
+  instagram: string(),
+  youtube: string(),
+  tiktok: string(),
 });
 
 // Define a component that renders the form
@@ -65,14 +65,14 @@ export default function EditUserProfile() {
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
       const response = await axiosRequest(
-        "/api/user/editprofile",
-        "POST",
+        "/api/editUser/updateName",
+        "PATCH",
         data
       );
       console.log(response);
 
       if (response.status === 200) {
-        router.push("saveprofileinfo");
+        router.push("/edituserprofile");
       }
     } catch (error) {
       alert("Error occurred, unknown origin.");
@@ -98,6 +98,7 @@ export default function EditUserProfile() {
         </Typography>
       </Box>
 
+      {/*change avatar button*/}
       <Grid container spacing={20}>
         <Grid item xs={2}>
           <Avatar sx={{ width: 130, height: 130 }}>
@@ -317,7 +318,13 @@ export default function EditUserProfile() {
               </Link>
             </Box>
 
-            <Grid container justifyContent="center">
+            {/*change name button*/}
+            <Grid
+              container
+              justifyContent="center"
+              component="form"
+              onSubmit={methods.handleSubmit(onSubmit)}
+            >
               <Button
                 type="submit"
                 size="large"
