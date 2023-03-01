@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Stack from "@mui/material/Stack";
-import { Button } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import { Avatar } from "@mui/material";
 import { Typography } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 
 import axiosRequest from "../src/utils/axiosRequest";
 import image from "../src/components/image.jpg"; //test
-import image2 from "../src/components/image2.jpg";
+import image2 from "../src/components/image2.jpg"; //test
 
 // Define a component that renders the page
 const PhotoQuickView = () => {
@@ -25,13 +25,15 @@ const PhotoQuickView = () => {
   });
 
   const [collected, setCollected] = useState(false);
+  const [collectNumber, setCollectNumber] = useState(0);
   const [liked, setLiked] = useState(false);
+  const [likeNumber, setLikeNumber] = useState(0);
 
-  const { postid } = router.query;
+  const { filename } = router.query;
   //fetch user data
   // useEffect(() => {
   //   try {
-  //     const response = axiosRequest(`/api/quickView/${postid}`, "GET");
+  //     const response = axiosRequest(`/api/quickView/${filename}`, "GET");
   //     if (response === null || response === undefined) {
   //       return;
   //       console.log("error");
@@ -51,13 +53,21 @@ const PhotoQuickView = () => {
     router.push("/");
   };
 
-  //Toggle collect button
+  //Toggle collect button and add/delete collect number
   const addToCollection = () => {
     setCollected(!collected);
+    // const response = axiosRequest(`/api/collect/${filename}`, "POST", {
+    // filename
+    // });
+    setCollectNumber(collectNumber);
   };
   //Toggle like button
   const addToLiked = () => {
     setLiked(!liked);
+    // const response = axiosRequest(`/api/like/${filename}`, "POST", {
+    //   filename
+    // });
+    setLikeNumber(likeNumber);
   };
 
   //Redirect to download page
@@ -70,6 +80,7 @@ const PhotoQuickView = () => {
         height: "100vh",
         bgcolor: "rgba(0,0,0,0.8)",
         position: "relative",
+        m: "auto",
       }}
     >
       {/*  close button */}
@@ -91,6 +102,7 @@ const PhotoQuickView = () => {
         display="flex"
         sx={{
           width: "75vw",
+          // width: { xs: "20vw", sm: "40vw", md: "60vw", lg: "70vw", xl: "75vw" },
           height: "90vh",
           minWidth: "600px",
           borderRadius: "10px",
@@ -122,6 +134,7 @@ const PhotoQuickView = () => {
               </Button>
             </Stack>
           </Stack>
+
           {/* Collect, like, download button */}
           <Stack display="flex" direction="row" justifyContent="space-around">
             <Button
@@ -133,7 +146,9 @@ const PhotoQuickView = () => {
               onClick={addToCollection}
               startIcon={<AddToPhotosIcon />}
             >
-              {collected ? "Collected" : "Collect"}
+              {collected
+                ? "Collected" + " " + `${collectNumber}`
+                : "Collect" + " " + `${collectNumber}`}
             </Button>
             <Button
               variant="outlined"
@@ -144,10 +159,12 @@ const PhotoQuickView = () => {
               startIcon={<FavoriteBorderIcon />}
               onClick={addToLiked}
             >
-              {liked ? "Unlike" : "Like"}
+              {liked
+                ? "Unlike" + " " + `${likeNumber}`
+                : "Like" + " " + `${likeNumber}`}
             </Button>
             <Button
-              // href="/users/:id/photo/:id"
+              // href="/users/download/:id/photo/:id"
               variant="contained"
               sx={{ mr: 2, bgcolor: "secondary.main" }}
               startIcon={<DownloadIcon />}
@@ -159,15 +176,20 @@ const PhotoQuickView = () => {
         </Stack>
 
         {/* Post image */}
-        <Box sx={{ m: "auto" }} maxWidth={1000}>
+        <Box
+          // maxWidth="sm"
+          sx={{
+            m: "auto",
+            position: "relative",
+            width: "60vw",
+            height: "70vh",
+          }}
+        >
           <Image
             src={image2}
             alt="image"
-            height={500}
-            // layout="fill"
-            layout="responsive"
-            // sizes="max-width:50vh,
-            //         min-width:20vh"
+            fill={true}
+            style={{ objectFit: "contain" }}
           />
           {/* <Image src={userInfo.photo} alt="Image" width={400} /> */}
         </Box>
