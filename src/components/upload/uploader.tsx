@@ -1,13 +1,15 @@
 import 'react-dropzone-uploader/dist/styles.css'
 import Dropzone from 'react-dropzone-uploader'
+import { useState} from "react";
 // import Dropzone from 'react-dropzone'
 import axios, { AxiosRequestConfig, Method } from "axios";
+import { string } from 'yup';
 
 
 // import { DropzoneArea } from "material-ui-dropzone";
 
 export default function Uploader() { 
-
+  const [status, setStatus] = useState([]);
   
 
   const API_ENDPOINT = "https://882yhgxvdh.execute-api.ap-southeast-2.amazonaws.com/getPresignedImageURL"
@@ -23,9 +25,10 @@ export default function Uploader() {
     meta: FileMeta;
   }
   
-  const handleChangeStatus = (props: DropzoneProps, status: string): void => {
+  const handleChangeStatus = (props: DropzoneProps, status: any): void => {
     const { meta} = props;
     console.log(status, meta);
+    setStatus(status);
   };
   
   const handleSubmit = async (files: any) => {
