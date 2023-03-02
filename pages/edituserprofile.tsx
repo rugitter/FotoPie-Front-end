@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import Stack from "@mui/material/Stack";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -24,7 +27,7 @@ import {
 import Copyright from "../src/components/Copyright";
 import FormTextField from "../src/components/textField/formTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Schema, string, object } from "yup";
+import { Schema, string, object, mixed } from "yup";
 import { useRouter } from "next/router";
 import axiosRequest from "../src/utils/axiosRequest";
 import { deepOrange, deepPurple } from "@mui/material/colors";
@@ -40,6 +43,7 @@ interface IFormInput {
   instagram: string;
   youtube: string;
   tiktok: string;
+  picture: FileList;
 }
 // Define a schema for the form values
 const formSchema: Schema<IFormInput> = object({
@@ -52,6 +56,7 @@ const formSchema: Schema<IFormInput> = object({
   instagram: string().default(""),
   youtube: string().default(""),
   tiktok: string().default(""),
+  picture: mixed(),
 });
 
 // Define a component that renders the form
@@ -69,6 +74,31 @@ export default function EditUserProfile() {
         "PATCH",
         data
       );
+      console.log(data.picture[0]);
+      console.log(response);
+
+      if (response.status === 200) {
+        router.push("/edituserprofile");
+      }
+    } catch (error) {
+      alert("Error occurred, unknown origin.");
+      console.log(error);
+    }
+  };
+
+  const submitPic: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+    try {
+      console.log(data.picture[0]);
+      const file = data.picture[0];
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await axiosRequest(
+        "/api/editUser/upload",
+        "PATCH",
+        formData
+      );
+
       console.log(response);
 
       if (response.status === 200) {
@@ -81,52 +111,73 @@ export default function EditUserProfile() {
   };
 
   return (
-    <Container component="main" maxWidth="md">
-      {/*Page heading, profile icon and change picture button*/}
+    <FormProvider {...methods}>
+      <Container component="main" maxWidth="md">
+        {/*Page heading, profile icon and change picture button*/}
 
-      <Box
-        sx={{
-          marginTop: 10,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          marginBottom: 10,
-        }}
-      >
-        <Typography component="h1" variant="h3">
-          Profile Setting
-        </Typography>
-      </Box>
+        <Box
+          sx={{
+            marginTop: 10,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: 10,
+          }}
+        >
+          <Typography component="h1" variant="h3">
+            Profile Setting
+          </Typography>
+        </Box>
 
-      {/*change avatar button*/}
-      <Grid container spacing={20}>
-        <Grid item xs={2}>
-          <Avatar sx={{ width: 130, height: 130 }}>
-            <AccountCircleIcon sx={{ fontSize: 125 }} />
-          </Avatar>
-        </Grid>
-        <Grid item xs={6}>
-          <Button
-            type="submit"
-            size="medium"
-            variant="contained"
-            color="secondary"
-            sx={{ mt: 5, mb: 8 }}
+        {/*change avatar button*/}
+        <Grid container spacing={10}>
+          <Grid item xs={2}>
+            <Avatar sx={{ width: 130, height: 130 }}>
+              <AccountCircleIcon sx={{ fontSize: 125 }} />
+            </Avatar>
+          </Grid>
+          <Grid
+            item
+            xs={6}
+            component="form"
+            onSubmit={methods.handleSubmit(submitPic)}
           >
-            Change Picture
-            <Link href="changepicture"></Link>
-          </Button>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="label"
+                id="picture"
+              >
+                <input
+                  hidden
+                  accept="image/*"
+                  type="file"
+                  {...methods.register("picture")}
+                />
+                <PhotoCamera />
+              </IconButton>
+              <Button
+                type="submit"
+                size="medium"
+                variant="contained"
+                color="secondary"
+                sx={{ mt: 5, mb: 8 }}
+              >
+                Change Picture
+                <Link href="changepicture"></Link>
+              </Button>
+            </Stack>
+          </Grid>
         </Grid>
-      </Grid>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "start",
-        }}
-      >
-        <FormProvider {...methods}>
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "start",
+          }}
+        >
           {/*First input grid*/}
 
           <Grid container spacing={8}>
@@ -157,11 +208,7 @@ export default function EditUserProfile() {
 
           {/*Box containing password reset*/}
 
-          <Box
-            component="form"
-            onSubmit={methods.handleSubmit(onSubmit)}
-            sx={{ mt: 3 }}
-          >
+          <Box component="form" sx={{ mt: 3 }}>
             <Typography component="h1" variant="h6">
               password
             </Typography>
@@ -337,9 +384,9 @@ export default function EditUserProfile() {
               </Button>
             </Grid>
           </Box>
-        </FormProvider>
-      </Box>
-      <Copyright sx={{ mt: 5 }} />
-    </Container>
+        </Box>
+        <Copyright sx={{ mt: 5 }} />
+      </Container>
+    </FormProvider>
   );
 }
