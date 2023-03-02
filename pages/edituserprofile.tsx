@@ -45,13 +45,13 @@ interface IFormInput {
 const formSchema: Schema<IFormInput> = object({
   firstName: string().max(15).required(),
   lastName: string().max(15).required(),
-  bio: string().max(130),
-  location: string().max(20),
-  website: string(),
-  twitter: string(),
-  instagram: string(),
-  youtube: string(),
-  tiktok: string(),
+  bio: string().max(130).default(""),
+  location: string().max(20).default(""),
+  website: string().default(""),
+  twitter: string().default(""),
+  instagram: string().default(""),
+  youtube: string().default(""),
+  tiktok: string().default(""),
 });
 
 // Define a component that renders the form
