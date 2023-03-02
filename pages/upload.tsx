@@ -7,6 +7,7 @@ import 'react-dropzone-uploader/dist/styles.css'
 import Dropzone from 'react-dropzone-uploader'
 import { Helmet } from "react-helmet"
 import Uploader from "../src/components/upload/uploader";
+// import SingleFileAutoSubmit  from "../src/components/upload/uploadImage";
 
 export default function MyDropzone() {
 
@@ -15,13 +16,13 @@ export default function MyDropzone() {
     <div>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Upload to Amazon S3</title>
         <meta
           name="description"
           content="How to upload files to S3 from your react app "
         />
         
       </Helmet>
+      
       <Uploader/>
 
 
