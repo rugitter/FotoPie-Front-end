@@ -6,19 +6,42 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button"
 import Link from "../utils/Link";
-import Image from "mui-image"
+import Image from "next/image"
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useState } from 'react'
 import MenuIcon from '@mui/icons-material/Menu';
 import UploadIcon from '@mui/icons-material/Upload';
 import LoginIcon from '@mui/icons-material/Login'
+import { useEffect } from "react";
+import Avatar from '@mui/material/Avatar';
 
 
 export default function Navbar() {
+  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+
+    const accessToken = localStorage.getItem('accessToken')
+    const refreshToken = localStorage.getItem('refreshToken')
+    if (accessToken !== null) {
+      setIsLoggedIn(true)
+      console.log(accessToken)
+    } else {
+      setIsLoggedIn(false)
+    }
+
+  }, [])
+
+
+  const removeToken = () => {
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
+    setIsLoggedIn(false)
+  }
 
 
   const [ fix, setFix ] = useState(false);
@@ -61,29 +84,37 @@ export default function Navbar() {
   };
 
   const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>My Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My Collections</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
 
-    </Menu>
-  );
+  const handleLogout = () => {
+    removeToken();
+    handleMenuClose();
+  };
+    const renderMenu = (
+
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        id={menuId}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={isMenuOpen}
+        onClose={handleMenuClose}
+      >
+        <MenuItem onClick={handleMenuClose}>My Profile</MenuItem>
+        <MenuItem onClick={handleMenuClose}>My Collections</MenuItem>
+        <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+
+      </Menu>
+    );
+
+
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -114,13 +145,12 @@ export default function Navbar() {
         <p>Notifications</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
+         <Avatar
+            alt="Avatar"
+            src="/profile.png"
+            onClick={handleProfileMenuOpen}
+            sx={{ width: 40, height: 40 }}
+          />
         <p>Profile</p>
       </MenuItem>
       <MenuItem>
@@ -144,6 +174,8 @@ export default function Navbar() {
     </Menu>
   );
 
+
+
   return (
     <Box 
       sx={{ flexGrow: 1}}
@@ -159,13 +191,9 @@ export default function Navbar() {
         <Toolbar>
           {/* Logo  */}
           <Link
-            variant="h6"
-            underline="none"
-            color="inherit"
             href="/"
-            sx={{ fontSize: 24 }}
           >
-            <Image src="/logo2.jpg" 
+            <Image src="/logo.jpg" 
               style={{ borderRadius:10}}
               alt="Fotopie_Logo"
               width={50}
@@ -179,14 +207,15 @@ export default function Navbar() {
             <Link
               variant="h6"
               underline="none"
-              color="inherit"
+              color="#FFFFFF"
               href="/"
-              sx={{ fontSize: 24 }}
+              sx={{ fontSize: 24, fontFamily: 'inherit'}}
             >
               {"FotoPie"}         
             </Link>
           
           </Typography>
+
 
         <Box sx={{ flexGrow: 1 }} >
          </Box>
@@ -198,52 +227,60 @@ export default function Navbar() {
               
             }}
           >
+
+
+
+            {isLoggedIn ? (
+            <Box
+            sx={{
+              display: { xs: 'none', md: 'flex'},
+              flexGrow: 1,
+              justifyContent: 'space-between'
+              
+            }}
+            >
             {/* notifications */}
-            <IconButton
-                size="large"
-                color="inherit"
-              >
-                <Badge badgeContent={1} color="error">
-                  <NotificationsIcon />
-                </Badge>
-            </IconButton>
+              <IconButton
+                  size="large"
+                  color="inherit"
+                >
+                  <Badge badgeContent={1} color="error">
+                    <NotificationsIcon />
+                  </Badge>
+              </IconButton>
 
-            {/* User Profile */}
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-              >
-              <AccountCircle />
-            </IconButton>
+              {/* User Profile */}
+              <Avatar
+                alt="Avatar"
+                src="/profile.png"
+                onClick={handleProfileMenuOpen}
+                sx={{ width: 40, height: 40 }}
+              />
 
-            {/* Upload */}
-            <Button 
+              <Button 
               variant="contained" 
               href='upload'
               sx={{
                 bgcolor: fix ? "primary.main" : "gray",
               }}
-            >
-              {/* <UploadIcon /> */}
+              >
               Upload
-            </Button>
-            
-            {/* Log In  */}
-            <Button 
+              </Button>
+            </Box>
+            ):(
+
+              <Button 
               variant="contained" 
               color="success"
               href="login"
               sx={{
                 bgcolor: fix ? "#3CB371" : "white",
-              }}
-            >
+              }}   
+              >
               Log In
-            </Button>
+              </Button>
+            )}
+
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -261,6 +298,9 @@ export default function Navbar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+
     </Box>
   );
 }
+
+

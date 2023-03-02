@@ -32,7 +32,9 @@ export default function Header() {
           <Typography  
             variant="subtitle2" 
             align='center' 
-            display='inline'   
+            display='inline'  
+            color='#FFFFFF'
+            sx={{ fontSize: 18, fontFamily: 'inherit'}}
           >
             Start shining.<br/>
             Start earning.<br/>

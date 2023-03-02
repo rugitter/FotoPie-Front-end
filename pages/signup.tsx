@@ -50,7 +50,7 @@ export default function SignUp() {
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
-      const response = await axiosRequest("/user/create", "POST", data);
+      const response = await axiosRequest("/api/user/create", "POST", data);
       console.log(response);
 
       if (response.status === 200) {
