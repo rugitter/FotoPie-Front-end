@@ -14,7 +14,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (!router.isReady) return;
-
+    
     axiosRequest(`/api/user/${id}`, "GET").then((res) => {
       console.log(res);
       setLastName(res.data.lastName);
@@ -41,30 +41,3 @@ export default function ProfilePage() {
     </Container>
   );
 }
-
-// export async function getStaticPaths() {
-//   // const {id} = context.query;
-//   const response = await axios({ method: "get", url: "/api/user" });
-
-//   const paths = response.data.map((user: any) => {
-//     return {
-//       params: { id: user.id },
-//     };
-//   });
-
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// }
-
-// export async function getStaticProps(context: GetStaticPropsContext) {
-//   const { id } = context.params;
-//   const response = await axios({ method: "get", url: `/api/user/${id}` });
-
-//   return {
-//     props: {
-//       user: response.data,
-//     },
-//   };
-// }
