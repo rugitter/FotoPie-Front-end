@@ -6,6 +6,7 @@ import ButtonAppNoticeBar from "../src/components/TopBar-notice";
 import { Container } from "@mui/system";
 import BasicStack from "../src/components/Notice-stack";
 import ButtonAppBar from "../src/components/TopBar-notification";
+import CenteredElementGrid from "./notifyTable";
 
 export default function notification(){
 
@@ -14,11 +15,6 @@ export default function notification(){
             <ButtonAppBar />
 
             <BasicStack />
-            <BasicStack />
-            <BasicStack />
-            <BasicStack />
-            <BasicStack />
-           
         </Container>
         
     )

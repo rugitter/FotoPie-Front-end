@@ -34,7 +34,7 @@ export default function BasicStack() {
 
   // useEffect(()=>{
   //   try{
-  //     Get User Avatar from User Schema
+  //     // Get User Avatar from User Schema
   //     const userResponse = axiosRequest('/api/user',"GET");
   //     const postResponse = axiosRequest('/api/post',"GET");
   //     console.log(userResponse,postResponse);
@@ -66,7 +66,7 @@ export default function BasicStack() {
     marginTop:2, }}>
       <Stack spacing={5}
       sx={{ 
-      dispaly: 'flex', 
+      display: 'flex', 
       justifyContent:'center',
       alignItems:'center',
       backgroundColor:'secondary' }}>
@@ -76,14 +76,14 @@ export default function BasicStack() {
         justifyContent:'space-evenly',
         alignItems:'center',
         width:'70%',
-        color:'secondary',
+        color:'primary',
 
         }}> 
             <Box sx={{
         display: 'flexbox',
         flexDirection:'row',
         alignItem:'center',
-
+        color:'primary',
         }}>
           
             <Avatar>
@@ -98,7 +98,7 @@ export default function BasicStack() {
             </Typography>
             {/* <Typography>{getPost.post}</Typography> */}
             <Typography>
-            Post
+            <img src=''/>
             </Typography>
 
             <IconButton
@@ -106,16 +106,165 @@ export default function BasicStack() {
             edge="end"
             color="secondary"
             aria-label="close"
-            sx={{position:'absolute', left:'79%'}}
+            
           >
-            <CloseIcon />
+            <CloseIcon sx={{position:'relative', left:"100%", top:"30%" }} />
             </IconButton>
         </Item>
-
-
-       
-        
       </Stack>
+
+      {/* 22 */}
+
+      <Stack spacing={5}
+      sx={{ 
+      display: 'flex', 
+      justifyContent:'center',
+      alignItems:'center',
+      backgroundColor:'secondary' }}>
+      
+        <Item sx={{
+        display:'flex',
+        justifyContent:'space-evenly',
+        alignItems:'center',
+        width:'70%',
+        color:'primary',
+
+        }}> 
+            <Box sx={{
+        display: 'flexbox',
+        flexDirection:'row',
+        alignItem:'center',
+        color:'primary',
+        }}>
+          
+            <Avatar>
+            {/* {getAvatar.avatar} */}
+            </Avatar>
+            {/* <Typography>{getUsername.username}</Typography> */}
+            Name
+            </Box>
+
+            <Typography>
+            Liked Your
+            </Typography>
+            {/* <Typography>{getPost.post}</Typography> */}
+            <Typography>
+            <img src=''/>
+            </Typography>
+
+            <IconButton
+            size="small"
+            edge="end"
+            color="secondary"
+            aria-label="close"
+            
+          >
+            <CloseIcon sx={{position:'relative', left:"100%", top:"30%" }} />
+            </IconButton>
+        </Item>
+      </Stack>
+      {/* 3 */}
+      <Stack spacing={5}
+      sx={{ 
+      display: 'flex', 
+      justifyContent:'center',
+      alignItems:'center',
+      backgroundColor:'secondary' }}>
+      
+        <Item sx={{
+        display:'flex',
+        justifyContent:'space-evenly',
+        alignItems:'center',
+        width:'70%',
+        color:'primary',
+
+        }}> 
+            <Box sx={{
+        display: 'flexbox',
+        flexDirection:'row',
+        alignItem:'center',
+        color:'primary',
+        }}>
+          
+            <Avatar>
+            {/* {getAvatar.avatar} */}
+            </Avatar>
+            {/* <Typography>{getUsername.username}</Typography> */}
+            Name
+            </Box>
+
+            <Typography>
+            Liked Your
+            </Typography>
+            {/* <Typography>{getPost.post}</Typography> */}
+            <Typography>
+            <img src=''/>
+            </Typography>
+
+            <IconButton
+            size="small"
+            edge="end"
+            color="secondary"
+            aria-label="close"
+            
+          >
+            <CloseIcon sx={{position:'relative', left:"100%", top:"30%" }} />
+            </IconButton>
+        </Item>
+      </Stack>
+
+    {/* 44 */}
+
+      <Stack spacing={5}
+      sx={{ 
+      display: 'flex', 
+      justifyContent:'center',
+      alignItems:'center',
+      backgroundColor:'secondary' }}>
+      
+        <Item sx={{
+        display:'flex',
+        justifyContent:'space-evenly',
+        alignItems:'center',
+        width:'70%',
+        color:'primary',
+
+        }}> 
+            <Box sx={{
+        display: 'flexbox',
+        flexDirection:'row',
+        alignItem:'center',
+        color:'primary',
+        }}>
+          
+            <Avatar>
+            {/* {getAvatar.avatar} */}
+            </Avatar>
+            {/* <Typography>{getUsername.username}</Typography> */}
+            Name
+            </Box>
+
+            <Typography>
+            Liked Your
+            </Typography>
+            {/* <Typography>{getPost.post}</Typography> */}
+            <Typography>
+            <img src=''/>
+            </Typography>
+
+            <IconButton
+            size="small"
+            edge="end"
+            color="secondary"
+            aria-label="close"
+            
+          >
+            <CloseIcon sx={{position:'relative', left:"100%", top:"30%" }} />
+            </IconButton>
+        </Item>
+      </Stack>
+
+      
     </Box>
   );
 }

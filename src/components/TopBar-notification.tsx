@@ -11,7 +11,7 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function ButtonAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color='primary' background-color="secondary" >
+      <AppBar position="static" color='secondary' background-color="secondary" >
         <Toolbar color='secondary' background-color="secondary">
           <IconButton
             size="large"
