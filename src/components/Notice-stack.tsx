@@ -6,7 +6,7 @@ import { styled, makeStyles } from '@mui/material/styles';
 import { Avatar, Typography } from '@mui/material';
 import { flexbox } from '@mui/system';
 import { Big_Shoulders_Text } from '@next/font/google';
-import axios from 'axios'
+import axios from 'axios';
 import axiosRequest from '../utils/axiosRequest';
 import {useState, useEffect} from 'react';
 import IconButton from '@mui/material/IconButton';
