@@ -19,7 +19,7 @@ export default function Home () {
           backgroundSize:'cover',
         }}
       >
-        <NavBar useFixed={true}/>
+        <NavBar isFixed={true}/>
         <Header />
       </Box>
 

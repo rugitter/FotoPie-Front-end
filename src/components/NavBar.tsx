@@ -17,11 +17,16 @@ import UploadIcon from '@mui/icons-material/Upload';
 import LoginIcon from '@mui/icons-material/Login'
 import { useEffect } from "react";
 import Avatar from '@mui/material/Avatar';
-import { color } from '@mui/system';
 
 
-export default function Navbar( { useFixed, color = '#FFFFFF' } ) {
-  
+
+interface NavbarProps {
+  isFixed: boolean;
+  color?: string;
+}
+
+export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -30,7 +35,6 @@ export default function Navbar( { useFixed, color = '#FFFFFF' } ) {
     const refreshToken = localStorage.getItem('refreshToken')
     if (accessToken !== null) {
       setIsLoggedIn(true)
-      console.log(accessToken)
     } else {
       setIsLoggedIn(false)
     }
@@ -56,19 +60,15 @@ export default function Navbar( { useFixed, color = '#FFFFFF' } ) {
   }
 
   useEffect(() => {
-    if (useFixed && typeof window !== "undefined") {
+    if (isFixed && typeof window !== "undefined") {
       window.addEventListener("scroll", setFixed)
     }
     return () => {
-      if (useFixed && typeof window !== "undefined") {
+      if (isFixed && typeof window !== "undefined") {
         window.removeEventListener("scroll", setFixed)
       }
     }
-  }, [useFixed])
-  // if (typeof window !== "undefined") {
-  //   window.addEventListener("scroll", setFixed)
-  // }
-
+  }, [isFixed])
 
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -163,6 +163,7 @@ export default function Navbar( { useFixed, color = '#FFFFFF' } ) {
             onClick={handleProfileMenuOpen}
             sx={{ width: 40, height: 40 }}
           />
+         
         <p>Profile</p>
       </MenuItem>
       <MenuItem>
