@@ -17,9 +17,10 @@ import UploadIcon from '@mui/icons-material/Upload';
 import LoginIcon from '@mui/icons-material/Login'
 import { useEffect } from "react";
 import Avatar from '@mui/material/Avatar';
+import { color } from '@mui/system';
 
 
-export default function Navbar() {
+export default function Navbar( { useFixed, color = '#FFFFFF' } ) {
   
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -54,10 +55,21 @@ export default function Navbar() {
     }
   }
 
-  if (typeof window !== "undefined") {
-    window.addEventListener("scroll", setFixed)
-  }
-  
+  useEffect(() => {
+    if (useFixed && typeof window !== "undefined") {
+      window.addEventListener("scroll", setFixed)
+    }
+    return () => {
+      if (useFixed && typeof window !== "undefined") {
+        window.removeEventListener("scroll", setFixed)
+      }
+    }
+  }, [useFixed])
+  // if (typeof window !== "undefined") {
+  //   window.addEventListener("scroll", setFixed)
+  // }
+
+
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -106,9 +118,9 @@ export default function Navbar() {
         open={isMenuOpen}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleMenuClose}>My Profile</MenuItem>
+        <MenuItem onClick={handleMenuClose}>My Gallery</MenuItem>
         <MenuItem onClick={handleMenuClose}>My Collections</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
+        <MenuItem onClick={handleMenuClose}>Edit Profile</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
 
       </Menu>
@@ -185,7 +197,7 @@ export default function Navbar() {
         elevation={0}
         sx={{
           position: fix? "fixed" : "relative",
-          bgcolor: fix? '#B0C4DE' : '',
+          bgcolor: fix? '#FFFFFF' : '',
         }}
       >       
         <Toolbar>
@@ -196,8 +208,8 @@ export default function Navbar() {
             <Image src="/logo.jpg" 
               style={{ borderRadius:10}}
               alt="Fotopie_Logo"
-              width={50}
-              height={50}
+              width={45}
+              height={45}
             />
           </Link>
      
@@ -207,9 +219,10 @@ export default function Navbar() {
             <Link
               variant="h6"
               underline="none"
-              color="#FFFFFF"
               href="/"
-              sx={{ fontSize: 24, fontFamily: 'inherit'}}
+              sx={{ fontSize: 24, fontFamily: 'inherit',
+                    color: fix? '#000000' : color,
+                  }}
             >
               {"FotoPie"}         
             </Link>
