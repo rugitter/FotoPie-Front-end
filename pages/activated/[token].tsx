@@ -19,11 +19,11 @@ export default function Activated() {
     }
 
     axiosRequest( 
+
       "/api/user/signup", "POST", {token})
       .then(response => response.status)
-      .catch(err => console.log(err));
-  
-
+      .catch(err => console.log(err))
+ 
   return (
     <Container component="main" maxWidth="xs">
       <Box

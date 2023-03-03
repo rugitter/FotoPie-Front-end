@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig, Method } from "axios";
 
 // create an axios instance
 const service = axios.create({
+  // baseURL: "api",
   timeout: process.env.REQUEST_TIMEOUT as number | undefined,
   withCredentials: true,
 });
