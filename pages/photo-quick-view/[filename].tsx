@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Stack from "@mui/material/Stack";
-import { Button, Container } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { Avatar } from "@mui/material";
 import { Typography } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -8,45 +8,48 @@ import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 import DownloadIcon from "@mui/icons-material/Download";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
-import Image from "next/image";
 import { useRouter } from "next/router";
+import Image from "mui-image";
 
-import axiosRequest from "../src/utils/axiosRequest";
-import image from "../src/components/image.jpg"; //test
-import image2 from "../src/components/image2.jpg"; //test
+import axiosRequest from "../../src/utils/axiosRequest";
 
 // Define a component that renders the page
 const PhotoQuickView = () => {
-  const router = useRouter();
-  const [userInfo, setUserInfo] = useState({
-    user_name: "AB",
-    user_image: "image",
-    photo: "photo",
-  });
+  const [userName, setUserName] = useState("");
+  const [userAvatar, setUserAvatar] = useState("");
+  const [postPhoto, setPostPhoto] = useState("");
+  const [userCollects, setUserCollects] = useState("");
+  const [userLikes, setUserLikes] = useState("");
 
   const [collected, setCollected] = useState(false);
-  const [collectNumber, setCollectNumber] = useState(0);
   const [liked, setLiked] = useState(false);
-  const [likeNumber, setLikeNumber] = useState(0);
 
+  const router = useRouter();
   const { filename } = router.query;
-  //fetch user data
-  // useEffect(() => {
-  //   try {
-  //     const response = axiosRequest(`/api/quickView/${filename}`, "GET");
-  //     if (response === null || response === undefined) {
-  //       return;
-  //       console.log("error");
-  //     }
-  //     response.then(
-  //       (user) => setUserInfo(user.data) //｛user_name，user_image，photo｝
-  //     );
 
-  //     // TODO: handle error and set error type
-  //   } catch (error: any) {
-  //     console.log(error.message);
-  //   }
-  // }, []);
+  // fetch user avatar,username,post image
+  useEffect(() => {
+    if (!router.isReady) return;
+    const fetchData = async () => {
+      try {
+        const response = await axiosRequest(
+          `/api/quickView?filename=${filename}`,
+          "GET"
+        );
+        if (!response) {
+          return;
+        }
+        setUserName(response.data.user_name);
+        setUserAvatar(response.data.avatar_url);
+        setPostPhoto(response.data.photo_url);
+        setUserCollects(response.data.collects);
+        setUserLikes(response.data.likes);
+      } catch (error: any) {
+        return error.message;
+      }
+    };
+    fetchData();
+  }, [router.isReady, filename]);
 
   //click close button to redirect back to home page
   const onClickCloseButton = () => {
@@ -54,20 +57,39 @@ const PhotoQuickView = () => {
   };
 
   //Toggle collect button and add/delete collect number
-  const addToCollection = () => {
-    setCollected(!collected);
-    // const response = axiosRequest(`/api/collect/${filename}`, "POST", {
-    // filename
-    // });
-    setCollectNumber(collectNumber);
+  const addToCollection = async () => {
+    setCollected((collected) => !collected);
+    //click collect button to update number
+    try {
+      const response = await axiosRequest(`/api/collect/${filename}`, "POST", {
+        filename: `${filename}`,
+      });
+      if (response.status === 401) {
+        router.push("/login");
+      }
+      const data = response.data || response;
+      setUserCollects(data);
+    } catch (error: any) {
+      return error.message;
+    }
   };
-  //Toggle like button
-  const addToLiked = () => {
-    setLiked(!liked);
-    // const response = axiosRequest(`/api/like/${filename}`, "POST", {
-    //   filename
-    // });
-    setLikeNumber(likeNumber);
+
+  //Toggle like button and add/delete like number
+  const addToLiked = async () => {
+    setLiked((liked) => !liked);
+    //click like button to update number
+    try {
+      const response = await axiosRequest(`/api/like/${filename}`, "POST", {
+        filename: `${filename}`,
+      });
+      if (response.status === 401) {
+        router.push("/login");
+      }
+      const data = response.data || response;
+      setUserLikes(data);
+    } catch (error: any) {
+      return error.message;
+    }
   };
 
   //Redirect to download page
@@ -78,6 +100,7 @@ const PhotoQuickView = () => {
       sx={{
         width: "100vw",
         height: "100vh",
+        minWidth: "500px",
         bgcolor: "rgba(0,0,0,0.8)",
         position: "relative",
         m: "auto",
@@ -102,9 +125,8 @@ const PhotoQuickView = () => {
         display="flex"
         sx={{
           width: "75vw",
-          // width: { xs: "20vw", sm: "40vw", md: "60vw", lg: "70vw", xl: "75vw" },
           height: "90vh",
-          minWidth: "600px",
+          minWidth: "50vw",
           borderRadius: "10px",
           m: "auto",
           bgcolor: "#fff",
@@ -123,50 +145,55 @@ const PhotoQuickView = () => {
           <Stack>
             <Stack display="flex" direction="row">
               <Button href="/" sx={{ m: 0 }}>
-                {/* <Avatar>{userInfo.user_image}</Avatar> */}
-                <Avatar>
-                  {/* <Image src={image} alt="Image" width={400} /> */}
-                </Avatar>
+                <Avatar alt="avatar" src={userAvatar}></Avatar>
               </Button>
               <Button href="/">
-                {/* <Typography variant="body1">{userInfo.user_name}</Typography> */}
-                <Typography variant="body1">username</Typography>
+                <Typography variant="body1">{userName}</Typography>
               </Button>
             </Stack>
           </Stack>
 
           {/* Collect, like, download button */}
-          <Stack display="flex" direction="row" justifyContent="space-around">
+          <Stack
+            display="flex"
+            direction="row"
+            justifyContent="space-around"
+            spacing={2}
+            sx={{ mr: 2 }}
+          >
             <Button
               variant="outlined"
               sx={{
-                mr: 2,
+                opacity: { xs: 0, sm: 0, md: 1 },
                 color: collected ? "orange" : "primary.main",
               }}
               onClick={addToCollection}
               startIcon={<AddToPhotosIcon />}
             >
               {collected
-                ? "Collected" + " " + `${collectNumber}`
-                : "Collect" + " " + `${collectNumber}`}
+                ? "Collected" + " " + `${userCollects}`
+                : "Collect" + " " + `${userCollects}`}
             </Button>
             <Button
               variant="outlined"
               sx={{
-                mr: 2,
+                opacity: { xs: 0, sm: 0, md: 1 },
                 color: liked ? "secondary.main" : "primary.main",
               }}
               startIcon={<FavoriteBorderIcon />}
               onClick={addToLiked}
             >
               {liked
-                ? "Unlike" + " " + `${likeNumber}`
-                : "Like" + " " + `${likeNumber}`}
+                ? "Unlike" + " " + `${userLikes}`
+                : "Like" + " " + `${userLikes}`}
             </Button>
             <Button
               // href="/users/download/:id/photo/:id"
               variant="contained"
-              sx={{ mr: 2, bgcolor: "secondary.main" }}
+              sx={{
+                opacity: { xs: 0, sm: 1 },
+                bgcolor: "secondary.main",
+              }}
               startIcon={<DownloadIcon />}
               onClick={downLoadImages}
             >
@@ -177,21 +204,18 @@ const PhotoQuickView = () => {
 
         {/* Post image */}
         <Box
-          // maxWidth="sm"
           sx={{
             m: "auto",
-            position: "relative",
             width: "60vw",
             height: "70vh",
           }}
         >
           <Image
-            src={image2}
             alt="image"
-            fill={true}
+            src={postPhoto}
+            width="60vw"
             style={{ objectFit: "contain" }}
           />
-          {/* <Image src={userInfo.photo} alt="Image" width={400} /> */}
         </Box>
       </Stack>
     </Stack>
