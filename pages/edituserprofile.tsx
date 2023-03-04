@@ -66,6 +66,21 @@ export default function EditUserProfile() {
     resolver: yupResolver(formSchema),
   });
 
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [avatar, setAvatar] = useState("");
+  //const jpgData = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD...";
+
+  useEffect(() => {
+    axiosRequest(`/api/editUser/me`, "GET").then((res) => {
+      console.log(res);
+      console.log(res.data.data.userData.avatar);
+      setLastName(res.data.data.userData.lastName);
+      setFirstName(res.data.data.userData.firstName);
+      setAvatar(res.data.data.userData.avatar);
+    });
+  });
+
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
@@ -132,9 +147,7 @@ export default function EditUserProfile() {
         {/*change avatar button*/}
         <Grid container spacing={10}>
           <Grid item xs={2}>
-            <Avatar sx={{ width: 130, height: 130 }}>
-              <AccountCircleIcon sx={{ fontSize: 125 }} />
-            </Avatar>
+            <Avatar src={avatar} sx={{ width: 130, height: 130 }}></Avatar>
           </Grid>
           <Grid
             item
@@ -185,7 +198,6 @@ export default function EditUserProfile() {
               <Typography variant="h6">First Name*</Typography>
               <FormTextField
                 name="firstName"
-                label="First Name"
                 id="firstName"
                 autoComplete="fistName"
               />
