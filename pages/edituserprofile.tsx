@@ -31,6 +31,7 @@ import { Schema, string, object, mixed } from "yup";
 import { useRouter } from "next/router";
 import axiosRequest from "../src/utils/axiosRequest";
 import { deepOrange, deepPurple } from "@mui/material/colors";
+import Image from "next/image";
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -43,7 +44,6 @@ interface IFormInput {
   instagram: string;
   youtube: string;
   tiktok: string;
-  picture: FileList;
 }
 // Define a schema for the form values
 const formSchema: Schema<IFormInput> = object({
@@ -56,7 +56,6 @@ const formSchema: Schema<IFormInput> = object({
   instagram: string().default(""),
   youtube: string().default(""),
   tiktok: string().default(""),
-  picture: mixed(),
 });
 
 // Define a component that renders the form
@@ -71,7 +70,7 @@ export default function EditUserProfile() {
   const [avatar, setAvatar] = useState("");
   //const jpgData = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD...";
 
-  useEffect(() => {
+  /*useEffect(() => {
     axiosRequest(`/api/editUser/me`, "GET").then((res) => {
       console.log(res);
       console.log(res.data.data.userData.avatar);
@@ -79,7 +78,7 @@ export default function EditUserProfile() {
       setFirstName(res.data.data.userData.firstName);
       setAvatar(res.data.data.userData.avatar);
     });
-  });
+  });*/
 
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
@@ -89,7 +88,7 @@ export default function EditUserProfile() {
         "PATCH",
         data
       );
-      console.log(data.picture[0]);
+
       console.log(response);
 
       if (response.status === 200) {
@@ -101,27 +100,24 @@ export default function EditUserProfile() {
     }
   };
 
-  const submitPic: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+  const handleFileUpload = async (event) => {
     try {
-      console.log(data.picture[0]);
-      const file = data.picture[0];
+      const file = event.target.files[0];
+      console.log(event.target.files[0]);
       const formData = new FormData();
       formData.append("file", file);
-
       const response = await axiosRequest(
         "/api/editUser/upload",
         "PATCH",
         formData
       );
-
-      console.log(response);
-
       if (response.status === 200) {
+        // Update the user's profile picture in the UI
+        //setUser(response.data.user);//
         router.push("/edituserprofile");
       }
     } catch (error) {
-      alert("Error occurred, unknown origin.");
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -149,38 +145,22 @@ export default function EditUserProfile() {
           <Grid item xs={2}>
             <Avatar src={avatar} sx={{ width: 130, height: 130 }}></Avatar>
           </Grid>
-          <Grid
-            item
-            xs={6}
-            component="form"
-            onSubmit={methods.handleSubmit(submitPic)}
-          >
-            <Stack direction="row" alignItems="center" spacing={2}>
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="label"
-                id="picture"
-              >
-                <input
-                  hidden
-                  accept="image/*"
-                  type="file"
-                  {...methods.register("picture")}
-                />
-                <PhotoCamera />
-              </IconButton>
-              <Button
-                type="submit"
-                size="medium"
-                variant="contained"
-                color="secondary"
-                sx={{ mt: 5, mb: 8 }}
-              >
-                Change Picture
-                <Link href="changepicture"></Link>
-              </Button>
-            </Stack>
+          <Grid item xs={10}>
+            <Button
+              size="medium"
+              variant="contained"
+              color="secondary"
+              sx={{ mt: 5, mb: 8 }}
+              component="label"
+            >
+              Change Picture
+              <input
+                hidden
+                type="file"
+                accept="image/*"
+                onChange={handleFileUpload}
+              />
+            </Button>
           </Grid>
         </Grid>
         <Box
@@ -198,6 +178,7 @@ export default function EditUserProfile() {
               <Typography variant="h6">First Name*</Typography>
               <FormTextField
                 name="firstName"
+                label="First Name"
                 id="firstName"
                 autoComplete="fistName"
               />
