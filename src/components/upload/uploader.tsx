@@ -2,7 +2,7 @@ import 'react-dropzone-uploader/dist/styles.css'
 import Dropzone, { IFileWithMeta, StatusValue } from 'react-dropzone-uploader';
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import {faImages} from "@fortawesome/free-solid-svg-icons";
 
 import axios, { AxiosRequestConfig, Method } from "axios";
 
@@ -15,11 +15,10 @@ export default function Uploader() {
 
   const handleChangeStatus = async (
     file: IFileWithMeta,
-    status: any,
-  ): Promise<void|{ meta: { [name: string]: any } }> => {
-    const { meta } = file;
-    console.log(status, meta);
-    setStatus(status);
+    status: any): Promise<void | { meta: { [name: string]: any } }> => {
+  const { meta } = file;
+  console.log(status, meta);
+  setStatus(status);
 
     if (status === "done") {
       try {
@@ -52,13 +51,13 @@ export default function Uploader() {
 
   const styles = {
     dropzone: {
-      width: 600, height: 300, border: '4px dashed gray', // set border style
+      width: 650, height: 300, border: '4px dashed grey', // set border style
       borderRadius: '10px', // set border radius
       padding: '20px',
       overflow: "hidden"
     },
     dropzoneActive: { borderColor: "green" },
-    inputLabel: { color: "grey" },
+    inputLabel: { color: "#424242" },
     submitButtonContainer: { display: "none" },
     input: {
       display: "none",
@@ -88,15 +87,15 @@ export default function Uploader() {
 
   const inputContentWithIcon = (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-    <FontAwesomeIcon icon={faUpload} style={{ marginBottom: "10px", transform: "scale(1.5)" }} />
-    <div style={{ fontSize: "20px", fontWeight: "bold", display: "flex", alignItems: "center" }}>
+    <FontAwesomeIcon icon={faImages} style={{ marginBottom: "10px", transform: "scale(3)"}} />
+    <div style={{  margin: "30px 0",  fontSize: "20px", fontWeight: "bold", display: "flex", alignItems: "center" }}>
       <span>Drop files here or click to upload</span>
     </div>
   </div>
   );
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }} >
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "35vh" }} >
     <Dropzone
       onChangeStatus={handleChangeStatus}
       maxFiles={1}
