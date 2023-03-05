@@ -65,20 +65,20 @@ export default function EditUserProfile() {
     resolver: yupResolver(formSchema),
   });
 
-  const [lastName, setLastName] = useState("");
-  const [firstName, setFirstName] = useState("");
+  const [LastName, setLastName] = useState("");
+  const [FirstName, setFirstName] = useState("");
   const [avatar, setAvatar] = useState("");
-  //const jpgData = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD...";
 
-  /*useEffect(() => {
+  useEffect(() => {
     axiosRequest(`/api/editUser/me`, "GET").then((res) => {
       console.log(res);
       console.log(res.data.data.userData.avatar);
       setLastName(res.data.data.userData.lastName);
       setFirstName(res.data.data.userData.firstName);
       setAvatar(res.data.data.userData.avatar);
+      //console.log(FirstName);
     });
-  });*/
+  });
 
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
@@ -178,9 +178,9 @@ export default function EditUserProfile() {
               <Typography variant="h6">First Name*</Typography>
               <FormTextField
                 name="firstName"
-                label="First Name"
+                label={FirstName}
                 id="firstName"
-                autoComplete="fistName"
+                autoComplete="firstName"
               />
             </Grid>
 
@@ -188,9 +188,9 @@ export default function EditUserProfile() {
               <Typography variant="h6">Last Name*</Typography>
               <FormTextField
                 name="lastName"
-                label="Last Name"
+                label={LastName}
                 id="lastName"
-                autoComplete="lastName"
+                autoComplete="LastName"
               />
             </Grid>
           </Grid>
@@ -213,8 +213,9 @@ export default function EditUserProfile() {
               color="secondary"
               sx={{ mt: 3, mb: 2 }}
             >
-              Reset Password
-              <Link href="resetpassword"></Link>
+              <Link href="reset-request" color="inherit" underline="none">
+                Reset Password
+              </Link>
             </Button>
           </Box>
 
