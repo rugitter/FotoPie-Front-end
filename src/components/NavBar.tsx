@@ -17,8 +17,8 @@ import UploadIcon from '@mui/icons-material/Upload';
 import LoginIcon from '@mui/icons-material/Login'
 import { useEffect } from "react";
 import Avatar from '@mui/material/Avatar';
-
-
+import axiosRequest from "../utils/axiosRequest";
+import { useRouter } from "next/router";
 
 interface NavbarProps {
   isFixed: boolean;
@@ -28,6 +28,13 @@ interface NavbarProps {
 export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [avatar, setAvatar] = useState("");
+  const [id, setId] = useState("");
+
+
+  const router = useRouter();
+  // const { id } = router.query;
+
 
   useEffect(() => {
 
@@ -35,8 +42,17 @@ export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
     const refreshToken = localStorage.getItem('refreshToken')
     if (accessToken !== null) {
       setIsLoggedIn(true)
+      axiosRequest(`/api/editUser/me`, "GET").then((res) => {
+        console.log(res);
+        // if (id !== res.data.id) return router.push("/404");
+        setAvatar(res.data.data.avatar);
+        console.log(avatar);
+        setId(res.data.data.id);
+      });
+
     } else {
       setIsLoggedIn(false)
+
     }
 
   }, [])
@@ -118,7 +134,9 @@ export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
         open={isMenuOpen}
         onClose={handleMenuClose}
       >
+        {/* router.push(`/profile/${id}/Gallery`); */}
         <MenuItem onClick={handleMenuClose}>My Gallery</MenuItem>
+        {/* router.push(`/profile/${id}/collection`); */}
         <MenuItem onClick={handleMenuClose}>My Collections</MenuItem>
         <MenuItem onClick={handleMenuClose}>Edit Profile</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
@@ -159,7 +177,7 @@ export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
       <MenuItem onClick={handleProfileMenuOpen}>
          <Avatar
             alt="Avatar"
-            src="/profile.png"
+            src={avatar}
             onClick={handleProfileMenuOpen}
             sx={{ width: 40, height: 40 }}
           />
@@ -266,7 +284,7 @@ export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
               {/* User Profile */}
               <Avatar
                 alt="Avatar"
-                src="/profile.png"
+                src={avatar}
                 onClick={handleProfileMenuOpen}
                 sx={{ width: 40, height: 40 }}
               />
