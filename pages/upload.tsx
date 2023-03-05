@@ -17,9 +17,9 @@ export default function MyDropzone() {
           name="description"
           content="How to upload files to S3 from your react app "
         />
-        
+     
       </Helmet>
-      <NavBar isfixed={false}  color='#000000'/>
+      <NavBar isFixed={false}  color='#000000'/> 
       <Submittable/>
       {/* <Uploader/> */}
 

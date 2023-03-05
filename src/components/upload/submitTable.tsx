@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Avatar from "@mui/material/Avatar";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import { AttachMoney } from "@mui/icons-material"
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,70 +7,155 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material";
 import FormHelperText from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm, SubmitHandler,FormState, FormProvider} from "react-hook-form";
 import Copyright from "../../components/Copyright"
 import FormTextField from "../textField/formTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Schema, string, object } from "yup";
 import { useRouter } from "next/router";
 import InputAdornment from '@mui/material/InputAdornment'
-
-
-
-import Uploader from "./uploader";
-
-
-
-
+// import Uploader from "./uploader";
+import * as yup from 'yup';
+import axiosRequest from "../../utils/axiosRequest"
 // Define a type with the shape of the form values
-interface IFormInput {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
+import 'react-dropzone-uploader/dist/styles.css'
+import Dropzone, { IFileWithMeta, StatusValue } from 'react-dropzone-uploader';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faImages} from "@fortawesome/free-solid-svg-icons";
+import axios, { AxiosRequestConfig, Method } from "axios";
 
-// Define a schema for the form values
-const formSchema: Schema<IFormInput> = object({
-  firstName: string().max(15).required(),
-  lastName: string().max(15).required(),
-  email: string().email().required(),
-  password: string().min(2).max(20).required(),
-});
+
+
 
 // Define a component that renders the form
 export default function Submittable() {
 
+  const [uploadfileName, setUploadfileName] = useState({})
+  const [status, setStatus] = useState("");
+  const handleChangeStatus = async(file: IFileWithMeta, status: StatusValue): Promise<void | { meta: { [name: string]: any; }; }>=> {
+ 
+    const { meta } = file;
+    console.log(status, meta);
+    setStatus(status);
+  
+    const formData = new FormData();
+    formData.append("file", file.file);
+  
+    if (status === "done") {
+      
+      try {
+        const response = await axios.patch("http://localhost:9090/api/posts/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log(response.data.filename, response.data.original_path, response.data.compression_path);
+        setUploadfileName(response.data.filename);
+        // return { meta: response.data.filename};
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  
+    // return an empty object if the upload is not done
+    return { meta: {} };
+  };
+
+  const getUploadParams = () => {
+    return { url: 'http://localhost:3000/upload' }
+  }
+  
+  interface IFormInput {
+    description: string;
+    tag: string;
+    price: number;
+  }
+  
+  const formSchema = yup.object().shape({
+    description: yup.string().max(50),
+    tag: yup.string().max(15),
+    price: yup.number(),
+  });
   const router = useRouter();
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
   });
-
+    
     const [tagValue, setTagValue] = useState("");
     const [priceValue, setPriceValue] = useState("");
     const [desValue, setDesValue] = useState("");
   // Define a submit handler for the form
-//   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-//     try {
-//       const response = await axiosRequest("/api/user/create", "POST", data);
-//       console.log(response);
 
-//       if (response.status === 200) {
-//         router.push("verifyemail");
-//       }
+  const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+    try {
+    const formData = new FormData();
+    // formData.append("meta", )
+    formData.append("username", data.description);
+    formData.append("price", data.price.toString());
+    formData.append("password", data.tag);
+    const response = await axiosRequest("/api/user/create", "POST", data);
+    console.log(response);
+
+      if (response.status === 200) {
+        router.push("verifyemail");
+      }
       
-//     } catch (error) {
-//       alert('Email is already been used,please go to the login page.')
-//       console.log(error);
-//     }
-//   };
+    } catch (error) {
+    
+    }
+  };
+
+  const styles = {
+    dropzone: {
+      width: 650, height: 300, border: '4px dashed grey', // set border style
+      borderRadius: '10px', // set border radius
+      padding: '20px',
+      overflow: "hidden"
+    },
+    dropzoneActive: { borderColor: "green" },
+    inputLabel: { color: "#424242" },
+    submitButtonContainer: { display: "none" },
+    input: {
+      display: "none",
+    
+    },
+    previewImage: {
+      maxWidth: "100%",
+      maxHeight: "100%",
+      display: "block",
+      margin: "0 auto"
+    },
+    previewContainer: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+      height: "100%",
+      borderBottom: "1px solid #ccc",
+      overflow: "hidden"
+    },
+    progressBar: {
+      backgroundColor: "black",
+      color:"black"
+    },
+    preview: {
+      width: "100%",
+      height: "100%",
+      overflow: "hidden"
+    }
+  }
+
+  const inputContentWithIcon = (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <FontAwesomeIcon icon={faImages} style={{ marginBottom: "10px", transform: "scale(3)"}} />
+    <div style={{  margin: "30px 0",  fontSize: "20px", fontWeight: "bold", display: "flex", alignItems: "center" }}>
+      <span>Drop files here or click to upload</span>
+    </div>
+  </div>
+);
+
     
 const inputProps = {
   startAdornment: (
@@ -82,7 +166,8 @@ const inputProps = {
         </InputAdornment>
     ),
     onChange: (e:any) =>setPriceValue(e.target.value),
-};
+  };
+  
 
   return (
       <Container component="main" maxWidth="xs">
@@ -98,15 +183,27 @@ const inputProps = {
           <FormProvider {...methods}>
             <Box component="form" 
                     
-            //   onSubmit={methods.handleSubmit(onSubmit)}
+            onSubmit={methods.handleSubmit(onSubmit)}
                       sx={{  mt: 5,
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "flex-end", }}       
-                  >
-                      <Uploader />
-                      
-                
+              >
+            
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "35vh" }} >
+              <Dropzone
+                    onChangeStatus={handleChangeStatus}
+                    maxFiles={1}
+                    multiple={false}
+                    canCancel={false}
+                    inputContent={inputContentWithIcon}
+                    // inputContainerStyle={{ border: "none" }}  
+                    getUploadParams={getUploadParams} 
+                    accept="image/*"
+                    styles={styles}
+               />
+              </div>
+           
                 <FormTextField
             
                   name="description"
