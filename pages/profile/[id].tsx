@@ -9,6 +9,7 @@ export default function ProfilePage() {
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [isGallery, setIsGallery] = useState(true);
 
   const router = useRouter();
   const { id } = router.query;
@@ -31,9 +32,12 @@ export default function ProfilePage() {
       alignItems="center"
       sx={{ mt: 10, width: "100%" }}
     >
+      {/* avatar */}
       <Grid item>
         <Avatar alt="avatar" src={avatar} sx={{ width: 180, height: 180 }} />
       </Grid>
+
+      {/* name */}
       <Grid
         container
         direction="row"
@@ -49,12 +53,33 @@ export default function ProfilePage() {
         </Grid>
       </Grid>
 
-      <Grid container sx={{ mt: 5, ml: 10 }} spacing={5}>
+      {/* Gallery & Collection button*/}
+      <Grid container justifyContent="center" sx={{ mt: 5 }} spacing={5}>
         <Grid item>
-          <Button variant="contained" sx={{borderRadius:10 }}>Gallery</Button>
+          <Button
+            variant={isGallery ? "contained" : "outlined"}
+            sx={{ borderRadius: 10, p: 1.5, pl: 3, pr: 3 }}
+            size="large"
+            onClick={() => {
+              // router.push(`/profile/${id}/gallery`);
+              setIsGallery(true);
+            }}
+          >
+            <Typography>Gallery</Typography>
+          </Button>
         </Grid>
         <Grid item>
-          <Button variant="contained">Gallery</Button>
+          <Button
+            variant={!isGallery ? "contained" : "outlined"}
+            sx={{ borderRadius: 10, p: 1.5, pl: 3, pr: 3 }}
+            size="large"
+            onClick={() => {
+              // router.push(`/profile/${id}/collection`);
+              setIsGallery(false);
+            }}
+          >
+            <Typography>Collection</Typography>
+          </Button>
         </Grid>
       </Grid>
     </Grid>
