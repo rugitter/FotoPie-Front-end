@@ -71,8 +71,8 @@ export default function EditUserProfile() {
 
   useEffect(() => {
     axiosRequest(`/api/editUser/me`, "GET").then((res) => {
-      console.log(res);
-      console.log(res.data.data.userData.avatar);
+      //console.log(res);
+      //console.log(res.data.data.userData.avatar);
       setLastName(res.data.data.userData.lastName);
       setFirstName(res.data.data.userData.firstName);
       setAvatar(res.data.data.userData.avatar);
