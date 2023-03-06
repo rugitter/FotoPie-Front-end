@@ -34,8 +34,7 @@ const PostList = () => {
     axios
       .get(`https://api.pexels.com/v1/curated?page=${page}&per_page=${limit}`, {
         headers: {
-          Authorization:
-            "7icQv56YuNGI5ogzpM0J4XpKM76IkQplRbz3ZRvTHcqOkGQulZCXoUhm",
+          Authorization: process.env.PEXELS_KEY,
         },
       })
       .then((res) => {
