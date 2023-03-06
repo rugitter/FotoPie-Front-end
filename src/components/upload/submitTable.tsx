@@ -32,7 +32,9 @@ import axios, { AxiosRequestConfig, Method } from "axios";
 // Define a component that renders the form
 export default function Submittable() {
 
-  const [uploadfileName, setUploadfileName] = useState({})
+  const [filename, setUploadfileName] = useState({})
+  const [OrginalFilePath, setOrginalFilePath] = useState({})
+  const [CompressFilePath, setCompressFilePath] = useState({})
   const [status, setStatus] = useState("");
   const handleChangeStatus = async(file: IFileWithMeta, status: StatusValue): Promise<void | { meta: { [name: string]: any; }; }>=> {
  
@@ -53,6 +55,8 @@ export default function Submittable() {
         });
         console.log(response.data.filename, response.data.original_path, response.data.compression_path);
         setUploadfileName(response.data.filename);
+        setOrginalFilePath(response.data.original_path)
+        setCompressFilePath(response.data.compression_path)
         // return { meta: response.data.filename};
       } catch (error) {
         console.error(error);
@@ -90,12 +94,15 @@ export default function Submittable() {
 
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
-    const formData = new FormData();
-    // formData.append("meta", )
-    formData.append("username", data.description);
-    formData.append("price", data.price.toString());
-    formData.append("password", data.tag);
-    const response = await axiosRequest("/api/user/create", "POST", data);
+    console.log(filename);
+   
+
+      const response = await axiosRequest("/api/posts/sent", "POST", {
+        ...data,
+        filename: filename,
+        orginalFilePath: OrginalFilePath,
+        compressFilePath:CompressFilePath
+      });
     console.log(response);
 
       if (response.status === 200) {
@@ -103,6 +110,7 @@ export default function Submittable() {
       }
       
     } catch (error) {
+      console.log(error)
     
     }
   };
@@ -228,7 +236,7 @@ const inputProps = {
                           InputProps={{
                             startAdornment: (
                              <InputAdornment position="start">
-                                {tagValue ? null : "Enter tag"}
+                                {tagValue ? null : "Enter Tag"}
                               </InputAdornment>
                             ),
                             onChange: (e:any) => setTagValue(e.target.value),
