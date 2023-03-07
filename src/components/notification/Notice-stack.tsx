@@ -62,6 +62,17 @@ export default function BasicStack() {
     //<ul> {lists.map(list)=>{<li>}}
     <Box sx={{ width: '100%', 
     marginTop:2, }}>
+
+    <IconButton
+            size="small"
+            edge="end"
+            aria-label="close"
+            onClick={onClickCloseButton}
+            sx={{position:'relative', left:"80%", top:"5%", color:"purple" }}
+            style={{display:deleteIcon ? "true" : "none"}}
+          >
+            <MarkChatReadIcon />
+      </IconButton>
       <Stack spacing={5}
       sx={{ 
       display: 'flex', 
@@ -94,7 +105,7 @@ export default function BasicStack() {
             </Typography>
 
             <Box>
-            <Image alt="image" src={getPost[0]} size="10%"/>
+            <Image alt="image" src={getPost[0]} size="10% 10%"/>
             </Box>
             
             {/* <IconButton
@@ -148,7 +159,7 @@ export default function BasicStack() {
             </Typography>
 
             <Box>
-            <Image alt="image" src={getPost[0]} width="10%"/>
+            <Image alt="image" src={getPost[0]} size="10%"/>
             </Box>
         
         </Item>
@@ -189,7 +200,7 @@ export default function BasicStack() {
             </Typography>
 
             <Box>
-            <Image alt="image" src={getPost[0]} width="10%"/>
+            <Image alt="image" src={getPost[0]} size="10%"/>
             </Box>
         
         </Item>
@@ -228,7 +239,7 @@ export default function BasicStack() {
             </Typography>
 
             <Box>
-            <Image alt="image" src={getPost[0]} width="10%"/>
+            <Image alt="image" src={getPost[0]} size="10%"/>
             </Box>
         
         </Item>
@@ -267,24 +278,11 @@ export default function BasicStack() {
             </Typography>
 
             <Box>
-            <Image alt="image" src={getPost[0]} width="10%"/>
+            <Image alt="image" src={getPost[0]} size="10%"/>
             </Box>
         
         </Item>
       </Stack>
-
-
-      <IconButton
-            size="small"
-            edge="end"
-            
-            aria-label="close"
-            onClick={onClickCloseButton}
-            sx={{position:'absolute', left:"30%", top:"5%", color:"purple" }}
-            style={{display:deleteIcon ? "true" : "none"}}
-          >
-            <MarkChatReadIcon />
-            </IconButton>
     </Box>
   );
 }
