@@ -34,7 +34,7 @@ export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-
+  // api/editProfile/me => res: avatar => setAvatar => avatar => src={avatar}
     const accessToken = localStorage.getItem('accessToken')
     const refreshToken = localStorage.getItem('refreshToken')
     if (accessToken !== null) {
@@ -122,6 +122,7 @@ export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
         open={isMenuOpen}
         onClose={handleMenuClose}
       >
+         {/* router.push(`profile/${id}`) */}
         <MenuItem onClick={handleMenuClose}>My Gallery</MenuItem>
         <MenuItem onClick={handleMenuClose}>My Collections</MenuItem>
         <MenuItem onClick={handleMenuClose}>Edit Profile</MenuItem>
