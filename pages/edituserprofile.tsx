@@ -71,14 +71,11 @@ export default function EditUserProfile() {
 
   useEffect(() => {
     axiosRequest(`/api/editUser/me`, "GET").then((res) => {
-      //console.log(res);
-      //console.log(res.data.data.userData.avatar);
-      setLastName(res.data.data.userData.lastName);
-      setFirstName(res.data.data.userData.firstName);
-      setAvatar(res.data.data.userData.avatar);
-      //console.log(FirstName);
+      setLastName(res.data.data.lastName);
+      setFirstName(res.data.data.firstName);
+      setAvatar(res.data.data.avatar);
     });
-  });
+  }, [avatar]);
 
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
@@ -112,9 +109,7 @@ export default function EditUserProfile() {
         formData
       );
       if (response.status === 200) {
-        // Update the user's profile picture in the UI
-        //setUser(response.data.user);//
-        router.push("/edituserprofile");
+        setAvatar(response.data.data.avatar);
       }
     } catch (error) {
       console.error(error);
@@ -374,7 +369,6 @@ export default function EditUserProfile() {
                 sx={{ mt: 3, mb: 2 }}
               >
                 Save Profile
-                <Link href="saveprofileinfo"></Link>
               </Button>
             </Grid>
           </Box>
