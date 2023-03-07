@@ -6,7 +6,7 @@ name: Node.js CI
 env:
   # Setting an environment variable with the value of a configuration variable
   BACKEND_API: ${{ vars.BACKEND_API }}
-  BACKEND_PORT: ${{ var.BACKEND_PORT }}
+  BACKEND_PORT: ${{ vars.BACKEND_PORT }}
   
 on:
   push:
