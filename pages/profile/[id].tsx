@@ -9,11 +9,13 @@ import NavBar from "../../src/components/NavBar";
 export default function ProfilePage() {
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const [avatarPath, setAvatarPath] = useState("");
   const [isGallery, setIsGallery] = useState(true);
 
   const router = useRouter();
   const { id } = router.query;
+
+  // const id = params[0];
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -22,9 +24,17 @@ export default function ProfilePage() {
       if (id !== res.data.id) return router.push("/404");
       setLastName(res.data.lastName);
       setFirstName(res.data.firstName);
-      setAvatar(res.data.avatar);
+      setAvatarPath(res.data.avatarPath);
     });
   }, [id]);
+
+  // if (params[1] === "gallery") {
+  //   return <h1>gallery</h1>;
+  // }
+
+  // if (params[2] === "collection") {
+  //   return <h1>collection</h1>;
+  // }
 
   return (
     <>
@@ -37,7 +47,11 @@ export default function ProfilePage() {
       >
         {/* avatar */}
         <Grid item>
-          <Avatar alt="avatar" src={avatar} sx={{ width: 180, height: 180 }} />
+          <Avatar
+            alt="avatar"
+            src={avatarPath}
+            sx={{ width: 180, height: 180 }}
+          />
         </Grid>
 
         {/* name */}
