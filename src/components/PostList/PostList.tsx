@@ -7,40 +7,38 @@ import Loader from "../Loader";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import axiosRequest from "../../utils/axiosRequest";
 
 interface ImageData {
   //path: string;
-  id: number;
-  src: {
-    medium: string;
-  };
+  _id: string;
+  filename: string;
+  compressFilePath: string;
 }
 
 const PostList = () => {
-  // const [posts, setPost] = useState<ImageData[]>([]);
-  const [images, setImages] = useState<ImageData[]>([]);
+  const [posts, setPost] = useState<ImageData[]>([]);
   const [page, setPage] = useState(1);
+  const [loaderHandler, setLoaderHandler] = useState<ImageData[]>([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get<ImageData[]>(
-  //       `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/posts?page=${page}&limit=${limit}`
-  //     )
-  //     .then((res) => setPost([...posts, ...res.data]));
-  // }, []);
+  const [Error, setError] = useState(null);
+
   let limit = 10;
 
-  const fetchImages = () => {
-    axios
-      .get(`https://api.pexels.com/v1/curated?page=${page}&per_page=${limit}`, {
-        headers: {
-          Authorization: process.env.PEXELS_KEY,
-        },
-      })
-      .then((res) => {
-        setImages([...images, ...res.data.photos]);
+  const fetchImages = async () => {
+    try {
+      const res = await axiosRequest(
+        `/api/posts?page=${page}&limit=${limit}`,
+        "GET"
+      );
+      if (res.status === 200) {
+        setPost([...posts, ...res.data]);
+        setLoaderHandler([...res.data]);
         setPage(page + 1);
-      });
+      }
+    } catch (error: any) {
+      setError(error.message);
+    }
   };
 
   useEffect(() => {
@@ -52,17 +50,24 @@ const PostList = () => {
       {/* {posts.map((post, index) => {
         <Post url={post.path} key={index} />;
       })} */}
+      <p>{Error}</p>
       <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
         <InfiniteScroll
-          dataLength={images.length}
+          dataLength={posts.length}
           next={fetchImages}
           hasMore={true}
-          loader={<Loader />}
+          loader={
+            loaderHandler.length === 0 ? <p>No more images</p> : <Loader />
+          }
         >
-          <ImageList variant="masonry" cols={3} gap={8}>
-            {images.map((image) => (
-              <ImageListItem key={image.id}>
-                <Post url={image.src.medium} />
+          <ImageList
+            sx={{ columnCount: { sm: `2 !important`, md: `3 !important` } }}
+            variant="masonry"
+            gap={8}
+          >
+            {posts.map((post) => (
+              <ImageListItem key={post._id}>
+                <Post url={post.compressFilePath} filename={post.filename} />
               </ImageListItem>
             ))}
           </ImageList>
