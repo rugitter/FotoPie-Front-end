@@ -44,8 +44,6 @@ export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
       setIsLoggedIn(true)
       axiosRequest(`/api/editUser/me`, "GET").then((res) => {
         console.log(res);
-        console.log(res.data.avatarPath);
-        // if (id !== res.data.id) return router.push("/404");
         setAvatar(res.data.avatarPath);
         setId(res.data.id);
       });
