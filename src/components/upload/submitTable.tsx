@@ -67,9 +67,9 @@ export default function Submittable() {
     return { meta: {} };
   };
 
-  const getUploadParams = () => {
-    return { url: 'http://localhost:3000/upload' }
-  }
+  // const getUploadParams = () => {
+  //   return { url: 'http://localhost:3000/upload' }
+  // }
   
   interface IFormInput {
     description: string;
@@ -206,7 +206,7 @@ const inputProps = {
                     canCancel={false}
                     inputContent={inputContentWithIcon}
                     // inputContainerStyle={{ border: "none" }}  
-                    getUploadParams={getUploadParams} 
+                    // getUploadParams={getUploadParams} 
                     accept="image/*"
                     styles={styles}
                />

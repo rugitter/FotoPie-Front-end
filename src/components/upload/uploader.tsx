@@ -6,7 +6,6 @@ import {faImages} from "@fortawesome/free-solid-svg-icons";
 import axios, { AxiosRequestConfig, Method } from "axios";
 
 
-
 export default function Uploader() {
   const [status, setStatus] = useState("");
 
@@ -37,10 +36,10 @@ export default function Uploader() {
 
   };
 
-  const getUploadParams = () => {
-    return { url: 'http://localhost:3000/upload' }
-  }
-  
+  // const getUploadParams = () => {
+  //   return { url: 'http://localhost:3000/upload' }
+  // };
+
   const styles = {
     dropzone: {
     width: 650, height: 300, border: '4px dashed grey', // set border style
@@ -79,7 +78,7 @@ export default function Uploader() {
       height: "100%",
       overflow: "hidden"
     }
-  }
+  };
 
   const inputContentWithIcon = (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -99,10 +98,10 @@ export default function Uploader() {
         canCancel={false}
         inputContent={inputContentWithIcon}
         // inputContainerStyle={{ border: "none" }}  
-        getUploadParams={getUploadParams} 
+        // getUploadParams={getUploadParams} 
         accept="image/*"
         styles={styles}
       />
-       </div>
+    </div>
   );
 }
