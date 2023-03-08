@@ -6,14 +6,15 @@ import { Container } from "@mui/system";
 import BasicStack from "../../src/components/notification/Notice-stack";
 import ButtonAppBar from "../../src/components/TopBar-notification";
 import Navbar from "../../src/components/NavBar";
+import { Box } from "@mui/material";
 
 export default function notification(){
 
     return( 
-        <Container>
+        <div>
             <Navbar isFixed={false} color="#000000" />
             <BasicStack />
-        </Container>
+        </div>
         
     )
 }
