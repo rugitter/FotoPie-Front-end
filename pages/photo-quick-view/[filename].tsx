@@ -23,7 +23,6 @@ const PhotoQuickView = () => {
 
   const [collected, setCollected] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const router = useRouter();
   const { filename } = router.query;
@@ -52,12 +51,6 @@ const PhotoQuickView = () => {
     fetchData();
   }, [router.isReady, filename]);
 
-  //check if view user is logged in
-  const checkLogin = () => {
-    const accessToken = window.localStorage.getItem("accessToken");
-    accessToken !== null ? setIsLoggedIn(true) : setIsLoggedIn(false);
-  };
-
   //click close button to redirect back to home page
   const onClickCloseButton = () => {
     router.push("/");
@@ -65,49 +58,34 @@ const PhotoQuickView = () => {
 
   //Toggle collect button and add/delete collect number
   const addToCollection = async () => {
-    checkLogin();
-    if (isLoggedIn === false) return router.push("/login");
-    if (isLoggedIn === true) {
+    //click collect button to update number
+    try {
+      const response = await axiosRequest(`/api/collect/${filename}`, "POST", {
+        filename: `${filename}`,
+      });
+      const data = response.data;
+      setUserCollects(data);
       setCollected((collected) => !collected);
-      //click collect button to update number
-      try {
-        const response = await axiosRequest(
-          `/api/collect/${filename}`,
-          "POST",
-          {
-            filename: `${filename}`,
-          }
-        );
-        if (response.status === 401) {
-          router.push("/login");
-        }
-        const data = response.data || response;
-        setUserCollects(data);
-      } catch (error: any) {
-        return error.message;
-      }
+    } catch (error: any) {
+      router.push("/login");
     }
   };
 
   //Toggle like button and add/delete like number
   const addToLiked = async () => {
-    checkLogin();
-    if (isLoggedIn === false) return router.push("/login");
-    if (isLoggedIn === true) {
-      setLiked((liked) => !liked);
-      //click like button to update number
-      try {
-        const response = await axiosRequest(`/api/like/${filename}`, "POST", {
-          filename: `${filename}`,
-        });
-        if (response.status === 401) {
-          router.push("/login");
-        }
-        const data = response.data || response;
-        setUserLikes(data);
-      } catch (error: any) {
-        return error.message;
+    //click like button to update number
+    try {
+      const response = await axiosRequest(`/api/like/${filename}`, "POST", {
+        filename: `${filename}`,
+      });
+      if (response.status === 401) {
+        router.push("/login");
       }
+      const data = response.data;
+      setUserLikes(data);
+      setLiked((liked) => !liked);
+    } catch (error: any) {
+      router.push("/login");
     }
   };
 
