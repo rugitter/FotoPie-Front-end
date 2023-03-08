@@ -5,6 +5,8 @@ import axiosRequest from "../../src/utils/axiosRequest";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import NavBar from "../../src/components/NavBar";
+import Gallery from "../../src/components/profile/gallery";
+import Collection from "../../src/components/profile/collection";
 
 export default function ProfilePage() {
   const [lastName, setLastName] = useState("");
@@ -98,6 +100,14 @@ export default function ProfilePage() {
               <Typography>Collection</Typography>
             </Button>
           </Grid>
+        </Grid>
+
+        <Grid>
+          {isGallery ? (
+            <Gallery id={id as string} />
+          ) : (
+            <Collection id={id as string} />
+          )}
         </Grid>
       </Grid>
     </>
