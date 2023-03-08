@@ -44,10 +44,10 @@ export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
       setIsLoggedIn(true)
       axiosRequest(`/api/editUser/me`, "GET").then((res) => {
         console.log(res);
+        console.log(res.data.avatarPath);
         // if (id !== res.data.id) return router.push("/404");
-        setAvatar(res.data.data.avatar);
-        console.log(avatar);
-        setId(res.data.data.id);
+        setAvatar(res.data.avatarPath);
+        setId(res.data.id);
       });
 
     } else {
@@ -224,7 +224,7 @@ export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
           <Link
             href="/"
           >
-            <Image src="/logo.jpg" 
+            <Image src="/logo3.png" 
               style={{ borderRadius:10}}
               alt="Fotopie_Logo"
               width={45}
