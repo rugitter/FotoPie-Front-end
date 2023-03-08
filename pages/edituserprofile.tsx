@@ -71,9 +71,9 @@ export default function EditUserProfile() {
 
   useEffect(() => {
     axiosRequest(`/api/editUser/me`, "GET").then((res) => {
-      setLastName(res.data.data.lastName);
-      setFirstName(res.data.data.firstName);
-      setAvatar(res.data.data.avatar);
+      setLastName(res.data.lastName);
+      setFirstName(res.data.firstName);
+      setAvatar(res.data.avatarPath);
     });
   }, [avatar]);
 
@@ -85,8 +85,6 @@ export default function EditUserProfile() {
         "PATCH",
         data
       );
-
-      console.log(response);
 
       if (response.status === 200) {
         router.push("/edituserprofile");
@@ -100,7 +98,6 @@ export default function EditUserProfile() {
   const handleFileUpload = async (event) => {
     try {
       const file = event.target.files[0];
-      console.log(event.target.files[0]);
       const formData = new FormData();
       formData.append("file", file);
       const response = await axiosRequest(
@@ -109,7 +106,7 @@ export default function EditUserProfile() {
         formData
       );
       if (response.status === 200) {
-        setAvatar(response.data.data.avatar);
+        setAvatar(response.data.avatarPath);
       }
     } catch (error) {
       console.error(error);
