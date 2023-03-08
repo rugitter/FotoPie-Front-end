@@ -1,89 +1,79 @@
-import * as React from 'react';
+import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button"
+import Button from "@mui/material/Button";
 import Link from "../utils/Link";
-import Image from "next/image"
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Badge from '@mui/material/Badge';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { useState } from 'react'
-import MenuIcon from '@mui/icons-material/Menu';
-import UploadIcon from '@mui/icons-material/Upload';
-import LoginIcon from '@mui/icons-material/Login'
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Badge from "@mui/material/Badge";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { useState } from "react";
+import MenuIcon from "@mui/icons-material/Menu";
+import UploadIcon from "@mui/icons-material/Upload";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useEffect } from "react";
-import Avatar from '@mui/material/Avatar';
-import axiosRequest from "../utils/axiosRequest";
-import { useRouter } from "next/router";
+import Avatar from "@mui/material/Avatar";
+import axiosRequest from "../utils/axiosRequest"
 
 interface NavbarProps {
   isFixed: boolean;
   color?: string;
 }
 
-export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
-
+export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [avatar, setAvatar] = useState("");
+  const [avatarPath, setAvatarPath] = useState("");
   const [id, setId] = useState("");
 
 
-  const router = useRouter();
-  // const { id } = router.query;
-
-
   useEffect(() => {
-
-    const accessToken = localStorage.getItem('accessToken')
-    const refreshToken = localStorage.getItem('refreshToken')
+    // api/editProfile/me => res: avatar => setAvatar => avatar => src={avatar}
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
     if (accessToken !== null) {
       setIsLoggedIn(true)
       axiosRequest(`/api/editUser/me`, "GET").then((res) => {
         console.log(res);
-        setAvatar(res.data.avatarPath);
+        setAvatarPath(res.data.avatarPath);
         setId(res.data.id);
       });
 
+      setIsLoggedIn(true);
     } else {
-      setIsLoggedIn(false)
-
+      setIsLoggedIn(false);
     }
-
-  }, [])
-
+  }, []);
 
   const removeToken = () => {
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('refreshToken')
-    setIsLoggedIn(false)
-  }
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    setIsLoggedIn(false);
+  };
 
+  const [fix, setFix] = useState(false);
 
-  const [ fix, setFix ] = useState(false);
-
-  const setFixed =() => {
+  const setFixed = () => {
     if (window.scrollY >= 410) {
-      setFix(true)
+      setFix(true);
     } else {
-      setFix(false)
+      setFix(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (isFixed && typeof window !== "undefined") {
-      window.addEventListener("scroll", setFixed)
+      window.addEventListener("scroll", setFixed);
     }
     return () => {
       if (isFixed && typeof window !== "undefined") {
-        window.removeEventListener("scroll", setFixed)
+        window.removeEventListener("scroll", setFixed);
       }
-    }
-  }, [isFixed])
-
+    };
+  }, [isFixed]);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -109,63 +99,57 @@ export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
 
   const handleLogout = () => {
     removeToken();
     handleMenuClose();
   };
-    const renderMenu = (
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      {/* router.push(`profile/${id}`) */}
+      <MenuItem onClick={handleMenuClose}>My Gallery</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My Collections</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Edit Profile</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+    </Menu>
+  );
 
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        id={menuId}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        open={isMenuOpen}
-        onClose={handleMenuClose}
-      >
-        {/* router.push(`/profile/${id}/Gallery`); */}
-        <MenuItem onClick={handleMenuClose}>My Gallery</MenuItem>
-        {/* router.push(`/profile/${id}/collection`); */}
-        <MenuItem onClick={handleMenuClose}>My Collections</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Edit Profile</MenuItem>
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-
-      </Menu>
-    );
-
-
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+    {isLoggedIn ? (
+      <Box>
       <MenuItem>
-        <IconButton
-          size="large"
-          color="inherit"
-        >
+        <IconButton size="large" color="inherit">
           <Badge badgeContent={1} color="error">
             <NotificationsIcon />
           </Badge>
@@ -173,146 +157,136 @@ export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
         <p>Notifications</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
-         <Avatar
-            alt="Avatar"
-            src={avatar}
-            onClick={handleProfileMenuOpen}
-            sx={{ width: 40, height: 40 }}
-          />
-         
+        <Avatar
+          alt="Avatar"
+          src={avatarPath}
+          onClick={handleProfileMenuOpen}
+          sx={{ width: 40, height: 40, marginRight: 1 }}
+        />
         <p>Profile</p>
       </MenuItem>
       <MenuItem>
-        <IconButton
-          size="large"
-          color="inherit"
-        > 
+        <IconButton size="large" color="inherit">
           <UploadIcon />
         </IconButton>
         <p>Upload</p>
       </MenuItem>
+      <MenuItem onClick={handleLogout}>
+        <IconButton size="large" color="inherit" >
+          <LogoutOutlinedIcon />
+        </IconButton>
+        <p>Log Out</p>
+      </MenuItem>
+      </Box>
+       ) : (
       <MenuItem>
-        <IconButton
-          size="large"
-          color="inherit"
-        > 
+        <IconButton size="large" color="inherit">
           <LoginIcon />
         </IconButton>
-        <p>Log In</p>
+        <Link href="login" style={{ textDecoration: 'none' }}>Log In</Link>
       </MenuItem>
+       )}
     </Menu>
   );
 
-
-
   return (
-    <Box 
-      sx={{ flexGrow: 1}}
-    >
-      <AppBar 
-        color='transparent'
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar
+        color="transparent"
         elevation={0}
         sx={{
-          position: fix? "fixed" : "relative",
-          bgcolor: fix? '#FFFFFF' : '',
+          position: fix ? "fixed" : "relative",
+          bgcolor: fix ? "#FFFFFF" : "",
         }}
-      >       
-        <Toolbar>
+      >
+        <Toolbar 
+          sx={{ 
+            marginTop: 1, 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between'
+            }}
+        >
           {/* Logo  */}
-          <Link
-            href="/"
-          >
-            <Image src="/logo3.png" 
-              style={{ borderRadius:10}}
+          <Link href="/">
+            <img
+              src="/logo3.png"
+              style={{ borderRadius: 10 }}
               alt="Fotopie_Logo"
               width={45}
               height={45}
             />
           </Link>
-     
-         
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml:2}}>
-            
+
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 2 }}>
             <Link
               variant="h6"
               underline="none"
               href="/"
-              sx={{ fontSize: 24, fontFamily: 'inherit',
-                    color: fix? '#000000' : color,
-                  }}
+              sx={{
+                fontSize: 24,
+                fontFamily: "inherit",
+                color: fix ? "#000000" : color,
+              }}
             >
-              {"FotoPie"}         
+              {"FotoPie"}
             </Link>
-          
           </Typography>
 
-
-        <Box sx={{ flexGrow: 1 }} >
-         </Box>
-          <Box 
+          <Box sx={{ flexGrow: 1 }}></Box>
+          <Box
             sx={{
-              display: { xs: 'none', md: 'flex'},
+              display: { xs: "none", md: "flex" },
               flexGrow: 0.05,
-              justifyContent: 'space-between'
-              
+              justifyContent: "space-between",
             }}
           >
-
-
-
             {isLoggedIn ? (
-            <Box
-            sx={{
-              display: { xs: 'none', md: 'flex'},
-              flexGrow: 1,
-              justifyContent: 'space-between'
-              
-            }}
-            >
-            {/* notifications */}
-              <IconButton
-                  size="large"
-                  color="inherit"
-                >
+              <Box
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                  flexGrow: 1,
+                  justifyContent: "space-between",
+                }}
+              >
+                {/* notifications */}
+                <IconButton size="large" color="inherit">
                   <Badge badgeContent={1} color="error">
                     <NotificationsIcon />
                   </Badge>
-              </IconButton>
+                </IconButton>
 
-              {/* User Profile */}
-              <Avatar
-                alt="Avatar"
-                src={avatar}
-                onClick={handleProfileMenuOpen}
-                sx={{ width: 40, height: 40 }}
-              />
+                {/* User Profile */}
+                <Avatar
+                  alt="Avatar"
+                  src={avatarPath}
+                  onClick={handleProfileMenuOpen}
+                  sx={{ width: 40, height: 40 }}
+                />
 
-              <Button 
-              variant="contained" 
-              href='upload'
-              sx={{
-                bgcolor: fix ? "primary.main" : "gray",
-              }}
+                <Button
+                  variant="contained"
+                  href="upload"
+                  sx={{
+                    bgcolor: fix ? "primary.main" : "gray",
+                  }}
+                >
+                  Upload
+                </Button>
+              </Box>
+            ) : (
+              <Button
+                variant="contained"
+                color="success"
+                sx={{
+                  bgcolor: fix ? "#3CB371" : "white",
+                }}
               >
-              Upload
-              </Button>
-            </Box>
-            ):(
-
-              <Button 
-              variant="contained" 
-              color="success"
-              href="login"
-              sx={{
-                bgcolor: fix ? "#3CB371" : "white",
-              }}   
-              >
-              Log In
+                <Link href="login">Log In</Link>
               </Button>
             )}
-
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="show more"
@@ -328,9 +302,6 @@ export default function Navbar( { isFixed, color = '#FFFFFF' }: NavbarProps ) {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-
     </Box>
   );
 }
-
-
