@@ -208,7 +208,13 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
             }}
         >
           {/* Logo  */}
-          <Link href="/">
+          <Link href="/" 
+            sx={{
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'space-between'
+            }}
+          >
             <img
               src="/logo3.png"
               style={{ borderRadius: 10 }}
@@ -237,7 +243,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
           <Box
             sx={{
               display: { xs: "none", md: "flex" },
-              flexGrow: 0.05,
+              flexGrow: 0.09,
               justifyContent: "space-between",
             }}
           >
@@ -247,6 +253,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
                   display: { xs: "none", md: "flex" },
                   flexGrow: 1,
                   justifyContent: "space-between",
+                  alignItems: 'center'
                 }}
               >
                 {/* notifications */}

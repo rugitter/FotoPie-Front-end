@@ -59,7 +59,7 @@ export default function Header() {
           >
 
             <InputBase
-              sx={{ ml: 0, flex: 1 }}
+              sx={{ ml: 1, flex: 1}}
               placeholder="Search..."
               inputProps={{ 'aria-label': 'search google maps' }}
             />
