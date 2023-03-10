@@ -31,6 +31,8 @@ import { Schema, string, object, mixed } from "yup";
 import { useRouter } from "next/router";
 import axiosRequest from "../src/utils/axiosRequest";
 import NavBar from "../src/components/NavBar";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -64,8 +66,8 @@ export default function EditUserProfile() {
     resolver: yupResolver(formSchema),
   });
 
-  const [LastName, setLastName] = useState("");
-  const [FirstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
@@ -89,7 +91,10 @@ export default function EditUserProfile() {
         router.push("/edituserprofile");
       }
     } catch (error) {
-      alert("Error occurred, unknown origin.");
+      <Alert severity="error">
+        <AlertTitle>Error</AlertTitle>
+        Error occurred, unknown origin — <strong>check it out!</strong>
+      </Alert>;
       console.log(error);
     }
   };
@@ -108,6 +113,10 @@ export default function EditUserProfile() {
         setAvatar(response.data.avatarPath);
       }
     } catch (error) {
+      <Alert severity="error">
+        <AlertTitle>Error</AlertTitle>
+        Error occurred, unknown origin — <strong>check it out!</strong>
+      </Alert>;
       console.error(error);
     }
   };
@@ -171,7 +180,7 @@ export default function EditUserProfile() {
                 <Typography variant="h6">First Name*</Typography>
                 <FormTextField
                   name="firstName"
-                  label={FirstName}
+                  label={firstName}
                   id="firstName"
                   autoComplete="firstName"
                 />
@@ -181,7 +190,7 @@ export default function EditUserProfile() {
                 <Typography variant="h6">Last Name*</Typography>
                 <FormTextField
                   name="lastName"
-                  label={LastName}
+                  label={lastName}
                   id="lastName"
                   autoComplete="LastName"
                 />
