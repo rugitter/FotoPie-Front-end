@@ -33,6 +33,7 @@ import axiosRequest from "../src/utils/axiosRequest";
 import NavBar from "../src/components/NavBar";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import {getMe} from "../src/axiosRequest/api/user"
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -71,7 +72,7 @@ export default function EditUserProfile() {
   const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
-    axiosRequest(`/api/editUser/me`, "GET").then((res) => {
+    getMe().then((res) => {
       setLastName(res.data.lastName);
       setFirstName(res.data.firstName);
       setAvatar(res.data.avatarPath);
@@ -120,7 +121,7 @@ export default function EditUserProfile() {
       console.error(error);
     }
   };
-
+  
   return (
     <>
       <NavBar isFixed={false} color="#000000" />
