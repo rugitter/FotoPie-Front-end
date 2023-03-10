@@ -31,40 +31,36 @@ import axios, { AxiosRequestConfig, Method } from "axios";
 
 // Define a component that renders the form
 export default function Submittable() {
-
+  const [tagValue, setTagValue] = useState("");
+  const [priceValue, setPriceValue] = useState("");
+  const [desValue, setDesValue] = useState("");
   const [filename, setUploadfileName] = useState({})
   const [OrginalFilePath, setOrginalFilePath] = useState({})
   const [CompressFilePath, setCompressFilePath] = useState({})
   const [status, setStatus] = useState("");
-  const handleChangeStatus = async(file: IFileWithMeta, status: StatusValue): Promise<void | { meta: { [name: string]: any; }; }>=> {
- 
+
+  const handleChangeStatus = async (file: IFileWithMeta, status: StatusValue)=> {
     const { meta } = file;
     console.log(status, meta);
     setStatus(status);
-  
-    const formData = new FormData();
-    formData.append("file", file.file);
-  
     if (status === "done") {
+      const formData = new FormData();
+      formData.append("file", file.file);
       
       try {
-        const response = await axios.patch("http://localhost:9090/api/posts/upload", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        const response = await axiosRequest("api/posts/upload", "PATCH", 
+          formData  
+        );
         console.log(response.data.filename, response.data.original_path, response.data.compression_path);
         setUploadfileName(response.data.filename);
         setOrginalFilePath(response.data.original_path)
         setCompressFilePath(response.data.compression_path)
-        // return { meta: response.data.filename};
+        return { meta: response};
       } catch (error) {
         console.error(error);
       }
     }
   
-    // return an empty object if the upload is not done
-    return { meta: {} };
   };
 
   // const getUploadParams = () => {
@@ -87,11 +83,8 @@ export default function Submittable() {
     resolver: yupResolver(formSchema),
   });
     
-    const [tagValue, setTagValue] = useState("");
-    const [priceValue, setPriceValue] = useState("");
-    const [desValue, setDesValue] = useState("");
+ 
   // Define a submit handler for the form
-
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
     console.log(filename);
@@ -278,11 +271,10 @@ const inputProps = {
               > 
                 Send
                 {/* <Link href="verifyemail"></Link> */}
-                      </Button>
+              </Button>
                   
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  
                 </Grid>
               </Grid>
             </Box>

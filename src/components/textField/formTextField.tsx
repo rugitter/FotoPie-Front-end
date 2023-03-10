@@ -15,12 +15,6 @@ interface IFormTextFieldProps {
 
 }
 
-// const inputProps = {
-//   startAdornment: (
-//     <InputAdornment position="start">$</InputAdornment>
-//   ),
-// };
-
 
 const FormTextField: FC<IFormTextFieldProps> = ({
   label,

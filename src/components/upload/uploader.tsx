@@ -26,7 +26,7 @@ export default function Uploader() {
           },
         });
         console.log(response);
-        return { meta: response.data };
+        return { meta: response};
       } catch (error) {
         console.error(error);
       }
@@ -36,9 +36,9 @@ export default function Uploader() {
 
   };
 
-  // const getUploadParams = () => {
-  //   return { url: 'http://localhost:3000/upload' }
-  // };
+  const getUploadParams = () => {
+    return { url: 'http://localhost:3000/upload' }
+  };
 
   const styles = {
     dropzone: {
@@ -98,7 +98,7 @@ export default function Uploader() {
         canCancel={false}
         inputContent={inputContentWithIcon}
         // inputContainerStyle={{ border: "none" }}  
-        // getUploadParams={getUploadParams} 
+        getUploadParams={getUploadParams} 
         accept="image/*"
         styles={styles}
       />
