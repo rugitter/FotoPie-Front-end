@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 
-import axios from "axios";
 import Post from "./Post";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Loader from "../Loader";
+import Loader from "../Loader/Loader";
 import Box from "@mui/material/Box";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
 import axiosRequest from "../../utils/axiosRequest";
+import Masonry from "@mui/lab/Masonry";
+import NoMore from "../Loader/NoMore";
 
 interface ImageData {
   //path: string;
@@ -19,7 +18,7 @@ interface ImageData {
 const PostList = () => {
   const [posts, setPost] = useState<ImageData[]>([]);
   const [page, setPage] = useState(1);
-  const [loaderHandler, setLoaderHandler] = useState<ImageData[]>([]);
+  const [loaderHandler, setLoaderHandler] = useState(true);
 
   const [Error, setError] = useState(null);
 
@@ -33,8 +32,10 @@ const PostList = () => {
       );
       if (res.status === 200) {
         setPost([...posts, ...res.data]);
-        setLoaderHandler([...res.data]);
         setPage(page + 1);
+        if ([...res.data].length === 0) {
+          setLoaderHandler(false);
+        }
       }
     } catch (error: any) {
       setError(error.message);
@@ -47,30 +48,23 @@ const PostList = () => {
 
   return (
     <>
-      {/* {posts.map((post, index) => {
-        <Post url={post.path} key={index} />;
-      })} */}
       <p>{Error}</p>
       <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
         <InfiniteScroll
           dataLength={posts.length}
           next={fetchImages}
           hasMore={true}
-          loader={
-            loaderHandler.length === 0 ? <p>No more images</p> : <Loader />
-          }
+          loader={loaderHandler ? <Loader /> : <NoMore />}
         >
-          <ImageList
-            sx={{ columnCount: { sm: `2 !important`, md: `3 !important` } }}
-            variant="masonry"
-            gap={8}
-          >
+          <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
             {posts.map((post) => (
-              <ImageListItem key={post._id}>
-                <Post url={post.compressFilePath} filename={post.filename} />
-              </ImageListItem>
+              <Post
+                url={post.compressFilePath}
+                filename={post.filename}
+                key={post._id}
+              />
             ))}
-          </ImageList>
+          </Masonry>
         </InfiniteScroll>
       </Box>
     </>
