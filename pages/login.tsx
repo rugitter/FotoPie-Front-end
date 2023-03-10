@@ -15,7 +15,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
 import FormTextField from "../src/components/textField/formTextField";
 import { useRouter } from "next/router";
-import axiosRequest from "../src/utils/axiosRequest";
+// import axiosRequest from "../src/utils/axiosRequest";
+import { login } from "../src/axiosRequest/api/user";
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -33,27 +34,25 @@ const formSchema: Schema<IFormInput> = object({
 export default function SignIn() {
   const [loginError, setLoginError] = useState(null);
 
-  const router = useRouter();
-
   // Use the useForm hook to create a form controller
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
   });
 
+  const router = useRouter();
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
-      const response = await axiosRequest("/api/auth/login", "POST", data);
+      const response = await login(data);
       if (response.status === 200) {
         window.localStorage.setItem("accessToken", response.data.access_token);
         window.localStorage.setItem(
           "refreshToken",
           response.data.refresh_token
         );
-
-        // redirect to home page
-        router.push("/");
       }
+      // redirect to home page
+      router.push("/");
 
       // TODO: handle error and set error type
     } catch (error: any) {
