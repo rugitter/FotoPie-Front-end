@@ -7,7 +7,7 @@ export const login = <T>(data: T) => {
     url: "/api/auth/login",
     method: "post",
     data,
-    
+
   });
 };
 
@@ -18,12 +18,6 @@ export const getUserInfo = <T>(params: T) => {
   });
 };
 
-export const getMe = () => {
-  return request({
-    url: '/api/editUser/me',
-    method: "get",
-  });
-};
 
 
 

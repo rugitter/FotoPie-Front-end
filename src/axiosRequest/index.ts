@@ -2,6 +2,9 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { useRouter } from "next/router";
 import { NextResponse } from "next/server";
 import axiosConfig from "./config";
+import { useEffect } from "react";
+
+
 
 
 
@@ -41,6 +44,7 @@ export const createAxiosByinterceptors = (
         return data;
       } else if (status === 401) {
         //console.log(status,"123")
+        return Promise.reject({ redirectToLogin: true });
         
 
         
@@ -62,9 +66,13 @@ export const createAxiosByinterceptors = (
             break;
           case 401:
             message = "Please login!";
+            console.log(message)
             //NextResponse.redirect('/login');
-            const router = useRouter();
-            router.push("/login");
+            //const router = useRouter();
+            //router.push("/login");
+            window.location.href = "/login";
+            
+            
             
             break;
           case 403:

@@ -33,7 +33,9 @@ import axiosRequest from "../src/utils/axiosRequest";
 import NavBar from "../src/components/NavBar";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import {getMe} from "../src/axiosRequest/api/user"
+import { getMe } from "../src/axiosRequest/api/editUser"
+import { updateName } from "../src/axiosRequest/api/editUser";
+import { upload } from "../src/axiosRequest/api/editUser";
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -81,12 +83,15 @@ export default function EditUserProfile() {
 
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-    try {
+    updateName(data);
+    {
+      /*try {
       const response = await axiosRequest(
         "/api/editUser/updateName",
         "PATCH",
         data
       );
+      
 
       if (response.status === 200) {
         router.push("/edituserprofile");
@@ -97,11 +102,23 @@ export default function EditUserProfile() {
         Error occurred, unknown origin — <strong>check it out!</strong>
       </Alert>;
       console.log(error);
+    }*/
     }
   };
 
   const handleFileUpload = async (event) => {
-    try {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+
+    //upload(formData);
+    //setAvatar(response.data.avatarPath);
+
+    upload(formData).then((res) => {
+      
+      setAvatar(res.data.avatarPath);
+    });
+    {/*try {
       const file = event.target.files[0];
       const formData = new FormData();
       formData.append("file", file);
@@ -119,7 +136,7 @@ export default function EditUserProfile() {
         Error occurred, unknown origin — <strong>check it out!</strong>
       </Alert>;
       console.error(error);
-    }
+    }*/}
   };
   
   return (
