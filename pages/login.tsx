@@ -44,7 +44,6 @@ export default function SignIn() {
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
       const response = await axiosRequest("/api/auth/login", "POST", data);
-      console.log(response);
       if (response.status === 200) {
         window.localStorage.setItem("accessToken", response.data.access_token);
         window.localStorage.setItem(
