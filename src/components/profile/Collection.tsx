@@ -10,6 +10,13 @@ interface CollectionProps {
   id: string;
 }
 
+interface ResponseImageData {
+  collect_user_email: string;
+  collected_user_email: string;
+  imageUrl: string;
+  _id: string;
+}
+
 export default function Collection(props: CollectionProps) {
   const [collection, setCollection] = useState([]);
   const fetchImages = async () => {
@@ -19,8 +26,8 @@ export default function Collection(props: CollectionProps) {
         "GET"
       );
       if (res.status === 200) {
-        //console.log(res.data)
-        const imageUrlArray = res.data.map((obj) => obj.imageUrl);
+        console.log(res.data)
+        const imageUrlArray = res.data.map((image: ResponseImageData) => image.imageUrl);
         console.log(imageUrlArray)
         setCollection(imageUrlArray);
         console.log(collection)
