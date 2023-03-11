@@ -49,6 +49,10 @@ interface IFormInput {
   youtube: string;
   tiktok: string;
 }
+
+interface MouseEvent {
+  target: EventTarget;
+}
 // Define a schema for the form values
 const formSchema: Schema<IFormInput> = object({
   firstName: string().max(15).required(),
@@ -86,13 +90,16 @@ export default function EditUserProfile() {
     updateName(data);
   };
 
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    upload(formData).then((res) => {
-      setAvatar(res.data.avatarPath);
-    });
+  const handleFileUpload = async (event: MouseEvent) => {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files != null) {
+      const file = fileInput.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      upload(formData).then((res) => {
+        setAvatar(res.data.avatarPath);
+      });
+    };
   };
   
   return (
