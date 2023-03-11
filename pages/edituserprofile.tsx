@@ -84,59 +84,15 @@ export default function EditUserProfile() {
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     updateName(data);
-    {
-      /*try {
-      const response = await axiosRequest(
-        "/api/editUser/updateName",
-        "PATCH",
-        data
-      );
-      
-
-      if (response.status === 200) {
-        router.push("/edituserprofile");
-      }
-    } catch (error) {
-      <Alert severity="error">
-        <AlertTitle>Error</AlertTitle>
-        Error occurred, unknown origin — <strong>check it out!</strong>
-      </Alert>;
-      console.log(error);
-    }*/
-    }
   };
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append("file", file);
-
-    //upload(formData);
-    //setAvatar(response.data.avatarPath);
-
     upload(formData).then((res) => {
-      
       setAvatar(res.data.avatarPath);
     });
-    {/*try {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      const response = await axiosRequest(
-        "/api/editUser/upload",
-        "PATCH",
-        formData
-      );
-      if (response.status === 200) {
-        setAvatar(response.data.avatarPath);
-      }
-    } catch (error) {
-      <Alert severity="error">
-        <AlertTitle>Error</AlertTitle>
-        Error occurred, unknown origin — <strong>check it out!</strong>
-      </Alert>;
-      console.error(error);
-    }*/}
   };
   
   return (
