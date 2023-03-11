@@ -22,7 +22,7 @@ export default function Header() {
 
         <Box
           sx={{
-            mt:13,
+            mt:8,
             ml:'auto',
             mr:'auto',
             display:'flex',
@@ -36,7 +36,7 @@ export default function Header() {
             align='center' 
             display='inline'  
             color='#FFFFFF'
-            sx={{ fontSize: 18, fontFamily: 'inherit', textAlign: 'left'}}
+            sx={{ fontSize: 22, fontFamily: 'inherit', textAlign: 'left'}}
           >
             Start shining.<br/>
             Start earning.<br/>
@@ -50,7 +50,7 @@ export default function Header() {
               display: 'flex', 
               alignItems: 'center', 
               width: '100%', 
-              mb: 13, 
+              mb: 15, 
               mt:2,
               '@media (min-width: 600px)': {
                 width: 500,
@@ -60,7 +60,7 @@ export default function Header() {
 
             <InputBase
               sx={{ ml: 1, flex: 1}}
-              placeholder="Search..."
+              placeholder="What type of photos can I look for you?"
               inputProps={{ 'aria-label': 'search google maps' }}
             />
             <IconButton type="button" sx={{ p: '10px' }} aria-label="search">

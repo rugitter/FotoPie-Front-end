@@ -18,13 +18,15 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import axiosRequest from "../utils/axiosRequest"
+import axios from "axios";
 
 interface NavbarProps {
   isFixed: boolean;
   color?: string;
+  bgColor?: string;
 }
 
-export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
+export default function Navbar({ isFixed, color = "#FFFFFF", bgColor}: NavbarProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [avatarPath, setAvatarPath] = useState("");
   const [id, setId] = useState("");
@@ -37,7 +39,6 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
     if (accessToken !== null) {
       setIsLoggedIn(true)
       axiosRequest(`/api/editUser/me`, "GET").then((res) => {
-        console.log(res);
         setAvatarPath(res.data.avatarPath);
         setId(res.data.id);
       });
@@ -48,11 +49,19 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
     }
   }, []);
 
+
   const removeToken = () => {
+    // axios.post (`/api/auth/logout`, {
+    //   headers: {
+    //     'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+    //   }
+    // })  
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     setIsLoggedIn(false);
-  };
+
+    }
+  
 
   const [fix, setFix] = useState(false);
 
@@ -109,7 +118,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: "top",
+        vertical: "bottom",
         horizontal: "right",
       }}
       id={menuId}
@@ -134,7 +143,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: "top",
+        vertical: "bottom",
         horizontal: "right",
       }}
       id={mobileMenuId}
@@ -196,12 +205,12 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
         elevation={0}
         sx={{
           position: fix ? "fixed" : "relative",
-          bgcolor: fix ? "#FFFFFF" : "",
+          bgcolor: bgColor || (fix ? "#f8f8ff" : "transparent")
         }}
       >
         <Toolbar 
           sx={{ 
-            marginTop: 1, 
+            marginTop: 0, 
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'space-between'
@@ -212,7 +221,10 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
             sx={{
               display: 'flex', 
               alignItems: 'center', 
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              "&:hover": {
+                opacity: 0.8, 
+                },
             }}
           >
             <img
@@ -243,7 +255,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
           <Box
             sx={{
               display: { xs: "none", md: "flex" },
-              flexGrow: 0.09,
+              flexGrow: 0.12,
               justifyContent: "space-between",
             }}
           >
@@ -259,7 +271,13 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
                 {/* notifications */}
                 <IconButton size="large" color="inherit">
                   <Badge badgeContent={1} color="error">
-                    <NotificationsIcon />
+                    <NotificationsIcon sx={{ 
+                                          color: fix ? 'black' : color,  
+                                          "&:hover": {
+                                          opacity: 0.8, 
+                                          },
+                                        }}
+                    />
                   </Badge>
                 </IconButton>
 
@@ -268,17 +286,26 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
                   alt="Avatar"
                   src={avatarPath}
                   onClick={handleProfileMenuOpen}
-                  sx={{ width: 40, height: 40 }}
+                  sx={{ 
+                    width: 40, 
+                    height: 40,
+                    "&:hover": {
+                      opacity: 0.8, 
+                    },
+                  }}
                 />
 
                 <Button
                   variant="contained"
                   href="upload"
                   sx={{
-                    bgcolor: fix ? "primary.main" : "gray",
+                    bgcolor: fix ? "#F4DADA" : "#FBF1F1",
+                    "&:hover": {
+                      backgroundColor: "#F4DADA",
+                    },
                   }}
                 >
-                  Upload
+                  <Link href="upload" underline="none">Upload</Link>
                 </Button>
               </Box>
             ) : (
@@ -286,10 +313,10 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
                 variant="contained"
                 color="success"
                 sx={{
-                  bgcolor: fix ? "#3CB371" : "white",
+                  bgcolor: fix ? "#F4DADA" : "#FBF1F1",
                 }}
               >
-                <Link href="login">Log In</Link>
+                <Link href="login" underline="none">Log In</Link>
               </Button>
             )}
           </Box>
@@ -302,7 +329,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MenuIcon />
+              <MenuIcon sx={{ color: fix ? 'black' : color}}/>
             </IconButton>
           </Box>
         </Toolbar>
