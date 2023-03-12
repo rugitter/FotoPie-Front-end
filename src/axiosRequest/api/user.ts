@@ -17,9 +17,7 @@ export const getUserInfo = <T>(params: T) => {
   });
 };
 
-export const getMe = () => {
-  return request({
-    url: '/api/editUser/me',
-    method: "get",
-  });
-};
+
+
+
+

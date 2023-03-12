@@ -1,6 +1,4 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { useRouter } from "next/router";
-import { NextResponse } from "next/server";
 import axiosConfig from "./config";
 
 export const createAxiosByinterceptors = (
@@ -28,13 +26,16 @@ export const createAxiosByinterceptors = (
 
   // response interceptor - after response is received
   axiosInstance.interceptors.response.use(
+    
     function (response) {
       console.log("response:", response);
       const { status, data } = response;
+      console.log(status);
+
       if (status === 200) {
         return data;
       } else if (status === 401) {
-        NextResponse.redirect("/login");
+        return Promise.reject({ redirectToLogin: true });
       } else {
         return Promise.reject(response.data);
       }
@@ -51,7 +52,6 @@ export const createAxiosByinterceptors = (
             break;
           case 401:
             message = "Please login!";
-            NextResponse.redirect("/login");
             break;
           case 403:
             message = "Forbidden!";
