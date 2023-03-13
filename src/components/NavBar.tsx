@@ -33,13 +33,13 @@ export default function Navbar({ isFixed, color = "#FFFFFF", bgColor}: NavbarPro
 
 
   useEffect(() => {
-    // api/editProfile/me => res: avatar => setAvatar => avatar => src={avatar}
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
     if (accessToken !== null) {
       setIsLoggedIn(true)
       axiosRequest(`/api/editUser/me`, "GET").then((res) => {
-        setAvatarPath(res.data.avatarPath);
+      
+        setAvatarPath(res.data.data['avatarPath']);
         setId(res.data.id);
       });
 
@@ -51,11 +51,11 @@ export default function Navbar({ isFixed, color = "#FFFFFF", bgColor}: NavbarPro
 
 
   const removeToken = () => {
-    // axios.post (`/api/auth/logout`, {
-    //   headers: {
-    //     'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
-    //   }
-    // })  
+    axios.post (`/api/auth/logout`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+      }
+    })  
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     setIsLoggedIn(false);
@@ -228,7 +228,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF", bgColor}: NavbarPro
             }}
           >
             <img
-              src="/logo3.png"
+              src="/logo2.png"
               style={{ borderRadius: 10 }}
               alt="Fotopie_Logo"
               width={45}
