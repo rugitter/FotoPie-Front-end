@@ -32,7 +32,6 @@ import {faImages} from "@fortawesome/free-solid-svg-icons";
 import axios, { AxiosRequestConfig, Method } from "axios";
 
 
-
 interface IFormInput {
   description: string;
   tag: string;
@@ -48,8 +47,6 @@ export default function Upload() {
   const [OrginalFilePath, setOrginalFilePath] = useState({})
   const [CompressFilePath, setCompressFilePath] = useState({})
   const [status, setStatus] = useState("");
-
-  
 
   const handleChangeStatus = (file: IFileWithMeta, status: StatusValue) => {
     testhandleChangeStatus(file, status);
@@ -84,7 +81,6 @@ export default function Upload() {
   //   return { url: 'http://localhost:3000/upload' }
   // }
   
-
   const formSchema = yup.object().shape({
     description: yup.string().max(50),
     tag: yup.string().max(15),
@@ -166,8 +162,7 @@ export default function Upload() {
     </div>
   </div>
 );
-
-    
+   
 const priceInputProps = {
   startAdornment: (
         <InputAdornment position="start">
@@ -237,13 +232,12 @@ const DesInputProps = {
               </div>
            
                 <FormTextField
-            
                   name="description"
                   label="Description (optional)"
                   id="Description"
                           autoComplete="Description"
                           InputProps={DesInputProps}      
-                      />
+                />
             
                 <FormTextField
                 name="tag"
@@ -300,6 +294,6 @@ const DesInputProps = {
           
         <Copyright sx={{ mt: 5 }} />
       </Container>
-      </>
+    </>
   );
 }
