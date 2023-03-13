@@ -17,6 +17,7 @@ import FormTextField from "../src/components/textField/formTextField";
 import { useRouter } from "next/router";
 // import axiosRequest from "../src/utils/axiosRequest";
 import { login } from "../src/axiosRequest/api/user";
+import { setAccessToken, getAccessToken } from "../src/utils/token";
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -32,32 +33,24 @@ const formSchema: Schema<IFormInput> = object({
 
 // Define a component that renders the form
 export default function SignIn() {
+  const router = useRouter();
+
   const [loginError, setLoginError] = useState(null);
 
   // Use the useForm hook to create a form controller
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
   });
-
-  const router = useRouter();
   // Define a submit handler for the form
-  const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-    try {
-      const response = await login(data);
-      if (response.status === 200) {
-        window.localStorage.setItem("accessToken", response.data.access_token);
-        window.localStorage.setItem(
-          "refreshToken",
-          response.data.refresh_token
-        );
-      }
-      // redirect to home page
-      router.push("/");
-
-      // TODO: handle error and set error type
-    } catch (error: any) {
-      setLoginError(error.message);
-    }
+  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+    login(data)
+      .then((res) => {
+        setAccessToken(res.data.access_token);
+        router.push("/");
+      })
+      .catch((err: any) => {
+        setLoginError(err.message);
+      });
   };
 
   return (
