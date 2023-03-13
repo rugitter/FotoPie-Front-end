@@ -105,7 +105,7 @@ export default function BasicStack() {
             </Typography>
 
             <Box>
-            <Image alt="image" src={getPost[0]} size="10% 10%"/>
+            <Image alt="image" src={getPost[0]} style={{height:10, width:10}}/>
             </Box>
             
             {/* <IconButton
@@ -159,7 +159,7 @@ export default function BasicStack() {
             </Typography>
 
             <Box>
-            <Image alt="image" src={getPost[0]} size="10%"/>
+            <Image alt="image" src={getPost[0]} style={{height:10, width:10}}/>
             </Box>
         
         </Item>
@@ -200,7 +200,7 @@ export default function BasicStack() {
             </Typography>
 
             <Box>
-            <Image alt="image" src={getPost[0]} size="10%"/>
+            <Image alt="image" src={getPost[0]} style={{height:10, width:10}}/>
             </Box>
         
         </Item>
@@ -239,7 +239,7 @@ export default function BasicStack() {
             </Typography>
 
             <Box>
-            <Image alt="image" src={getPost[0]} size="10%"/>
+            <Image alt="image" src={getPost[0]} width="10%"/>
             </Box>
         
         </Item>
@@ -278,7 +278,7 @@ export default function BasicStack() {
             </Typography>
 
             <Box>
-            <Image alt="image" src={getPost[0]} size="10%"/>
+            <Image alt="image" src={getPost[0]} width="10%"/>
             </Box>
         
         </Item>
