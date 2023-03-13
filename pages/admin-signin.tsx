@@ -51,7 +51,7 @@ export default function AdminSignIn() {
         window.localStorage.setItem("accessToken", response.data.access_token);
 
         // redirect to admin manager page
-        router.push("/adminmanager");
+        router.push("/admin-manager");
       }
       // TODO: handle error and set error type
     } catch (error: any) {
