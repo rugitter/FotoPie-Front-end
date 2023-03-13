@@ -228,7 +228,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF", bgColor}: NavbarPro
             }}
           >
             <img
-              src="/logo2.png"
+              src="/logo.png"
               style={{ borderRadius: 10 }}
               alt="Fotopie_Logo"
               width={45}
