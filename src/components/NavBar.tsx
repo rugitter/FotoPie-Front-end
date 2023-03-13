@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import Link from "../utils/Link";
+<<<<<<< HEAD
 import Image from "next/image";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -15,6 +16,26 @@ import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import UploadIcon from "@mui/icons-material/Upload";
 import LoginIcon from "@mui/icons-material/Login";
+||||||| 9d2c030
+import Image from "next/image"
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Badge from '@mui/material/Badge';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { useState } from 'react'
+import MenuIcon from '@mui/icons-material/Menu';
+import UploadIcon from '@mui/icons-material/Upload';
+import LoginIcon from '@mui/icons-material/Login'
+=======
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Badge from "@mui/material/Badge";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { useState } from "react";
+import MenuIcon from "@mui/icons-material/Menu";
+import UploadIcon from "@mui/icons-material/Upload";
+import LoginIcon from "@mui/icons-material/Login";
+>>>>>>> dev
 import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 
@@ -180,10 +201,23 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
       >
         <Toolbar>
           {/* Logo  */}
+<<<<<<< HEAD
           <Link href="/">
             <Image
               src="/logo.jpg"
               style={{ borderRadius: 10 }}
+||||||| 9d2c030
+          <Link
+            href="/"
+          >
+            <Image src="/logo.jpg" 
+              style={{ borderRadius:10}}
+=======
+          <Link href="/">
+            <img
+              src="/logo.jpg"
+              style={{ borderRadius: 10 }}
+>>>>>>> dev
               alt="Fotopie_Logo"
               width={45}
               height={45}
@@ -236,6 +270,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
                   sx={{ width: 40, height: 40 }}
                 />
 
+<<<<<<< HEAD
                 <Button
                   variant="contained"
                   href="upload"
@@ -254,8 +289,53 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
                 sx={{
                   bgcolor: fix ? "#3CB371" : "white",
                 }}
+||||||| 9d2c030
+              <Button 
+              variant="contained" 
+              href='upload'
+              sx={{
+                bgcolor: fix ? "primary.main" : "gray",
+              }}
+=======
+                <Button
+                  variant="contained"
+                  href="upload"
+                  sx={{
+                    bgcolor: fix ? "primary.main" : "gray",
+                  }}
+                >
+                  Upload
+                </Button>
+              </Box>
+            ) : (
+              <Button
+                variant="contained"
+                color="success"
+                sx={{
+                  bgcolor: fix ? "#3CB371" : "white",
+                }}
+>>>>>>> dev
               >
+<<<<<<< HEAD
                 Log In
+||||||| 9d2c030
+              Upload
+              </Button>
+            </Box>
+            ):(
+
+              <Button 
+              variant="contained" 
+              color="success"
+              href="login"
+              sx={{
+                bgcolor: fix ? "#3CB371" : "white",
+              }}   
+              >
+              Log In
+=======
+                <Link href="login">Log In</Link>
+>>>>>>> dev
               </Button>
             )}
           </Box>

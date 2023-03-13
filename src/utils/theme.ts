@@ -1,6 +1,16 @@
+<<<<<<< HEAD
 import { Roboto } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
 import { green, grey, red } from "@mui/material/colors";
+||||||| 9d2c030
+import { Roboto } from '@next/font/google';
+import { createTheme } from '@mui/material/styles';
+import { green, grey, red } from '@mui/material/colors';
+=======
+import { Roboto } from 'next/font/google';
+import { createTheme } from '@mui/material/styles';
+import { green, grey, red } from '@mui/material/colors';
+>>>>>>> dev
 
 export const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
