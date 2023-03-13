@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import Image from "mui-image";
 
 import axiosRequest from "../../src/utils/axiosRequest";
+import Link from "../../src/utils/Link";
 
 // Define a component that renders the page
 const PhotoQuickView = () => {
@@ -20,45 +21,43 @@ const PhotoQuickView = () => {
   const [postPhoto, setPostPhoto] = useState("");
   const [userCollects, setUserCollects] = useState("");
   const [userLikes, setUserLikes] = useState("");
+  const [userID, setUserID] = useState("");
 
   const [collected, setCollected] = useState(false);
   const [liked, setLiked] = useState(false);
+  // const [requestError, setRequestError] = useState();
 
   const router = useRouter();
   const { filename } = router.query;
 
-  // fetch post user avatar,username,post image
+  // fetch post user avatar,username,post image, collect/like status, collect/like count
   useEffect(() => {
     if (!router.isReady) return;
     const fetchData = async () => {
       try {
         const response = await axiosRequest(
-          `/api/quickView?filename=${filename}`,
+          `/api/quick-view?filename=${filename}`,
           "GET"
         );
-        if (!response) {
-          return;
-        }
+        console.log(response.data)
         setUserName(response.data.user_name);
         setUserAvatar(response.data.avatar_url);
         setPostPhoto(response.data.photo_url);
-        setUserCollects(response.data.collects);
-        setUserLikes(response.data.likes);
+        setUserCollects(response.data.collect_count);
+        setUserLikes(response.data.like_count);
+        setCollected(response.data.collect_status);
+        setLiked(response.data.like_status);
+        setUserID(response.data.user_id);
       } catch (error: any) {
         return error.message;
+        // setRequestError(error.message);
       }
     };
     fetchData();
   }, [router.isReady, filename]);
 
-  //click close button to redirect back to home page
-  const onClickCloseButton = () => {
-    router.push("/");
-  };
-
   //Toggle collect button and add/delete collect number
   const addToCollection = async () => {
-    //click collect button to update number
     try {
       const response = await axiosRequest(`/api/collect/${filename}`, "POST", {
         filename: `${filename}`,
@@ -73,14 +72,10 @@ const PhotoQuickView = () => {
 
   //Toggle like button and add/delete like number
   const addToLiked = async () => {
-    //click like button to update number
     try {
       const response = await axiosRequest(`/api/like/${filename}`, "POST", {
         filename: `${filename}`,
       });
-      if (response.status === 401) {
-        router.push("/login");
-      }
       const data = response.data;
       setUserLikes(data);
       setLiked((liked) => !liked);
@@ -89,8 +84,19 @@ const PhotoQuickView = () => {
     }
   };
 
-  //Redirect to download page
-  const downLoadImages = () => {};
+  //Redirect to download page-- to be done in the next sprint
+  const downLoadImages = async () => {
+    try {
+      const response = await axiosRequest(`/api/download/${filename}`, "POST", {
+        filename: `${filename}`,
+      });
+      const data = response.data;
+      router.push("/payment");
+    } catch (error: any) {
+      return error.message;
+      // setRequestError(error.message);
+    }
+  };
 
   return (
     <Stack
@@ -112,8 +118,10 @@ const PhotoQuickView = () => {
           opacity: "1",
         }}
       >
-        <Button sx={{ color: "#fff" }} onClick={onClickCloseButton}>
-          <CloseIcon />
+        <Button>
+          <Link href="/" sx={{ color: "#fff" }}>
+            {<CloseIcon />}
+          </Link>
         </Button>
       </Stack>
 
@@ -141,11 +149,18 @@ const PhotoQuickView = () => {
           {/* Avatar and username */}
           <Stack>
             <Stack display="flex" direction="row">
-              <Button href="/" sx={{ m: 0 }}>
-                <Avatar alt="avatar" src={userAvatar}></Avatar>
+              <Button>
+                <Link href={`/profile/${userID}`}>
+                  {<Avatar alt="avatar" src={userAvatar}></Avatar>}
+                </Link>
               </Button>
-              <Button href="/">
-                <Typography variant="body1">{userName}</Typography>
+              <Button>
+                <Link
+                  href={`/profile/${userID}`}
+                  sx={{ textDecoration: "none" }}
+                >
+                  {<Typography variant="body1">{userName}</Typography>}
+                </Link>
               </Button>
             </Stack>
           </Stack>
@@ -185,7 +200,6 @@ const PhotoQuickView = () => {
                 : "Like" + " " + `${userLikes}`}
             </Button>
             <Button
-              // href="/users/download/:id/photo/:id"
               variant="contained"
               sx={{
                 opacity: { xs: 0, sm: 1 },
@@ -194,7 +208,13 @@ const PhotoQuickView = () => {
               startIcon={<DownloadIcon />}
               onClick={downLoadImages}
             >
-              Download
+              <Link
+                href={`/users/download/${userID}`}
+                // to be changed in the next sprint
+                sx={{ textDecoration: "none", color: "#fff" }}
+              >
+                Download
+              </Link>
             </Button>
           </Stack>
         </Stack>
@@ -207,6 +227,7 @@ const PhotoQuickView = () => {
             height: "70vh",
           }}
         >
+          {/* <p>{requestError}</p> */}
           <Image
             alt="image"
             src={postPhoto}
