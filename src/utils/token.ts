@@ -7,5 +7,8 @@ export const getAccessToken = () => {
 };
 
 export const setAccessToken = (token: string) => {
-  cookies.set("accessToken", token, { path: "/" });
+  cookies.set("accessToken", token, {
+    path: "/",
+    expires: new Date(Date.now() + 1000 * 60 * 15), // 15 minutes
+  });
 };

@@ -15,9 +15,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
 import FormTextField from "../src/components/textField/formTextField";
 import { useRouter } from "next/router";
-// import axiosRequest from "../src/utils/axiosRequest";
 import { login } from "../src/axiosRequest/api/user";
-import { setAccessToken, getAccessToken } from "../src/utils/token";
+import { setAccessToken } from "../src/utils/token";
+
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -42,15 +42,14 @@ export default function SignIn() {
     resolver: yupResolver(formSchema),
   });
   // Define a submit handler for the form
-  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
-    login(data)
-      .then((res) => {
-        setAccessToken(res.data.access_token);
-        router.push("/");
-      })
-      .catch((err: any) => {
-        setLoginError(err.message);
-      });
+  const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+    try {
+      const res = await login(data);
+      setAccessToken(res.data.access_token);
+      router.push("/");
+    } catch (err: any) {
+      setLoginError(err.message);
+    }
   };
 
   return (
