@@ -27,7 +27,11 @@ import {faImages} from "@fortawesome/free-solid-svg-icons";
 import axios, { AxiosRequestConfig, Method } from "axios";
 
 
-
+interface IFormInput {
+  description: string;
+  tag: string;
+  price: number;
+}
 
 // Define a component that renders the form
 export default function Submittable() {
@@ -39,7 +43,11 @@ export default function Submittable() {
   const [CompressFilePath, setCompressFilePath] = useState({})
   const [status, setStatus] = useState("");
 
-  const handleChangeStatus = async (file: IFileWithMeta, status: StatusValue)=> {
+  const handleChangeStatus = (file: IFileWithMeta, status: StatusValue) => {
+    testhandleChangeStatus(file, status);
+  }
+
+  const testhandleChangeStatus = async (file: IFileWithMeta, status: StatusValue)=> {
     const { meta } = file;
     console.log(status, meta);
     setStatus(status);
@@ -58,6 +66,7 @@ export default function Submittable() {
         return { meta: response};
       } catch (error) {
         console.error(error);
+        return error
       }
     }
   
@@ -66,13 +75,7 @@ export default function Submittable() {
   // const getUploadParams = () => {
   //   return { url: 'http://localhost:3000/upload' }
   // }
-  
-  interface IFormInput {
-    description: string;
-    tag: string;
-    price: number;
-  }
-  
+
   const formSchema = yup.object().shape({
     description: yup.string().max(50),
     tag: yup.string().max(15),
@@ -82,8 +85,6 @@ export default function Submittable() {
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
   });
-    
- 
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
