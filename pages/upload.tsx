@@ -83,6 +83,7 @@ export default function Upload() {
   // const getUploadParams = () => {
   //   return { url: 'http://localhost:3000/upload' }
   // }
+  
 
   const formSchema = yup.object().shape({
     description: yup.string().max(50),
@@ -167,7 +168,7 @@ export default function Upload() {
 );
 
     
-const inputProps = {
+const priceInputProps = {
   startAdornment: (
         <InputAdornment position="start">
         
@@ -177,7 +178,25 @@ const inputProps = {
     ),
     onChange: (e:any) =>setPriceValue(e.target.value),
   };
+
+
+const tagInputProps = {
+  startAdornment: (
+          <InputAdornment position="start">
+              {tagValue ? null : "Enter Tag"}
+          </InputAdornment>
+      ),
+      onChange: (e:any) => setTagValue(e.target.value),
+    };  
   
+const DesInputProps = {
+    startAdornment: (
+     <InputAdornment position="start">
+        {desValue ? null : "Enter Description"}
+      </InputAdornment>
+    ),
+    onChange: (e:any) => setDesValue(e.target.value),
+  }
 
   return (
     <>
@@ -223,29 +242,15 @@ const inputProps = {
                   label="Description (optional)"
                   id="Description"
                           autoComplete="Description"
-                          InputProps={{
-                            startAdornment: (
-                             <InputAdornment position="start">
-                                {desValue ? null : "Enter Description"}
-                              </InputAdornment>
-                            ),
-                            onChange: (e:any) => setDesValue(e.target.value),
-                          }}      
+                          InputProps={DesInputProps}      
                       />
             
                 <FormTextField
-                  name="tag"
-                  label="Tag (optional)"
-                  id="Tag"
-                          autoComplete="Tag"
-                          InputProps={{
-                            startAdornment: (
-                             <InputAdornment position="start">
-                                {tagValue ? null : "Enter Tag"}
-                              </InputAdornment>
-                            ),
-                            onChange: (e:any) => setTagValue(e.target.value),
-                          }}          
+                name="tag"
+                label="Tag (optional)"
+                id="Tag"
+                autoComplete="Tag"
+                InputProps={tagInputProps}       
                 />
 
                 <FormTextField
@@ -254,7 +259,7 @@ const inputProps = {
                   id="price"
                   type="number"
                   autoComplete="price"
-                  InputProps={inputProps}                
+                  InputProps={priceInputProps}                
                           
                 />
                 
