@@ -30,7 +30,7 @@ const PhotoQuickView = () => {
   const router = useRouter();
   const { filename } = router.query;
 
-  // fetch post user avatar,username,post image, collect/like status, collect/like count
+  // fetch get user avatar,username,post image, collect/like status, collect/like count
   useEffect(() => {
     if (!router.isReady) return;
     const fetchData = async () => {
@@ -39,7 +39,6 @@ const PhotoQuickView = () => {
           `/api/quick-view?filename=${filename}`,
           "GET"
         );
-        console.log(response.data)
         setUserName(response.data.user_name);
         setUserAvatar(response.data.avatar_url);
         setPostPhoto(response.data.photo_url);
