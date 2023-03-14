@@ -12,7 +12,7 @@ export default function Header() {
   return (
 
       <Stack
-      component='span'
+      component='div'
       sx={{ 
         flexGrow: 1,
         Height: 300,
@@ -22,11 +22,13 @@ export default function Header() {
 
         <Box
           sx={{
-            mt:13,
+            mt:8,
+            ml:'auto',
+            mr:'auto',
             display:'flex',
             justifyContent:'center',
             flexDirection:'column',
-            alignItems:'center',
+            alignItems:'flex-start',
           }}
         >
           <Typography  
@@ -34,21 +36,31 @@ export default function Header() {
             align='center' 
             display='inline'  
             color='#FFFFFF'
-            sx={{ fontSize: 18, fontFamily: 'inherit'}}
+            sx={{ fontSize: 22, fontFamily: 'inherit', textAlign: 'left'}}
           >
             Start shining.<br/>
             Start earning.<br/>
-            With your beloved shots. 
+            With your beloved shots.
           </Typography>
-          <br/>
+          
           <Paper
             component="form"
-            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, mb: 13}}
+            sx={{ 
+              p: '2px 4px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              width: '100%', 
+              mb: 15, 
+              mt:2,
+              '@media (min-width: 600px)': {
+                width: 500,
+              }
+            }}
           >
 
             <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="Search..."
+              sx={{ ml: 1, flex: 1}}
+              placeholder="What type of photos can I look for you?"
               inputProps={{ 'aria-label': 'search google maps' }}
             />
             <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
