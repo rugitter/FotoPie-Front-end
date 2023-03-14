@@ -5,8 +5,8 @@ import axiosRequest from "../../src/utils/axiosRequest";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import NavBar from "../../src/components/NavBar";
-import Gallery from "../../src/components/profile/gallery";
-import Collection from "../../src/components/profile/collection";
+import Gallery from "../../src/components/profile/Gallery";
+import Collection from "../../src/components/profile/Collection";
 
 export default function ProfilePage() {
   const [lastName, setLastName] = useState("");
