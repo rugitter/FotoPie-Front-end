@@ -28,7 +28,6 @@ export default function Gallery(props: GalleryProps) {
     axiosRequest(`/api/profile/${id}`, "GET").then((res) => {
       const image = res.data.map((image: ResponseImageData) => (image.imageUrl
       ))
-      console.log(image);
       setGalleryPosts(image);
 
     });
