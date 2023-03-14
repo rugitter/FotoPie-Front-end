@@ -93,7 +93,7 @@ export default function ProfilePage() {
           </Grid>
         </Grid>
 
-        <Grid>
+        <Grid sx={{m:5}}>
           {isGallery ? (
             <Gallery id={id as string} />
           ) : (
