@@ -17,7 +17,7 @@ import FormTextField from "../src/components/textField/formTextField";
 import { useRouter } from "next/router";
 import { login } from "../src/axiosRequest/api/user";
 import { setAccessToken } from "../src/utils/token";
-
+import Alert from "@mui/material/Alert";
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -35,7 +35,7 @@ const formSchema: Schema<IFormInput> = object({
 export default function SignIn() {
   const router = useRouter();
 
-  const [loginError, setLoginError] = useState(null);
+  const [loginError, setLoginError] = useState("");
 
   // Use the useForm hook to create a form controller
   const methods = useForm<IFormInput>({
@@ -48,14 +48,17 @@ export default function SignIn() {
       setAccessToken(res.data.access_token);
       router.push("/");
     } catch (err: any) {
-      setLoginError(err.message);
+
+      if (err.response.status === 403) {
+        setLoginError("Invalid email or password");
+      }
     }
   };
 
   return (
     <Container component="main" maxWidth="xs">
       {/*  TODO: add error message */}
-      <p>{loginError}</p>
+      {loginError ? <Alert severity="error">{loginError}</Alert> : null}
       <Box
         sx={{
           marginTop: 8,

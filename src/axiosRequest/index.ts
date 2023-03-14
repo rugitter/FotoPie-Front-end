@@ -12,7 +12,6 @@ axiosInstance.interceptors.request.use(
   function (config: any) {
     const accessToken = getAccessToken();
     accessToken && (config.headers["Authorization"] = `Bearer ${accessToken}`);
-
     return config;
   },
   function (error) {
@@ -37,6 +36,7 @@ axiosInstance.interceptors.response.use(
   function (error) {
     let message = "";
     if (error && error.response) {
+      console.log(error);
       switch (error.response.status) {
         case 302:
           message = "Redirect to other url";
