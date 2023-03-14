@@ -17,12 +17,24 @@ export default function Home () {
             ),
             url(../../background.jpg)`,
           backgroundSize:'cover',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          margin: 0,
+          padding: 0,
+          // overflow: 'hidden'
         }}
       >
-        <NavBar isFixed={true}/>
-        <Header />
+        <div 
+        style={{ maxWidth: '1200px', margin: '0 auto' }}
+        > 
+          <NavBar isFixed={true} />
+          <Header />
+        </div>
+        
       </Box>
-
+ 
       </Container>
   );
 };
