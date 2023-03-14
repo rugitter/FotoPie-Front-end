@@ -39,7 +39,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF", bgColor}: NavbarPro
       setIsLoggedIn(true)
       axiosRequest(`/api/editUser/me`, "GET").then((res) => {
       
-        setAvatarPath(res.data.data['avatarPath']);
+        setAvatarPath(res.data['avatarPath']);
         setId(res.data.id);
       });
 
