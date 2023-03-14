@@ -330,7 +330,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF", bgColor}: NavbarPro
               color="inherit"
             >
               <MenuIcon sx={{ color: fix ? 'black' : color}}/>
-            </IconButton>
+          </IconButton>
           </Box>
         </Toolbar>
       </AppBar>
