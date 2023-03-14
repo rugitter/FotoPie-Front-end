@@ -22,7 +22,7 @@ export default function ProfilePage() {
 
     getUserInfo(id).then((res) => {
       console.log(res);
-      if (id !== res.data.id) return router.push("/404");
+      // if (id !== res.data.id) return router.push("/404");
       setLastName(res.data.lastName);
       setFirstName(res.data.firstName);
       setAvatarPath(res.data.avatarPath);
