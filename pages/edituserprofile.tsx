@@ -80,9 +80,9 @@ export default function EditUserProfile() {
   useEffect(() => {
     getMe().then((res) => {
       console.log(res)
-      setLastName(res.lastName);
-      setFirstName(res.firstName);
-      setAvatar(res.avatarPath);
+      setLastName(res.data.lastName);
+      setFirstName(res.data.firstName);
+      setAvatar(res.data.avatarPath);
     });
   }, [avatar]);
 
@@ -98,7 +98,7 @@ export default function EditUserProfile() {
       const formData = new FormData();
       formData.append("file", file);
       upload(formData).then((res) => {
-        setAvatar(res.avatarPath);
+        setAvatar(res.data.avatarPath);
       });
     };
   };
@@ -127,7 +127,9 @@ export default function EditUserProfile() {
           {/*change avatar button*/}
           <Grid container spacing={10}>
             <Grid item xs={2}>
-              <Avatar src={avatar} sx={{ width: 130, height: 130 }}></Avatar>
+              {avatar ? (
+                <Avatar src={avatar} sx={{ width: 130, height: 130 }}></Avatar>
+              ) : null}
             </Grid>
             <Grid item xs={10}>
               <Button
@@ -160,22 +162,26 @@ export default function EditUserProfile() {
             <Grid container spacing={8}>
               <Grid item xs={6}>
                 <Typography variant="h6">First Name*</Typography>
-                <FormTextField
-                  name="firstName"
-                  label={firstName}
-                  id="firstName"
-                  autoComplete="firstName"
-                />
+                {firstName ? (
+                  <FormTextField
+                    name="firstName"
+                    label={firstName}
+                    id="firstName"
+                    autoComplete="firstName"
+                  />
+                ) : null}
               </Grid>
 
               <Grid item xs={6}>
                 <Typography variant="h6">Last Name*</Typography>
-                <FormTextField
-                  name="lastName"
-                  label={lastName}
-                  id="lastName"
-                  autoComplete="LastName"
-                />
+                {lastName ? (
+                  <FormTextField
+                    name="lastName"
+                    label={lastName}
+                    id="lastName"
+                    autoComplete="LastName"
+                  />
+                ) : null}
               </Grid>
             </Grid>
             <Typography variant="body1" color="grey">
