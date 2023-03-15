@@ -16,8 +16,7 @@ export default function Home() {
               rgba(0, 0, 0, 0.1)
             ),
             url(../../background.jpg)`,
-          
-         
+
           backgroundSize:'cover',
           position: 'absolute',
           top: 0,
@@ -36,10 +35,10 @@ export default function Home() {
           <NavBar isFixed={true} />
           <Header />
         </div>
-        
+
       </Box>
 
-
+      <PostList />
     </Container>
   );
 }
