@@ -79,9 +79,10 @@ export default function EditUserProfile() {
 
   useEffect(() => {
     getMe().then((res) => {
-      setLastName(res.data.lastName);
-      setFirstName(res.data.firstName);
-      setAvatar(res.data.avatarPath);
+      console.log(res)
+      setLastName(res.lastName);
+      setFirstName(res.firstName);
+      setAvatar(res.avatarPath);
     });
   }, [avatar]);
 
@@ -97,7 +98,7 @@ export default function EditUserProfile() {
       const formData = new FormData();
       formData.append("file", file);
       upload(formData).then((res) => {
-        setAvatar(res.data.avatarPath);
+        setAvatar(res.avatarPath);
       });
     };
   };
