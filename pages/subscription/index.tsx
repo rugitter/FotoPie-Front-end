@@ -6,6 +6,7 @@ export default function SubscriptionPage() {
     <>
       <h1>Click Here to Subscribe</h1>
       <SubscriptionButton />
+      <Copyright />
     </>
   );
 }
