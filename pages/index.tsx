@@ -16,6 +16,8 @@ export default function Home() {
               rgba(0, 0, 0, 0.1)
             ),
             url(../../background.jpg)`,
+          
+         
           backgroundSize:'cover',
           position: 'absolute',
           top: 0,
@@ -24,8 +26,10 @@ export default function Home() {
           margin: 0,
           padding: 0,
           // overflow: 'hidden'
+
         }}
       >
+
         <div 
         style={{ maxWidth: '1200px', margin: '0 auto' }}
         > 
@@ -34,7 +38,8 @@ export default function Home() {
         </div>
         
       </Box>
- 
-      </Container>
+
+
+    </Container>
   );
 }
