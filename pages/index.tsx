@@ -35,12 +35,10 @@ export default function Home() {
           <NavBar isFixed={true} />
           <Header />
         </div>
-        
 
       </Box>
 
       <PostList />
     </Container>
-
   );
 }
