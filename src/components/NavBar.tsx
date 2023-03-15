@@ -14,22 +14,37 @@ import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import UploadIcon from "@mui/icons-material/Upload";
 import LoginIcon from "@mui/icons-material/Login";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
+import axiosRequest from "../utils/axiosRequest";
+import axios from "axios";
 
 interface NavbarProps {
   isFixed: boolean;
   color?: string;
+  bgColor?: string;
 }
 
-export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
+export default function Navbar({
+  isFixed,
+  color = "#FFFFFF",
+  bgColor,
+}: NavbarProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [avatarPath, setAvatarPath] = useState("");
+  const [id, setId] = useState("");
 
   useEffect(() => {
-    // api/editProfile/me => res: avatar => setAvatar => avatar => src={avatar}
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
     if (accessToken !== null) {
+      setIsLoggedIn(true);
+      axiosRequest(`/api/editUser/me`, "GET").then((res) => {
+        setAvatarPath(res.data["avatarPath"]);
+        setId(res.data.id);
+      });
+
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
@@ -37,6 +52,11 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
   }, []);
 
   const removeToken = () => {
+    axios.post(`/api/auth/logout`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     setIsLoggedIn(false);
@@ -97,7 +117,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: "top",
+        vertical: "bottom",
         horizontal: "right",
       }}
       id={menuId}
@@ -122,7 +142,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: "top",
+        vertical: "bottom",
         horizontal: "right",
       }}
       id={mobileMenuId}
@@ -134,36 +154,48 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" color="inherit">
-          <Badge badgeContent={1} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <Avatar
-          alt="Avatar"
-          src="/profile.png"
-          onClick={handleProfileMenuOpen}
-          sx={{ width: 40, height: 40 }}
-        />
-
-        <p>Profile</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton size="large" color="inherit">
-          <UploadIcon />
-        </IconButton>
-        <p>Upload</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton size="large" color="inherit">
-          <LoginIcon />
-        </IconButton>
-        <p>Log In</p>
-      </MenuItem>
+      {isLoggedIn ? (
+        <Box>
+          <MenuItem>
+            <IconButton size="large" color="inherit">
+              <Badge badgeContent={1} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <p>Notifications</p>
+          </MenuItem>
+          <MenuItem onClick={handleProfileMenuOpen}>
+            <Avatar
+              alt="Avatar"
+              src={avatarPath}
+              onClick={handleProfileMenuOpen}
+              sx={{ width: 40, height: 40, marginRight: 1 }}
+            />
+            <p>Profile</p>
+          </MenuItem>
+          <MenuItem>
+            <IconButton size="large" color="inherit">
+              <UploadIcon />
+            </IconButton>
+            <p>Upload</p>
+          </MenuItem>
+          <MenuItem onClick={handleLogout}>
+            <IconButton size="large" color="inherit">
+              <LogoutOutlinedIcon />
+            </IconButton>
+            <p>Log Out</p>
+          </MenuItem>
+        </Box>
+      ) : (
+        <MenuItem>
+          <IconButton size="large" color="inherit">
+            <LoginIcon />
+          </IconButton>
+          <Link href="login" style={{ textDecoration: "none" }}>
+            Log In
+          </Link>
+        </MenuItem>
+      )}
     </Menu>
   );
 
@@ -174,14 +206,31 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
         elevation={0}
         sx={{
           position: fix ? "fixed" : "relative",
-          bgcolor: fix ? "#FFFFFF" : "",
+          bgcolor: bgColor || (fix ? "#f8f8ff" : "transparent"),
         }}
       >
-        <Toolbar>
+        <Toolbar
+          sx={{
+            marginTop: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           {/* Logo  */}
-          <Link href="/">
+          <Link
+            href="/"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              "&:hover": {
+                opacity: 0.8,
+              },
+            }}
+          >
             <img
-              src="/logo.jpg"
+              src="/logo.png"
               style={{ borderRadius: 10 }}
               alt="Fotopie_Logo"
               width={45}
@@ -208,7 +257,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
           <Box
             sx={{
               display: { xs: "none", md: "flex" },
-              flexGrow: 0.05,
+              flexGrow: 0.12,
               justifyContent: "space-between",
             }}
           >
@@ -218,31 +267,50 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
                   display: { xs: "none", md: "flex" },
                   flexGrow: 1,
                   justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
                 {/* notifications */}
                 <IconButton size="large" color="inherit">
                   <Badge badgeContent={1} color="error">
-                    <NotificationsIcon />
+                    <NotificationsIcon
+                      sx={{
+                        color: fix ? "black" : color,
+                        "&:hover": {
+                          opacity: 0.8,
+                        },
+                      }}
+                    />
                   </Badge>
                 </IconButton>
 
                 {/* User Profile */}
                 <Avatar
                   alt="Avatar"
-                  src="/profile.png"
+                  src={avatarPath}
                   onClick={handleProfileMenuOpen}
-                  sx={{ width: 40, height: 40 }}
+                  sx={{
+                    width: 40,
+                    height: 40,
+                    "&:hover": {
+                      opacity: 0.8,
+                    },
+                  }}
                 />
 
                 <Button
                   variant="contained"
                   href="upload"
                   sx={{
-                    bgcolor: fix ? "primary.main" : "gray",
+                    bgcolor: fix ? "#F4DADA" : "#FBF1F1",
+                    "&:hover": {
+                      backgroundColor: "#F4DADA",
+                    },
                   }}
                 >
-                  Upload
+                  <Link href="upload" underline="none">
+                    Upload
+                  </Link>
                 </Button>
               </Box>
             ) : (
@@ -250,10 +318,12 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
                 variant="contained"
                 color="success"
                 sx={{
-                  bgcolor: fix ? "#3CB371" : "white",
+                  bgcolor: fix ? "#F4DADA" : "#FBF1F1",
                 }}
               >
-                <Link href="login">Log In</Link>
+                <Link href="login" underline="none">
+                  Log In
+                </Link>
               </Button>
             )}
           </Box>
@@ -266,7 +336,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF" }: NavbarProps) {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MenuIcon />
+              <MenuIcon sx={{ color: fix ? "black" : color }} />
             </IconButton>
           </Box>
         </Toolbar>
