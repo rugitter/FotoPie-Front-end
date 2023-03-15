@@ -16,13 +16,47 @@ export default function Home() {
               rgba(0, 0, 0, 0.1)
             ),
             url(../../background.jpg)`,
+<<<<<<< HEAD
           backgroundSize: "cover",
+||||||| f5e0c9d
+          backgroundSize:'cover',
+=======
+          backgroundSize:'cover',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          margin: 0,
+          padding: 0,
+          // overflow: 'hidden'
+>>>>>>> dev
         }}
       >
+<<<<<<< HEAD
         <NavBar isFixed={true} />
         <Header />
+||||||| f5e0c9d
+        <NavBar isFixed={true}/>
+        <Header />
+=======
+        <div 
+        style={{ maxWidth: '1200px', margin: '0 auto' }}
+        > 
+          <NavBar isFixed={true} />
+          <Header />
+        </div>
+        
+>>>>>>> dev
       </Box>
+<<<<<<< HEAD
       <PostList />
     </Container>
+||||||| f5e0c9d
+
+      </Container>
+=======
+ 
+      </Container>
+>>>>>>> dev
   );
 }
