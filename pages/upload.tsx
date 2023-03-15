@@ -1,9 +1,6 @@
 import { StrictMode } from "react";
 import React, { useState } from "react";
-
-
 import NavBar from "../src/components/NavBar"
-
 import Button from "@mui/material/Button";
 import { AttachMoney } from "@mui/icons-material"
 import CssBaseline from "@mui/material/CssBaseline";
@@ -21,10 +18,8 @@ import FormTextField from "../src/components/textField/formTextField"
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
 import InputAdornment from '@mui/material/InputAdornment'
-// import Uploader from "./uploader";
 import * as yup from 'yup';
 import axiosRequest from "../src/utils/axiosRequest";
-// Define a type with the shape of the form values
 import 'react-dropzone-uploader/dist/styles.css'
 import Dropzone, { IFileWithMeta, StatusValue } from 'react-dropzone-uploader';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
