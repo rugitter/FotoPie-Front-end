@@ -10,6 +10,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../Loader/Loader";
 import Masonry from "@mui/lab/Masonry";
 import NoMore from "../Loader/NoMore";
+import { profileCollection } from "../../axiosRequest/api/profileCollection";
 
 interface CollectionProps {
   id: string;
@@ -30,10 +31,13 @@ export default function Collection(props: CollectionProps) {
   const [Error, setError] = useState(null);
 
   let limit = 10;
+
+  let id = props.id;
   const fetchImages = async () => {
-    try {
+    {
+      /*try {
       const res = await axiosRequest(
-        `/api/user-collect/${props.id}?page=${page}&limit=${limit}`,
+        `/api/user-collect/${id}?page=${page}&limit=${limit}`,
         "GET"
       );
       if (res.status === 200) {
@@ -41,11 +45,18 @@ export default function Collection(props: CollectionProps) {
         setPage(page + 1);
         if ([...res.data].length === 0) {
           setLoaderHandler(false);
-        }
       }
     } catch (error: any) {
       setError(error.message);
+    }*/
     }
+    profileCollection(id, page, limit).then((res) => {
+      setCollection([...collection, ...res.data]);
+      setPage(page + 1);
+      if ([...res.data].length === 0) {
+        setLoaderHandler(false);
+      }
+    });
   };
   useEffect(() => {
     fetchImages();
@@ -55,18 +66,6 @@ export default function Collection(props: CollectionProps) {
     <>
       <h1>Collection</h1>
       {/*<h2>{props.id}</h2>*/}
-      {/*<ImageList sx={{ width: 1000, height: 900 }} cols={3} rowHeight={328}>
-        {collection.map((item) => (
-          <ImageListItem key={item}>
-            <img
-              src={`${item}?w=328&h=328&fit=crop&auto=format`}
-              srcSet={`${item}?w=328&h=328&fit=crop&auto=format&dpr=2 2x`}
-              
-              loading="lazy"
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>*/}
       <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
         <InfiniteScroll
           dataLength={collection.length}
