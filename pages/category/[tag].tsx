@@ -23,7 +23,7 @@ export default function CategoryInsidePage() {
   const { tag } = router.query;
   console.log({ tag });
  
-
+  
   const [category, setCategory] = useState<ResponseImageData[]>([]);
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
@@ -52,11 +52,20 @@ export default function CategoryInsidePage() {
   useEffect(() => {
     if (!router.isReady) return;
     fetchImages();
-  }, [tag]);
+    {/*categoryPosts(tag, page, limit).then((res) => {
+      console.log(res);
+      // if (id !== res.data.id) return router.push("/404");
+      setCategory([...category, ...res.data]);
+      setPage(page + 1);
+      if ([...res.data].length === 0) {
+        setLoaderHandler(false);
+      }
+    });*/}
+  }, [{ tag }]);
 
   return (
     <>
-      <h1>Category: '{tag}'</h1>
+      <h1>Category: '{tag} image'</h1>
       {/*<h2>{props.id}</h2>*/}
       <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
         <InfiniteScroll
@@ -65,15 +74,15 @@ export default function CategoryInsidePage() {
           hasMore={true}
           loader={loaderHandler ? <Loader /> : <NoMore />}
         >
-          <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
-            {category.map((category) => (
-              <Post
-                url={category.imageUrl}
-                filename={category.imageUrl}
-                key={category._id}
-              />
-            ))}
-          </Masonry>
+        <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
+          {category.map((category) => (
+            <Post
+              url={category.imageUrl}
+              filename={category.imageUrl}
+              key={category._id}
+            />
+          ))}
+        </Masonry>
         </InfiniteScroll>
       </Box>
     </>
