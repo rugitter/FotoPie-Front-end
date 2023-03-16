@@ -79,7 +79,6 @@ export default function EditUserProfile() {
 
   useEffect(() => {
     getMe().then((res) => {
-      console.log(res)
       setLastName(res.data.lastName);
       setFirstName(res.data.firstName);
       setAvatar(res.data.avatarPath);
