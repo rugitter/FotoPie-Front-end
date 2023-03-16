@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -15,12 +15,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
 import FormTextField from "../src/components/textField/formTextField";
 import { useRouter } from "next/router";
-import { login } from "../src/axiosRequest/api/user";
+import { useDispatch, useSelector } from "react-redux";
 import { setAccessToken } from "../src/utils/token";
 import Alert from "@mui/material/Alert";
+import { AppDispatch, RootState } from "../store/store";
+import { login } from "../store/auth/authAciton";
 
 // Define a type with the shape of the form values
-interface IFormInput {
+export interface IFormInput {
   email: string;
   password: string;
 }
@@ -32,36 +34,36 @@ const formSchema: Schema<IFormInput> = object({
 });
 
 // Define a component that renders the form
-export default function SignIn() {
+export default function LogIn() {
   const router = useRouter();
-
-  const [loginError, setLoginError] = useState("");
+  const { status, error } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch<AppDispatch>();
 
   // Use the useForm hook to create a form controller
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
   });
   // Define a submit handler for the form
-  const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-    try {
-      const res = await login(data);
-      setAccessToken(res.data.access_token);
-      router.push("/");
-    } catch (err: any) {
-
-      if (err.response.status === 403) {
-        setLoginError("Invalid email or password");
-      }
-    }
+  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+    dispatch(login(data));
   };
+
+  useEffect(() => {
+    if (status === "success") {
+      router.push("/");
+    }
+  }, [status]);
 
   return (
     <Container component="main" maxWidth="xs">
-      {/*  TODO: add error message */}
-      {loginError ? <Alert severity="error">{loginError}</Alert> : null}
+      {error && (
+        <Alert variant="filled" severity="error" sx={{ mt: 2 }}>
+          {error}
+        </Alert>
+      )}
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 3,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -105,7 +107,7 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Log In
+              {status === "loading" ? "Loading..." : "Log In"}
             </Button>
             <Grid container>
               <Grid item xs>
