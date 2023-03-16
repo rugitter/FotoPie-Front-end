@@ -33,7 +33,7 @@ export default function Collection(props: CollectionProps) {
   let limit = 10;
 
   let id = props.id;
-  const fetchImages = async () => {
+  const fetchImages = () => {
     {
       /*try {
       const res = await axiosRequest(
