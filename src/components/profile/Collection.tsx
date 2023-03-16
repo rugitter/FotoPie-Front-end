@@ -33,9 +33,9 @@ export default function Collection(props: CollectionProps) {
   let limit = 10;
 
   let id = props.id;
-  const fetchImages = () => {
-    {
-      /*try {
+  const fetchImages = async () => {
+    
+    {/*try {
       const res = await axiosRequest(
         `/api/user-collect/${id}?page=${page}&limit=${limit}`,
         "GET"
@@ -48,16 +48,22 @@ export default function Collection(props: CollectionProps) {
       }
     } catch (error: any) {
       setError(error.message);
-    }*/
-    }
-    profileCollection(id, page, limit).then((res) => {
-      setCollection([...collection, ...res.data]);
-      setPage(page + 1);
-      if ([...res.data].length === 0) {
-        setLoaderHandler(false);
+    }*/}
+
+    try {
+      const res = await profileCollection(id, page, limit);
+      if (res.status === 200) {
+        setCollection([...collection, ...res.data]);
+        setPage(page + 1);
+        if ([...res.data].length === 0) {
+          setLoaderHandler(false);
+        }
       }
-    });
+    } catch (error: any) {
+      setError(error.message);
+    }    
   };
+    
   useEffect(() => {
     fetchImages();
   }, []);
