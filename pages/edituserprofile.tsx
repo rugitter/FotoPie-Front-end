@@ -183,22 +183,22 @@ export default function EditUserProfile() {
             <Grid container spacing={8}>
               <Grid item xs={6}>
                 <Typography variant="h6">First Name*</Typography>               
-                  <FormTextField
-                    name="firstName"
-                    label={firstName}
-                    id="firstName"
-                    autoComplete="firstName"
-                  />
+                <FormTextField
+                  name="firstName"
+                  label={firstName}
+                  id="firstName"
+                  autoComplete="firstName"
+                />
               </Grid>
 
               <Grid item xs={6}>
                 <Typography variant="h6">Last Name*</Typography>
-                  <FormTextField
-                    name="lastName"
-                    label={lastName}
-                    id="lastName"
-                    autoComplete="lastName"
-                  />
+                <FormTextField
+                  name="lastName"
+                  label={lastName}
+                  id="lastName"
+                  autoComplete="lastName"
+                />
               </Grid>
             </Grid>
             <Typography variant="body1" color="grey">
