@@ -87,7 +87,19 @@ export default function EditUserProfile() {
 
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-    updateName(data);
+    try {
+      const response = await updateName(data);
+
+      if (response.status === 200) {
+        router.push("/edituserprofile");
+      }
+    } catch (error) {
+      <Alert severity="error">
+        <AlertTitle>Error</AlertTitle>
+        Error occurred, unknown origin — <strong>check it out!</strong>
+      </Alert>;
+      console.log(error);
+    }
   };
 
   const handleFileUpload = async (event: MouseEvent) => {
@@ -96,9 +108,18 @@ export default function EditUserProfile() {
       const file = fileInput.files[0];
       const formData = new FormData();
       formData.append("file", file);
-      upload(formData).then((res) => {
-        setAvatar(res.data.avatarPath);
-      });
+      try {
+        const response = await upload(formData);
+        if (response.status === 200) {
+          setAvatar(response.data.avatarPath);
+        }
+      } catch (error) {
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          Error occurred, unknown origin — <strong>check it out!</strong>
+        </Alert>;
+        console.error(error);
+      }
     };
   };
 
@@ -126,7 +147,9 @@ export default function EditUserProfile() {
           {/*change avatar button*/}
           <Grid container spacing={10}>
             <Grid item xs={2}>
-              <Avatar src={avatar} sx={{ width: 130, height: 130 }}></Avatar>
+              {avatar ? (
+                <Avatar src={avatar} sx={{ width: 130, height: 130 }}></Avatar>
+              ) : null}
             </Grid>
             <Grid item xs={10}>
               <Button
@@ -158,7 +181,7 @@ export default function EditUserProfile() {
 
             <Grid container spacing={8}>
               <Grid item xs={6}>
-                <Typography variant="h6">First Name*</Typography>
+                <Typography variant="h6">First Name*</Typography>               
                 <FormTextField
                   name="firstName"
                   label={firstName}
@@ -173,7 +196,7 @@ export default function EditUserProfile() {
                   name="lastName"
                   label={lastName}
                   id="lastName"
-                  autoComplete="LastName"
+                  autoComplete="lastName"
                 />
               </Grid>
             </Grid>
