@@ -1,5 +1,6 @@
 import { Button, Container, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Post from "../../src/components/PostList/Post";
@@ -9,6 +10,7 @@ import Masonry from "@mui/lab/Masonry";
 import NoMore from "../../src/components/Loader/NoMore";
 import { categoryPosts } from "../../src/axiosRequest/api/category";
 import NavBar from "../../src/components/NavBar";
+import Stack from "@mui/material/Stack";
 
 interface ResponseImageData {
   _id: string;
@@ -67,7 +69,46 @@ export default function CategoryInsidePage() {
   return (
     <>
       <NavBar isFixed={false} color="#000000" />
-      <h1>Category: '{tag} image'</h1>
+      <Typography
+        variant="h3"
+        sx={{
+          ml: 5,
+          mt: 5,
+          fontWeight: 500,
+          //fontStyle: "italic",
+          //fontFamily: "Monospace",
+        }}
+      >
+        Category: '{tag} image'
+      </Typography>
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        spacing={{ xs: 1, sm: 4, md: 6 }}
+        sx={{ ml: 5, mt: 7 }}
+      >
+        <Button variant="outlined" href="#contained-buttons" color="secondary">
+          Search Tag1
+        </Button>
+        <Button variant="outlined" href="#contained-buttons" color="secondary">
+          Search Tag2
+        </Button>
+        <Button variant="outlined" href="#contained-buttons" color="secondary">
+          Search Tag3
+        </Button>
+        <Button variant="outlined" href="#contained-buttons">
+          Search Tag4
+        </Button>
+        <Button variant="outlined" href="#contained-buttons">
+          Search Tag5
+        </Button>
+        <Button variant="outlined" href="#contained-buttons">
+          Search Tag6
+        </Button>
+        <Button variant="outlined" href="#contained-buttons">
+          Search Tag7
+        </Button>
+      </Stack>
+      {/*<h1>Category: '{tag} image'</h1>*/}
       {/*<h2>{props.id}</h2>*/}
       <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
         <InfiniteScroll
@@ -76,7 +117,11 @@ export default function CategoryInsidePage() {
           hasMore={true}
           loader={loaderHandler ? <Loader /> : <NoMore />}
         >
-          <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
+          <Masonry
+            columns={{ sm: 2, md: 3 }}
+            spacing={2}
+            sx={{ m: "auto", mt: 15 }}
+          >
             {category.map((category) => (
               <Post
                 url={category.imageUrl}

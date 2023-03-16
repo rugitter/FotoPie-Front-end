@@ -13,10 +13,10 @@ const PhotoCategory: React.FC = () => {
             <h3 className={styles.tag}>Mars</h3>
           </div>
           <div className={styles.singleBox}>
-            <a href="/category/house">
+            <a href="/category/building">
               <img src="/category-photos/2.jpg" alt="image" />
             </a>
-            <h3 className={styles.tag}>House</h3>
+            <h3 className={styles.tag}>Building</h3>
           </div>
           <div className={styles.singleBox}>
             <a href="/category/flowers">
