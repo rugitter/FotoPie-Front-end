@@ -88,7 +88,19 @@ export default function EditUserProfile() {
 
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-    updateName(data);
+    try {
+      const response = await updateName(data);
+
+      if (response.status === 200) {
+        router.push("/edituserprofile");
+      }
+    } catch (error) {
+      <Alert severity="error">
+        <AlertTitle>Error</AlertTitle>
+        Error occurred, unknown origin — <strong>check it out!</strong>
+      </Alert>;
+      console.log(error);
+    }
   };
 
   const handleFileUpload = async (event: MouseEvent) => {
@@ -97,9 +109,18 @@ export default function EditUserProfile() {
       const file = fileInput.files[0];
       const formData = new FormData();
       formData.append("file", file);
-      upload(formData).then((res) => {
-        setAvatar(res.data.avatarPath);
-      });
+      try {
+        const response = await upload(formData);
+        if (response.status === 200) {
+          setAvatar(response.data.avatarPath);
+        }
+      } catch (error) {
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          Error occurred, unknown origin — <strong>check it out!</strong>
+        </Alert>;
+        console.error(error);
+      }
     };
   };
 
@@ -161,27 +182,23 @@ export default function EditUserProfile() {
 
             <Grid container spacing={8}>
               <Grid item xs={6}>
-                <Typography variant="h6">First Name*</Typography>
-                {firstName ? (
+                <Typography variant="h6">First Name*</Typography>               
                   <FormTextField
                     name="firstName"
                     label={firstName}
                     id="firstName"
                     autoComplete="firstName"
                   />
-                ) : null}
               </Grid>
 
               <Grid item xs={6}>
                 <Typography variant="h6">Last Name*</Typography>
-                {lastName ? (
                   <FormTextField
                     name="lastName"
                     label={lastName}
                     id="lastName"
-                    autoComplete="LastName"
+                    autoComplete="lastName"
                   />
-                ) : null}
               </Grid>
             </Grid>
             <Typography variant="body1" color="grey">
