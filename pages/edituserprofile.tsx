@@ -87,7 +87,7 @@ export default function EditUserProfile() {
 
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-    updateName(data);
+    await updateName(data);
   };
 
   const handleFileUpload = async (event: MouseEvent) => {
@@ -96,7 +96,7 @@ export default function EditUserProfile() {
       const file = fileInput.files[0];
       const formData = new FormData();
       formData.append("file", file);
-      upload(formData).then((res) => {
+      await upload(formData).then((res) => {
         setAvatar(res.data.avatarPath);
       });
     };
