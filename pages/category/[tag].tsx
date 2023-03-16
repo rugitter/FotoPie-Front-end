@@ -8,6 +8,7 @@ import Loader from "../../src/components/Loader/Loader";
 import Masonry from "@mui/lab/Masonry";
 import NoMore from "../../src/components/Loader/NoMore";
 import { categoryPosts } from "../../src/axiosRequest/api/category";
+import NavBar from "../../src/components/NavBar";
 
 interface ResponseImageData {
   _id: string;
@@ -65,6 +66,7 @@ export default function CategoryInsidePage() {
 
   return (
     <>
+      <NavBar isFixed={false} color="#000000" />
       <h1>Category: '{tag} image'</h1>
       {/*<h2>{props.id}</h2>*/}
       <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
@@ -74,15 +76,15 @@ export default function CategoryInsidePage() {
           hasMore={true}
           loader={loaderHandler ? <Loader /> : <NoMore />}
         >
-        <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
-          {category.map((category) => (
-            <Post
-              url={category.imageUrl}
-              filename={category.imageUrl}
-              key={category._id}
-            />
-          ))}
-        </Masonry>
+          <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
+            {category.map((category) => (
+              <Post
+                url={category.imageUrl}
+                filename={category.imageUrl}
+                key={category._id}
+              />
+            ))}
+          </Masonry>
         </InfiniteScroll>
       </Box>
     </>
