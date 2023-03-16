@@ -9,6 +9,9 @@ export function middleware(req: NextRequest) {
     if (pathname.startsWith("/edituserprofile")) {
       return NextResponse.redirect(new URL("/login", req.nextUrl));
     }
+    if (pathname.startsWith("/upload")) {
+      return NextResponse.redirect(new URL("/login", req.nextUrl));
+    }
   }
   return NextResponse.next();
 }

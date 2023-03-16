@@ -25,6 +25,7 @@ import Dropzone, { IFileWithMeta, StatusValue } from 'react-dropzone-uploader';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faImages} from "@fortawesome/free-solid-svg-icons";
 import axios, { AxiosRequestConfig, Method } from "axios";
+import { uploadPhoto, uploadPost } from "../src/axiosRequest/api/posts";
 
 
 interface IFormInput {
@@ -56,9 +57,7 @@ export default function Upload() {
       formData.append("file", file.file);
       
       try {
-        const response = await axiosRequest("api/posts/upload", "PATCH", 
-          formData  
-        );
+        const response = await uploadPhoto(formData);
         console.log(response.data.filename, response.data.original_path, response.data.compression_path);
         setUploadfileName(response.data.filename);
         setOrginalFilePath(response.data.original_path)
@@ -91,7 +90,7 @@ export default function Upload() {
     console.log(filename);
    
 
-      const response = await axiosRequest("/api/posts/sent", "POST", {
+      const response = await uploadPost({
         ...data,
         filename: filename,
         orginalFilePath: OrginalFilePath,
