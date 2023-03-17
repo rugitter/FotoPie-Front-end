@@ -26,32 +26,28 @@ export default function CategoryInsidePage() {
   const router = useRouter();
   const { tag } = router.query;
   const tagString = tag as string;
-  //console.log({ tag });
+  console.log({ tag });
 
   const [category, setCategory] = useState<ResponseImageData[]>([]);
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
+
   const [Error, setError] = useState(null);
+
   const [links, setLinks] = useState([]);
+
   let limit = 10;
 
 
   const fetchImages = async () => {
     try {
-      //console.log(tag);
       const res = await categoryPosts(tag, page, limit);
       if (res.status === 200) {
-        
         setCategory([...category, ...res.data]);
-        console.log(category[0].tag);
         setPage(page + 1);
         if ([...res.data].length === 0) {
           setLoaderHandler(false);
         }
-        console.log(tag);
-        console.log(category[0].tag);
-        
-        
       }
     } catch (error: any) {
       setError(error.message);
@@ -79,6 +75,7 @@ export default function CategoryInsidePage() {
   useEffect(() => {
     if (!router.isReady) return;
     getSynonyms(tagString).then((result) => {
+      // Use the resolved value here
       console.log(result);
       setLinks(result);
     });
@@ -116,7 +113,6 @@ export default function CategoryInsidePage() {
           </Link>
         ))}
       </Stack>
-      
       {/*<h1>Category: '{tag} image'</h1>*/}
       <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
         <InfiniteScroll
