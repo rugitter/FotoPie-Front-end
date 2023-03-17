@@ -87,32 +87,32 @@ type Notification = {
       alignItems:'center',
       bgcolor:'secondary' }}
       >
-        <Item sx={{
-        display:'flex',
-        justifyContent:'space-evenly',
-        alignItems:'center',
-        width:'70%',
-        color:'primary',
-        }}
-        style={{backgroundColor:deleteMark ? "#e8d3ff" : "white"}}> 
-            <Box sx={{
-        display: 'flexbox',
-        flexDirection:'row',
-        alignItem:'center',
-        color:'primary',
-        }}>
+          <Box sx={{width:"90%", display:"flex",flexDirection:"column", alignItem:"center",justifyContent:"center"}}>
 
           {notifications.slice(0,10).map((notification)=>(
-            <Box key={notification.id}>
+            <Box key={notification.id} sx={{display:"flex",justifyContent:"center"}}>
+              <Item sx={{
+                display:'flex',
+                justifyContent:'space-evenly',
+                alignItems:'center',
+                width:'70%',
+                color:'primary',
+                margin:'1px'
+              }}>
+              <Box sx={{
+                display: 'flexbox',
+                flexDirection:'row',
+                alignItem:'center',
+                color:'primary',
+                }}>
               <Avatar alt="avatar" src={notification.userAvatar}/>
               <Typography>{notification.userName}</Typography>
+              </Box>
+               Liked Your Post
+              <img alt="image" src={notification.post} width={50} height={45}/>
+              </Item>
             </Box>
           ))}
-
-          {/* fetch Avatar Username and Posts */}
-            {/* <Avatar alt="avatar" src={getAvatar[0]}>
-            </Avatar>
-            <Typography>{getUsername[0]}</Typography> */}
             </Box>
 
             {/* <Typography>
@@ -135,7 +135,7 @@ type Notification = {
           >
             <CloseIcon  />
             </IconButton> */}
-        </Item>
+        
       </Stack>
 
     </Box>
