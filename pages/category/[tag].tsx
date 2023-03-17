@@ -41,11 +41,17 @@ export default function CategoryInsidePage() {
       //console.log(tag);
       const res = await categoryPosts(tag, page, limit);
       if (res.status === 200) {
+        
         setCategory([...category, ...res.data]);
+        console.log(category[0].tag);
         setPage(page + 1);
         if ([...res.data].length === 0) {
           setLoaderHandler(false);
         }
+        console.log(tag);
+        console.log(category[0].tag);
+        
+        
       }
     } catch (error: any) {
       setError(error.message);
