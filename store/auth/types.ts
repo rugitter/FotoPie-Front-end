@@ -3,8 +3,3 @@ export interface AuthState {
   error: string | null;
   status: "idle" | "loading" | "success" | "failed";
 }
-
-export interface LoginPayload {
-  email: string;
-  password: string;
-}

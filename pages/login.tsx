@@ -36,7 +36,9 @@ const formSchema: Schema<IFormInput> = object({
 // Define a component that renders the form
 export default function LogIn() {
   const router = useRouter();
-  const { status, error } = useSelector((state: RootState) => state.auth);
+  const { status, error, isAuthenticated } = useSelector(
+    (state: RootState) => state.auth
+  );
   const dispatch = useDispatch<AppDispatch>();
 
   // Use the useForm hook to create a form controller
@@ -49,7 +51,7 @@ export default function LogIn() {
   };
 
   useEffect(() => {
-    if (status === "success") {
+    if (isAuthenticated) {
       router.push("/");
     }
   }, [status]);

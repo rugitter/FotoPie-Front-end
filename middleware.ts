@@ -6,7 +6,9 @@ export function middleware(req: NextRequest) {
   const isAuth = req.cookies.has("accessToken");
 
   if (!isAuth) {
-    if (pathname.startsWith("/edituserprofile" || "/upload")) {
+    if (pathname.startsWith("/edituserprofile")) {
+      return NextResponse.redirect(new URL("/login", req.nextUrl));
+    } else if (pathname.startsWith("/upload")) {
       return NextResponse.redirect(new URL("/login", req.nextUrl));
     }
   } else {
