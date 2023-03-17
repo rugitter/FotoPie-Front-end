@@ -11,6 +11,7 @@ import NoMore from "../../src/components/Loader/NoMore";
 import { categoryPosts } from "../../src/axiosRequest/api/category";
 import NavBar from "../../src/components/NavBar";
 import Stack from "@mui/material/Stack";
+import Link from "next/link";
 
 interface ResponseImageData {
   _id: string;
@@ -24,22 +25,21 @@ interface ResponseImageData {
 export default function CategoryInsidePage() {
   const router = useRouter();
   const { tag } = router.query;
-  console.log({ tag });
- 
-  
+  const tagString = tag as string;
+  //console.log({ tag });
+
   const [category, setCategory] = useState<ResponseImageData[]>([]);
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
-
   const [Error, setError] = useState(null);
-
+  const [links, setLinks] = useState([]);
   let limit = 10;
 
-  //let id = props.id;
+
   const fetchImages = async () => {
     try {
       //console.log(tag);
-      const res = await categoryPosts( tag  , page, limit);
+      const res = await categoryPosts(tag, page, limit);
       if (res.status === 200) {
         setCategory([...category, ...res.data]);
         setPage(page + 1);
@@ -52,19 +52,33 @@ export default function CategoryInsidePage() {
     }
   };
 
+  const getSynonyms = async (word: string) => {
+    try {
+      const response = await fetch(
+        `https://words.bighugelabs.com/api/2/3f3f84727a0ebebcff3c969e871a286a/${word}/json`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      const synonyms = data?.noun?.syn || data?.verb?.syn || [];
+      // check if the response contains synonyms for the noun or verb form of the word, otherwise return an empty array
+      return synonyms;
+    } catch (error) {
+      console.error("Error fetching synonyms:", error);
+      return [];
+    }
+  };
+
   useEffect(() => {
     if (!router.isReady) return;
+    getSynonyms(tagString).then((result) => {
+      console.log(result);
+      setLinks(result);
+    });
     fetchImages();
-    {/*categoryPosts(tag, page, limit).then((res) => {
-      console.log(res);
-      // if (id !== res.data.id) return router.push("/404");
-      setCategory([...category, ...res.data]);
-      setPage(page + 1);
-      if ([...res.data].length === 0) {
-        setLoaderHandler(false);
-      }
-    });*/}
-  }, [{ tag }]);
+    //}
+  }, [tag]);
 
   return (
     <>
@@ -75,8 +89,6 @@ export default function CategoryInsidePage() {
           ml: 5,
           mt: 5,
           fontWeight: 500,
-          //fontStyle: "italic",
-          //fontFamily: "Monospace",
         }}
       >
         Category: '{tag} image'
@@ -86,36 +98,27 @@ export default function CategoryInsidePage() {
         spacing={{ xs: 1, sm: 4, md: 6 }}
         sx={{ ml: 5, mt: 7 }}
       >
-        <Button variant="outlined" href="#contained-buttons" color="secondary">
-          Search Tag1
-        </Button>
-        <Button variant="outlined" href="#contained-buttons" color="secondary">
-          Search Tag2
-        </Button>
-        <Button variant="outlined" href="#contained-buttons" color="secondary">
-          Search Tag3
-        </Button>
-        <Button variant="outlined" href="#contained-buttons">
-          Search Tag4
-        </Button>
-        <Button variant="outlined" href="#contained-buttons">
-          Search Tag5
-        </Button>
-        <Button variant="outlined" href="#contained-buttons">
-          Search Tag6
-        </Button>
-        <Button variant="outlined" href="#contained-buttons">
-          Search Tag7
-        </Button>
+        {links.map((link) => (
+          <Link key={link} href={`/category/${link}`} passHref>
+            <Button
+              variant="outlined"
+              href="#contained-buttons"
+              color="primary"
+            >
+              {link}
+            </Button>
+          </Link>
+        ))}
       </Stack>
+      
       {/*<h1>Category: '{tag} image'</h1>*/}
-      {/*<h2>{props.id}</h2>*/}
       <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
         <InfiniteScroll
           dataLength={category.length}
           next={fetchImages}
           hasMore={true}
           loader={loaderHandler ? <Loader /> : <NoMore />}
+          //scrollThreshold={0.9}
         >
           <Masonry
             columns={{ sm: 2, md: 3 }}
