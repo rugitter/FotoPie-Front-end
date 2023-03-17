@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import { styled, makeStyles } from '@mui/material/styles';
 import { Avatar, Typography } from '@mui/material';
 import { flexbox } from '@mui/system';
-import { Big_Shoulders_Text } from '@next/font/google';
+// import { Big_Shoulders_Text } from '@next/font/google';
 import axios from 'axios';
 import axiosRequest from '../../utils/axiosRequest';
 import {useState, useEffect} from 'react';
@@ -26,30 +26,37 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 export default function BasicStack() {
-  const[getAvatar, setGetAvatar]= useState([]);
-  const[getUsername, setGetUsername]= useState([]);
-  const[getPost, setGetPost]= useState([]);
+  // const[getAvatar, setGetAvatar]= useState([]);
+  // const[getUsername, setGetUsername]= useState([]);
+  // const[getPost, setGetPost]= useState([]);
+type Notification = {
+  id: number;
+  userAvatar: string;
+  userName: string;
+  post: string;
+};
+  const [notifications, setNotifications]= useState<Notification[]>([]);
 
   const[deleteMark, setDeleteMark]= useState(true);
   const[deleteIcon, setDeleteIcon]= useState(true);
-
 
   useEffect(()=>{
     const fetchData = async () =>{
       try{
         // Get User Avatar from User Schema
-        const userResponse = await axiosRequest('/api/user',"GET");
-        const postResponse = await axiosRequest('/api/post',"GET");
-        console.log(userResponse,postResponse);
-        setGetAvatar(userResponse.data.avatar)
-        setGetUsername(postResponse.data.username)
-        setGetPost(postResponse.data.post)
+        const Response = await axiosRequest('/api/notification/latest',"GET")
+        console.log(Response)
+        // setGetAvatar(Response.data.userAvatar)
+        // setGetUsername(Response.data.userName)
+        // setGetPost(Response.data.post)
+        setNotifications(Response.data)
       }
       catch (error:any){
         console.log(error)
-      }
-      fetchData();
+      } 
     } 
+    fetchData();
+      // setInterval(fetchData, 5000)
   },[])
 
     const onClickCloseButton= ()=>{
@@ -94,19 +101,27 @@ export default function BasicStack() {
         alignItem:'center',
         color:'primary',
         }}>
+
+          {notifications.slice(0,10).map((notification)=>(
+            <Box key={notification.id}>
+              <Avatar alt="avatar" src={notification.userAvatar}/>
+              <Typography>{notification.userName}</Typography>
+            </Box>
+          ))}
+
           {/* fetch Avatar Username and Posts */}
-            <Avatar alt="avatar" src={getAvatar[0]}>
+            {/* <Avatar alt="avatar" src={getAvatar[0]}>
             </Avatar>
-            <Typography>{getUsername[0]}</Typography>
+            <Typography>{getUsername[0]}</Typography> */}
             </Box>
 
-            <Typography>
+            {/* <Typography>
             Liked Your
             </Typography>
 
             <Box>
-            <Image alt="image" src={getPost[0]} style={{height:10, width:10}}/>
-            </Box>
+            <img alt="image" src={getPost[0]} width={40} height={40}/>
+            </Box> */}
             
             {/* <IconButton
             size="small"
@@ -123,166 +138,6 @@ export default function BasicStack() {
         </Item>
       </Stack>
 
-
-
-
-
-      <Stack spacing={5}
-      sx={{ 
-      display: 'flex', 
-      justifyContent:'center',
-      alignItems:'center',
-      bgcolor:'secondary' }}
-      >
-        <Item sx={{
-        display:'flex',
-        justifyContent:'space-evenly',
-        alignItems:'center',
-        width:'70%',
-        color:'primary',
-        }}
-        style={{backgroundColor:deleteMark ? "#e8d3ff" : "white"}}> 
-            <Box sx={{
-        display: 'flexbox',
-        flexDirection:'row',
-        alignItem:'center',
-        color:'primary',
-        }}>
-          {/* fetch Avatar Username and Posts */}
-            <Avatar alt="avatar" src={getAvatar[0]}>
-            </Avatar>
-            <Typography>{getUsername[0]}</Typography>
-            </Box>
-
-            <Typography>
-            Liked Your
-            </Typography>
-
-            <Box>
-            <Image alt="image" src={getPost[0]} style={{height:10, width:10}}/>
-            </Box>
-        
-        </Item>
-      </Stack>
-
-
-
-
-      <Stack spacing={5}
-      sx={{ 
-      display: 'flex', 
-      justifyContent:'center',
-      alignItems:'center',
-      bgcolor:'secondary' }}
-      >
-        <Item sx={{
-        display:'flex',
-        justifyContent:'space-evenly',
-        alignItems:'center',
-        width:'70%',
-        color:'primary',
-        }}
-        style={{backgroundColor:deleteMark ? "#e8d3ff" : "white"}}> 
-            <Box sx={{
-        display: 'flexbox',
-        flexDirection:'row',
-        alignItem:'center',
-        color:'primary',
-        }}>
-          {/* fetch Avatar Username and Posts */}
-            <Avatar alt="avatar" src={getAvatar[0]}>
-            </Avatar>
-            <Typography>{getUsername[0]}</Typography>
-            </Box>
-
-            <Typography>
-            Liked Your
-            </Typography>
-
-            <Box>
-            <Image alt="image" src={getPost[0]} style={{height:10, width:10}}/>
-            </Box>
-        
-        </Item>
-      </Stack>
-
-
-      <Stack spacing={5}
-      sx={{ 
-      display: 'flex', 
-      justifyContent:'center',
-      alignItems:'center',
-      bgcolor:'secondary' }}
-      >
-        <Item sx={{
-        display:'flex',
-        justifyContent:'space-evenly',
-        alignItems:'center',
-        width:'70%',
-        color:'primary',
-        }}
-        style={{backgroundColor:deleteMark ? "#e8d3ff" : "white"}}> 
-            <Box sx={{
-        display: 'flexbox',
-        flexDirection:'row',
-        alignItem:'center',
-        color:'primary',
-        }}>
-          {/* fetch Avatar Username and Posts */}
-            <Avatar alt="avatar" src={getAvatar[0]}>
-            </Avatar>
-            <Typography>{getUsername[0]}</Typography>
-            </Box>
-
-            <Typography>
-            Liked Your
-            </Typography>
-
-            <Box>
-            <Image alt="image" src={getPost[0]} width="10%"/>
-            </Box>
-        
-        </Item>
-      </Stack>
-
-
-      <Stack spacing={5}
-      sx={{ 
-      display: 'flex', 
-      justifyContent:'center',
-      alignItems:'center',
-      bgcolor:'secondary' }}
-      >
-        <Item sx={{
-        display:'flex',
-        justifyContent:'space-evenly',
-        alignItems:'center',
-        width:'70%',
-        color:'primary',
-        }}
-        style={{backgroundColor:deleteMark ? "#e8d3ff" : "white"}}> 
-            <Box sx={{
-        display: 'flexbox',
-        flexDirection:'row',
-        alignItem:'center',
-        color:'primary',
-        }}>
-          {/* fetch Avatar Username and Posts */}
-            <Avatar alt="avatar" src={getAvatar[0]}>
-            </Avatar>
-            <Typography>{getUsername[0]}</Typography>
-            </Box>
-
-            <Typography>
-            Liked Your
-            </Typography>
-
-            <Box>
-            <Image alt="image" src={getPost[0]} width="10%"/>
-            </Box>
-        
-        </Item>
-      </Stack>
     </Box>
   );
 }
