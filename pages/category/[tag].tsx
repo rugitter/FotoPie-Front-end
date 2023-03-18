@@ -26,28 +26,21 @@ export default function CategoryInsidePage() {
   const router = useRouter();
   const { tag } = router.query;
   const tagString = tag as string;
-  console.log({ tag });
 
   const [category, setCategory] = useState<ResponseImageData[]>([]);
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
-
   const [Error, setError] = useState(null);
-
   const [links, setLinks] = useState([]);
-
   const [prevUrl, setPrevUrl] = useState("");
 
   let limit = 10;
 
-  
-
   const fetchImages = async () => {
-    //setPage(1);
     try {
       
-      console.log(tag, 'axiosrequestTag')
-      console.log(page, "axiosrequestPage");
+      //console.log(tag, 'axiosrequestTag')
+      //console.log(page, "axiosrequestPage");
       const res = await categoryPosts(tag, page, limit);
       
       if (res.status === 200) {
@@ -118,16 +111,11 @@ export default function CategoryInsidePage() {
   }, [tag]);
 
   useEffect(() => {
-    //setPage(1);
     if (!router.isReady) return;
-    //setPage(1);
-    
     getSynonyms(tagString).then((result) => {
-      // Use the resolved value here
-      console.log(result);
+      //console.log(result);
       setLinks(result);
     });
-    //setPage(1);
     fetchImages();
     
   }, [tag]);
