@@ -25,6 +25,9 @@ const PhotoQuickView = () => {
 
   const [collected, setCollected] = useState(false);
   const [liked, setLiked] = useState(false);
+
+  // const [presignedUrl, setPresignedUrl] = useState("");
+  // const [isLoading, setIsLoading] = useState(false);
   // const [requestError, setRequestError] = useState();
 
   const router = useRouter();
@@ -85,12 +88,30 @@ const PhotoQuickView = () => {
 
   //Redirect to download page-- to be done in the next sprint
   const downLoadImages = async () => {
+    // setIsLoading(true);
     try {
-      const response = await axiosRequest(`/api/download/${filename}`, "POST", {
-        filename: `${filename}`,
-      });
-      const data = response.data;
-      router.push("/payment");
+      const response = await axiosRequest(
+        `/api/download?filename=${filename}`,
+        "GET"
+        // { responseType: "blob" }
+      );
+      console.log(response);
+      console.log(response.data);
+      // setPresignedUrl(response.data);
+
+      // const res = await axiosRequest(presignedUrl, "GET", {
+      //   responseType: "blob",
+      // });
+      // router.push(`${response.data}`);
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link: HTMLAnchorElement = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${filename}`);
+      document.body.appendChild(link);
+      link.click();
+      // link.remove();
+
+      // router.push("/payment");
     } catch (error: any) {
       return error.message;
       // setRequestError(error.message);
@@ -198,6 +219,7 @@ const PhotoQuickView = () => {
                 ? "Unlike" + " " + `${userLikes}`
                 : "Like" + " " + `${userLikes}`}
             </Button>
+
             <Button
               variant="contained"
               sx={{
@@ -207,13 +229,14 @@ const PhotoQuickView = () => {
               startIcon={<DownloadIcon />}
               onClick={downLoadImages}
             >
-              <Link
-                href={`/users/download/${userID}`}
-                // to be changed in the next sprint
+              {/* <Link
+                href={`/download/${filename}`}
                 sx={{ textDecoration: "none", color: "#fff" }}
-              >
-                Download
-              </Link>
+                download
+                target={"_blank"}
+              > */}
+              Download
+              {/* </Link> */}
             </Button>
           </Stack>
         </Stack>
