@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -15,10 +15,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
 import FormTextField from "../src/components/textField/formTextField";
 import { useRouter } from "next/router";
-import axiosRequest from "../src/utils/axiosRequest";
+import { useDispatch, useSelector } from "react-redux";
+import { setAccessToken } from "../src/utils/token";
+import Alert from "@mui/material/Alert";
+import { AppDispatch, RootState } from "../store/store";
+import { login } from "../store/auth/authAciton";
 
 // Define a type with the shape of the form values
-interface IFormInput {
+export interface IFormInput {
   email: string;
   password: string;
 }
@@ -30,45 +34,38 @@ const formSchema: Schema<IFormInput> = object({
 });
 
 // Define a component that renders the form
-export default function SignIn() {
-  const [loginError, setLoginError] = useState(null);
-
+export default function LogIn() {
   const router = useRouter();
+  const { status, error, isAuthenticated } = useSelector(
+    (state: RootState) => state.auth
+  );
+  const dispatch = useDispatch<AppDispatch>();
 
   // Use the useForm hook to create a form controller
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
   });
-
   // Define a submit handler for the form
-  const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-    try {
-      const response = await axiosRequest("/api/auth/login", "POST", data);
-      console.log(response);
-      if (response.status === 200) {
-        window.localStorage.setItem("accessToken", response.data.access_token);
-        window.localStorage.setItem(
-          "refreshToken",
-          response.data.refresh_token
-        );
-
-        // redirect to home page
-        router.push("/");
-      }
-
-      // TODO: handle error and set error type
-    } catch (error: any) {
-      setLoginError(error.message);
-    }
+  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+    dispatch(login(data));
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/");
+    }
+  }, [status]);
 
   return (
     <Container component="main" maxWidth="xs">
-      {/*  TODO: add error message */}
-      <p>{loginError}</p>
+      {error && (
+        <Alert variant="filled" severity="error" sx={{ mt: 2 }}>
+          {error}
+        </Alert>
+      )}
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 3,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -112,7 +109,7 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Log In
+              {status === "loading" ? "Loading..." : "Log In"}
             </Button>
             <Grid container>
               <Grid item xs>
