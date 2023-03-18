@@ -64,9 +64,16 @@ type Notification = {
       setDeleteMark(!deleteMark)
       setDeleteIcon(!deleteIcon)
   }
-
-
-  return (
+  
+  
+  if (notifications.length === 0){
+    return(
+      <div>
+        <h1>No new notifications found</h1>
+        <p>Please check back later</p>
+      </div>
+    )
+  }else{return (
     //<ul> {lists.map(list)=>{<li>}}
     <Box sx={{ width: '100%', 
     marginTop:2, }}>
@@ -141,4 +148,4 @@ type Notification = {
 
     </Box>
   );
-}
+}}
