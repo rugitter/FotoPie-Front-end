@@ -30,6 +30,7 @@ export default function Navbar({ isFixed, color = "#FFFFFF", bgColor}: NavbarPro
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [avatarPath, setAvatarPath] = useState("");
   const [id, setId] = useState("");
+  const [newNotificationCount, setNewNotificationCount] = useState(0);
 
 
   useEffect(() => {
