@@ -12,3 +12,7 @@ export const setAccessToken = (token: string) => {
     expires: new Date(Date.now() + 1000 * 60 * 15), // 15 minutes
   });
 };
+
+export const removeAccessToken = () => {
+  cookies.remove("accessToken", { path: "/" });
+};
