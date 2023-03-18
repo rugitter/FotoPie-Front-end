@@ -1,15 +1,17 @@
 import { Button, Container, Grid } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import axiosRequest from "../../src/utils/axiosRequest";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import NavBar from "../../src/components/NavBar";
+import Gallery from "../../src/components/profile/Gallery";
+import Collection from "../../src/components/profile/Collection";
+import { getUserInfo } from "../../src/axiosRequest/api/user";
 
 export default function ProfilePage() {
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const [avatarPath, setAvatarPath] = useState("");
   const [isGallery, setIsGallery] = useState(true);
 
   const router = useRouter();
@@ -18,17 +20,18 @@ export default function ProfilePage() {
   useEffect(() => {
     if (!router.isReady) return;
 
-    axiosRequest(`/api/user/${id}`, "GET").then((res) => {
-      if (id !== res.data.id) return router.push("/404");
+    getUserInfo(id).then((res) => {
+      console.log(res);
+      // if (id !== res.data.id) return router.push("/404");
       setLastName(res.data.lastName);
       setFirstName(res.data.firstName);
-      setAvatar(res.data.avatar);
+      setAvatarPath(res.data.avatarPath);
     });
   }, [id]);
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" />
+      <NavBar isFixed={false} color="#000000" bgColor="#f8f8ff"/>
       <Grid
         container
         direction="column"
@@ -37,7 +40,11 @@ export default function ProfilePage() {
       >
         {/* avatar */}
         <Grid item>
-          <Avatar alt="avatar" src={avatar} sx={{ width: 180, height: 180 }} />
+          <Avatar
+            alt="avatar"
+            src={avatarPath}
+            sx={{ width: 180, height: 180 }}
+          />
         </Grid>
 
         {/* name */}
@@ -84,6 +91,14 @@ export default function ProfilePage() {
               <Typography>Collection</Typography>
             </Button>
           </Grid>
+        </Grid>
+
+        <Grid sx={{m:5}}>
+          {isGallery ? (
+            <Gallery id={id as string} />
+          ) : (
+            <Collection id={id as string} />
+          )}
         </Grid>
       </Grid>
     </>

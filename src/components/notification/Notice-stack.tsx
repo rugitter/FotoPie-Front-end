@@ -12,8 +12,9 @@ import {useState, useEffect} from 'react';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from "mui-image";
-import { DEV_MIDDLEWARE_MANIFEST } from 'next/dist/shared/lib/constants';
+// import { DEV_MIDDLEWARE_MANIFEST } from 'next/dist/shared/lib/constants';
 import MarkChatReadIcon from '@mui/icons-material/MarkChatRead';
+import { getNotification } from '../../axiosRequest/api/notification';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -44,7 +45,7 @@ type Notification = {
     const fetchData = async () =>{
       try{
         // Get User Avatar from User Schema
-        const Response = await axiosRequest('/api/notification/latest',"GET")
+        const Response = await getNotification()
         console.log(Response)
         // setGetAvatar(Response.data.userAvatar)
         // setGetUsername(Response.data.userName)
