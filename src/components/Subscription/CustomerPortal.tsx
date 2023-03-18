@@ -1,15 +1,12 @@
 import axiosRequest from "../../utils/axiosRequest";
 import { Button } from "@mui/material";
 
-const clickToSubscribe = async () => {
+const clickToPortal = async () => {
   try {
     const response = await axiosRequest(
-      "api/subscription/create-checkout-session",
-      "POST",
-      { priceId: "price_1MitMoCWJBDJNhy8OQeBC2pY" }
+      "api/subscription/create-portal-session",
+      "POST"
     );
-
-    console.log(response.data);
 
     const url = response.data.session_url;
     console.log(url);
@@ -20,10 +17,10 @@ const clickToSubscribe = async () => {
   }
 };
 
-export default function SubscriptionButton() {
+export default function CustomerPortal() {
   return (
-    <Button type="submit" variant="contained" onClick={clickToSubscribe}>
-      Subscribe
+    <Button type="submit" variant="contained" onClick={clickToPortal}>
+      Manage Your Subscription
     </Button>
   );
 }
