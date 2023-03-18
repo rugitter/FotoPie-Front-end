@@ -36,12 +36,20 @@ export default function CategoryInsidePage() {
 
   const [links, setLinks] = useState([]);
 
+  const [prevUrl, setPrevUrl] = useState("");
+
   let limit = 10;
 
+  
 
   const fetchImages = async () => {
+    //setPage(1);
     try {
+      
+      console.log(tag, 'axiosrequestTag')
+      console.log(page, "axiosrequestPage");
       const res = await categoryPosts(tag, page, limit);
+      
       if (res.status === 200) {
         setCategory([...category, ...res.data]);
         setPage(page + 1);
@@ -53,6 +61,17 @@ export default function CategoryInsidePage() {
       setError(error.message);
     }
   };
+
+  const resetCategoryState = async (newTag: string) => {
+    setCategory([]);
+    setPage(1);
+    setLoaderHandler(true);
+    router.push(`/category/${newTag}`);
+    
+    
+  };
+
+  
 
   const getSynonyms = async (word: string) => {
     try {
@@ -71,16 +90,46 @@ export default function CategoryInsidePage() {
       return [];
     }
   };
+  useEffect(() => {
+    // Save the previous URL when the component mounts
+    setPrevUrl(window.location.href);
+
+    const handlePopstate = () => {
+      // Check if the user has navigated back
+      if (window.location.href === prevUrl) {
+        // Reset the page state to 1
+        setCategory([]);
+        setPage(1);
+        setLoaderHandler(true);
+        // Fetch the images for the new category
+        fetchImages();
+      }
+      // Update the previous URL
+      setPrevUrl(window.location.href);
+    };
+
+    // Add an event listener to the window object
+    window.addEventListener("popstate", handlePopstate);
+
+    return () => {
+      // Remove the event listener when the component unmounts
+      window.removeEventListener("popstate", handlePopstate);
+    };
+  }, [tag]);
 
   useEffect(() => {
+    //setPage(1);
     if (!router.isReady) return;
+    //setPage(1);
+    
     getSynonyms(tagString).then((result) => {
       // Use the resolved value here
       console.log(result);
       setLinks(result);
     });
+    //setPage(1);
     fetchImages();
-    //}
+    
   }, [tag]);
 
   return (
@@ -102,15 +151,19 @@ export default function CategoryInsidePage() {
         sx={{ ml: 5, mt: 7 }}
       >
         {links.map((link) => (
-          <Link key={link} href={`/category/${link}`} passHref>
-            <Button
-              variant="outlined"
-              href="#contained-buttons"
-              color="primary"
-            >
-              {link}
-            </Button>
-          </Link>
+          //<Link key={link} href={`/category/${link}`} passHref>
+          <Button
+            key={link}
+            variant="outlined"
+            //href="#contained-buttons"
+            color="primary"
+            onClick={() => {
+              resetCategoryState(link);
+            }}
+          >
+            {link}
+          </Button>
+          //</Link>
         ))}
       </Stack>
       {/*<h1>Category: '{tag} image'</h1>*/}
