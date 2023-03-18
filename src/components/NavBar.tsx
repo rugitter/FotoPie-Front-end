@@ -17,8 +17,10 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import axiosRequest from "../utils/axiosRequest";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { getMe } from "../axiosRequest/api/editUser";
+import { logout } from "../../store/auth/authAciton";
 
 interface NavbarProps {
   isFixed: boolean;
@@ -31,36 +33,19 @@ export default function Navbar({
   color = "#FFFFFF",
   bgColor,
 }: NavbarProps) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch<AppDispatch>();
   const [avatarPath, setAvatarPath] = useState("");
   const [id, setId] = useState("");
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
-    if (accessToken !== null) {
-      setIsLoggedIn(true);
-      axiosRequest(`/api/editUser/me`, "GET").then((res) => {
+    if (isAuthenticated) {
+      getMe().then((res) => {
         setAvatarPath(res.data["avatarPath"]);
         setId(res.data.id);
       });
-
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
     }
   }, []);
-
-  const removeToken = () => {
-    axios.post(`/api/auth/logout`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    });
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    setIsLoggedIn(false);
-  };
 
   const [fix, setFix] = useState(false);
 
@@ -110,7 +95,7 @@ export default function Navbar({
   const menuId = "primary-search-account-menu";
 
   const handleLogout = () => {
-    removeToken();
+    dispatch(logout());
     handleMenuClose();
   };
   const renderMenu = (
@@ -154,7 +139,7 @@ export default function Navbar({
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {isLoggedIn ? (
+      {isAuthenticated ? (
         <Box>
           <MenuItem>
             <IconButton size="large" color="inherit">
@@ -261,7 +246,7 @@ export default function Navbar({
               justifyContent: "space-between",
             }}
           >
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <Box
                 sx={{
                   display: { xs: "none", md: "flex" },

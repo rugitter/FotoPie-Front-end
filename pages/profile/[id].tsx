@@ -31,7 +31,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" />
+      <NavBar isFixed={false} color="#000000" bgColor="#f8f8ff"/>
       <Grid
         container
         direction="column"

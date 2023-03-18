@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
   function (error) {
     let message = "";
     if (error && error.response) {
-      console.log(error);
+      console.log("❌Error!", error);
       switch (error.response.status) {
         case 302:
           message = "Redirect to other url";
