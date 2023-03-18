@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "../../utils/Link";
-import styles from "../../styles/post.module.css";
+import styles from "./post.module.css";
 
 const Post = ({ url, filename }: { url: string; filename: string }) => {
   return (

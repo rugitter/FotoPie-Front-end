@@ -1,4 +1,4 @@
-import styles from "../../styles/nomore.module.css";
+import styles from "./nomore.module.css";
 
 const NoMore = () => {
   return (
