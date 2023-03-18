@@ -22,6 +22,7 @@ import { AppDispatch, RootState } from "../../store/store";
 import { getMe } from "../axiosRequest/api/editUser";
 import { logout } from "../../store/auth/authAciton";
 
+
 interface NavbarProps {
   isFixed: boolean;
   color?: string;
@@ -37,6 +38,8 @@ export default function Navbar({
   const dispatch = useDispatch<AppDispatch>();
   const [avatarPath, setAvatarPath] = useState("");
   const [id, setId] = useState("");
+
+
 
   useEffect(() => {
     if (isAuthenticated) {

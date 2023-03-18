@@ -36,7 +36,7 @@ const formSchema: Schema<IFormInput> = object({
 // Define a component that renders the form
 export default function LogIn() {
   const router = useRouter();
-  const { status, error, isAuthenticated } = useSelector(
+  const { loginStatus, error, isAuthenticated } = useSelector(
     (state: RootState) => state.auth
   );
   const dispatch = useDispatch<AppDispatch>();
@@ -54,7 +54,7 @@ export default function LogIn() {
     if (isAuthenticated) {
       router.push("/");
     }
-  }, [status]);
+  }, [isAuthenticated]);
 
   return (
     <Container component="main" maxWidth="xs">
