@@ -7,10 +7,10 @@ const clickToPortal = async () => {
     // Send POST request to api/subscription/create-portal-session
     const response = await createPortalSession();
 
-    const url = response.data.session_url;
-    console.log(url);
-    // window.location.href = url;
-    window.open(url);
+    const portalSession_url = response.data.portalSession_url;
+    console.log(portalSession_url);
+    // Jump to customer portal page
+    window.location.href = portalSession_url;
   } catch (error) {
     return "Create checkout session failed";
   }

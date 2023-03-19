@@ -7,6 +7,9 @@ export default function SubscriptionPage() {
     <>
       <h1>Click Here to Subscribe</h1>
       <SubscriptionButton />
+      <br />
+      <br />
+      <br />
       <CustomerPortal />
       <Copyright />
     </>
