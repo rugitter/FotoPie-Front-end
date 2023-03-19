@@ -1,12 +1,11 @@
 import axiosRequest from "../../utils/axiosRequest";
 import { Button } from "@mui/material";
+import { createPortalSession } from "../../axiosRequest/api/subscription";
 
 const clickToPortal = async () => {
   try {
-    const response = await axiosRequest(
-      "api/subscription/create-portal-session",
-      "POST"
-    );
+    // Send POST request to api/subscription/create-portal-session
+    const response = await createPortalSession();
 
     const url = response.data.session_url;
     console.log(url);

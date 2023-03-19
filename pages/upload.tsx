@@ -64,26 +64,12 @@ export default function Upload() {
       formData.append("file", file.file);
 
       try {
-<<<<<<< HEAD
-        const response = await axiosRequest(
-          "api/posts/upload",
-          "PATCH",
-          formData
-        );
+        const response = await uploadPhoto(formData);
         console.log(
           response.data.filename,
           response.data.original_path,
           response.data.compression_path
         );
-||||||| aa62122
-        const response = await axiosRequest("api/posts/upload", "PATCH", 
-          formData  
-        );
-        console.log(response.data.filename, response.data.original_path, response.data.compression_path);
-=======
-        const response = await uploadPhoto(formData);
-        console.log(response.data.filename, response.data.original_path, response.data.compression_path);
->>>>>>> dev
         setUploadfileName(response.data.filename);
         setOrginalFilePath(response.data.original_path);
         setCompressFilePath(response.data.compression_path);

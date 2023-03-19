@@ -1,13 +1,13 @@
 import axiosRequest from "../../utils/axiosRequest";
 import { Button } from "@mui/material";
+import { createCheckoutSession } from "../../axiosRequest/api/subscription";
 
 const clickToSubscribe = async () => {
   try {
-    const response = await axiosRequest(
-      "api/subscription/create-checkout-session",
-      "POST",
-      { priceId: "price_1MitMoCWJBDJNhy8OQeBC2pY" }
-    );
+    // Send POST request to api/subscription/create-checkout-session
+    const response = await createCheckoutSession({
+      priceId: "price_1MitMoCWJBDJNhy8OQeBC2pY",
+    });
 
     console.log(response.data);
 
