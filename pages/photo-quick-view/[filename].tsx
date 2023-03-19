@@ -13,6 +13,9 @@ import Image from "mui-image";
 
 import axiosRequest from "../../src/utils/axiosRequest";
 import Link from "../../src/utils/Link";
+import DeletePost from "../../src/components/DeletePost";
+
+
 
 // Define a component that renders the page
 const PhotoQuickView = () => {
@@ -28,7 +31,8 @@ const PhotoQuickView = () => {
   // const [requestError, setRequestError] = useState();
 
   const router = useRouter();
-  const { filename } = router.query;
+  // const { filename } = router.query;
+  const filename: string = router.query.filename as string;
 
   // fetch get user avatar,username,post image, collect/like status, collect/like count
   useEffect(() => {
@@ -234,6 +238,7 @@ const PhotoQuickView = () => {
             style={{ objectFit: "contain" }}
           />
         </Box>
+        <DeletePost filename={filename} />
       </Stack>
     </Stack>
   );
