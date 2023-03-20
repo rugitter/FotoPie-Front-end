@@ -5,16 +5,16 @@ import Stack from '@mui/material/Stack';
 import { styled, makeStyles } from '@mui/material/styles';
 import { Avatar, Typography } from '@mui/material';
 import { flexbox } from '@mui/system';
-// import { Big_Shoulders_Text } from '@next/font/google';
 import axios from 'axios';
 import axiosRequest from '../../utils/axiosRequest';
 import {useState, useEffect} from 'react';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from "mui-image";
-// import { DEV_MIDDLEWARE_MANIFEST } from 'next/dist/shared/lib/constants';
 import MarkChatReadIcon from '@mui/icons-material/MarkChatRead';
 import { getNotification } from '../../axiosRequest/api/notification';
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -27,9 +27,6 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 export default function BasicStack() {
-  // const[getAvatar, setGetAvatar]= useState([]);
-  // const[getUsername, setGetUsername]= useState([]);
-  // const[getPost, setGetPost]= useState([]);
 type Notification = {
   id: number;
   userAvatar: string;
@@ -47,9 +44,6 @@ type Notification = {
         // Get User Avatar from User Schema
         const Response = await getNotification()
         console.log(Response)
-        // setGetAvatar(Response.data.userAvatar)
-        // setGetUsername(Response.data.userName)
-        // setGetPost(Response.data.post)
         setNotifications(Response.data)
       }
       catch (error:any){
@@ -68,13 +62,15 @@ type Notification = {
   
   if (notifications.length === 0){
     return(
-      <div>
+      <Box sx={{display:"flex",justifyContent:'center'}}>
+        <Item sx={{width:"60%", mt:"5%"}}>
         <h1>No new notifications found</h1>
         <p>Please check back later</p>
-      </div>
+        <Button variant="outlined" sx={{bgcolor:"white", marginTop:"2%"}} href={"/upload"}>Upload Photos</Button>
+        </Item>
+      </Box>
     )
   }else{return (
-    //<ul> {lists.map(list)=>{<li>}}
     <Box sx={{ width: '100%', 
     marginTop:2, }}>
 
@@ -86,7 +82,6 @@ type Notification = {
             sx={{position:'relative', left:"80%", top:"5%", color:"purple" }}
             style={{display:deleteIcon ? "true" : "none"}}
           >
-            <MarkChatReadIcon />
       </IconButton>
       <Stack spacing={5}
       sx={{ 
@@ -96,7 +91,7 @@ type Notification = {
       bgcolor:'secondary' }}
       >
           <Box sx={{width:"90%", display:"flex",flexDirection:"column", alignItem:"center",justifyContent:"center"}}>
-
+          {/* to get notification mapped into Stack  */}
           {notifications.map((notification)=>(
             <Box key={notification.id} sx={{display:"flex",justifyContent:"center"}}>
               <Item sx={{
@@ -122,30 +117,7 @@ type Notification = {
             </Box>
           ))}
             </Box>
-
-            {/* <Typography>
-            Liked Your
-            </Typography>
-
-            <Box>
-            <img alt="image" src={getPost[0]} width={40} height={40}/>
-            </Box> */}
-            
-            {/* <IconButton
-            size="small"
-            edge="end"
-            color="secondary"
-            aria-label="close"
-            onClick={onClickCloseButton}
-            sx={{position:'relative', left:"10%", top:"30%" }}
-            style={{display:deleteIcon ? "true" : "none"}}
-            
-          >
-            <CloseIcon  />
-            </IconButton> */}
-        
       </Stack>
-
     </Box>
   );
 }}

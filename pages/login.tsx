@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -16,7 +16,6 @@ import { Schema, string, object } from "yup";
 import FormTextField from "../src/components/textField/formTextField";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { setAccessToken } from "../src/utils/token";
 import Alert from "@mui/material/Alert";
 import { AppDispatch, RootState } from "../store/store";
 import { login } from "../store/auth/authAciton";
@@ -36,7 +35,7 @@ const formSchema: Schema<IFormInput> = object({
 // Define a component that renders the form
 export default function LogIn() {
   const router = useRouter();
-  const { status, error, isAuthenticated } = useSelector(
+  const { loginStatus, error, isAuthenticated } = useSelector(
     (state: RootState) => state.auth
   );
   const dispatch = useDispatch<AppDispatch>();
@@ -54,7 +53,7 @@ export default function LogIn() {
     if (isAuthenticated) {
       router.push("/");
     }
-  }, [status]);
+  }, [isAuthenticated]);
 
   return (
     <Container component="main" maxWidth="xs">
