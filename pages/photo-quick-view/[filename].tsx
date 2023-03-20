@@ -5,8 +5,8 @@ import MainBody from "../../src/components/PhotoQuickView/MainBody";
 
 // Define a component that renders the page
 const PhotoQuickView = () => {
-  const router = useRouter();
-  const { filename } = router.query;
+  // const router = useRouter();
+  // const { filename } = router.query;
 
   return (
     <Stack
@@ -23,7 +23,8 @@ const PhotoQuickView = () => {
       <CloseButton />
 
       {/* main body */}
-      <MainBody filename={filename} />
+      {/* <MainBody filename={filename} /> */}
+      <MainBody />
     </Stack>
   );
 };

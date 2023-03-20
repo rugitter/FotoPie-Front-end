@@ -3,9 +3,11 @@ import { Button } from "@mui/material";
 import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 import axiosRequest from "../../utils/axiosRequest";
 import { useRouter } from "next/router";
+import { getCollectNumber } from "../../axiosRequest/api/photoQuickView";
 
 export interface CollectButtonProps {
-  filename: string | string[] | undefined;
+  filenameString: string;
+  // filename: string | string[] | undefined;
   collected: boolean;
   userCollects: number;
 }
@@ -17,18 +19,21 @@ const CollectButton = (props: CollectButtonProps) => {
   const router = useRouter();
   const addToCollection = async () => {
     try {
-      const response = await axiosRequest(
-        `/api/collect/${props.filename}`,
-        "POST",
-        {
-          filename: `${props.filename}`,
-        }
-      );
+      // const response = await axiosRequest(
+      //   `/api/collect/${props.filename}`,
+      //   "POST",
+      //   {
+      //     filename: `${props.filename}`,
+      //   }
+      // );
+      const response = await getCollectNumber(props.filenameString);
+      // const response = await getCollectNumber(props.filename);
       const data = response.data;
       setUserCollects(data);
       setCollected((collected) => !collected);
     } catch (error: any) {
-      router.push("/login");
+      // router.push("/login");
+      console.log(error.message);
     }
   };
   return (

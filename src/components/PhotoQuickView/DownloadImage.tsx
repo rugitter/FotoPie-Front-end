@@ -5,9 +5,11 @@ import DownloadIcon from "@mui/icons-material/Download";
 import axiosRequest from "../../utils/axiosRequest";
 import Link from "../../utils/Link";
 import { saveAs } from "file-saver";
+import { getDownloadImage } from "../../axiosRequest/api/photoQuickView";
 
 export interface DownloadImageProps {
-  filename: string | string[] | undefined;
+  filenameString: string ;
+  // filename: string | string[] | undefined;
 }
 
 //Photo quick view page download button
@@ -16,11 +18,13 @@ const DownloadImage = (props: DownloadImageProps) => {
   const downLoadImages = async () => {
     // setIsLoading(true);
     try {
-      const response = await axiosRequest(
-        `/api/download?filename=${props.filename}`,
-        "GET"
-        // { responseType: "blob" }
-      );
+      const response = await getDownloadImage(props.filenameString);
+      // const response = await getDownloadImage(props.filename);
+      // const response = await axiosRequest(
+      //   `/api/download?filename=${props.filename}`,
+      //   "GET"
+      // { responseType: "blob" }
+
       console.log(response);
       console.log(response.data);
       setPresignedUrl(response.data);
@@ -30,16 +34,16 @@ const DownloadImage = (props: DownloadImageProps) => {
       // saveAs(response.data, "filename");
       ////////////////////////////////////////////////////////
       //1. open in a new window
-      const downloadLink = document.createElement("a");
-      console.log(downloadLink);
-      downloadLink.href = presignedUrl;
-      downloadLink.download = `${props.filename}`;
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
+      // const downloadLink = document.createElement("a");
+      // console.log(downloadLink);
+      // downloadLink.href = presignedUrl;
+      // downloadLink.download = `${props.filename}`;
+      // document.body.appendChild(downloadLink);
+      // downloadLink.click();
+      // document.body.removeChild(downloadLink);
       ////////////////////////////////////////////////////////////////
       // downloadLink.dispatchEvent(new MouseEvent('click')
-      // window.open(response.data, '_blank');
+      window.open(response.data, "_blank");
       // router.push(`${response.data}`);
 
       //2. blob

@@ -1,20 +1,17 @@
 import { useState, useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import { useRouter } from "next/router";
-import axiosRequest from "../../utils/axiosRequest";
 import UserName from "./UserName";
 import CollectButton from "./CollectButton";
 import DownloadImage from "./DownloadImage";
 import LikeButton from "./LikeButton";
 import CloseButton from "./CloseButton";
 import PostImage from "./PostImage";
+import { getInitialData } from "../../axiosRequest/api/photoQuickView";
 
 // Define a component that renders the page
-export interface MainBodyProps {
-  filename: string | string[] | undefined;
-}
 
-const MainBody = (props: MainBodyProps) => {
+const MainBody = () => {
   const [userName, setUserName] = useState("");
   const [userAvatar, setUserAvatar] = useState("");
   const [postPhoto, setPostPhoto] = useState("");
@@ -28,17 +25,15 @@ const MainBody = (props: MainBodyProps) => {
   // const [requestError, setRequestError] = useState();
 
   const router = useRouter();
-  // const { filename } = router.query;
+  const { filename } = router.query;
+  const filenameString = filename as string;
 
   // fetch get user avatar,username,post image, collect/like status, collect/like count
   useEffect(() => {
     if (!router.isReady) return;
     const fetchData = async () => {
       try {
-        const response = await axiosRequest(
-          `/api/quick-view?filename=${props.filename}`,
-          "GET"
-        );
+        const response = await getInitialData(filename);
         setUserName(response.data.user_name);
         setUserAvatar(response.data.avatar_url);
         setPostPhoto(response.data.photo_url);
@@ -53,7 +48,8 @@ const MainBody = (props: MainBodyProps) => {
       }
     };
     fetchData();
-  }, [router.isReady, props.filename]);
+    // }, [router.isReady, filename]);
+  }, [router.isReady, filenameString]);
 
   return (
     <Stack
@@ -109,14 +105,17 @@ const MainBody = (props: MainBodyProps) => {
             <CollectButton
               userCollects={userCollects}
               collected={collected}
-              filename={props.filename}
+              filenameString={filenameString}
+              // filename={filename}
             />
             <LikeButton
-              filename={props.filename}
+              filenameString={filenameString}
+              // filename={filename}
               liked={liked}
               userLikes={userLikes}
             />
-            <DownloadImage filename={props.filename} />
+            <DownloadImage filenameString={filenameString} />
+            {/* <DownloadImage filename={filename} /> */}
           </Stack>
         </Stack>
 

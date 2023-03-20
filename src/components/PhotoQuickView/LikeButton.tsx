@@ -3,9 +3,11 @@ import { Button } from "@mui/material";
 import axiosRequest from "../../utils/axiosRequest";
 import { useRouter } from "next/router";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { getLikeNumber } from "../../axiosRequest/api/photoQuickView";
 
 export interface LikeButtonProps {
-  filename: string | string[] | undefined;
+  filenameString: string ;
+  // filename: string | string[] | undefined;
   liked: boolean;
   userLikes: number;
 }
@@ -18,13 +20,16 @@ const LikeButton = (props: LikeButtonProps) => {
 
   const addToLiked = async () => {
     try {
-      const response = await axiosRequest(
-        `/api/like/${props.filename}`,
-        "POST",
-        {
-          filename: `${props.filename}`,
-        }
-      );
+      const response = await getLikeNumber(props.filenameString);
+      // const response = await getLikeNumber(props.filename);
+
+      // const response = await axiosRequest(
+      //   `/api/like/${props.filename}`,
+      //   "POST",
+      //   {
+      //     filename: `${props.filename}`,
+      //   }
+      // );
       const data = response.data;
       setUserLikes(data);
       setLiked((liked) => !liked);
