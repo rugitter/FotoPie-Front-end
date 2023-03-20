@@ -97,7 +97,7 @@ type Notification = {
       >
           <Box sx={{width:"90%", display:"flex",flexDirection:"column", alignItem:"center",justifyContent:"center"}}>
 
-          {notifications.slice(0,10).map((notification)=>(
+          {notifications.map((notification)=>(
             <Box key={notification.id} sx={{display:"flex",justifyContent:"center"}}>
               <Item sx={{
                 display:'flex',
