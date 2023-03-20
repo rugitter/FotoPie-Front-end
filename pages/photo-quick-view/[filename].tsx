@@ -5,7 +5,6 @@ import { Avatar } from "@mui/material";
 import { Typography } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
-import DownloadIcon from "@mui/icons-material/Download";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
 import { useRouter } from "next/router";
@@ -13,6 +12,7 @@ import Image from "mui-image";
 
 import axiosRequest from "../../src/utils/axiosRequest";
 import Link from "../../src/utils/Link";
+import DownloadImage from "../../src/components/PhotoQuickView/DownloadImage";
 
 // Define a component that renders the page
 const PhotoQuickView = () => {
@@ -26,7 +26,6 @@ const PhotoQuickView = () => {
   const [collected, setCollected] = useState(false);
   const [liked, setLiked] = useState(false);
 
-  // const [presignedUrl, setPresignedUrl] = useState("");
   // const [isLoading, setIsLoading] = useState(false);
   // const [requestError, setRequestError] = useState();
 
@@ -83,38 +82,6 @@ const PhotoQuickView = () => {
       setLiked((liked) => !liked);
     } catch (error: any) {
       router.push("/login");
-    }
-  };
-
-  //Redirect to download page-- to be done in the next sprint
-  const downLoadImages = async () => {
-    // setIsLoading(true);
-    try {
-      const response = await axiosRequest(
-        `/api/download?filename=${filename}`,
-        "GET"
-        // { responseType: "blob" }
-      );
-      console.log(response);
-      console.log(response.data);
-      // setPresignedUrl(response.data);
-
-      // const res = await axiosRequest(presignedUrl, "GET", {
-      //   responseType: "blob",
-      // });
-      // router.push(`${response.data}`);
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link: HTMLAnchorElement = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `${filename}`);
-      document.body.appendChild(link);
-      link.click();
-      // link.remove();
-
-      // router.push("/payment");
-    } catch (error: any) {
-      return error.message;
-      // setRequestError(error.message);
     }
   };
 
@@ -219,25 +186,7 @@ const PhotoQuickView = () => {
                 ? "Unlike" + " " + `${userLikes}`
                 : "Like" + " " + `${userLikes}`}
             </Button>
-
-            <Button
-              variant="contained"
-              sx={{
-                opacity: { xs: 0, sm: 1 },
-                bgcolor: "secondary.main",
-              }}
-              startIcon={<DownloadIcon />}
-              onClick={downLoadImages}
-            >
-              {/* <Link
-                href={`/download/${filename}`}
-                sx={{ textDecoration: "none", color: "#fff" }}
-                download
-                target={"_blank"}
-              > */}
-              Download
-              {/* </Link> */}
-            </Button>
+            <DownloadImage filename={filename} />
           </Stack>
         </Stack>
 
