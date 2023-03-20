@@ -2,14 +2,11 @@ import Container from "@mui/material/Container";
 import NavBar from "../src/components/NavBar";
 import Header from "../src/components/Header";
 import Box from "@mui/material/Box";
-import { useState } from "react";
 import PostList from "../src/components/PostList/PostList";
-import { useAutoLogout } from "../src/hooks/useAutoLogout";
 import { useCheckToken } from "../src/hooks/useCheckToken";
 
 export default function Home() {
-  // useCheckToken();
-  // useAutoLogout();
+  useCheckToken();
   return (
     <Container>
       <Box

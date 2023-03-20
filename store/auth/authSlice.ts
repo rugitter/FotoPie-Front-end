@@ -14,16 +14,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logoutSync: (state) => {
-      state.isAuthenticated = false;
-      state.logoutStatus = "success";
-    },
-    setLoginStatusIdle: (state) => {
-      state.loginStatus = "idle";
-    },
-    setLogoutStatusIdle: (state) => {
-      state.logoutStatus = "idle";
-    },
     checkToken: (state) => {
       const accessToken = getAccessToken();
       state.isAuthenticated = !!accessToken;
@@ -56,9 +46,6 @@ const authSlice = createSlice({
   },
 });
 export const {
-  logoutSync,
-  setLoginStatusIdle,
-  setLogoutStatusIdle,
   checkToken,
 } = authSlice.actions;
 
