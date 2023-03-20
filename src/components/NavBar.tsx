@@ -45,7 +45,7 @@ export default function Navbar({
         setId(res.data.id);
       });
     }
-  }, []);
+  }, [isAuthenticated]);
 
   const [fix, setFix] = useState(false);
 
