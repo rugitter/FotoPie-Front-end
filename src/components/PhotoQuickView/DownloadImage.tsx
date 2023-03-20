@@ -27,16 +27,16 @@ const DownloadImage = (props: DownloadImageProps) => {
       // const url = response.data;
       // download(url);
       // download(response.data);
-      // saveAs(response.data, "filename");
+      saveAs(response.data, "filename");
       ////////////////////////////////////////////////////////
       //1. open in a new window
-      const downloadLink = document.createElement("a");
-      console.log(downloadLink);
-      downloadLink.href = presignedUrl;
-      downloadLink.download = `${props.filename}`;
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
+      // const downloadLink = document.createElement("a");
+      // console.log(downloadLink);
+      // downloadLink.href = presignedUrl;
+      // downloadLink.download = `${props.filename}`;
+      // document.body.appendChild(downloadLink);
+      // downloadLink.click();
+      // document.body.removeChild(downloadLink);
       ////////////////////////////////////////////////////////////////
       // downloadLink.dispatchEvent(new MouseEvent('click')
       // window.open(response.data, '_blank');
