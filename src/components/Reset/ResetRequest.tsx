@@ -2,35 +2,15 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
-import Link from "@mui/material/Link";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Router from "next/router";
-
-//Copyright function at the bottom of the page
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="">
-        FotoPie
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 interface FormData {
   email: string;
@@ -110,15 +90,6 @@ function ResetRequest() {
                   autoComplete="email"
                   value={email}
                   onChange={handleEmailChange}
-                  // {...register("email", {
-                  //   required: true,
-                  //   pattern: {
-                  //     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  //     message: "Invalid email address",
-                  //   },
-                  // })}
-                  // error={!!errors.email}
-                  // helperText={errors.email?.message}
                 />
               </Grid>
             </Grid>
@@ -137,7 +108,6 @@ function ResetRequest() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
