@@ -1,3 +1,4 @@
+import { getAccessToken } from "./../../src/utils/token";
 import { createSlice } from "@reduxjs/toolkit";
 import { login, logout } from "./authAciton";
 import { AuthState } from "./types";
@@ -16,6 +17,16 @@ const authSlice = createSlice({
     logoutSync: (state) => {
       state.isAuthenticated = false;
       state.logoutStatus = "success";
+    },
+    setLoginStatusIdle: (state) => {
+      state.loginStatus = "idle";
+    },
+    setLogoutStatusIdle: (state) => {
+      state.logoutStatus = "idle";
+    },
+    checkToken: (state) => {
+      const accessToken = getAccessToken();
+      state.isAuthenticated = !!accessToken;
     },
   },
   extraReducers: (builder) => {
@@ -44,6 +55,11 @@ const authSlice = createSlice({
       });
   },
 });
-export const { logoutSync } = authSlice.actions;
+export const {
+  logoutSync,
+  setLoginStatusIdle,
+  setLogoutStatusIdle,
+  checkToken,
+} = authSlice.actions;
 
 export default authSlice.reducer;

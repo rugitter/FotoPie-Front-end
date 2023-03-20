@@ -9,7 +9,7 @@ export const useAutoLogout = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
-  // Check if the token exists every 1 minute
+  // Check if the token exists every 5 seconds
   useEffect(() => {
     if (isAuthenticated) {
       const interval = setInterval(() => {
@@ -18,10 +18,9 @@ export const useAutoLogout = () => {
         // If the token doesn't exist, logout
         if (!accessToken) {
           dispatch(logoutSync());
+          console.log("💩logout");
         }
-      }, 1000 * 5); // every 1 minute
-
-      console.log("😜logout");
+      }, 1000 * 5); // every 5 seconds
       // clean up to avoid memory leaks when the component is unmounted
       return () => {
         clearInterval(interval);
@@ -40,8 +39,7 @@ export const useAutoLogout = () => {
     // If the token is expired, logout
     if (now > tokenExpiration) {
       dispatch(logoutSync());
+      console.log("😜logout");
     }
-
-    console.log("😜logout");
   }, [dispatch]);
 };

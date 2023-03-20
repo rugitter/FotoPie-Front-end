@@ -5,9 +5,11 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 import PostList from "../src/components/PostList/PostList";
 import { useAutoLogout } from "../src/hooks/useAutoLogout";
+import { useCheckToken } from "../src/hooks/useCheckToken";
 
 export default function Home() {
-  useAutoLogout();
+  // useCheckToken();
+  // useAutoLogout();
   return (
     <Container>
       <Box
