@@ -4,7 +4,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { loginRequest, logoutRequest } from "../../src/axiosRequest/api/auth";
 import { setAccessToken } from "../../src/utils/token";
 
-
 export const login = createAsyncThunk(
   "auth/login",
   async (payload: IFormInput, { rejectWithValue }) => {
