@@ -20,6 +20,7 @@ import Avatar from "@mui/material/Avatar";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { getMe } from "../axiosRequest/api/editUser";
+import { count } from "../axiosRequest/api/notification"
 import { logout } from "../../store/auth/authAciton";
 
 interface NavbarProps {
@@ -45,8 +46,14 @@ export default function Navbar({
         setAvatarPath(res.data["avatarPath"]);
         setId(res.data.id);
       });
+      
+      count().then((res) => {
+        setNewNotificationCount(res.data.count);
+      });
     }
   }, []);
+
+
 
   const [fix, setFix] = useState(false);
 
@@ -143,8 +150,8 @@ export default function Navbar({
       {isAuthenticated ? (
         <Box>
           <MenuItem>
-            <IconButton size="large" color="inherit">
-              <Badge badgeContent={1} color="error">
+            <IconButton size="large" color="inherit" onClick={() => setNewNotificationCount(0)}>
+              <Badge badgeContent={newNotificationCount} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -257,8 +264,8 @@ export default function Navbar({
                 }}
               >
                 {/* notifications */}
-                <IconButton size="large" color="inherit">
-                  <Badge badgeContent={1} color="error">
+                <IconButton size="large" color="inherit" onClick={() => setNewNotificationCount(0)}>
+                  <Badge badgeContent={newNotificationCount} color="error">
                     <NotificationsIcon
                       sx={{
                         color: fix ? "black" : color,
