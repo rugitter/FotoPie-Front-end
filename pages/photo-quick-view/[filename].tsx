@@ -46,7 +46,6 @@ const PhotoQuickView = () => {
         setCollected(response.data.collect_status);
         setLiked(response.data.like_status);
         setUserID(response.data.user_id);
-        console.log(userAvatar);
       } catch (error: any) {
         return error.message;
         // setRequestError(error.message);
