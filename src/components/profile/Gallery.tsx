@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import axiosRequest from "../../utils/axiosRequest";
+import { getUserPost } from "../../axiosRequest/api/userPost";
 
 interface GalleryProps {
   id: string;
@@ -25,11 +25,10 @@ export default function Gallery(props: GalleryProps) {
 
   useEffect(() => {
     if (!router.isReady) return;
-    axiosRequest(`/api/profile/${id}`, "GET").then((res) => {
+    getUserPost(id).then((res) => {
       const image = res.data.map((image: ResponseImageData) => (image.imageUrl
       ))
       setGalleryPosts(image);
-
     });
   }, [id]);
   return (

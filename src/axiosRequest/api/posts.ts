@@ -15,10 +15,3 @@ export const uploadPost = <T>(data: T) => {
     data,
   });
 };
-
-export const deletePost = <T>(params: T) => {
-  return axiosInstance({
-    url: `/api/profile/${params}`,
-    method:"delete",
-  });
-};

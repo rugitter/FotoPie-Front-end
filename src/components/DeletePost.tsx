@@ -1,19 +1,21 @@
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState } from 'react';
-import { deletePost } from '../axiosRequest/api/posts';
+import { deletePost } from '../axiosRequest/api/userPost';
 
 
 interface Props {
     filename: string;
+    userID: string;
 }
 function DeletePost(props: Props) {
     const [isDeleting, setIsDeleting] = useState(false);
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
     const router = useRouter();
-    const { filename } = props;
+    const { filename, userID } = props;
 
 
+    
 
     const handleDeleteClick = async () => {
         setIsConfirmationOpen(true);
@@ -27,13 +29,13 @@ function DeletePost(props: Props) {
         setIsDeleting(true);
         try {
             const response = await deletePost(filename);
-    
+
 
         } catch (error) {
             setIsDeleting(false);
         } finally {
             setIsConfirmationOpen(false);
-            router.push("/profile");
+            router.push(`/profile/${userID}`);
         }
     };
 

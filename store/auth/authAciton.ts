@@ -10,6 +10,7 @@ export const login = createAsyncThunk(
     try {
       const response = await loginRequest(payload);
       setAccessToken(response.data.access_token);
+      localStorage.setItem("currentUserId", response.data._id);
     } catch (error: any) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
