@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import NavBar from "../../src/components/NavBar";
-import Gallery from "../../src/components/profile/Gallery";
-import Collection from "../../src/components/profile/Collection";
+import Gallery from "../../src/components/ProfilePage/Gallery";
+import Collection from "../../src/components/ProfilePage/Collection";
 import { getUserInfo } from "../../src/axiosRequest/api/user";
+import ProfileHeader from "../../src/components/ProfilePage/ProfileHeader";
+import ProfileGalleryAndCollection from "../../src/components/ProfilePage/ProfileGalleryAndCollection";
 
 export default function ProfilePage() {
-  const [lastName, setLastName] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [avatarPath, setAvatarPath] = useState("");
+  const [user, setUser] = useState(null);
   const [isGallery, setIsGallery] = useState(true);
 
   const router = useRouter();
@@ -20,87 +20,25 @@ export default function ProfilePage() {
   useEffect(() => {
     if (!router.isReady) return;
 
-    getUserInfo(id).then((res) => {
-      console.log(res);
-      // if (id !== res.data.id) return router.push("/404");
-      setLastName(res.data.lastName);
-      setFirstName(res.data.firstName);
-      setAvatarPath(res.data.avatarPath);
+    getUserInfo(id).then(({ data }) => {
+      setUser(data);
     });
-  }, [id]);
+  }, [id, router.isReady]);
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" bgColor="#f8f8ff"/>
-      <Grid
-        container
-        direction="column"
-        alignItems="center"
-        sx={{ mt: 10, width: "100%" }}
-      >
-        {/* avatar */}
-        <Grid item>
-          <Avatar
-            alt="avatar"
-            src={avatarPath}
-            sx={{ width: 180, height: 180 }}
-          />
-        </Grid>
+      <NavBar isFixed={false} color="#000000" bgColor="#f8f8ff" />
 
-        {/* name */}
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          sx={{ mt: 5 }}
-          spacing={2}
-        >
-          <Grid item>
-            <Typography variant="h3">{firstName}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="h3">{lastName}</Typography>
-          </Grid>
-        </Grid>
+      <ProfileHeader
+        user={user}
+        isGallery={isGallery}
+        setIsGallery={setIsGallery}
+      ></ProfileHeader>
 
-        {/* Gallery & Collection button*/}
-        <Grid container justifyContent="center" sx={{ mt: 5 }} spacing={5}>
-          <Grid item>
-            <Button
-              variant={isGallery ? "contained" : "outlined"}
-              sx={{ borderRadius: 10, p: 1.5, pl: 3, pr: 3 }}
-              size="large"
-              onClick={() => {
-                // router.push(`/profile/${id}/gallery`);
-                setIsGallery(true);
-              }}
-            >
-              <Typography>Gallery</Typography>
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              variant={!isGallery ? "contained" : "outlined"}
-              sx={{ borderRadius: 10, p: 1.5, pl: 3, pr: 3 }}
-              size="large"
-              onClick={() => {
-                // router.push(`/profile/${id}/collection`);
-                setIsGallery(false);
-              }}
-            >
-              <Typography>Collection</Typography>
-            </Button>
-          </Grid>
-        </Grid>
-
-        <Grid sx={{m:5}}>
-          {isGallery ? (
-            <Gallery id={id as string} />
-          ) : (
-            <Collection id={id as string} />
-          )}
-        </Grid>
-      </Grid>
+      <ProfileGalleryAndCollection
+        isGallery={isGallery}
+        id={id}
+      ></ProfileGalleryAndCollection>
     </>
   );
 }

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import axiosRequest from "../../../src/utils/axiosRequest";
+import axiosRequest from "../../utils/axiosRequest";
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -45,9 +45,9 @@ export default function Collection(props: CollectionProps) {
       }
     } catch (error: any) {
       setError(error.message);
-    }    
+    }
   };
-    
+
   useEffect(() => {
     fetchImages();
   }, []);
