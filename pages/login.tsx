@@ -4,13 +4,13 @@ import Avatar from "@mui/material/Avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { Schema, string, object } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
 import Link from "../src/utils/Link";
 
 import Copyright from "../src/components/Copyright";
