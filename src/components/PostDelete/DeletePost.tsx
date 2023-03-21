@@ -1,21 +1,60 @@
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState } from 'react';
-import { deletePost } from '../axiosRequest/api/userPost';
+import { useEffect, useMemo, useState } from 'react';
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { getMe } from "../../axiosRequest/api/editUser";
+import { deletePost } from '../../axiosRequest/api/userPost';
+import { useCheckToken } from "../../hooks/useCheckToken";
 
 
 interface Props {
     filename: string;
     userID: string;
 }
+
+
+const currentLoginUserId = async () => {
+    try {
+        const response = await getMe();
+        const { id } = response.data;
+        return id;
+    } catch (error) {
+    }
+}
 function DeletePost(props: Props) {
+    useCheckToken();
+    const { isAuthenticated } = useSelector((state: RootState) => state.auth);
     const [isDeleting, setIsDeleting] = useState(false);
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+    const [isCurrentUserId, setIsCurrentUserId] = useState<boolean>(false);
+    // const [currentUserId, setCurrentUserId] = useState<string | null>(null);
     const router = useRouter();
     const { filename, userID } = props;
 
+    useEffect(() => {
+        const fetchUserId = async () => {
+            const trueUser = await currentLoginUserId();
+            const isMatch = trueUser === userID;
+            setIsCurrentUserId(isMatch);
+        };
 
-    
+        fetchUserId();
+    }, [userID])
+
+    //useMemo (chatgpt optimization)
+    // useEffect(() => {
+    //     const fetchUserId = async () => {
+    //       const trueUser = await currentLoginUserId();
+    //       setCurrentUserId(trueUser);
+    //     };
+
+    //     fetchUserId();
+    //   }, []);
+
+    //   const isCurrentUserId = useMemo(() => {
+    //     return currentUserId === userID;
+    //   }, [currentUserId, userID]);
 
     const handleDeleteClick = async () => {
         setIsConfirmationOpen(true);
@@ -46,7 +85,7 @@ function DeletePost(props: Props) {
 
     return (
         <>
-            <div style={deleteBoxStyles}>
+            {isAuthenticated && isCurrentUserId ? <div style={deleteBoxStyles}>
                 <Button
                     variant="contained"
                     color="secondary"
@@ -70,7 +109,8 @@ function DeletePost(props: Props) {
                         </Button>
                     </DialogActions>
                 </Dialog>
-            </div>
+            </div> : null}
+
         </>
     );
 }

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import NavBar from "../../src/components/NavBar";
-import Gallery from "../../src/components/profile/Gallery";
+import Gallery from "../../src/components/PostGallery/Gallery";
 import Collection from "../../src/components/profile/Collection";
 import { getUserInfo } from "../../src/axiosRequest/api/user";
 

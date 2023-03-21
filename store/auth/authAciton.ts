@@ -3,6 +3,7 @@ import { removeAccessToken } from "./../../src/utils/token";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { loginRequest, logoutRequest } from "../../src/axiosRequest/api/auth";
 import { setAccessToken } from "../../src/utils/token";
+import Cookies from "universal-cookie";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -10,7 +11,6 @@ export const login = createAsyncThunk(
     try {
       const response = await loginRequest(payload);
       setAccessToken(response.data.access_token);
-      localStorage.setItem("currentUserId", response.data._id);
     } catch (error: any) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);

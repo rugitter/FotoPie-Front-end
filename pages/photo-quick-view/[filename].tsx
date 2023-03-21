@@ -13,17 +13,16 @@ import Image from "mui-image";
 
 import axiosRequest from "../../src/utils/axiosRequest";
 import Link from "../../src/utils/Link";
-import DeletePost from "../../src/components/DeletePost";
+import DeletePost from "../../src/components/PostDelete/DeletePost";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { useCheckToken } from "../../src/hooks/useCheckToken";
+
+
 
 
 
 // Define a component that renders the page
 const PhotoQuickView = () => {
-  useCheckToken();
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+
   const [userName, setUserName] = useState("");
   const [userAvatar, setUserAvatar] = useState("");
   const [postPhoto, setPostPhoto] = useState("");
@@ -34,23 +33,10 @@ const PhotoQuickView = () => {
   const [collected, setCollected] = useState(false);
   const [liked, setLiked] = useState(false);
 
-  const [isCurrentUser, setIsCurrentUser] = useState(true);
-  // const [requestError, setRequestError] = useState();
 
   const router = useRouter();
-  // const { filename } = router.query;
   const filename: string = router.query.filename as string;
 
-  useEffect(() => {
-    if (!router.isReady) return;
-
-    if (typeof window !== "undefined") {
-      setIsCurrentUser(localStorage.getItem("currentUserId") === userID);
-    }
-  }, [])
-
-
-  // fetch get user avatar,username,post image, collect/like status, collect/like count
   useEffect(() => {
     if (!router.isReady) return;
 
@@ -255,7 +241,7 @@ const PhotoQuickView = () => {
             style={{ objectFit: "contain" }}
           />
         </Box>
-        {isAuthenticated && isCurrentUser ? <DeletePost userID={userID} filename={filename} /> : null}
+        <DeletePost userID={userID} filename={filename} />
       </Stack>
     </Stack>
   );
