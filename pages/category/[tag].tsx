@@ -11,7 +11,6 @@ import NoMore from "../../src/components/Loader/NoMore";
 import { categoryPosts } from "../../src/axiosRequest/api/category";
 import NavBar from "../../src/components/NavBar";
 import Stack from "@mui/material/Stack";
-import Link from "next/link";
 
 interface ResponseImageData {
   _id: string;
@@ -38,9 +37,6 @@ export default function CategoryInsidePage() {
 
   const fetchImages = async () => {
     try {
-      
-      //console.log(tag, 'axiosrequestTag')
-      //console.log(page, "axiosrequestPage");
       const res = await categoryPosts(tag, page, limit);
       
       if (res.status === 200) {
@@ -59,12 +55,8 @@ export default function CategoryInsidePage() {
     setCategory([]);
     setPage(1);
     setLoaderHandler(true);
-    router.push(`/category/${newTag}`);
-    
-    
+    router.push(`/category/${newTag}`);    
   };
-
-  
 
   const getSynonyms = async (word: string) => {
     try {
@@ -83,6 +75,7 @@ export default function CategoryInsidePage() {
       return [];
     }
   };
+
   useEffect(() => {
     // Save the previous URL when the component mounts
     setPrevUrl(window.location.href);
@@ -113,7 +106,6 @@ export default function CategoryInsidePage() {
   useEffect(() => {
     if (!router.isReady) return;
     getSynonyms(tagString).then((result) => {
-      //console.log(result);
       setLinks(result);
     });
     fetchImages();
@@ -139,11 +131,9 @@ export default function CategoryInsidePage() {
         sx={{ ml: 5, mt: 7 }}
       >
         {links.map((link) => (
-          //<Link key={link} href={`/category/${link}`} passHref>
           <Button
             key={link}
             variant="outlined"
-            //href="#contained-buttons"
             color="primary"
             onClick={() => {
               resetCategoryState(link);
@@ -154,14 +144,13 @@ export default function CategoryInsidePage() {
           //</Link>
         ))}
       </Stack>
-      {/*<h1>Category: '{tag} image'</h1>*/}
+      
       <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
         <InfiniteScroll
           dataLength={category.length}
           next={fetchImages}
           hasMore={true}
           loader={loaderHandler ? <Loader /> : <NoMore />}
-          //scrollThreshold={0.9}
         >
           <Masonry
             columns={{ sm: 2, md: 3 }}
