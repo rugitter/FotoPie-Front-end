@@ -14,9 +14,9 @@ export const updateCollect = createAsyncThunk(
       // const response = await getCollectNumber(
       // "ee901d26-a908-4fe0-ae18-2e6ff5e114c9.jpeg"
       // );
-      // return response.data;
+      return response.data;
       console.log("getCollectNumber response:", response);
-      return { payload: response.data };
+      // return { payload: response.data };
     } catch (error: any) {
       console.log("updateCollect error:", error);
       if (error.response && error.response.data.message) {
