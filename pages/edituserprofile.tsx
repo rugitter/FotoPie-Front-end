@@ -25,7 +25,7 @@ import {
   FormProvider,
 } from "react-hook-form";
 import Copyright from "../src/components/Copyright";
-import FormTextField from "../src/components/textField/formTextField";
+import FormTextField from "../src/components/LoginForm/FormTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object, mixed } from "yup";
 import { useRouter } from "next/router";
@@ -120,7 +120,7 @@ export default function EditUserProfile() {
         </Alert>;
         console.error(error);
       }
-    };
+    }
   };
 
   return (
@@ -181,7 +181,7 @@ export default function EditUserProfile() {
 
             <Grid container spacing={8}>
               <Grid item xs={6}>
-                <Typography variant="h6">First Name*</Typography>               
+                <Typography variant="h6">First Name*</Typography>
                 <FormTextField
                   name="firstName"
                   label={firstName}

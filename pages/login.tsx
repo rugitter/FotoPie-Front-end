@@ -1,24 +1,24 @@
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "../src/utils/Link";
+import { useDispatch, useSelector } from "react-redux";
+import { Schema, string, object } from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Copyright from "../src/components/Copyright";
 import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Schema, string, object } from "yup";
-import FormTextField from "../src/components/textField/formTextField";
-import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import Alert from "@mui/material/Alert";
+import Link from "../src/utils/Link";
+
+import Copyright from "../src/components/Copyright";
+import FormTextField from "../src/components/LoginForm/FormTextField";
 import { AppDispatch, RootState } from "../store/store";
 import { login } from "../store/auth/authAciton";
+import LoginButton from "../src/components/LoginForm/LoginButton";
+import ErrorAlert from "../src/components/LoginForm/ErrorAlert";
 
 // Define a type with the shape of the form values
 export interface IFormInput {
@@ -57,11 +57,9 @@ export default function LogIn() {
 
   return (
     <Container component="main" maxWidth="xs">
-      {error && (
-        <Alert variant="filled" severity="error" sx={{ mt: 2 }}>
-          {error}
-        </Alert>
-      )}
+      {/* error handling*/}
+      {error && <ErrorAlert error={error}></ErrorAlert>}
+
       <Box
         sx={{
           marginTop: 3,
@@ -70,19 +68,23 @@ export default function LogIn() {
           alignItems: "center",
         }}
       >
+        {/* login icon */}
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
+
         <Typography component="h1" variant="h5">
           Login
         </Typography>
 
+        {/* input Form */}
         <FormProvider {...methods}>
           <Box
             component="form"
             onSubmit={methods.handleSubmit(onSubmit)}
             sx={{ mt: 1 }}
           >
+            {/* Email */}
             <FormTextField
               name="email"
               label="Email Address"
@@ -90,6 +92,7 @@ export default function LogIn() {
               autoComplete="email"
             />
 
+            {/* Password */}
             <FormTextField
               name="password"
               label="Password"
@@ -98,24 +101,24 @@ export default function LogIn() {
               autoComplete="current-password"
             />
 
-            <FormControlLabel
+            {/* TODO: add remember checkbox */}
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              {loginStatus === "loading" ? "Loading..." : "Log In"}
-            </Button>
+            /> */}
+
+            {/* Button */}
+            <LoginButton loginStatus={loginStatus}></LoginButton>
+
             <Grid container>
+              {/* Forgot password? */}
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="reset-password/reset-request" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
+
+              {/* Don't have an account? Sign Up */}
               <Grid item>
                 <Link href="signup" variant="body2">
                   {"Don't have an account? Sign Up"}
