@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 import { Button, Avatar, Typography } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Image from "mui-image";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import DownloadImage from "./DownloadImage";
 import Link from "../../utils/Link";
 import { getInitialData } from "../../axiosRequest/api/photoQuickView";
@@ -16,14 +16,15 @@ import {
   updateCollect,
   updateLike,
 } from "../../../store/photoQuickView/quickViewAciton";
+import PostImage from "./PostImage";
+
+interface MainBodyProps {
+  filename: string | string[] | undefined;
+  router: NextRouter;
+}
 
 // Define a component that renders the page
-const MainBody = () => {
-
-  const router = useRouter();
-  const { filename } = router.query;
-  const filenameString = filename as string;
-
+const MainBody: FC<MainBodyProps> = ({ filename, router }) => {
   const {
     isAuthenticated,
     userName,
@@ -65,17 +66,16 @@ const MainBody = () => {
   // }, [router.isReady, filenameString]);
   // }, [props.filenameString]);
   useEffect(() => {
-    if (!router.isReady) return;
     const fetchData = async () => {
       try {
-        const response = await getInitialData(filenameString);
+        const response = await getInitialData(filename);
         dispatch(setQuickViewData(response.data));
       } catch (error: any) {
         return error.message;
       }
     };
     fetchData();
-  }, [router.isReady, filenameString, dispatch]);
+  }, [filename, dispatch]);
 
   //Toggle collect button and add/delete collect number
   // const addToCollection = async () => {
@@ -103,7 +103,7 @@ const MainBody = () => {
   const addToCollection = () => {
     if (!isAuthenticated) router.push("/login");
     if (isAuthenticated) {
-      dispatch(updateCollect(filenameString));
+      dispatch(updateCollect(filename));
     }
   };
   // try {
@@ -143,7 +143,7 @@ const MainBody = () => {
   const addToLiked = () => {
     if (!isAuthenticated) router.push("/login");
     if (isAuthenticated) {
-      dispatch(updateLike(filenameString));
+      dispatch(updateLike(filename));
     }
   };
   //   try {
@@ -257,7 +257,7 @@ const MainBody = () => {
                   ? "Unlike" + " " + `${userLikes}`
                   : "Like" + " " + `${userLikes}`}
               </Button>
-              <DownloadImage filenameString={filenameString} />
+              <DownloadImage filename={filename} />
               {/* <DownloadImage filenameString={props.filenameString} /> */}
               {/* <DownloadImage filename={filename} /> */}
             </Stack>
@@ -272,18 +272,14 @@ const MainBody = () => {
               height: "auto",
             }}
           >
-            <Image
-              alt="image"
-              src={postPhoto}
-              width="40vw"
-              style={{ objectFit: "contain" }}
-            />
-            <Image
-              alt="image"
-              src={postPhoto}
-              width="40vw"
-              style={{ objectFit: "contain" }}
-            />
+            {postPhoto && (
+              <Image
+                alt="image"
+                src={postPhoto}
+                width="40vw"
+                style={{ objectFit: "contain" }}
+              />
+            )}
           </Box>
         </Stack>
       </Box>

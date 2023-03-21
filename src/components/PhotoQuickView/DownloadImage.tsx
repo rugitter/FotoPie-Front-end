@@ -8,7 +8,7 @@ import Link from "../../utils/Link";
 import { getDownloadImage } from "../../axiosRequest/api/photoQuickView";
 
 export interface DownloadImageProps {
-  filenameString: string;
+  filename: string | string[] | undefined;
   // filename: string | string[] | undefined;
 }
 
@@ -19,7 +19,7 @@ const DownloadImage = (props: DownloadImageProps) => {
     // setIsLoading(true);
     try {
       // const response = await getDownloadImage(props.filename);
-      const response = await getDownloadImage(props.filenameString);
+      const response = await getDownloadImage(props.filename);
       // const response = await getDownloadImage(props.filename);
       // const response = await axiosRequest(
       //   `/api/download?filename=${props.filename}`,

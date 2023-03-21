@@ -6,9 +6,9 @@ import {
 
 export const updateCollect = createAsyncThunk(
   "photoQuickView/updateCollect",
-  async (filenameString: string, { rejectWithValue }) => {
+  async (filename: string | string[] | undefined, { rejectWithValue }) => {
     try {
-      const response = await getCollectNumber(filenameString);
+      const response = await getCollectNumber(filename);
       console.log("response.data", response.data);
       return response.data;
     } catch (error: any) {
@@ -23,9 +23,9 @@ export const updateCollect = createAsyncThunk(
 
 export const updateLike = createAsyncThunk(
   "photoQuickView/updateLike",
-  async (filenameString: string, { rejectWithValue }) => {
+  async (filename: string | string[] | undefined, { rejectWithValue }) => {
     try {
-      const response = await getLikeNumber(filenameString);
+      const response = await getLikeNumber(filename);
       return response.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {
