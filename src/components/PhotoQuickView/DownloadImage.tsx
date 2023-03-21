@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import DownloadIcon from "@mui/icons-material/Download";
 import axiosRequest from "../../utils/axiosRequest";
 import Link from "../../utils/Link";
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 import { getDownloadImage } from "../../axiosRequest/api/photoQuickView";
 
 export interface DownloadImageProps {
-  filenameString: string ;
+  filenameString: string;
   // filename: string | string[] | undefined;
 }
 
@@ -18,6 +18,7 @@ const DownloadImage = (props: DownloadImageProps) => {
   const downLoadImages = async () => {
     // setIsLoading(true);
     try {
+      // const response = await getDownloadImage(props.filename);
       const response = await getDownloadImage(props.filenameString);
       // const response = await getDownloadImage(props.filename);
       // const response = await axiosRequest(

@@ -1,12 +1,17 @@
+import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import CloseButton from "../../src/components/PhotoQuickView/CloseButton";
 import MainBody from "../../src/components/PhotoQuickView/MainBody";
+import { useCheckToken } from "../../src/hooks/useCheckToken";
+
 
 // Define a component that renders the page
 const PhotoQuickView = () => {
+  useCheckToken();
   // const router = useRouter();
   // const { filename } = router.query;
+  // const filenameString = filename as string;
 
   return (
     <Stack
@@ -23,8 +28,8 @@ const PhotoQuickView = () => {
       <CloseButton />
 
       {/* main body */}
-      {/* <MainBody filename={filename} /> */}
       <MainBody />
+      {/* <MainBody filenameString={filenameString} /> */}
     </Stack>
   );
 };
