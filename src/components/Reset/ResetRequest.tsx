@@ -2,35 +2,16 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
-import Link from "@mui/material/Link";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Router from "next/router";
-
-//Copyright function at the bottom of the page
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="">
-        FotoPie
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { createResetRequest } from "../../axiosRequest/api/reset";
 
 interface FormData {
   email: string;
@@ -38,7 +19,6 @@ interface FormData {
 
 const theme = createTheme();
 
-//main function
 function ResetRequest() {
   const [email, setEmail] = useState("");
 
@@ -49,25 +29,16 @@ function ResetRequest() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        "http://localhost:9090/api/reset/resetRequest",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-          }),
-        }
-      );
-      const data = await response.json();
+      // Send POST request to api/reset/resetRequest
+      const response = await createResetRequest({ email });
 
       //redirecting page based on server response code
       switch (response.status) {
         case 200:
-          Router.push("/email-sent");
+          Router.push("/reset/email-sent");
           break;
         case 404:
-          Router.push("/user-not-exist");
+          Router.push("/reset/user-not-exist");
           break;
       }
     } catch (error) {
@@ -80,7 +51,6 @@ function ResetRequest() {
     formState: { errors },
   } = useForm<FormData>();
 
-  //Front end page
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -110,15 +80,6 @@ function ResetRequest() {
                   autoComplete="email"
                   value={email}
                   onChange={handleEmailChange}
-                  // {...register("email", {
-                  //   required: true,
-                  //   pattern: {
-                  //     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  //     message: "Invalid email address",
-                  //   },
-                  // })}
-                  // error={!!errors.email}
-                  // helperText={errors.email?.message}
                 />
               </Grid>
             </Grid>
@@ -137,7 +98,6 @@ function ResetRequest() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
