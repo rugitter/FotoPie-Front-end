@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import Router from "next/router";
+import { createResetPassword } from "../../axiosRequest/api/reset";
 
 interface FormData {
   password: string;
@@ -32,18 +33,13 @@ function ResetPassword() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `http://localhost:9090/api/reset/resetPassword?token=${token}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            password,
-          }),
-        }
-      );
-
-      const data = await response.json();
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("token");
+      // Send POST request to api/reset/resetPassword
+      const response = await createResetPassword({
+        password,
+        token,
+      });
 
       //redirecting page based on server response code
       switch (response.status) {
@@ -51,10 +47,9 @@ function ResetPassword() {
           Router.push("/login");
           break;
         case 401:
-          Router.push("/invalid token");
+          Router.push("/reset/invalid-token");
           break;
       }
-      console.log(data);
     } catch (error) {
       console.error(error);
     }

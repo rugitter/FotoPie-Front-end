@@ -1,17 +1,11 @@
-import Link from "next/link";
-import Button from "@mui/material/Button";
+import InvalidToken from "../../src/components/Reset/InvalidToken";
 
-function InvalidToken() {
+const invalidToken: React.FC = () => {
   return (
     <>
-      <h2>Invalid Token</h2>
-      <div>
-        <Button variant="contained">
-          <Link href="/reset-request">Go Back</Link>
-        </Button>
-      </div>
+      <InvalidToken />
     </>
   );
-}
+};
 
-export default InvalidToken;
+export default invalidToken;

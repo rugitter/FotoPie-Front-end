@@ -1,17 +1,11 @@
-import Link from "next/link";
-import Button from "@mui/material/Button";
+import UserNotExist from "../../src/components/Reset/UserNotExist";
 
-function UserNotExist() {
+const userNotExist: React.FC = () => {
   return (
     <>
-      <h1>User Not Exist, Please Go Back and Try Again</h1>
-      <div>
-        <Button variant="contained">
-          <Link href="/reset-request">Reset Password</Link>
-        </Button>
-      </div>
+      <UserNotExist />
     </>
   );
-}
+};
 
-export default UserNotExist;
+export default userNotExist;

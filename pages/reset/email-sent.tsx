@@ -1,20 +1,13 @@
-import Link from "next/link";
-import Button from "@mui/material/Button";
+import EmailSent from "../../src/components/Reset/EmailSent";
+import Copyright from "../../src/components/Copyright";
 
-function EmailSent() {
+const emailSent: React.FC = () => {
   return (
     <>
-      <h1>
-        Email Sent Successfully, Please Click the Verify Button in the Email to
-        Verify
-      </h1>
-      <div>
-        <Button variant="contained">
-          <Link href="/login">Login</Link>
-        </Button>
-      </div>
+      <EmailSent />
+      <Copyright sx={{ mt: 8, mb: 4 }} />
     </>
   );
-}
+};
 
-export default EmailSent;
+export default emailSent;
