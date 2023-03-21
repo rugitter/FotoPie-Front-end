@@ -35,9 +35,6 @@ type Notification = {
 };
   const [notifications, setNotifications]= useState<Notification[]>([]);
 
-  const[deleteMark, setDeleteMark]= useState(true);
-  const[deleteIcon, setDeleteIcon]= useState(true);
-
   useEffect(()=>{
     const fetchData = async () =>{
       try{
@@ -51,14 +48,8 @@ type Notification = {
       } 
     } 
     fetchData();
-      // setInterval(fetchData, 5000)
+    setInterval(fetchData, 5000)
   },[])
-
-    const onClickCloseButton= ()=>{
-      setDeleteMark(!deleteMark)
-      setDeleteIcon(!deleteIcon)
-  }
-  
   
   if (notifications.length === 0){
     return(
@@ -74,15 +65,6 @@ type Notification = {
     <Box sx={{ width: '100%', 
     marginTop:2, }}>
 
-    <IconButton
-            size="small"
-            edge="end"
-            aria-label="close"
-            onClick={onClickCloseButton}
-            sx={{position:'relative', left:"80%", top:"5%", color:"purple" }}
-            style={{display:deleteIcon ? "true" : "none"}}
-          >
-      </IconButton>
       <Stack spacing={5}
       sx={{ 
       display: 'flex', 
