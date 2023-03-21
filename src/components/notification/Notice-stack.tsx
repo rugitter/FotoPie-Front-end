@@ -100,7 +100,7 @@ type Notification = {
                 alignItems:'center',
                 width:'70%',
                 color:'primary',
-                margin:'1px'
+                margin:'2px'
               }}>
               <Box sx={{
                 display: 'flexbox',
