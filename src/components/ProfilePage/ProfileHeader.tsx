@@ -1,11 +1,6 @@
 import { Avatar, Button, Grid, Typography } from "@mui/material";
 import { FC } from "react";
-
-interface User {
-  firstName: string;
-  lastName: string;
-  avatarPath: string;
-}
+import { User } from "../../../pages/profile/[id]";
 
 interface ProfileHeaderProps {
   user: User | null;
@@ -78,7 +73,6 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({
           </Button>
         </Grid>
       </Grid>
-
     </Grid>
   );
 };

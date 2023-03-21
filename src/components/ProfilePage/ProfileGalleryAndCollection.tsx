@@ -4,22 +4,18 @@ import Collection from "./Collection";
 import Gallery from "./Gallery";
 
 interface ProfileGalleryAndCollectionProps {
-  id: string | string[] | undefined;
+  profileUserId: string | string[] | undefined;
   isGallery: boolean;
 }
 
 const ProfileGalleryAndCollection: FC<ProfileGalleryAndCollectionProps> = ({
-  id,
+  profileUserId,
   isGallery,
 }: ProfileGalleryAndCollectionProps) => {
   return (
     <Grid sx={{ m: 5 }}>
-      {isGallery ? (
-        <Gallery id={id} />
-      ) : (
-        <Collection id={id} />
-      )}
+      {isGallery ? <Gallery profileUserId={profileUserId} /> : <Collection profileUserId={profileUserId} />}
     </Grid>
-  )
+  );
 };
 export default ProfileGalleryAndCollection;
