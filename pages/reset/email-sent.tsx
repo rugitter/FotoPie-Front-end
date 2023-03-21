@@ -5,7 +5,6 @@ const emailSent: React.FC = () => {
   return (
     <>
       <EmailSent />
-      <Copyright sx={{ mt: 8, mb: 4 }} />
     </>
   );
 };

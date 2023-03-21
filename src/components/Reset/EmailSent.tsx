@@ -1,6 +1,7 @@
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import Copyright from "../Copyright";
 
 function EmailSent() {
   return (
@@ -34,6 +35,10 @@ function EmailSent() {
             </Link>
           </Button>
         </div>
+        <br />
+        <br />
+        <br />
+        <Copyright />
       </Box>
     </Box>
   );
