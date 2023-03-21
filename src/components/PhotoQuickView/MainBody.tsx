@@ -6,53 +6,23 @@ import Image from "mui-image";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { useRouter } from "next/router";
-// import UserName from "./UserName";
-// import CollectButton from "./CollectButton";
-// import LikeButton from "./LikeButton";
-// import CloseButton from "./CloseButton";
-// import PostImage from "./PostImage";
 import DownloadImage from "./DownloadImage";
 import Link from "../../utils/Link";
-import {
-  getLikeNumber,
-  getCollectNumber,
-  getInitialData,
-  getDownloadImage,
-} from "../../axiosRequest/api/photoQuickView";
+import { getInitialData } from "../../axiosRequest/api/photoQuickView";
 import { AppDispatch, RootState } from "../../../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setQuickViewData,
-  // setUserCollects,
-  // toggleCollected,
-  // setUserLikes,
-  // toggleLiked,
-} from "../../../store/photoQuickView/quickViewSlice";
+import { setQuickViewData } from "../../../store/photoQuickView/quickViewSlice";
 import {
   updateCollect,
   updateLike,
 } from "../../../store/photoQuickView/quickViewAciton";
 
-// export interface MainBodyProps {
-//   filenameString: string;
-// }
 // Define a component that renders the page
 const MainBody = () => {
-  // const MainBody = (props: MainBodyProps) => {
+
   const router = useRouter();
   const { filename } = router.query;
   const filenameString = filename as string;
-  console.log(filenameString,filename)
-
-  // const [userName, setUserName] = useState("");
-  // const [userAvatar, setUserAvatar] = useState("");
-  // const [postPhoto, setPostPhoto] = useState("");
-  // const [userCollects, setUserCollects] = useState(0);
-  // const [userLikes, setUserLikes] = useState(0);
-  // const [userID, setUserID] = useState("");
-
-  // const [collected, setCollected] = useState(false);
-  // const [liked, setLiked] = useState(false);
 
   const {
     isAuthenticated,
