@@ -108,7 +108,7 @@ export default function LogIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              {status === "loading" ? "Loading..." : "Log In"}
+              {loginStatus === "loading" ? "Loading..." : "Log In"}
             </Button>
             <Grid container>
               <Grid item xs>
