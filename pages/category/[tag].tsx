@@ -11,6 +11,7 @@ import NoMore from "../../src/components/Loader/NoMore";
 import { categoryPosts } from "../../src/axiosRequest/api/category";
 import NavBar from "../../src/components/NavBar";
 import Stack from "@mui/material/Stack";
+import CategoryHeader from "../../src/components/Category/CategoryHeader";
 
 interface ResponseImageData {
   _id: string;
