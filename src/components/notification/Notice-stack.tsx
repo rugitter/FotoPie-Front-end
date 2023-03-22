@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled, makeStyles } from '@mui/material/styles';
-import { Avatar, Typography } from '@mui/material';
+import { Avatar, CircularProgress, Typography } from '@mui/material';
 import { flexbox } from '@mui/system';
 import axios from 'axios';
 import axiosRequest from '../../utils/axiosRequest';
@@ -15,6 +15,9 @@ import MarkChatReadIcon from '@mui/icons-material/MarkChatRead';
 import { getNotification } from '../../axiosRequest/api/notification';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchNotifications } from '../../../store/notification/notifyAction';
+import { AppDispatch, RootState } from '../../../store/store';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -27,31 +30,30 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 export default function BasicStack() {
-type Notification = {
-  id: number;
-  userAvatar: string;
-  userName: string;
-  post: string;
-};
-  const [notifications, setNotifications]= useState<Notification[]>([]);
+
+  // const [notifications, setNotifications]= useState<Notification[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const {notifications, status} = useSelector((state:RootState) => state.notifySlice)
+  const [loading, setLoading] = useState(true)
+
+  //fetch data
+  useEffect(()=>{
+    dispatch(fetchNotifications());
+  },[dispatch]);
 
   useEffect(()=>{
-    const fetchData = async () =>{
-      try{
-        // Get User Avatar from User Schema
-        const Response = await getNotification()
-        console.log(Response)
-        setNotifications(Response.data)
-      }
-      catch (error:any){
-        console.log(error)
-      } 
-    } 
-    fetchData();
-    setInterval(fetchData, 5000)
-  },[])
-  
-  if (notifications.length === 0){
+    if (status === 'succeeded'){
+      setLoading(false);
+    }
+  },[status]);
+
+  if(status === 'loading' || status === "idle"){
+    return(
+      <Box sx={{display:"flex", justifyContent:'center', mt:'5%'}}>
+        <CircularProgress />
+      </Box>
+    )
+  } else if (notifications.length === 0){
     return(
       <Box sx={{display:"flex",justifyContent:'center'}}>
         <Item sx={{width:"60%", mt:"5%"}}>
@@ -75,7 +77,9 @@ type Notification = {
           <Box sx={{width:"90%", display:"flex",flexDirection:"column", alignItem:"center",justifyContent:"center"}}>
           {/* to get notification mapped into Stack  */}
           {notifications.map((notification)=>(
+            <a href={`/photo-quick-view/${notification.directFilename}`} style={{ textDecoration: 'none' }} >
             <Box key={notification.id} sx={{display:"flex",justifyContent:"center"}}>
+              
               <Item sx={{
                 display:'flex',
                 justifyContent:'space-evenly',
@@ -83,7 +87,8 @@ type Notification = {
                 width:'70%',
                 color:'primary',
                 margin:'2px'
-              }}>
+              }}
+             >
               <Box sx={{
                 display: 'flexbox',
                 flexDirection:'row',
@@ -93,10 +98,12 @@ type Notification = {
               <Avatar alt="avatar" src={notification.userAvatar}/>
               <Typography>{notification.userName}</Typography>
               </Box>
-               Liked Your Post
+               <Typography>Liked Your Post</Typography>
               <img alt="image" src={notification.post} width={50} height={45}/>
               </Item>
+              
             </Box>
+            </a>
           ))}
             </Box>
       </Stack>

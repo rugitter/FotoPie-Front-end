@@ -6,7 +6,6 @@ import PostList from "../src/components/PostList/PostList";
 import { useCheckToken } from "../src/hooks/useCheckToken";
 
 export default function Home() {
-  useCheckToken();
   return (
     <Container>
       <Box
