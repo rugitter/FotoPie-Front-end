@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
 
 interface CategoryHeaderProps {
-  tag: string;
+  tagString: string | string[] | undefined;
 }
 
-export default function CategoryHeader({ tag }: CategoryHeaderProps) {
+export default function CategoryHeader({ tagString }: CategoryHeaderProps) {
   return (
     <Typography
       variant="h3"
@@ -14,7 +14,7 @@ export default function CategoryHeader({ tag }: CategoryHeaderProps) {
         fontWeight: 500,
       }}
     >
-      Category: '{tag} image'
+      Category: '{tagString} image'
     </Typography>
   );
 }

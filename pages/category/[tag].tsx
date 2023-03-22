@@ -16,7 +16,7 @@ import CategoryHeader from "../../src/components/Category/CategoryHeader";
 interface ResponseImageData {
   _id: string;
   price: number;
-  tag: string;
+  tag: string | string[] | undefined;
   userEmail: string;
   imageUrl: string;
   description: string;
@@ -25,14 +25,22 @@ interface ResponseImageData {
 export default function CategoryInsidePage() {
   const router = useRouter();
   const { tag } = router.query;
-  const tagString = tag as string;
-
+  //const tagString = tag as string;
+  const [tagString, setTagString] = useState<string | string[] | undefined>("");
   const [category, setCategory] = useState<ResponseImageData[]>([]);
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
   const [Error, setError] = useState(null);
   const [links, setLinks] = useState([]);
   const [prevUrl, setPrevUrl] = useState("");
+
+  useEffect(() => {
+    if (router.isReady && tag) {
+      setTagString(tag);
+      }
+    }, [tag, router.isReady]);
+
+
 
   let limit = 10;
 
@@ -64,9 +72,7 @@ export default function CategoryInsidePage() {
       const response = await fetch(
         `https://words.bighugelabs.com/api/2/3f3f84727a0ebebcff3c969e871a286a/${word}/json`
       );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+      
       const data = await response.json();
       const synonyms = data?.noun?.syn || data?.verb?.syn || [];
       // check if the response contains synonyms for the noun or verb form of the word, otherwise return an empty array
@@ -116,16 +122,7 @@ export default function CategoryInsidePage() {
   return (
     <>
       <NavBar isFixed={false} color="#000000" />
-      <Typography
-        variant="h3"
-        sx={{
-          ml: 5,
-          mt: 5,
-          fontWeight: 500,
-        }}
-      >
-        Category: '{tag} image'
-      </Typography>
+      <CategoryHeader tagString={tagString } />
       <Stack
         direction={{ xs: "column", sm: "row" }}
         spacing={{ xs: 1, sm: 4, md: 6 }}
