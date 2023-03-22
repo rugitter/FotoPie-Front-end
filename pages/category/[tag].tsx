@@ -11,7 +11,7 @@ import NoMore from "../../src/components/Loader/NoMore";
 import { categoryPosts } from "../../src/axiosRequest/api/category";
 import NavBar from "../../src/components/NavBar";
 import Stack from "@mui/material/Stack";
-import CategoryHeader from "../../src/components/Category/CategoryHeader";
+import CategoryHeader from "../../src/components/CategoryInside/CategoryHeader";
 
 interface ResponseImageData {
   _id: string;
@@ -60,19 +60,19 @@ export default function CategoryInsidePage() {
     }
   };
 
-  const resetCategoryState = async (newTag: string) => {
+  const resetCategoryStateHandler = async (newTag: string) => {
     setCategory([]);
     setPage(1);
     setLoaderHandler(true);
     router.push(`/category/${newTag}`);    
   };
 
-  const getSynonyms = async (word: string) => {
+  const getSynonyms = async (tagString: string | string[] | undefined) => {
     try {
       const response = await fetch(
-        `https://words.bighugelabs.com/api/2/3f3f84727a0ebebcff3c969e871a286a/${word}/json`
+        `https://words.bighugelabs.com/api/2/3f3f84727a0ebebcff3c969e871a286a/${tagString}/json`
       );
-      
+
       const data = await response.json();
       const synonyms = data?.noun?.syn || data?.verb?.syn || [];
       // check if the response contains synonyms for the noun or verb form of the word, otherwise return an empty array
@@ -112,12 +112,11 @@ export default function CategoryInsidePage() {
 
   useEffect(() => {
     if (!router.isReady) return;
-    getSynonyms(tagString).then((result) => {
-      setLinks(result);
+    getSynonyms(tagString).then((response) => {
+      setLinks(response);
     });
     fetchImages();
-    
-  }, [tag]);
+  }, [tagString,router.isReady]);
 
   return (
     <>
@@ -134,7 +133,7 @@ export default function CategoryInsidePage() {
             variant="outlined"
             color="primary"
             onClick={() => {
-              resetCategoryState(link);
+              resetCategoryStateHandler(link);
             }}
           >
             {link}
