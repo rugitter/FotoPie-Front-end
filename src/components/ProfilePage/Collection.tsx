@@ -6,7 +6,7 @@ interface CollectionProps {
 export default function Collection(props: CollectionProps) {
   let id = props.profileUserId;
 
-  console.log(id, 'debug')
+  //console.log(id, 'debug')
 
   return (
     <>
