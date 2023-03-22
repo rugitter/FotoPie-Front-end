@@ -13,7 +13,7 @@ import Copyright from "../src/components/Copyright";
 import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
-import FormTextField from "../src/components/textField/formTextField";
+import FormTextField from "../src/components/LoginForm/FormTextField";
 import { useRouter } from "next/router";
 import axiosRequest from "../src/utils/axiosRequest";
 

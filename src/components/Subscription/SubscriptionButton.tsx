@@ -1,24 +1,26 @@
-import Strip from "stripe";
-import { loadStripe } from "@stripe/stripe-js";
+import axiosRequest from "../../utils/axiosRequest";
+import { Button } from "@mui/material";
+import { createCheckoutSession } from "../../axiosRequest/api/subscription";
 
-import * as React from "react";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
+const clickToSubscribe = async () => {
+  try {
+    // Send POST request to api/subscription/create-checkout-session
+    const response = await createCheckoutSession({
+      priceId: "price_1MitMoCWJBDJNhy8OQeBC2pY",
+    });
+
+    const url = response.data.session_url;
+
+    window.open(url);
+  } catch (error) {
+    return "Create checkout session failed";
+  }
+};
 
 export default function SubscriptionButton() {
   return (
-    <a href="https://buy.stripe.com/test_5kAg2a3sng4EeKk7ss">
-      <Button
-        style={{
-          borderRadius: 10,
-          backgroundColor: "#21b6ae",
-          padding: "12px 20px",
-          fontSize: "14px",
-        }}
-        variant="contained"
-      >
-        Subscribe
-      </Button>
-    </a>
+    <Button type="submit" variant="contained" onClick={clickToSubscribe}>
+      Subscribe
+    </Button>
   );
 }
