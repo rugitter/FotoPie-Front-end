@@ -6,17 +6,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { useState } from "react";
 import UploadIcon from "@mui/icons-material/Upload";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
-import { getMe } from "../../axiosRequest/api/editUser";
-import { count } from "../../axiosRequest/api/notification";
-import { logout } from "../../../store/auth/authAciton";
 
 interface hamburgerMenuProps {
   handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;

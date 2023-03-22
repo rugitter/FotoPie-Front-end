@@ -1,4 +1,3 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -6,8 +5,6 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import Link from "../../utils/Link";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useState } from "react";
@@ -21,6 +18,7 @@ import { count } from "../../axiosRequest/api/notification";
 import HamburgerMenu from "./HamburgerMenu";
 import AvatarMenu from "./AvatarMenu";
 import { logout } from "../../../store/auth/authAciton";
+import { useCheckToken } from "../../hooks/useCheckToken";
 
 interface NavbarProps {
   isFixed: boolean;
@@ -33,6 +31,7 @@ export default function Navbar({
   color = "#FFFFFF",
   bgColor,
 }: NavbarProps) {
+  useCheckToken();
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const [avatarPath, setAvatarPath] = useState("");
@@ -83,7 +82,7 @@ export default function Navbar({
     useState<null | HTMLElement>(null);
 
   // desktop menu state
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   // mobile menu open/close
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {

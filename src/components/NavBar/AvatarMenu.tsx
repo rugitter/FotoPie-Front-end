@@ -1,10 +1,5 @@
-import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
-import { logout } from "../../../store/auth/authAciton";
-import { useState } from "react";
 
 interface avatarMenuProps {
   isMenuOpen: boolean;
