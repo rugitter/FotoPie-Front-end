@@ -12,6 +12,7 @@ import { categoryPosts } from "../../src/axiosRequest/api/category";
 import NavBar from "../../src/components/NavBar";
 import Stack from "@mui/material/Stack";
 import CategoryHeader from "../../src/components/CategoryInside/CategoryHeader";
+import PostList from "../../src/components/CategoryInside/CategoryInsidePosts";
 
 interface ResponseImageData {
   _id: string;
