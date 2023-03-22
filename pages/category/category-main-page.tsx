@@ -3,7 +3,7 @@ import PhotoCategory from "../../src/components/Category/PhotoCategory";
 import CategoryHeader from "../../src/components/Category/CategoryHeader";
 import Copyright from "../../src/components/Copyright";
 import Header from "../../src/components/Header";
-import NavBar from "../../src/components/NavBar";
+import NavBar from "../../src/components/NavBar/NavBar";
 
 const CategoryMainPage: React.FC = () => {
   return (

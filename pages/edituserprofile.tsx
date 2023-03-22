@@ -30,7 +30,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object, mixed } from "yup";
 import { useRouter } from "next/router";
 import axiosRequest from "../src/utils/axiosRequest";
-import NavBar from "../src/components/NavBar";
+import NavBar from "../src/components/NavBar/NavBar";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import { getMe } from "../src/axiosRequest/api/editUser";

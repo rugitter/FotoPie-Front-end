@@ -6,8 +6,8 @@ import storage from "redux-persist/lib/storage";
 const persistConfig: PersistConfig<any> = {
   key: "root",
   storage,
-  whitelist: ["auth"],
-  // blacklist: ["auth"],
+  // whitelist: ["auth"],
+  blacklist: ["auth"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);

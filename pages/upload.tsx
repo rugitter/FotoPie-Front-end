@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import React, { useState } from "react";
-import NavBar from "../src/components/NavBar"
+import NavBar from "../src/components/NavBar/NavBar"
 import Button from "@mui/material/Button";
 import { AttachMoney } from "@mui/icons-material"
 import CssBaseline from "@mui/material/CssBaseline";
