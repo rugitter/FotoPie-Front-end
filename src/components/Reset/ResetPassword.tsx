@@ -2,37 +2,17 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
-import Link from "@mui/material/Link";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import Router from "next/router";
-import axiosRequest from "../../src/utils/axiosRequest";
-
-//Copyright function at the bottom of the page
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="">
-        FotoPie
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { createResetPassword } from "../../axiosRequest/api/reset";
 
 interface FormData {
   password: string;
@@ -50,24 +30,16 @@ function ResetPassword() {
   const router = useRouter();
   const { token } = router.query;
 
-  // const searchParams = new URLSearchParams(window.location.search);
-  // const token = searchParams.get("token");
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `http://localhost:9090/api/reset/resetPassword?token=${token}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            password,
-          }),
-        }
-      );
-
-      const data = await response.json();
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("token");
+      // Send POST request to api/reset/resetPassword
+      const response = await createResetPassword({
+        password,
+        token,
+      });
 
       //redirecting page based on server response code
       switch (response.status) {
@@ -75,10 +47,9 @@ function ResetPassword() {
           Router.push("/login");
           break;
         case 401:
-          Router.push("/invalid token");
+          Router.push("/reset/invalid-token");
           break;
       }
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -119,18 +90,6 @@ function ResetPassword() {
                   autoComplete="new-password"
                   value={password}
                   onChange={handleEmailChange}
-                  // {...register("password", {
-                  //   required: true,
-                  //   minLength: 8,
-                  //   maxLength: 20,
-                  //   pattern: {
-                  //     value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                  //     message:
-                  //       "Password must be at least 8 characters long and contain at least one letter and one number",
-                  //   },
-                  // })}
-                  // error={!!errors.password}
-                  // helperText={errors.password?.message}
                 />
               </Grid>
             </Grid>
@@ -149,7 +108,6 @@ function ResetPassword() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
