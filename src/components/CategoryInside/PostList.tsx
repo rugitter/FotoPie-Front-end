@@ -10,8 +10,9 @@ interface ResponseImageData {
   price: number;
   tag: string;
   userEmail: string;
-  imageUrl: string;
+  compressed_imageUrl: string;
   description: string;
+  filename: string;
 }
 
 interface PostListProps {
@@ -36,8 +37,8 @@ const PostList = ({ category, loaderHandler, fetchImages }: PostListProps) => {
         >
           {category.map((category) => (
             <Post
-              url={category.imageUrl}
-              filename={category.imageUrl}
+              url={category.compressed_imageUrl}
+              filename={category.filename}
               key={category._id}
             />
           ))}
