@@ -14,8 +14,9 @@ interface CollectionPostsProps {
 interface ResponseImageData {
   collect_user_email: string;
   collected_user_email: string;
-  imageUrl: string;
+  compressed_imageUrl: string;
   _id: string;
+  filename: string;
 }
 
 
@@ -62,8 +63,8 @@ const PostList = (props: CollectionPostsProps) => {
           <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
             {collection.map((collection) => (
               <Post
-                url={collection.imageUrl}
-                filename={collection.imageUrl}
+                url={collection.compressed_imageUrl}
+                filename={collection.filename}
                 key={collection._id}
               />
             ))}
