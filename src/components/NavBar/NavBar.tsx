@@ -17,9 +17,10 @@ import Avatar from "@mui/material/Avatar";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { getMe } from "../../axiosRequest/api/editUser";
-import { count } from "../../axiosRequest/api/notification"
+import { count } from "../../axiosRequest/api/notification";
 import HamburgerMenu from "./HamburgerMenu";
 import AvatarMenu from "./AvatarMenu";
+import { logout } from "../../../store/auth/authAciton";
 
 interface NavbarProps {
   isFixed: boolean;
@@ -40,17 +41,20 @@ export default function Navbar({
 
   useEffect(() => {
     if (isAuthenticated) {
+      // Get user info
       getMe().then((res) => {
         setAvatarPath(res.data["avatarPath"]);
         setId(res.data.id);
       });
-      
+
+      // Get new notification count
       count().then((res) => {
         setNewNotificationCount(res.data.count);
       });
     }
-  }, []);
+  }, [isAuthenticated]);
 
+  // set fixed navbar when scroll down
   const [fix, setFix] = useState(false);
 
   const setFixed = () => {
@@ -72,147 +76,226 @@ export default function Navbar({
     };
   }, [isFixed]);
 
+  //////////////////////////////////////////////////////////////////////////////
+
+  // mobile menu state
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
+    useState<null | HTMLElement>(null);
+
+  // desktop menu state
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  // mobile menu open/close
+  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleMenuCloseInMobileMenu = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  // Mobile logout
+  const handleMobleLogout = () => {
+    dispatch(logout());
+    handleMenuCloseInMobileMenu();
+  };
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  // desktop menu open/close
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  // desktop logout
+  const handleLogout = () => {
+    dispatch(logout());
+    handleMenuClose();
+  };
+  const isMenuOpen = Boolean(anchorEl);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        color="transparent"
-        elevation={0}
-        sx={{
-          position: fix ? "fixed" : "relative",
-          bgcolor: bgColor || (fix ? "#f8f8ff" : "transparent"),
-        }}
-      >
-        <Toolbar
+      <>
+        <AppBar
+          color="transparent"
+          elevation={0}
           sx={{
-            marginTop: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            position: fix ? "fixed" : "relative",
+            bgcolor: bgColor || (fix ? "#f8f8ff" : "transparent"),
           }}
         >
-          {/* Logo  */}
-          <Link
-            href="/"
+          <Toolbar
             sx={{
+              marginTop: 0,
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              "&:hover": {
-                opacity: 0.8,
-              },
             }}
           >
-            <img
-              src="/logo.png"
-              style={{ borderRadius: 10 }}
-              alt="Fotopie_Logo"
-              width={45}
-              height={45}
-            />
-          </Link>
-
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 2 }}>
+            {/* Logo  */}
             <Link
-              variant="h6"
-              underline="none"
               href="/"
               sx={{
-                fontSize: 24,
-                fontFamily: "inherit",
-                color: fix ? "#000000" : color,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                "&:hover": {
+                  opacity: 0.8,
+                },
               }}
             >
-              {"FotoPie"}
+              <img
+                src="/logo.png"
+                style={{ borderRadius: 10 }}
+                alt="Fotopie_Logo"
+                width={45}
+                height={45}
+              />
             </Link>
-          </Typography>
 
-          <Box sx={{ flexGrow: 1 }}></Box>
-          <Box
-            sx={{
-              display: { xs: "none", md: "flex" },
-              flexGrow: 0.12,
-              justifyContent: "space-between",
-            }}
-          >
-            {isAuthenticated ? (
-              <Box
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, ml: 2 }}
+            >
+              <Link
+                variant="h6"
+                underline="none"
+                href="/"
                 sx={{
-                  display: { xs: "none", md: "flex" },
-                  flexGrow: 1,
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  fontSize: 24,
+                  fontFamily: "inherit",
+                  color: fix ? "#000000" : color,
                 }}
               >
-                {/* notifications */}
-                <IconButton href="/upload" size="large" color="inherit" onClick={() => setNewNotificationCount(0)}>
-                  <Badge badgeContent={newNotificationCount} color="error">
-                    <NotificationsIcon
-                      sx={{
-                        color: fix ? "black" : color,
-                        "&:hover": {
-                          opacity: 0.8,
-                        },
-                      }}
-                    />
-                  </Badge>
-                </IconButton>
+                {"FotoPie"}
+              </Link>
+            </Typography>
 
-                {/* User Profile */}
-                <Avatar
-                  alt="Avatar"
-                  src={avatarPath}
-                  // onClick={handleProfileMenuOpen}
+            <Box sx={{ flexGrow: 1 }}></Box>
+            <Box
+              sx={{
+                display: { xs: "none", md: "flex" },
+                flexGrow: 0.12,
+                justifyContent: "space-between",
+              }}
+            >
+              {isAuthenticated ? (
+                <Box
                   sx={{
-                    width: 40,
-                    height: 40,
-                    "&:hover": {
-                      opacity: 0.8,
-                    },
-                  }}
-                />
-
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: fix ? "#F4DADA" : "#FBF1F1",
-                    "&:hover": {
-                      backgroundColor: "#F4DADA",
-                    },
+                    display: { xs: "none", md: "flex" },
+                    flexGrow: 1,
+                    justifyContent: "space-between",
+                    alignItems: "center",
                   }}
                 >
-                  <Link href="/upload" underline="none">
-                    Upload
+                  {/* notifications */}
+                  <IconButton
+                    href="/upload"
+                    size="large"
+                    color="inherit"
+                    onClick={() => setNewNotificationCount(0)}
+                  >
+                    <Badge badgeContent={newNotificationCount} color="error">
+                      <NotificationsIcon
+                        sx={{
+                          color: fix ? "black" : color,
+                          "&:hover": {
+                            opacity: 0.8,
+                          },
+                        }}
+                      />
+                    </Badge>
+                  </IconButton>
+
+                  {/* User Profile */}
+                  <Avatar
+                    alt="Avatar"
+                    src={avatarPath}
+                    onClick={handleProfileMenuOpen}
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      "&:hover": {
+                        opacity: 0.8,
+                      },
+                    }}
+                  />
+
+                  <Button
+                    variant="contained"
+                    sx={{
+                      bgcolor: fix ? "#F4DADA" : "#FBF1F1",
+                      "&:hover": {
+                        backgroundColor: "#F4DADA",
+                      },
+                    }}
+                  >
+                    <Link href="/upload" underline="none">
+                      Upload
+                    </Link>
+                  </Button>
+                </Box>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="success"
+                  sx={{
+                    bgcolor: fix ? "#F4DADA" : "#FBF1F1",
+                  }}
+                >
+                  <Link href="/login" underline="none">
+                    Log In
                   </Link>
                 </Button>
-              </Box>
-            ) : (
-              <Button
-                variant="contained"
-                color="success"
-                sx={{
-                  bgcolor: fix ? "#F4DADA" : "#FBF1F1",
-                }}
+              )}
+            </Box>
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
               >
-                <Link href="/login" underline="none">
-                  Log In
-                </Link>
-              </Button>
-            )}
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-haspopup="true"
-              // onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MenuIcon sx={{ color: fix ? "black" : color }} />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {HamburgerMenu}
-      {AvatarMenu}
+                <MenuIcon sx={{ color: fix ? "black" : color }} />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+
+        {
+          <HamburgerMenu
+            isMobileMenuOpen={isMobileMenuOpen}
+            mobileMoreAnchorEl={mobileMoreAnchorEl}
+            handleMobileMenuClose={handleMobileMenuClose}
+            isAuthenticated={isAuthenticated}
+            setNewNotificationCount={setNewNotificationCount}
+            newNotificationCount={newNotificationCount}
+            avatarPath={avatarPath}
+            handleProfileMenuOpen={handleProfileMenuOpen}
+            handleMobleLogout={handleMobleLogout}
+          />
+        }
+
+        {
+          <AvatarMenu
+            isMenuOpen={isMenuOpen}
+            anchorEl={anchorEl}
+            handleMenuClose={handleMenuClose}
+            handleLogout={handleLogout}
+          />
+        }
+      </>
     </Box>
   );
 }
