@@ -1,24 +1,22 @@
-import React from "react";
 import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import DownloadIcon from "@mui/icons-material/Download";
 import axiosRequest from "../../utils/axiosRequest";
-import Link from "../../utils/Link";
 // import { saveAs } from "file-saver";
 import { getDownloadImage } from "../../axiosRequest/api/photoQuickView";
+import { NextRouter } from "next/router";
 
 export interface DownloadImageProps {
-  filenameString: string;
-  // filename: string | string[] | undefined;
+  filenameString: string | string[] | undefined;
+  router: NextRouter;
+  isAuthenticated: boolean;
 }
 
 //Photo quick view page download button
 const DownloadImage = (props: DownloadImageProps) => {
   const [presignedUrl, setPresignedUrl] = useState("");
   const downLoadImages = async () => {
-    // setIsLoading(true);
     try {
-      // const response = await getDownloadImage(props.filename);
       const response = await getDownloadImage(props.filenameString);
       // const response = await getDownloadImage(props.filename);
       // const response = await axiosRequest(
@@ -118,7 +116,6 @@ const DownloadImage = (props: DownloadImageProps) => {
       // router.push("/payment");
     } catch (error: any) {
       return error.message;
-      // setRequestError(error.message);
     }
   };
   // const download = async(url: string) => {
@@ -212,19 +209,19 @@ const DownloadImage = (props: DownloadImageProps) => {
         startIcon={<DownloadIcon />}
         onClick={downLoadImages}
       >
-        <Link
+        {/* <Link
           // href={`/download/${filename}`}
           href={presignedUrl}
           sx={{ textDecoration: "none", color: "#fff" }}
           download
           // target={"_blank"}
-        >
-          <a href={presignedUrl}>d</a>
-          {/* <a href={presignedUrl} download={props.filename}>
+        > */}
+        <a href={presignedUrl}>d</a>
+        {/* <a href={presignedUrl} download={props.filename}>
           d
         </a> */}
-          Download
-        </Link>
+        Download
+        {/* </Link> */}
       </Button>
     </>
   );

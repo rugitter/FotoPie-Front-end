@@ -8,22 +8,19 @@ export interface UserNameProps {
   userAvatar: string;
 }
 
-const UserName = (props: UserNameProps) => {
+const UserName = ({ userID, userName, userAvatar }: UserNameProps) => {
   return (
     <>
       <Stack>
         <Stack display="flex" direction="row">
           <Button>
-            <Link href={`/profile/${props.userID}`}>
-              {<Avatar alt="avatar" src={props.userAvatar}></Avatar>}
+            <Link href={`/profile/${userID}`}>
+              {<Avatar alt="avatar" src={userAvatar}></Avatar>}
             </Link>
           </Button>
           <Button>
-            <Link
-              href={`/profile/${props.userID}`}
-              sx={{ textDecoration: "none" }}
-            >
-              {<Typography variant="body1">{props.userName}</Typography>}
+            <Link href={`/profile/${userID}`} sx={{ textDecoration: "none" }}>
+              {<Typography variant="body1">{userName}</Typography>}
             </Link>
           </Button>
         </Stack>

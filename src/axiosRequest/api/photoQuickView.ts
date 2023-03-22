@@ -12,7 +12,6 @@ export const getCollectNumber = <T>(data: T) => {
     url: `/api/collect/${data}`,
     method: "post",
     data,
-    // filename: `${filename}`,
   });
 };
 

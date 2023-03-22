@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { updateCollect, updateLike } from "./quickViewAciton";
-// import { login, logout } from "./quickViewAciton";
 
 interface QuickViewState {
   userName: string;
@@ -39,22 +38,10 @@ export const quickViewSlice = createSlice({
       state.collected = action.payload.collect_status;
       state.liked = action.payload.like_status;
     },
-    // setUserCollects: (state, action) => {
-    //   state.userCollects = action.payload;
-    // },
-    // toggleCollected: (state) => {
-    //   state.collected = !state.collected;
-    // },
-    // setUserLikes: (state, action) => {
-    //   state.userLikes = action.payload;
-    // },
-    // toggleLiked: (state) => {
-    //   state.liked = !state.liked;
-    // },
   },
   extraReducers: (builder) => {
     builder.addCase(updateCollect.fulfilled, (state, action) => {
-      state.userCollects = action.payload;
+      state.userCollects = action.payload.userCollects;
       state.collected = !state.collected;
     });
     builder.addCase(updateLike.fulfilled, (state, action) => {
@@ -63,12 +50,6 @@ export const quickViewSlice = createSlice({
     });
   },
 });
-export const {
-  setQuickViewData,
-  // setUserCollects,
-  // toggleCollected,
-  // setUserLikes,
-  // toggleLiked,
-} = quickViewSlice.actions;
+export const { setQuickViewData } = quickViewSlice.actions;
 
 export default quickViewSlice.reducer;

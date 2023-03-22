@@ -5,21 +5,20 @@ export interface PostImageProps {
   postPhoto: string;
 }
 
-const PostImage = (props: PostImageProps) => {
+const PostImage = ({ postPhoto }: PostImageProps) => {
   return (
     <>
       <Box
         sx={{
           m: "auto",
-          width: "60vw",
-          height: "70vh",
+          width: "auto",
+          height: "auto",
         }}
       >
-        {/* <p>{requestError}</p> */}
         <Image
           alt="image"
-          src={props.postPhoto}
-          width="60vw"
+          src={postPhoto}
+          width="40vw"
           style={{ objectFit: "contain" }}
         />
       </Box>

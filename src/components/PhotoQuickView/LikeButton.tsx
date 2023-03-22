@@ -1,40 +1,31 @@
-import { useState } from "react";
 import { Button } from "@mui/material";
-import axiosRequest from "../../utils/axiosRequest";
-import { useRouter } from "next/router";
+import { NextRouter } from "next/router";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { getLikeNumber } from "../../axiosRequest/api/photoQuickView";
+import { updateLike } from "../../../store/photoQuickView/quickViewAciton";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store/store";
 
 export interface LikeButtonProps {
-  filenameString: string ;
-  // filename: string | string[] | undefined;
+  filenameString: string | string[] | undefined;
   liked: boolean;
   userLikes: number;
+  router: NextRouter;
+  isAuthenticated: boolean;
 }
 
-//Toggle like button and add/delete like number
-const LikeButton = (props: LikeButtonProps) => {
-  const [userLikes, setUserLikes] = useState(0);
-  const [liked, setLiked] = useState(false);
-  const router = useRouter();
-
+//Toggle like button and add/delete like
+const LikeButton = ({
+  filenameString,
+  liked,
+  userLikes,
+  router,
+  isAuthenticated,
+}: LikeButtonProps) => {
+  const dispatch = useDispatch<AppDispatch>();
   const addToLiked = async () => {
-    try {
-      const response = await getLikeNumber(props.filenameString);
-      // const response = await getLikeNumber(props.filename);
-
-      // const response = await axiosRequest(
-      //   `/api/like/${props.filename}`,
-      //   "POST",
-      //   {
-      //     filename: `${props.filename}`,
-      //   }
-      // );
-      const data = response.data;
-      setUserLikes(data);
-      setLiked((liked) => !liked);
-    } catch (error: any) {
-      router.push("/login");
+    if (!isAuthenticated) router.push("/login");
+    if (isAuthenticated) {
+      dispatch(updateLike(filenameString));
     }
   };
 
