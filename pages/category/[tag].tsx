@@ -18,8 +18,9 @@ interface ResponseImageData {
   price: number;
   tag: string | string[] | undefined;
   userEmail: string;
-  imageUrl: string;
+  compressed_imageUrl: string;
   description: string;
+  filename: string;
 }
 
 export default function CategoryInsidePage() {
@@ -156,8 +157,8 @@ export default function CategoryInsidePage() {
           >
             {category.map((category) => (
               <Post
-                url={category.imageUrl}
-                filename={category.imageUrl}
+                url={category.compressed_imageUrl}
+                filename={category.filename}
                 key={category._id}
               />
             ))}
