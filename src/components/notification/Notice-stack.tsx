@@ -18,6 +18,9 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchNotifications } from '../../../store/notification/notifyAction';
 import { AppDispatch, RootState } from '../../../store/store';
+import Loading from './Loading';
+import NoNotification from './NoNotification';
+import NotificationList from './NotificationList';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -49,19 +52,11 @@ export default function BasicStack() {
 
   if(status === 'loading' || status === "idle"){
     return(
-      <Box sx={{display:"flex", justifyContent:'center', mt:'5%'}}>
-        <CircularProgress />
-      </Box>
+      <Loading/>
     )
   } else if (notifications.length === 0){
     return(
-      <Box sx={{display:"flex",justifyContent:'center'}}>
-        <Item sx={{width:"60%", mt:"5%"}}>
-        <h1>No new notifications found</h1>
-        <p>Please check back later</p>
-        <Button variant="outlined" sx={{bgcolor:"white", marginTop:"2%"}} href={"/upload"}>Upload Photos</Button>
-        </Item>
-      </Box>
+      <NoNotification/>
     )
   }else{return (
     <Box sx={{ width: '100%', 
