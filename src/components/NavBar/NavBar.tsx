@@ -49,7 +49,7 @@ export default function Navbar({
         setNewNotificationCount(res.data.count);
       });
     }
-  }, []);
+  }, [isAuthenticated]);
 
   const [fix, setFix] = useState(false);
 

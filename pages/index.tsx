@@ -2,10 +2,11 @@ import Container from "@mui/material/Container";
 import NavBar from "../src/components/NavBar/NavBar";
 import Header from "../src/components/Header";
 import Box from "@mui/material/Box";
-import { useState } from "react";
 import PostList from "../src/components/PostList/PostList";
+import { useCheckToken } from "../src/hooks/useCheckToken";
 
 export default function Home() {
+  useCheckToken();
   return (
     <Container>
       <Box
@@ -17,7 +18,7 @@ export default function Home() {
             ),
             url(../../background.jpg)`,
 
-          backgroundSize:'cover',
+          backgroundSize: "cover",
           // position: 'absolute',
           // top: 0,
           // left: 0,
@@ -25,17 +26,12 @@ export default function Home() {
           margin: 0,
           padding: 0,
           // overflow: 'hidden'
-
         }}
       >
-
-        <div 
-        style={{ maxWidth: '1200px', margin: '0 auto' }}
-        > 
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <NavBar isFixed={true} />
           <Header />
         </div>
-
       </Box>
 
       <PostList />

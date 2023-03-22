@@ -16,3 +16,7 @@ export const setAccessToken = (token: string) => {
 export const removeAccessToken = () => {
   cookies.remove("accessToken", { path: "/" });
 };
+
+export const getAccessTokenExpiration = () => {
+  return cookies.get("accessToken").expires * 1000;
+};
