@@ -4,7 +4,7 @@ import styles from "./post.module.css";
 
 const Post = ({ url, filename }: { url: string; filename: string }) => {
   return (
-    <Link href={filename}>
+    <Link href={`photo-quick-view/${filename}`}>
       <div className={styles.container}>
         <img
           src={url}

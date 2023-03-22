@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import axiosRequest from "../../utils/axiosRequest";
 import Masonry from "@mui/lab/Masonry";
 import NoMore from "../Loader/NoMore";
+import { getPhotoWall } from "../../axiosRequest/api/photowall";
 
 interface ImageData {
   //path: string;
@@ -26,10 +27,7 @@ const PostList = () => {
 
   const fetchImages = async () => {
     try {
-      const res = await axiosRequest(
-        `/api/posts?page=${page}&limit=${limit}`,
-        "GET"
-      );
+      const res = await getPhotoWall(page, limit);
       if (res.status === 200) {
         setPost([...posts, ...res.data]);
         setPage(page + 1);
