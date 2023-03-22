@@ -23,15 +23,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   function (response) {
     console.log("✅response:", response);
-    const { status } = response;
-
-    if (status === 200) {
-      return Promise.resolve(response);
-    } else if (status === 401) {
-      return Promise.reject(response);
-    } else {
-      return Promise.reject(response);
-    }
+    return Promise.resolve(response);
   },
   function (error) {
     let message = "";
