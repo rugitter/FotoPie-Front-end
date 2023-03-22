@@ -1,3 +1,4 @@
+import axios from "axios";
 import axiosInstance from "../index";
 
 export const loginRequest = <T>(data: T) => {
@@ -14,3 +15,9 @@ export const logoutRequest = () => {
     method: "post",
   });
 };
+
+// export const refreshAccessToken = async(): Promise<string> => {
+//   try{
+// const response = await axios.post('')
+//   }
+// };
