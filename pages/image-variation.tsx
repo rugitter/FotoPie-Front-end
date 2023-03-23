@@ -37,38 +37,21 @@ export default function imageVariation() {
 
     const [status, setStatus] = useState("");
 
-    const handleChangeStatus = (file: IFileWithMeta, status: StatusValue) => {
-        testhandleChangeStatus(file, status);
-    };
-    
-    const testhandleChangeStatus = async (
+   
+    const handleChangeStatus =  (
         file: IFileWithMeta,
         status: StatusValue
       ) => {
         const { meta } = file;
         console.log(status, meta);
-        setStatus(status);
-        if (status === "done") {
-          const formData = new FormData();
-          formData.append("file", file.file);
-    
-        //   try {
-        //     const response = await uploadPhoto(formData);
-        //     console.log(
-        //       response.data.filename,
-        //       response.data.original_path,
-        //       response.data.compression_path
-        //     );
-          
-        //     return { meta: response };
-        //   } catch (error) {
-        //     console.error(error);
-        //     return error;
-        //   }
-            
-            
+        setStatus(status);      
         }
-      };
+
+    const handleSubmit = async (files: any) => {
+        const f = files[0];
+        console.log(f)
+
+    }
     const inputContentWithIcon = (
         <div
           style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
@@ -80,7 +63,7 @@ export default function imageVariation() {
           <div
             style={{
               margin: "30px 0",
-              fontSize: "20px",
+              fontSize: "24px",
               fontWeight: "bold",
               display: "flex",
               alignItems: "center",
@@ -93,8 +76,8 @@ export default function imageVariation() {
     
     const styles = {
         dropzone: {
-          width: 650,
-          height: 300,
+          width: 700,
+          height: 350,
           border: "4px dashed grey", // set border style
           borderRadius: "10px", // set border radius
           padding: "20px",
@@ -102,7 +85,6 @@ export default function imageVariation() {
         },
         dropzoneActive: { borderColor: "green" },
         inputLabel: { color: "#424242" },
-        submitButtonContainer: { display: "none" },
         input: {
           display: "none",
         },
@@ -131,28 +113,6 @@ export default function imageVariation() {
           overflow: "hidden",
         },
     };
-    
-    //   const router = useRouter();
-    
-    //   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-    //     try {
-          
-    
-        //   const response = await uploadPost({
-        //     ...data,
-        //     filename: filename,
-        //     orginalFilePath: OrginalFilePath,
-        //     compressFilePath: CompressFilePath,
-        //   });
-        //   console.log(response);
-    
-    //       if (response.status === 200) {
-    //         router.push("verifyemail");
-    //       }
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   };
     
 
     return (
@@ -192,42 +152,20 @@ export default function imageVariation() {
                     maxFiles={1}
                     multiple={false}
                     canCancel={false}
+                    onSubmit ={handleSubmit}
                     inputContent={inputContentWithIcon}
-                    // inputContainerStyle={{ border: "none" }}
-                    // getUploadParams={getUploadParams}
                     accept="image/*"
                     styles={styles}
                   />
                 </div>
-  
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Send
-                  {/* <Link href="verifyemail"></Link> */}
-                </Button>
-  
-                <Grid container justifyContent="flex-end">
-                  <Grid item></Grid>
-                </Grid>
               </Box>
-            {/* </FormProvider> */}
           </Box>
   
-          <Copyright sx={{ mt: 5 }} />
+          <Copyright sx={{ mt: 6}} />
         </Container>
       </>
 
     )
-    
-   
-
-   
-
-
 
     
  }
