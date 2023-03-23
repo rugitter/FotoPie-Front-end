@@ -10,6 +10,7 @@ import UploadIcon from "@mui/icons-material/Upload";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Avatar from "@mui/material/Avatar";
+import { markNotificationRead } from "../../axiosRequest/api/notification";
 
 interface hamburgerMenuProps {
   handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
@@ -34,48 +35,6 @@ export default function hamburgerMenu({
   handleProfileMenuOpen,
   handleMobleLogout,
 }: hamburgerMenuProps) {
-  // const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-  // const dispatch = useDispatch<AppDispatch>();
-  // const [avatarPath, setAvatarPath] = useState("");
-  // const [newNotificationCount, setNewNotificationCount] = useState(0);
-
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     getMe().then((res) => {
-  //       setAvatarPath(res.data["avatarPath"]);
-  //     });
-
-  //     count().then((res) => {
-  //       setNewNotificationCount(res.data.count);
-  //     });
-  //   }
-  // }, []);
-
-  // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  // const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-  //   React.useState<null | HTMLElement>(null);
-
-  // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  // const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  // const handleMenuClose = () => {
-  //   setAnchorEl(null);
-  //   handleMobileMenuClose();
-  // };
-
-  // const handleMobileMenuClose = () => {
-  //   setMobileMoreAnchorEl(null);
-  // };
-  // const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-  //   setMobileMoreAnchorEl(event.currentTarget);
-  // };
-
-  // const handleLogout = () => {
-  //   dispatch(logout());
-  //   handleMenuClose();
-  // };
 
   const mobileMenuId = "primary-search-account-menu-mobile";
 
@@ -99,10 +58,10 @@ export default function hamburgerMenu({
         <Box>
           <MenuItem>
             <IconButton
-              href="/upload"
+              href="/notification"
               size="large"
               color="inherit"
-              onClick={() => setNewNotificationCount(0)}
+              onClick={markNotificationRead}
             >
               <Badge badgeContent={newNotificationCount} color="error">
                 <NotificationsIcon />
@@ -120,7 +79,11 @@ export default function hamburgerMenu({
             <p>Profile</p>
           </MenuItem>
           <MenuItem>
-            <IconButton size="large" color="inherit">
+            <IconButton 
+              href="/upload"
+              size="large" 
+              color="inherit"
+            >
               <UploadIcon />
             </IconButton>
             <p>Upload</p>

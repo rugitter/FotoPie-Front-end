@@ -14,7 +14,7 @@ import Avatar from "@mui/material/Avatar";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { getMe } from "../../axiosRequest/api/editUser";
-import { count } from "../../axiosRequest/api/notification";
+import { getNewNotificationCount } from "../../axiosRequest/api/notification";
 import HamburgerMenu from "./HamburgerMenu";
 import AvatarMenu from "./AvatarMenu";
 import { logout } from "../../../store/auth/authAciton";
@@ -47,11 +47,21 @@ export default function Navbar({
       });
 
       // Get new notification count
-      count().then((res) => {
+      getNewNotificationCount().then((res) => {
         setNewNotificationCount(res.data.count);
       });
     }
   }, [isAuthenticated]);
+
+  //Mark all new notifications as read when click notification icon
+  const markNotificationRead= async () => {
+    try {
+      const response = await markNotificationRead();
+      setNewNotificationCount(0);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // set fixed navbar when scroll down
   const [fix, setFix] = useState(false);
@@ -200,10 +210,10 @@ export default function Navbar({
                 >
                   {/* notifications */}
                   <IconButton
-                    href="/upload"
+                    href="/notification"
                     size="large"
                     color="inherit"
-                    onClick={() => setNewNotificationCount(0)}
+                    onClick={markNotificationRead}
                   >
                     <Badge badgeContent={newNotificationCount} color="error">
                       <NotificationsIcon
