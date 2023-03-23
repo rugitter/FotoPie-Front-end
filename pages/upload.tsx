@@ -19,7 +19,7 @@ import {
   FormProvider,
 } from "react-hook-form";
 import Copyright from "../src/components/Copyright";
-import FormTextField from "../src/components/textField/formTextField";
+import FormTextField from "../src/components/LoginForm/FormTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
 import InputAdornment from "@mui/material/InputAdornment";

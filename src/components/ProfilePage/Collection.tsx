@@ -1,10 +1,5 @@
-import { useRouter } from "next/router";
-import axiosRequest from "../../../src/utils/axiosRequest";
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
 import Post from "../PostList/Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../Loader/Loader";
@@ -13,7 +8,7 @@ import NoMore from "../Loader/NoMore";
 import { profileCollection } from "../../axiosRequest/api/profileCollection";
 
 interface CollectionProps {
-  id: string;
+  profileUserId: string | string[] | undefined;
 }
 
 interface ResponseImageData {
@@ -32,7 +27,7 @@ export default function Collection(props: CollectionProps) {
 
   let limit = 10;
 
-  let id = props.id;
+  let id = props.profileUserId;
   const fetchImages = async () => {
     try {
       const res = await profileCollection(id, page, limit);
@@ -45,17 +40,15 @@ export default function Collection(props: CollectionProps) {
       }
     } catch (error: any) {
       setError(error.message);
-    }    
+    }
   };
-    
+
   useEffect(() => {
     fetchImages();
   }, []);
 
   return (
     <>
-      <h1>Collection</h1>
-      {/*<h2>{props.id}</h2>*/}
       <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
         <InfiniteScroll
           dataLength={collection.length}
