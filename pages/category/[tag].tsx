@@ -5,6 +5,8 @@ import NavBar from "../../src/components/NavBar";
 import CategoryHeader from "../../src/components/CategoryInside/CategoryHeader";
 import PostList from "../../src/components/CategoryInside/CategoryInsidePosts";
 import CategoryButton from "../../src/components/CategoryInside/CategoryButton";
+import { getSynonymsAPI } from "../../src/axiosRequest/api/getSynonyms";
+
 
 export interface ResponseImageData {
   _id: string;
@@ -15,6 +17,8 @@ export interface ResponseImageData {
   description: string;
   filename: string;
 }
+
+
 
 // Set all necessary states for rendering post lists and related category buttons
 export default function CategoryInsidePage() {
@@ -65,10 +69,10 @@ export default function CategoryInsidePage() {
   //Call the API to retrieve a list of synonyms for our initial category query
   const getSynonyms = async (tagString: string | string[] | undefined) => {
     try {
-      const response = await fetch(
-        `https://words.bighugelabs.com/api/2/3f3f84727a0ebebcff3c969e871a286a/${tagString}/json`
-      );
-      const data = await response.json();
+      
+      //const key = process.env.Get_Synonyms_API_Key;
+      const response= await getSynonymsAPI(tagString);
+      const data = response.data;
       const synonyms = data?.noun?.syn || data?.verb?.syn || [];
       // check if the response contains synonyms for the noun or verb form of the word, otherwise return an empty array
       return synonyms;
@@ -111,7 +115,7 @@ export default function CategoryInsidePage() {
       setLinks(response);
     });
     fetchImages();
-  }, [tagString,router.isReady]);
+  }, [tagString, router.isReady, API_Prefix]);
 
   return (
     <>

@@ -34,7 +34,6 @@ const PostList = ({
 }: CategoryInsidePostsProps) => {
 
   let limit = 10;
-  let tag = tagString;
 
   const fetchImages = async () => {
     try {
