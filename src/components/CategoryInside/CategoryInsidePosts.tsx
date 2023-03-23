@@ -19,44 +19,26 @@ interface CategoryInsidePostsProps {
   setLoaderHandler: Dispatch<SetStateAction<boolean>>;
   Error: null;
   setError: Dispatch<SetStateAction<null>>;
-  fetchImages:  () => Promise<void>;
 }
 
-// interface ResponseImageData {
-//   _id: string;
-//   price: number;
-//   tag: string;
-//   userEmail: string;
-//   compressed_imageUrl: string;
-//   description: string;
-//   filename: string;
-// }
-
-const PostList = (props: CategoryInsidePostsProps) => {
-  //const [category, setCategory] = useState<ResponseImageData[]>([]);
-  //const [page, setPage] = useState(1);
-  //const [loaderHandler, setLoaderHandler] = useState(true);
-  //const [Error, setError] = useState(null);
-  let category = props.category;
-  let setCategory = props.setCategory;
-  let page = props.page;
-  let setPage = props.setPage;
-  let loaderHandler = props.loaderHandler;
-  let setLoaderHandler = props.setLoaderHandler;
-  let Error = props.Error;
-  let setError = props.setError;
-  //let fetchImages = props.fetchImages;
+const PostList = ({
+  tagString,
+  category,
+  setCategory,
+  page,
+  setPage,
+  loaderHandler,
+  setLoaderHandler,
+  Error,
+  setError,
+}: CategoryInsidePostsProps) => {
 
   let limit = 10;
-  let tag = props.tagString;
-  //console.log(tag,"debug");
-  
-  //fetchImages();
-  //console.log(category,"debug")
+  let tag = tagString;
 
   const fetchImages = async () => {
     try {
-      const res = await categoryPosts(tag, page, limit);
+      const res = await categoryPosts(tagString, page, limit);
 
       if (res.status === 200) {
         setCategory([...category, ...res.data]);
@@ -72,7 +54,7 @@ const PostList = (props: CategoryInsidePostsProps) => {
 
   useEffect(() => {
     fetchImages();
-  }, [tag]);
+  }, [tagString]);
 
   return (
     <>
