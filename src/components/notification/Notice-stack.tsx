@@ -1,107 +1,50 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import { styled, makeStyles } from '@mui/material/styles';
-import { Avatar, CircularProgress, Typography } from '@mui/material';
-import { flexbox } from '@mui/system';
-import axios from 'axios';
-import axiosRequest from '../../utils/axiosRequest';
-import {useState, useEffect} from 'react';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import { styled, makeStyles } from "@mui/material/styles";
+import { Avatar, CircularProgress, Typography } from "@mui/material";
+import { flexbox } from "@mui/system";
+import axios from "axios";
+import axiosRequest from "../../utils/axiosRequest";
+import { useState, useEffect } from "react";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import Image from "mui-image";
-import MarkChatReadIcon from '@mui/icons-material/MarkChatRead';
-import { getNotification } from '../../axiosRequest/api/notification';
-import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchNotifications } from '../../../store/notification/notifyAction';
-import { AppDispatch, RootState } from '../../../store/store';
-import Loading from './Loading';
-import NoNotification from './NoNotification';
-import NotificationList from './NotificationList';
-
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#28282a' : '#e8d3ff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
-
+import MarkChatReadIcon from "@mui/icons-material/MarkChatRead";
+import { getNotification } from "../../axiosRequest/api/notification";
+import Button from "@mui/material/Button";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchNotifications } from "../../../store/notification/notifyAction";
+import { AppDispatch, RootState } from "../../../store/store";
+import Loading from "./Loading";
+import NoNotification from "./NoNotification";
+import NotificationList from "./NotificationList";
 
 export default function BasicStack() {
-
   // const [notifications, setNotifications]= useState<Notification[]>([]);
   const dispatch = useDispatch<AppDispatch>();
-  const {notifications, status} = useSelector((state:RootState) => state.notifySlice)
-  const [loading, setLoading] = useState(true)
+  const { notifications, status } = useSelector(
+    (state: RootState) => state.notifySlice
+  );
+  const [loading, setLoading] = useState(true);
 
   //fetch data
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(fetchNotifications());
-  },[dispatch]);
+  }, [dispatch]);
 
-  useEffect(()=>{
-    if (status === 'succeeded'){
+  useEffect(() => {
+    if (status === "succeeded") {
       setLoading(false);
     }
-  },[status]);
+  }, [status]);
 
-  if(status === 'loading' || status === "idle"){
-    return(
-      <Loading/>
-    )
-  } else if (notifications.length === 0){
-    return(
-      <NoNotification/>
-    )
-  }else{return (
-    <Box sx={{ width: '100%', 
-    marginTop:2, }}>
-
-      <Stack spacing={5}
-      sx={{ 
-      display: 'flex', 
-      justifyContent:'center',
-      alignItems:'center',
-      bgcolor:'secondary' }}
-      >
-          <Box sx={{width:"90%", display:"flex",flexDirection:"column", alignItem:"center",justifyContent:"center"}}>
-          {/* to get notification mapped into Stack  */}
-          {notifications.map((notification)=>(
-            <a href={`/photo-quick-view/${notification.directFilename}`} style={{ textDecoration: 'none' }} >
-            <Box key={notification.id} sx={{display:"flex",justifyContent:"center"}}>
-              
-              <Item sx={{
-                display:'flex',
-                justifyContent:'space-evenly',
-                alignItems:'center',
-                width:'70%',
-                color:'primary',
-                margin:'2px'
-              }}
-             >
-              <Box sx={{
-                display: 'flexbox',
-                flexDirection:'row',
-                alignItem:'center',
-                color:'primary',
-                }}>
-              <Avatar alt="avatar" src={notification.userAvatar}/>
-              <Typography>{notification.userName}</Typography>
-              </Box>
-               <Typography>Liked Your Post</Typography>
-              <img alt="image" src={notification.post} width={50} height={45}/>
-              </Item>
-              
-            </Box>
-            </a>
-          ))}
-            </Box>
-      </Stack>
-    </Box>
-  );
-}}
+  if (status === "loading" || status === "idle") {
+    return <Loading />;
+  } else if (notifications.length === 0) {
+    return <NoNotification />;
+  } else {
+    return <NotificationList notifications={notifications} />;
+  }
+}
