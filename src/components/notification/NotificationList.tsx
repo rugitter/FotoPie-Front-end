@@ -12,6 +12,7 @@ interface NotificationListProps {
 
 const NotificationList = ({ notifications }: NotificationListProps) => {
   return (
+    //Notification list
     <Box sx={{ width: "100%", marginTop: 2 }}>
       <Stack
         spacing={5}

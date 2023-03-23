@@ -22,7 +22,7 @@ import NoNotification from "./NoNotification";
 import NotificationList from "./NotificationList";
 
 export default function BasicStack() {
-  // const [notifications, setNotifications]= useState<Notification[]>([]);
+  //RTK Dispatch and fetch data
   const dispatch = useDispatch<AppDispatch>();
   const { notifications, status } = useSelector(
     (state: RootState) => state.notifySlice
@@ -34,12 +34,14 @@ export default function BasicStack() {
     dispatch(fetchNotifications());
   }, [dispatch]);
 
+  //when status is succeeded,removed loading 
   useEffect(() => {
     if (status === "succeeded") {
       setLoading(false);
     }
   }, [status]);
 
+  //render Loading/no notification tips/notification list
   if (status === "loading" || status === "idle") {
     return <Loading />;
   } else if (notifications.length === 0) {

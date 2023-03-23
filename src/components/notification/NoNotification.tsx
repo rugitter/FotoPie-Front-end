@@ -3,6 +3,7 @@ import Item from "./Notification.style";
 
 const NoNotification = () => {
   return (
+    //tips when no unread notifications
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       <Item sx={{ width: "60%", mt: "5%" }}>
         <h1>No new notifications found</h1>
