@@ -6,7 +6,7 @@ import Navbar from "../../src/components/NavBar";
 export default function SubscriptionPage() {
   return (
     <>
-      <Navbar />
+      <Navbar isFixed={true} />
       <h1>Click Here to Subscribe</h1>
       <SubscriptionButton />
       <br />
