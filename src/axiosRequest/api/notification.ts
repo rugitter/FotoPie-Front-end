@@ -13,3 +13,10 @@ export const markNotificationRead = () => {
     method: "post",
   });
 };
+
+export const getNotification= () => {
+    return axiosInstance({
+      url: `/api/notification/latest`,
+      method: "get",
+    });
+};

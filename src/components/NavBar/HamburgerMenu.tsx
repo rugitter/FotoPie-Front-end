@@ -10,7 +10,6 @@ import UploadIcon from "@mui/icons-material/Upload";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Avatar from "@mui/material/Avatar";
-import { markNotificationRead } from "../../axiosRequest/api/notification";
 
 interface hamburgerMenuProps {
   handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
@@ -21,7 +20,8 @@ interface hamburgerMenuProps {
   setNewNotificationCount: React.Dispatch<React.SetStateAction<number>>;
   newNotificationCount: number;
   avatarPath: string;
-  handleMobleLogout: () => void;
+  handleMobileLogout: () => void;
+  handleNotificationClick: () => void;
 }
 
 export default function hamburgerMenu({
@@ -33,7 +33,8 @@ export default function hamburgerMenu({
   newNotificationCount,
   avatarPath,
   handleProfileMenuOpen,
-  handleMobleLogout,
+  handleMobileLogout,
+  handleNotificationClick,
 }: hamburgerMenuProps) {
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -61,7 +62,7 @@ export default function hamburgerMenu({
               href="/notification"
               size="large"
               color="inherit"
-              onClick={markNotificationRead}
+              onClick={handleNotificationClick}
             >
               <Badge badgeContent={newNotificationCount} color="error">
                 <NotificationsIcon />
@@ -88,7 +89,7 @@ export default function hamburgerMenu({
             </IconButton>
             <p>Upload</p>
           </MenuItem>
-          <MenuItem onClick={handleMobleLogout}>
+          <MenuItem onClick={handleMobileLogout}>
             <IconButton size="large" color="inherit">
               <LogoutOutlinedIcon />
             </IconButton>

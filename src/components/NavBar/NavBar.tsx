@@ -7,18 +7,20 @@ import Button from "@mui/material/Button";
 import Link from "../../utils/Link";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { useState } from "react";
+import { useState, useEffect  } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { getMe } from "../../axiosRequest/api/editUser";
 import { getNewNotificationCount } from "../../axiosRequest/api/notification";
+import { markNotificationRead } from "../../axiosRequest/api/notification";
 import HamburgerMenu from "./HamburgerMenu";
 import AvatarMenu from "./AvatarMenu";
 import { logout } from "../../../store/auth/authAciton";
 import { useCheckToken } from "../../hooks/useCheckToken";
+import { useNavigate } from "react-router-dom";
+import UserIcons from "./UserIcons";
 
 interface NavbarProps {
   isFixed: boolean;
@@ -54,10 +56,12 @@ export default function Navbar({
   }, [isAuthenticated]);
 
   //Mark all new notifications as read when click notification icon
-  const markNotificationRead= async () => {
+  // const navigate = useNavigate();
+  const handleNotificationClick= async () => {
     try {
-      const response = await markNotificationRead();
+      await markNotificationRead();
       setNewNotificationCount(0);
+      // navigate("/notification");
     } catch (error) {
       console.error(error);
     }
@@ -109,7 +113,7 @@ export default function Navbar({
   };
 
   // Mobile logout
-  const handleMobleLogout = () => {
+  const handleMobileLogout = () => {
     dispatch(logout());
     handleMenuCloseInMobileMenu();
   };
@@ -200,61 +204,16 @@ export default function Navbar({
               }}
             >
               {isAuthenticated ? (
-                <Box
-                  sx={{
-                    display: { xs: "none", md: "flex" },
-                    flexGrow: 1,
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  {/* notifications */}
-                  <IconButton
-                    href="/notification"
-                    size="large"
-                    color="inherit"
-                    onClick={markNotificationRead}
-                  >
-                    <Badge badgeContent={newNotificationCount} color="error">
-                      <NotificationsIcon
-                        sx={{
-                          color: fix ? "black" : color,
-                          "&:hover": {
-                            opacity: 0.8,
-                          },
-                        }}
-                      />
-                    </Badge>
-                  </IconButton>
-
-                  {/* User Profile */}
-                  <Avatar
-                    alt="Avatar"
-                    src={avatarPath}
-                    onClick={handleProfileMenuOpen}
-                    sx={{
-                      width: 40,
-                      height: 40,
-                      "&:hover": {
-                        opacity: 0.8,
-                      },
-                    }}
-                  />
-
-                  <Button
-                    variant="contained"
-                    sx={{
-                      bgcolor: fix ? "#F4DADA" : "#FBF1F1",
-                      "&:hover": {
-                        backgroundColor: "#F4DADA",
-                      },
-                    }}
-                  >
-                    <Link href="/upload" underline="none">
-                      Upload
-                    </Link>
-                  </Button>
-                </Box>
+                <UserIcons
+                handleProfileMenuOpen={handleProfileMenuOpen}
+                setNewNotificationCount={setNewNotificationCount}
+                newNotificationCount={newNotificationCount}
+                avatarPath={avatarPath}
+                handleNotificationClick={handleNotificationClick}
+                isFixed={isFixed}
+                color={color}
+                bgColor={bgColor}
+              />
               ) : (
                 <Button
                   variant="contained"
@@ -292,7 +251,8 @@ export default function Navbar({
             newNotificationCount={newNotificationCount}
             avatarPath={avatarPath}
             handleProfileMenuOpen={handleProfileMenuOpen}
-            handleMobleLogout={handleMobleLogout}
+            handleMobileLogout={handleMobileLogout}
+            handleNotificationClick={handleNotificationClick}
           />
         }
 
