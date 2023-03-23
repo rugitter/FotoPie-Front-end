@@ -14,7 +14,7 @@ import Stack from "@mui/material/Stack";
 import CategoryHeader from "../../src/components/CategoryInside/CategoryHeader";
 import PostList from "../../src/components/CategoryInside/CategoryInsidePosts";;
 
-interface ResponseImageData {
+export interface ResponseImageData {
   _id: string;
   price: number;
   tag: string | string[] | undefined;
@@ -24,10 +24,12 @@ interface ResponseImageData {
   filename: string;
 }
 
+
 export default function CategoryInsidePage() {
   const router = useRouter();
   const { tag } = router.query;
   //const tagString = tag as string;
+  
   const [tagString, setTagString] = useState<string | string[] | undefined>("");
   const [category, setCategory] = useState<ResponseImageData[]>([]);
   const [page, setPage] = useState(1);
@@ -46,21 +48,21 @@ export default function CategoryInsidePage() {
 
   let limit = 10;
 
-  const fetchImages = async () => {
-    try {
-      const res = await categoryPosts(tag, page, limit);
+  // const fetchImages = async () => {
+  //   try {
+  //     const res = await categoryPosts(tag, page, limit);
       
-      if (res.status === 200) {
-        setCategory([...category, ...res.data]);
-        setPage(page + 1);
-        if ([...res.data].length === 0) {
-          setLoaderHandler(false);
-        }
-      }
-    } catch (error: any) {
-      setError(error.message);
-    }
-  };
+  //     if (res.status === 200) {
+  //       setCategory([...category, ...res.data]);
+  //       setPage(page + 1);
+  //       if ([...res.data].length === 0) {
+  //         setLoaderHandler(false);
+  //       }
+  //     }
+  //   } catch (error: any) {
+  //     setError(error.message);
+  //   }
+  // };
 
   const resetCategoryStateHandler = async (newTag: string) => {
     setCategory([]);
@@ -117,7 +119,7 @@ export default function CategoryInsidePage() {
     getSynonyms(tagString).then((response) => {
       setLinks(response);
     });
-    fetchImages();
+    //fetchImages();
   }, [tagString,router.isReady]);
 
   return (
@@ -144,9 +146,9 @@ export default function CategoryInsidePage() {
         ))}
       </Stack>
       
-      {/*<PostList tagString={tagString as string | string[] | undefined} />*/}
+      <PostList tagString={tagString as string | string[] | undefined} setCategory={setCategory } category={category} />
 
-      <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
+      {/* <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
         <InfiniteScroll
           dataLength={category.length}
           next={fetchImages}
@@ -167,7 +169,7 @@ export default function CategoryInsidePage() {
             ))}
           </Masonry>
         </InfiniteScroll>
-      </Box>
+      </Box> */}
     </>
   );
 }

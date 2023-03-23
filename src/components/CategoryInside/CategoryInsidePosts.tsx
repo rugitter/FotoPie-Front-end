@@ -1,25 +1,29 @@
 import Post from "../PostList/Post";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
 import NoMore from "../Loader/NoMore";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Masonry from "@mui/lab/Masonry";
 import Box from "@mui/material/Box";
 import { categoryPosts } from "../../axiosRequest/api/category";
+import { ResponseImageData } from "../../../pages/category/[tag]";
+
 
 interface CategoryInsidePostsProps {
   tagString: string | string[] | undefined;
+  setCategory: Dispatch<SetStateAction<ResponseImageData[]>>;
+  category:
 }
 
-interface ResponseImageData {
-  _id: string;
-  price: number;
-  tag: string;
-  userEmail: string;
-  compressed_imageUrl: string;
-  description: string;
-  filename: string;
-}
+// interface ResponseImageData {
+//   _id: string;
+//   price: number;
+//   tag: string;
+//   userEmail: string;
+//   compressed_imageUrl: string;
+//   description: string;
+//   filename: string;
+// }
 
 const PostList = (props: CategoryInsidePostsProps) => {
   const [category, setCategory] = useState<ResponseImageData[]>([]);
@@ -29,6 +33,7 @@ const PostList = (props: CategoryInsidePostsProps) => {
 
   let limit = 10;
   let tag = props.tagString;
+  console.log(tag,"debug");
 
   const fetchImages = async () => {
     try {
@@ -48,7 +53,7 @@ const PostList = (props: CategoryInsidePostsProps) => {
 
   useEffect(() => {
     fetchImages();
-  }, []);
+  }, [tag]);
 
   return (
     <>
