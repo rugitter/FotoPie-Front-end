@@ -12,7 +12,8 @@ import { categoryPosts } from "../../src/axiosRequest/api/category";
 import NavBar from "../../src/components/NavBar";
 import Stack from "@mui/material/Stack";
 import CategoryHeader from "../../src/components/CategoryInside/CategoryHeader";
-import PostList from "../../src/components/CategoryInside/CategoryInsidePosts";;
+import PostList from "../../src/components/CategoryInside/CategoryInsidePosts";
+import CategoryButton from "../../src/components/CategoryInside/CategoryButton";
 
 export interface ResponseImageData {
   _id: string;
@@ -126,7 +127,8 @@ export default function CategoryInsidePage() {
     <>
       <NavBar isFixed={false} color="#000000" />
       <CategoryHeader tagString={tagString} />
-      <Stack
+      <CategoryButton links={links} resetCategoryState={ resetCategoryStateHandler} />
+      {/* <Stack
         direction={{ xs: "column", sm: "row" }}
         spacing={{ xs: 1, sm: 4, md: 6 }}
         sx={{ ml: 5, mt: 7 }}
@@ -144,9 +146,20 @@ export default function CategoryInsidePage() {
           </Button>
           //</Link>
         ))}
-      </Stack>
-      
-      <PostList tagString={tagString as string | string[] | undefined} setCategory={setCategory } category={category} />
+      </Stack> */}
+
+      <PostList
+        tagString={tagString as string | string[] | undefined}
+        category={category}
+        setCategory={setCategory}
+        page={page}
+        setPage={setPage}
+        loaderHandler={loaderHandler}
+        setLoaderHandler={setLoaderHandler}
+        Error={Error}
+        setError={setError}
+        fetchImages ={fetchImages}
+      />
 
       {/* <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
         <InfiniteScroll

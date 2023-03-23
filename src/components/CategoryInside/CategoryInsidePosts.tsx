@@ -11,8 +11,15 @@ import { ResponseImageData } from "../../../pages/category/[tag]";
 
 interface CategoryInsidePostsProps {
   tagString: string | string[] | undefined;
+  category: ResponseImageData[];
   setCategory: Dispatch<SetStateAction<ResponseImageData[]>>;
-  category:
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
+  loaderHandler: boolean;
+  setLoaderHandler: Dispatch<SetStateAction<boolean>>;
+  Error: null;
+  setError: Dispatch<SetStateAction<null>>;
+  fetchImages:  () => Promise<void>;
 }
 
 // interface ResponseImageData {
@@ -26,14 +33,26 @@ interface CategoryInsidePostsProps {
 // }
 
 const PostList = (props: CategoryInsidePostsProps) => {
-  const [category, setCategory] = useState<ResponseImageData[]>([]);
-  const [page, setPage] = useState(1);
-  const [loaderHandler, setLoaderHandler] = useState(true);
-  const [Error, setError] = useState(null);
+  //const [category, setCategory] = useState<ResponseImageData[]>([]);
+  //const [page, setPage] = useState(1);
+  //const [loaderHandler, setLoaderHandler] = useState(true);
+  //const [Error, setError] = useState(null);
+  let category = props.category;
+  let setCategory = props.setCategory;
+  let page = props.page;
+  let setPage = props.setPage;
+  let loaderHandler = props.loaderHandler;
+  let setLoaderHandler = props.setLoaderHandler;
+  let Error = props.Error;
+  let setError = props.setError;
+  //let fetchImages = props.fetchImages;
 
   let limit = 10;
   let tag = props.tagString;
-  console.log(tag,"debug");
+  //console.log(tag,"debug");
+  
+  //fetchImages();
+  //console.log(category,"debug")
 
   const fetchImages = async () => {
     try {

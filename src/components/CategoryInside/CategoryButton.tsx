@@ -1,22 +1,33 @@
+import { LinkOffSharp } from "@mui/icons-material";
 import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 
 interface CategoryButtonProps {
-  link: string;
+  links: never[];
   resetCategoryState: (newTag: string) => void;
 }
 
-const CategoryButton = ({ link, resetCategoryState }: CategoryButtonProps) => {
+const CategoryButton = ({ links, resetCategoryState }: CategoryButtonProps) => {
   return (
-    <Button
-      key={link}
-      variant="outlined"
-      color="primary"
-      onClick={() => {
-        resetCategoryState(link);
-      }}
+    <Stack
+      direction={{ xs: "column", sm: "row" }}
+      spacing={{ xs: 1, sm: 4, md: 6 }}
+      sx={{ ml: 5, mt: 7 }}
     >
-      {link}
-    </Button>
+      {links.map((link) => (
+        <Button
+          key={link}
+          variant="outlined"
+          color="primary"
+          onClick={() => {
+            resetCategoryState(link);
+          }}
+        >
+          {link}
+        </Button>
+        //</Link>
+      ))}
+    </Stack>
   );
 };
 
