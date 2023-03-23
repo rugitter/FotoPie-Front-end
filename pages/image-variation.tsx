@@ -52,6 +52,9 @@ export default function imageVariation() {
         console.log(f)
 
     }
+
+
+
     const inputContentWithIcon = (
         <div
           style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
@@ -128,17 +131,6 @@ export default function imageVariation() {
             }}
                 >
            
-            {/* <FormProvider {...methods}> */}
-              <Box
-                component="form"
-                // onSubmit={methods.handleSubmit(onSubmit)}
-                sx={{
-                  mt: 5,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-end",
-                }}
-              >
                 <div
                   style={{
                     display: "flex",
@@ -159,7 +151,6 @@ export default function imageVariation() {
                   />
                 </div>
               </Box>
-          </Box>
   
           <Copyright sx={{ mt: 6}} />
         </Container>
