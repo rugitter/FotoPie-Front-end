@@ -115,7 +115,7 @@ export default function CategoryInsidePage() {
       setLinks(response);
     });
     fetchImages();
-  }, [tagString, router.isReady, API_Prefix]);
+  }, [tagString, router.isReady]);
 
   return (
     <>
