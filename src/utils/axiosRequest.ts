@@ -8,7 +8,7 @@ const service = axios.create({
 });
 
 // resquest interceptor - before request is sent
-service.interceptors.request.use((config) => {
+service.interceptors.request.use((config:any) => {
   const accessToken = localStorage.getItem("accessToken");
   accessToken && (config.headers["Authorization"] = `Bearer ${accessToken}`);
   return config;
