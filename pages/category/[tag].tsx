@@ -48,21 +48,21 @@ export default function CategoryInsidePage() {
 
   let limit = 10;
 
-  // const fetchImages = async () => {
-  //   try {
-  //     const res = await categoryPosts(tag, page, limit);
+  const fetchImages = async () => {
+    try {
+      const res = await categoryPosts(tag, page, limit);
       
-  //     if (res.status === 200) {
-  //       setCategory([...category, ...res.data]);
-  //       setPage(page + 1);
-  //       if ([...res.data].length === 0) {
-  //         setLoaderHandler(false);
-  //       }
-  //     }
-  //   } catch (error: any) {
-  //     setError(error.message);
-  //   }
-  // };
+      if (res.status === 200) {
+        setCategory([...category, ...res.data]);
+        setPage(page + 1);
+        if ([...res.data].length === 0) {
+          setLoaderHandler(false);
+        }
+      }
+    } catch (error: any) {
+      setError(error.message);
+    }
+  };
 
   const resetCategoryStateHandler = async (newTag: string) => {
     setCategory([]);
