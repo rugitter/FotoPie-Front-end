@@ -12,7 +12,7 @@ import { categoryPosts } from "../../src/axiosRequest/api/category";
 import NavBar from "../../src/components/NavBar";
 import Stack from "@mui/material/Stack";
 import CategoryHeader from "../../src/components/CategoryInside/CategoryHeader";
-import PostList from "../../src/components/CategoryInside/CategoryInsidePosts";
+import PostList from "../../src/components/CategoryInside/CategoryInsidePosts";;
 
 interface ResponseImageData {
   _id: string;
@@ -123,7 +123,7 @@ export default function CategoryInsidePage() {
   return (
     <>
       <NavBar isFixed={false} color="#000000" />
-      <CategoryHeader tagString={tagString } />
+      <CategoryHeader tagString={tagString} />
       <Stack
         direction={{ xs: "column", sm: "row" }}
         spacing={{ xs: 1, sm: 4, md: 6 }}
@@ -144,6 +144,8 @@ export default function CategoryInsidePage() {
         ))}
       </Stack>
       
+      {/*<PostList tagString={tagString as string | string[] | undefined} />*/}
+
       <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
         <InfiniteScroll
           dataLength={category.length}
