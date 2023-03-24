@@ -33,6 +33,9 @@ import axios, { AxiosRequestConfig, Method } from "axios";
 import { uploadPhoto, uploadPost } from "../src/axiosRequest/api/posts";
 import { imageVariations } from "../src/axiosRequest/api/imageVariations";
 
+interface MouseEvent {
+  target: EventTarget;
+}
 
 export default function imageVariation() {
   const [status, setStatus] = useState("");
@@ -47,9 +50,10 @@ export default function imageVariation() {
 
   const handleSubmit = async (files: any) => {
     const f = files[0];
-    console.log(f)
+    console.log(f,'debug')
     const formData = new FormData();
     formData.append("file", f);
+    console.log(f, "debug",formData,"formDebug");
     try {
       const response = await imageVariations(formData);
       if (response.status === 200) {
@@ -62,6 +66,28 @@ export default function imageVariation() {
         Error occurred, unknown origin — <strong>check it out!</strong>
       </Alert>;
       console.error(error);
+    }
+  };
+
+  const handleFileUpload = async (event: MouseEvent) => {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files != null) {
+      const file = fileInput.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      console.log(formData, "debug");
+      try {
+        const response = await imageVariations(formData);
+        if (response.status === 200) {
+          console.log(response.data);
+        }
+      } catch (error) {
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          Error occurred, unknown origin — <strong>check it out!</strong>
+        </Alert>;
+        console.error(error);
+      }
     }
   };
   
@@ -130,6 +156,21 @@ export default function imageVariation() {
   return (
     <>
       <NavBar isFixed={false} color="#000000" bgColor="#f8f8ff" />
+      <Button
+        size="medium"
+        variant="contained"
+        color="secondary"
+        sx={{ mt: 5, mb: 8 }}
+        component="label"
+      >
+        Change Picture
+        <input
+          hidden
+          type="file"
+          accept="image/*"
+          onChange={handleFileUpload}
+        />
+      </Button>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -137,28 +178,30 @@ export default function imageVariation() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}>
+          }}
+        >
           <div
             style={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               height: "35vh",
-            }}>
+            }}
+          >
             <Dropzone
               onChangeStatus={handleChangeStatus}
               maxFiles={1}
               multiple={false}
               canCancel={false}
-              onSubmit ={handleSubmit}
+              onSubmit={handleSubmit}
               inputContent={inputContentWithIcon}
               accept="image/*"
               styles={styles}
             />
           </div>
         </Box>
-        <Copyright sx={{ mt: 6}} />
+        <Copyright sx={{ mt: 6 }} />
       </Container>
     </>
-  )
+  );
 }
