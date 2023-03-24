@@ -48,6 +48,10 @@ export const quickViewSlice = createSlice({
       state.userLikes = action.payload;
       state.liked = !state.liked;
     });
+    // builder.addCase(updateLike.fulfilled, (state, action) => {
+    //   state.userLikes = action.payload;
+    //   state.liked = !state.liked;
+    // });
   },
 });
 export const { setQuickViewData } = quickViewSlice.actions;

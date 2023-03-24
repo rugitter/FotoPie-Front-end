@@ -1,9 +1,11 @@
-import { Button } from "@mui/material";
-import { useState, useEffect } from "react";
-import DownloadIcon from "@mui/icons-material/Download";
-import axiosRequest from "../../utils/axiosRequest";
-import { getDownloadImage } from "../../axiosRequest/api/photoQuickView";
+import type { NextPage } from "next";
 import { NextRouter } from "next/router";
+import { getDownloadImage } from "../../axiosRequest/api/photoQuickView";
+import DownloadImage from "./DownloadImage";
+import DownloadIcon from "@mui/icons-material/Download";
+import { Button } from "@mui/material";
+import { RootState } from "../../../store/store";
+import { useDispatch, useSelector } from "react-redux";
 
 export interface DownloadImageProps {
   filenameString: string | string[] | undefined;
@@ -11,83 +13,52 @@ export interface DownloadImageProps {
   isAuthenticated: boolean;
 }
 
-//Photo quick view page download button
-const DownloadImage = (props: DownloadImageProps) => {
-  const [presignedUrl, setPresignedUrl] = useState("");
+const DownloadButton: NextPage<DownloadImageProps> = ({
+  filenameString,
+  router,
+  isAuthenticated,
+}) => {
   const downLoadImages = async () => {
-    try {
-      const response = await getDownloadImage(props.filenameString);
-      // const response = await getDownloadImage(props.filename);
-      // const response = await axiosRequest(
-      //   `/api/download?filename=${props.filename}`,
-      //   "GET"
-      // { responseType: "blob" }
-
+    if (!isAuthenticated) router.push("/login");
+    // if (isAuthenticated) {
+      const response = await getDownloadImage(filenameString);
+      const presignedUrl = response.data.url;
       console.log(response);
-      console.log(response.data);
-      setPresignedUrl(response.data);
-      // const url = response.data;
-      // download(url);
-      // download(response.data);
-      // saveAs(response.data, "filename");
-      ////////////////////////////////////////////////////////
-      //1. open in a new window
-      // const downloadLink = document.createElement("a");
-      // console.log(downloadLink);
-      // downloadLink.href = presignedUrl;
-      // downloadLink.download = `${props.filename}`;
-      // document.body.appendChild(downloadLink);
-      // downloadLink.click();
-      // document.body.removeChild(downloadLink);
-      ////////////////////////////////////////////////////////////////
-      // downloadLink.dispatchEvent(new MouseEvent('click')
-      window.open(response.data, "_blank");
-      // router.push(`${response.data}`);
+      console.log(response.status);
+      switch (response.status) {
+        case 200: {
+          // try {
+          // Use the proxy url to fetch photo
+          const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
+            presignedUrl
+          )}`;
+          const response = await fetch(proxyUrl);
+          console.log("response", response);
+          const blob = await response.blob();
+          const url = URL.createObjectURL(blob);
 
-      //2. blob
-      // const buffer = await response.data.arrayBuffer();
-      // const url = window.URL.createObjectURL(new Blob([response.data]));
-      // console.log(url);
-      // const link: HTMLAnchorElement = document.createElement("a");
-      // link.href = url;
-      // link.setAttribute("download", `${props.filename}`);
-      // document.body.appendChild(link);
-      // link.click();
-      // link.remove();
-      ////////////////////////////////////////////////////////////////////////
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = `${filenameString}`;
+          link.click();
+          URL.revokeObjectURL(url);
+          break;
+          // } catch (error) {
+          // console.error("Failed to download the image:", error);
+          // }
+        }
 
-      ////////////////////////////////////////////////////////////////
-      // fetch(response.data, { mode: "no-cors" })
-      //   .then((response) => response.blob())
-      //   .then((blob) => {
-      //     let blobUrl = window.URL.createObjectURL(blob);
-      //     let a = document.createElement("a");
-      //     // a.download = response.data.replace(/^.*[\\\/]/, "");
-      //     a.download = response.data;
-      //     a.href = blobUrl;
-      //     document.body.appendChild(a);
-      //     a.click();
-      //     // a.remove();
-      //   });
-      ////////////////////////////////////////////////////////////////
-
-      ////////////////////////////////////////////////////////////////
-      // router.push(`${response.data}`);
-      // const buffer = await response.data.arrayBuffer();
-      // const blob = new Blob([buffer], { type: "image/jpeg" });
-      // const link: HTMLAnchorElement = document.createElement("a");
-      // link.href = URL.createObjectURL(blob);
-      // link.download = `${filename}`;
-      // document.body.appendChild(link);
-      // link.click();
-      // document.body.removeChild(link);
-      ////////////////////////////////////////////////////////////////
-      // router.push("/payment");
-    } catch (error: any) {
-      return error.message;
+        case 403: {
+          console.log(response.data.message);
+          router.push("/subscription");
+          break;
+        }
+        default: {
+          break;
+        }
+      // }
     }
   };
-
   return (
     <>
       <Button
@@ -99,22 +70,9 @@ const DownloadImage = (props: DownloadImageProps) => {
         startIcon={<DownloadIcon />}
         onClick={downLoadImages}
       >
-        {/* <Link
-          // href={`/download/${filename}`}
-          href={presignedUrl}
-          sx={{ textDecoration: "none", color: "#fff" }}
-          download
-          // target={"_blank"}
-        > */}
-        <a href={presignedUrl}>d</a>
-        {/* <a href={presignedUrl} download={props.filename}>
-          d
-        </a> */}
         Download
-        {/* </Link> */}
       </Button>
     </>
   );
 };
-
-export default DownloadImage;
+export default DownloadButton;
