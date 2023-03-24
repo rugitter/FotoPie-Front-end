@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import Stack from "@mui/material/Stack";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material";
-import FormHelperText from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -36,6 +28,7 @@ import AlertTitle from "@mui/material/AlertTitle";
 import { getMe } from "../src/axiosRequest/api/editUser";
 import { updateName } from "../src/axiosRequest/api/editUser";
 import { upload } from "../src/axiosRequest/api/editUser";
+import EditUserProfileHeader from "../src/components/EditUserProfile";
 
 // Define a type with the shape of the form values
 interface IFormInput {
