@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { createImage } from "../../axiosRequest/api/createImage";
 
 // Create the component
 const TextInputWithSubmit = () => {
@@ -7,14 +7,21 @@ const TextInputWithSubmit = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post("/api/submit", { content: inputValue });
+      const response = await createImage({
+        prompt: inputValue,
+      });
+
+      const url_1 = response.data.url_1;
+      const url_2 = response.data.url_2;
+      const url_3 = response.data.url_3;
+      const url_4 = response.data.url_4;
     } catch (error) {
       console.error("Error submitting input:", error);
     }
   };
 
   return (
-    <div>
+    <div className="container">
       <input
         type="text"
         value={inputValue}
@@ -42,6 +49,10 @@ const TextInputWithSubmit = () => {
       >
         Generate
       </button>
+      <img src={url_1} alt="" />
+      <img src="`${url_2}`" alt="" />
+      <img src="`${url_3}`" alt="" />
+      <img src="`${url_4}`" alt="" />
     </div>
   );
 };
