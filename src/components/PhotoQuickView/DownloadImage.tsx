@@ -1,11 +1,8 @@
 import type { NextPage } from "next";
 import { NextRouter } from "next/router";
 import { getDownloadImage } from "../../axiosRequest/api/photoQuickView";
-import DownloadImage from "./DownloadImage";
 import DownloadIcon from "@mui/icons-material/Download";
 import { Button } from "@mui/material";
-import { RootState } from "../../../store/store";
-import { useDispatch, useSelector } from "react-redux";
 
 export interface DownloadImageProps {
   filenameString: string | string[] | undefined;
@@ -20,43 +17,28 @@ const DownloadButton: NextPage<DownloadImageProps> = ({
 }) => {
   const downLoadImages = async () => {
     if (!isAuthenticated) router.push("/login");
-    // if (isAuthenticated) {
-      const response = await getDownloadImage(filenameString);
-      const presignedUrl = response.data.url;
-      console.log(response);
-      console.log(response.status);
-      switch (response.status) {
-        case 200: {
-          // try {
-          // Use the proxy url to fetch photo
-          const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
-            presignedUrl
-          )}`;
-          const response = await fetch(proxyUrl);
-          console.log("response", response);
-          const blob = await response.blob();
-          const url = URL.createObjectURL(blob);
+    if (isAuthenticated) {
+      try {
+        //get presigned url
+        const response = await getDownloadImage(filenameString);
+        const presignedUrl = response.data.url;
 
-          const link = document.createElement("a");
-          link.href = url;
-          link.download = `${filenameString}`;
-          link.click();
-          URL.revokeObjectURL(url);
-          break;
-          // } catch (error) {
-          // console.error("Failed to download the image:", error);
-          // }
-        }
+        //use proxy url to download image
+        const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
+          presignedUrl
+        )}`;
+        const res = await fetch(proxyUrl);
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
 
-        case 403: {
-          console.log(response.data.message);
-          router.push("/subscription");
-          break;
-        }
-        default: {
-          break;
-        }
-      // }
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${filenameString}`;
+        link.click();
+        URL.revokeObjectURL(url);
+      } catch (error) {
+        router.push("/subscription");
+      }
     }
   };
   return (
