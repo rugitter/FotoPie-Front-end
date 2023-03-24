@@ -16,7 +16,7 @@ import HamburgerMenu from "./HamburgerMenu";
 import AvatarMenu from "./AvatarMenu";
 import { logout } from "../../../store/auth/authAciton";
 import { useCheckToken } from "../../hooks/useCheckToken";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router"
 import UserIcons from "./UserIcons";
 
 interface NavbarProps {
@@ -53,12 +53,15 @@ export default function Navbar({
   }, [isAuthenticated]);
 
   //Mark all new notifications as read when click notification icon
-  // const navigate = useNavigate();
-  const handleNotificationClick= async () => {
+  const router = useRouter()
+  const handleNotificationClick = async () => {
     try {
-      await markNotificationRead();
       setNewNotificationCount(0);
-      // navigate("/notification");
+      await router.push("/notification");
+  
+      router.events.on("routeChangeComplete", async () => {
+        await markNotificationRead();
+      });
     } catch (error) {
       console.error(error);
     }
@@ -203,13 +206,11 @@ export default function Navbar({
               {isAuthenticated ? (
                 <UserIcons
                 handleProfileMenuOpen={handleProfileMenuOpen}
-                setNewNotificationCount={setNewNotificationCount}
                 newNotificationCount={newNotificationCount}
                 avatarPath={avatarPath}
                 handleNotificationClick={handleNotificationClick}
-                isFixed={isFixed}
                 color={color}
-                bgColor={bgColor}
+                fix={fix}
               />
               ) : (
                 <Button

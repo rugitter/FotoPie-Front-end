@@ -33,8 +33,7 @@ export default function avatarMenu({
       }}
     >
       {/* router.push(`profile/${id}`) */}
-      <MenuItem onClick={handleMenuClose}>My Gallery</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My Collections</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>Edit Profile</MenuItem>
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>

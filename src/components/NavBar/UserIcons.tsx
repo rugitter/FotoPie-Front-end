@@ -6,15 +6,13 @@ import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Avatar from "@mui/material/Avatar";
 
-interface hamburgerMenuProps {
+interface userIconsProps {
   handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
-  setNewNotificationCount: React.Dispatch<React.SetStateAction<number>>;
   newNotificationCount: number;
   avatarPath: string;
   handleNotificationClick: () => void;
-  isFixed: boolean;
   color?: string;
-  bgColor?: string;
+  fix: boolean;
 }
 
 export default function UserIcons ({
@@ -22,10 +20,12 @@ export default function UserIcons ({
   avatarPath,
   handleProfileMenuOpen,
   handleNotificationClick,
-  isFixed,
-  color,
-  bgColor,
-}: hamburgerMenuProps) {
+  color="white",
+  fix,
+}: userIconsProps) {
+
+  console.log("newNotificationCount:", newNotificationCount);
+  
   return (
     <Box
       sx={{
@@ -37,7 +37,6 @@ export default function UserIcons ({
     >
       {/* notifications */}
       <IconButton
-        href="/notification"
         size="large"
         color="inherit"
         onClick={handleNotificationClick}
@@ -45,7 +44,7 @@ export default function UserIcons ({
         <Badge badgeContent={newNotificationCount} color="error">
           <NotificationsIcon
             sx={{
-              color: isFixed ? "black" : color,
+              color: fix ? "black" : color,
               "&:hover": {
                 opacity: 0.8,
               },
@@ -71,7 +70,7 @@ export default function UserIcons ({
       <Button
         variant="contained"
         sx={{
-          bgcolor: isFixed ? "#F4DADA" : "#FBF1F1",
+          bgcolor: fix ? "#F4DADA" : "#FBF1F1",
           "&:hover": {
             backgroundColor: "#F4DADA",
           },
