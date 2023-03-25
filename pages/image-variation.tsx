@@ -41,33 +41,63 @@ export default function imageVariation() {
   const [status, setStatus] = useState("");
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
-  
+
   const handleChangeStatus = (file: IFileWithMeta, status: StatusValue) => {
+    testHandleChangeStatus(file, status);
+  };
+
+  const testHandleChangeStatus = async (file: IFileWithMeta, status: StatusValue) => {
     const { meta } = file;
     console.log(status, meta);
     setStatus(status);
-  };
+    if (status === "done") {
+      const formData = new FormData();
+      formData.append("file", file.file);
 
-  const handleSubmit = async (files: any) => {
-    const f = files[0];
-    console.log(f,'debug')
-    const formData = new FormData();
-    formData.append("file", f);
-    console.log(f, "debug",formData,"formDebug");
-    try {
-      const response = await imageVariations(formData);
-      if (response.status === 200) {
-        console.log(response)
-        //setAvatar(response.data.avatarPath);
+      try {
+        const response = await imageVariations(formData);
+        console.log(
+          response.data.url_1
+          
+        );
+        console.log(response.data.url_2);
+        // setUploadfileName(response.data.filename);
+        // setOrginalFilePath(response.data.original_path);
+        // setCompressFilePath(response.data.compression_path);
+        return { meta: response };
+      } catch (error) {
+        console.error(error);
+        return error;
       }
-    } catch (error) {
-      <Alert severity="error">
-        <AlertTitle>Error</AlertTitle>
-        Error occurred, unknown origin — <strong>check it out!</strong>
-      </Alert>;
-      console.error(error);
     }
   };
+  
+  // const handleChangeStatus = (file: IFileWithMeta, status: StatusValue) => {
+  //   const { meta } = file;
+  //   console.log(status, meta);
+  //   setStatus(status);
+  // };
+
+  // const handleSubmit = async (files: any) => {
+  //   const f = files[0];
+  //   console.log(f,'debug')
+  //   const formData = new FormData();
+  //   formData.append("file", f);
+  //   console.log(f, "debug",formData,"formDebug");
+  //   try {
+  //     const response = await imageVariations(formData);
+  //     if (response.status === 200) {
+  //       console.log(response)
+  //       //setAvatar(response.data.avatarPath);
+  //     }
+  //   } catch (error) {
+  //     <Alert severity="error">
+  //       <AlertTitle>Error</AlertTitle>
+  //       Error occurred, unknown origin — <strong>check it out!</strong>
+  //     </Alert>;
+  //     console.error(error);
+  //   }
+  // };
 
   const handleFileUpload = async (event: MouseEvent) => {
     const fileInput = event.target as HTMLInputElement;
@@ -193,7 +223,7 @@ export default function imageVariation() {
               maxFiles={1}
               multiple={false}
               canCancel={false}
-              onSubmit={handleSubmit}
+              //onSubmit={handleSubmit}
               inputContent={inputContentWithIcon}
               accept="image/*"
               styles={styles}
