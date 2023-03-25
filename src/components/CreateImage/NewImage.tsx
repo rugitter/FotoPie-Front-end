@@ -1,61 +1,111 @@
-import { useState } from "react";
+import React, { useEffect, useState, ChangeEvent } from "react";
 import { createImage } from "../../axiosRequest/api/createImage";
 import Image from "mui-image";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import { Box } from "@mui/system";
+import SendIcon from "@mui/icons-material/Send";
 
 // Create the component
-const TextInputWithSubmit = () => {
-  const [inputValue, setInputValue] = useState("");
+const NewImage: React.FC = () => {
+  const [inputValue, setInputValue] = useState<string>("");
+  const [url_1, setUrl_1] = useState("");
+  const [url_2, setUrl_2] = useState("");
+  const [url_3, setUrl_3] = useState("");
+  const [url_4, setUrl_4] = useState("");
 
-  const handleSubmit = async () => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleClick = async () => {
     try {
       const response = await createImage({
         prompt: inputValue,
       });
-
-      const url_1 = response.data.url_1;
-      const url_2 = response.data.url_2;
-      const url_3 = response.data.url_3;
-      const url_4 = response.data.url_4;
+      if (response.data) {
+        setUrl_1(response.data.url_1);
+        setUrl_2(response.data.url_2);
+        setUrl_3(response.data.url_3);
+        setUrl_4(response.data.url_4);
+      }
     } catch (error) {
-      console.error("Error submitting input:", error);
+      console.error("Error fatching URLs", error);
     }
   };
 
   return (
-    <div className="container">
-      <input
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        style={{
-          boxShadow:
-            "0 2px 4px rgba(0, 0, 0, 0.1), 2px 0 4px rgba(0, 0, 0, 0.1), -2px 0 4px rgba(0, 0, 0, 0.1)",
-          borderRadius: "4px",
-          padding: "8px",
-          fontSize: "16px",
-          marginRight: "8px",
-        }}
-      />
-      <button
-        onClick={handleSubmit}
-        style={{
-          backgroundColor: "#007BFF",
-          color: "white",
-          borderRadius: "4px",
-          padding: "8px 16px",
-          fontSize: "16px",
-          cursor: "pointer",
-          border: "none",
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        position: "fixed",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          marginBottom: 2,
+          width: "75%",
         }}
       >
-        Generate
-      </button>
-      <Image src={url_1} alt="image" />
-      <Image src="`${url_2}`" alt="" />
-      <Image src="`${url_3}`" alt="" />
-      <Image src="`${url_4}`" alt="" />
-    </div>
+        <TextField
+          fullWidth
+          label="Create anything in your mind.."
+          value={inputValue}
+          onChange={handleChange}
+          variant="outlined"
+          sx={{ marginRight: 1, flexGrow: 1 }}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleClick}
+          endIcon={<SendIcon />}
+          sx={{
+            backgroundColor: "white",
+            color: "purple",
+            height: "100%",
+            p: 1.7,
+          }}
+          size="medium"
+        >
+          Generate
+        </Button>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: "8px",
+          "& > img": {
+            flexGrow: 0,
+            flexShrink: 0,
+            flexBasis: {
+              xs: "calc(100% - 8px)",
+              sm: "calc(50% - 8px)",
+              md: "calc(25% - 8px)",
+            },
+            maxWidth: "20%",
+            objectFit: "cover",
+          },
+        }}
+      >
+        <Image src={url_1} alt="image" />
+        <Image src={url_2} alt="image" />
+        <Image src={url_3} alt="image" />
+        <Image src={url_4} alt="image" />
+      </Box>
+    </Box>
   );
 };
 
-export default TextInputWithSubmit;
+export default NewImage;
