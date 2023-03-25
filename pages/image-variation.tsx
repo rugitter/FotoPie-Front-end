@@ -71,16 +71,27 @@ export default function imageVariation() {
     }
   };
   
-  const handleDownload = () => {
-    const a = document.createElement("a");
-    a.href = image1;
-    a.download = "image1.png";
-    a.click();
+  const handleDownload = async() => {
+    const presignedUrl = image1;
 
-    const b = document.createElement("a");
-    b.href = image2;
-    b.download = "image2.png";
-    b.click();
+    //use proxy url to download image
+    const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
+      presignedUrl
+    )}`;
+    const res = await fetch(proxyUrl);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "image1.png";
+    link.click();
+    URL.revokeObjectURL(url);
+
+    // const b = document.createElement("a");
+    // b.href = image2;
+    // b.download = "image2.png";
+    // b.click();
   };
   // const handleChangeStatus = (file: IFileWithMeta, status: StatusValue) => {
   //   const { meta } = file;
