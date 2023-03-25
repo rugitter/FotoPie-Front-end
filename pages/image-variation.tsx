@@ -71,6 +71,17 @@ export default function imageVariation() {
     }
   };
   
+  const handleDownload = () => {
+    const a = document.createElement("a");
+    a.href = image1;
+    a.download = "image1.png";
+    a.click();
+
+    const b = document.createElement("a");
+    b.href = image2;
+    b.download = "image2.png";
+    b.click();
+  };
   // const handleChangeStatus = (file: IFileWithMeta, status: StatusValue) => {
   //   const { meta } = file;
   //   console.log(status, meta);
@@ -197,7 +208,7 @@ export default function imageVariation() {
           <img src={image2} alt="" />
           
         </div> */}
-        
+
         <Box
           sx={{
             marginTop: 8,
@@ -208,6 +219,8 @@ export default function imageVariation() {
         >
           <img src={image1} alt="" />
           <img src={image2} alt="" />
+          <button onClick={handleDownload}>Download Images</button>
+
         </Box>
         <Copyright sx={{ mt: 6 }} />
       </Container>
