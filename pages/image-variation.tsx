@@ -72,27 +72,44 @@ export default function imageVariation() {
   };
   
   const handleDownload = async() => {
-    const presignedUrl = image1;
+    // const presignedUrl = image1;
 
-    //use proxy url to download image
-    const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
-      presignedUrl
-    )}`;
-    const res = await fetch(proxyUrl);
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
+    // //use proxy url to download image
+    // const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
+    //   presignedUrl
+    // )}`;
+    // const res = await fetch(proxyUrl);
+    // const blob = await res.blob();
+    // const url = URL.createObjectURL(blob);
 
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "image1.png";
-    link.click();
-    URL.revokeObjectURL(url);
+    // const link = document.createElement("a");
+    // link.href = url;
+    // link.download = "image1.png";
+    // link.click();
+    // URL.revokeObjectURL(url);
+    const returned_urls = [image1, image2];
 
-    // const b = document.createElement("a");
-    // b.href = image2;
-    // b.download = "image2.png";
-    // b.click();
+    returned_urls.forEach(async (returned_url, i) => {
+      // use proxy url to download image
+      const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
+        returned_url
+      )}`;
+
+      const res = await fetch(proxyUrl);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `image${i + 1}.png`;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+
+    
   };
+
+
   // const handleChangeStatus = (file: IFileWithMeta, status: StatusValue) => {
   //   const { meta } = file;
   //   console.log(status, meta);
