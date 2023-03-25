@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createImage } from "../../axiosRequest/api/createImage";
+import Image from "mui-image";
 
 // Create the component
 const TextInputWithSubmit = () => {
@@ -49,10 +50,10 @@ const TextInputWithSubmit = () => {
       >
         Generate
       </button>
-      <img src={url_1} alt="" />
-      <img src="`${url_2}`" alt="" />
-      <img src="`${url_3}`" alt="" />
-      <img src="`${url_4}`" alt="" />
+      <Image src={url_1} alt="image" />
+      <Image src="`${url_2}`" alt="" />
+      <Image src="`${url_3}`" alt="" />
+      <Image src="`${url_4}`" alt="" />
     </div>
   );
 };
