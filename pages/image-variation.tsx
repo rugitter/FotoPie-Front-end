@@ -163,7 +163,7 @@ export default function imageVariation() {
         sx={{ mt: 5, mb: 8 }}
         component="label"
       >
-        Change Picture
+        Upload Picture
         <input
           hidden
           type="file"

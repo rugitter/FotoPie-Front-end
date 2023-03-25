@@ -10,6 +10,6 @@ module.exports = {
     ];
   },
   env: {
-    REQUEST_TIMEOUT: 10000,
+    REQUEST_TIMEOUT: 30000,
   },
 };
