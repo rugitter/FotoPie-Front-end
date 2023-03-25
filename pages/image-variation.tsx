@@ -6,7 +6,7 @@ import { AttachMoney } from "@mui/icons-material";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup, { Alert, AlertTitle } from "@mui/material";
+import FormGroup, { Alert, AlertTitle, Typography } from "@mui/material";
 import FormHelperText from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
@@ -56,14 +56,13 @@ export default function imageVariation() {
 
       try {
         const response = await imageVariations(formData);
-        console.log(
-          response.data.url_1
-          
-        );
-        console.log(response.data.url_2);
-        // setUploadfileName(response.data.filename);
-        // setOrginalFilePath(response.data.original_path);
-        // setCompressFilePath(response.data.compression_path);
+        console.log(response.data);
+        console.log(response.data.urls);
+        console.log(response.data.urls.url_1);
+        console.log(response.data.urls.url_2);
+        
+        setImage1(response.data.urls.url_1);
+        setImage2(response.data.urls.url_2);
         return { meta: response };
       } catch (error) {
         console.error(error);
@@ -98,28 +97,6 @@ export default function imageVariation() {
   //     console.error(error);
   //   }
   // };
-
-  const handleFileUpload = async (event: MouseEvent) => {
-    const fileInput = event.target as HTMLInputElement;
-    if (fileInput.files != null) {
-      const file = fileInput.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      console.log(formData, "debug");
-      try {
-        const response = await imageVariations(formData);
-        if (response.status === 200) {
-          console.log(response.data);
-        }
-      } catch (error) {
-        <Alert severity="error">
-          <AlertTitle>Error</AlertTitle>
-          Error occurred, unknown origin — <strong>check it out!</strong>
-        </Alert>;
-        console.error(error);
-      }
-    }
-  };
   
   const inputContentWithIcon = (
     <div
@@ -138,7 +115,7 @@ export default function imageVariation() {
           alignItems: "center",
         }}
       >
-        <span>Drop files here or click to upload</span>
+        <span>Drop image here or click to get image variations</span>
       </div>
     </div>
   );
@@ -186,21 +163,6 @@ export default function imageVariation() {
   return (
     <>
       <NavBar isFixed={false} color="#000000" bgColor="#f8f8ff" />
-      <Button
-        size="medium"
-        variant="contained"
-        color="secondary"
-        sx={{ mt: 5, mb: 8 }}
-        component="label"
-      >
-        Upload Picture
-        <input
-          hidden
-          type="file"
-          accept="image/*"
-          onChange={handleFileUpload}
-        />
-      </Button>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -229,6 +191,23 @@ export default function imageVariation() {
               styles={styles}
             />
           </div>
+        </Box>
+        {/* <div className="container">
+          <img src={image1} alt="" />
+          <img src={image2} alt="" />
+          
+        </div> */}
+        
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <img src={image1} alt="" />
+          <img src={image2} alt="" />
         </Box>
         <Copyright sx={{ mt: 6 }} />
       </Container>
