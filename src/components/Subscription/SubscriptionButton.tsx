@@ -9,11 +9,8 @@ const clickToSubscribe = async () => {
       priceId: "price_1MitMoCWJBDJNhy8OQeBC2pY",
     });
 
-    console.log(response.data);
-
     const url = response.data.session_url;
-    console.log(url);
-    // window.location.href = url;
+
     window.open(url);
   } catch (error) {
     return "Create checkout session failed";

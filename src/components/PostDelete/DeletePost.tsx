@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { getMe } from "../../axiosRequest/api/editUser";
@@ -8,9 +8,9 @@ import { deletePost } from '../../axiosRequest/api/userPost';
 import { useCheckToken } from "../../hooks/useCheckToken";
 
 
-interface Props {
-    filename: string;
-    userID: string;
+interface DeletePostButtonProps {
+    filenameString: string | string[] | undefined;
+    // userID: string;
 }
 
 
@@ -22,15 +22,18 @@ const currentLoginUserId = async () => {
     } catch (error) {
     }
 }
-function DeletePost(props: Props) {
+const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
     useCheckToken();
-    const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+
+    const { userID, isAuthenticated } = useSelector((state: RootState) => ({
+        ...state.auth,
+        ...state.quickView,
+    }));
     const [isDeleting, setIsDeleting] = useState(false);
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
     const [isCurrentUserId, setIsCurrentUserId] = useState<boolean>(false);
     // const [currentUserId, setCurrentUserId] = useState<string | null>(null);
     const router = useRouter();
-    const { filename, userID } = props;
 
     useEffect(() => {
         const fetchUserId = async () => {
@@ -67,7 +70,7 @@ function DeletePost(props: Props) {
     const handleConfirmationConfirm = async () => {
         setIsDeleting(true);
         try {
-            const response = await deletePost(filename);
+            const response = await deletePost(filenameString);
 
 
         } catch (error) {
@@ -81,6 +84,7 @@ function DeletePost(props: Props) {
     const deleteBoxStyles = {
         display: "flex",
         justifyContent: "center",
+        marginTop:"5px",
     }
 
     return (
@@ -115,4 +119,4 @@ function DeletePost(props: Props) {
     );
 }
 
-export default DeletePost;
+export default DeletePostButton;

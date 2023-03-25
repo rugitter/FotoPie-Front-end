@@ -1,8 +1,8 @@
 import { FC } from "react";
 import TextField from "@mui/material/TextField";
-import  InputLabel  from "@mui/material/InputLabel";
+import InputLabel from "@mui/material/InputLabel";
 import { FieldError, useFormContext } from "react-hook-form";
-import InputAdornment from '@mui/material/InputAdornment'
+import InputAdornment from "@mui/material/InputAdornment";
 
 interface IFormTextFieldProps {
   label: string;
@@ -11,10 +11,7 @@ interface IFormTextFieldProps {
   type?: string;
   autoComplete?: string;
   InputProps?: any;
-
-
 }
-
 
 const FormTextField: FC<IFormTextFieldProps> = ({
   label,
@@ -22,8 +19,6 @@ const FormTextField: FC<IFormTextFieldProps> = ({
   id,
   type,
   InputProps,
-  
-  
 }: IFormTextFieldProps) => {
   const {
     register,
@@ -31,11 +26,7 @@ const FormTextField: FC<IFormTextFieldProps> = ({
   } = useFormContext();
 
   return (
-
-  
     <>
-      
-      {/* <InputLabel htmlFor={id}>{label} </InputLabel> */}
       <TextField
         label={label}
         id={id}
@@ -49,10 +40,7 @@ const FormTextField: FC<IFormTextFieldProps> = ({
         autoFocus
         {...register(name)}
         InputProps={InputProps}
-       
-       
       />
-     
     </>
   );
 };

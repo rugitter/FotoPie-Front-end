@@ -2,7 +2,7 @@ import axiosInstance from "../index";
 
 export const createCheckoutSession = <T>(data: T) => {
   return axiosInstance({
-    url: "api/subscription/create-checkout-session",
+    url: "/api/subscription/create-checkout-session",
     method: "post",
     data,
   });
@@ -10,7 +10,7 @@ export const createCheckoutSession = <T>(data: T) => {
 
 export const createPortalSession = () => {
   return axiosInstance({
-    url: "api/subscription/create-portal-session",
+    url: "/api/subscription/create-portal-session",
     method: "post",
   });
 };
