@@ -239,16 +239,31 @@ export default function imageVariation() {
 
         <Box
           sx={{
-            marginTop: 8,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <img src={image1} alt="" />
-          <img src={image2} alt="" />
-          <button onClick={handleDownload}>Download Images</button>
-
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              src={image1}
+              alt=""
+              style={{ marginRight: "16px", width: "50%" }}
+            />
+            <img src={image2} alt="" style={{ width: "50%" }} />
+          </Box>
+          <Box>
+            <button onClick={handleDownload}>Download Images</button>
+          </Box>
         </Box>
         <Copyright sx={{ mt: 6 }} />
       </Container>
