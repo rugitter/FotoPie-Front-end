@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Container } from "@mui/system";
-import BasicStack from "../src/components/notification/Notice-stack";
+import BasicStack from "../src/components/Notification/Notice-stack";
 import Navbar from "../src/components/NavBar";
 import { Box } from "@mui/material";
 

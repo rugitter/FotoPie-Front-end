@@ -1,10 +1,12 @@
-import React, { useEffect, useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { createImage } from "../../axiosRequest/api/createImage";
 import Image from "mui-image";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/system";
 import SendIcon from "@mui/icons-material/Send";
+import Copyright from "../Copyright";
+import styles from "./NewImage.module.css";
 
 // Create the component
 const NewImage: React.FC = () => {
@@ -30,7 +32,7 @@ const NewImage: React.FC = () => {
         setUrl_4(response.data.url_4);
       }
     } catch (error) {
-      console.error("Error fatching URLs", error);
+      console.error("Error fetching URLs", error);
     }
   };
 
@@ -41,19 +43,35 @@ const NewImage: React.FC = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        minHeight: "100vh",
-        position: "fixed",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
+        width: "100%",
       }}
     >
       <Box
         sx={{
           display: "flex",
+          flexDirection: "row",
+
           alignItems: "center",
-          marginBottom: 2,
-          width: "75%",
+          justifyContent: "space-between",
+          width: "90%",
+          marginBottom: "60px",
+          marginTop: "30px",
+        }}
+      >
+        <h2 className={styles.bgText}>
+          Start with some detailed descriptions, It may take a few seconds to
+          surprise you with the
+          <span className={styles.gradientText}> astonishing images</span> ...
+        </h2>
+        <img src="/create-image.jpg" alt="" className={styles.bgImage} />
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          marginBottom: 8,
+          width: "90%",
         }}
       >
         <TextField
@@ -80,12 +98,14 @@ const NewImage: React.FC = () => {
           Generate
         </Button>
       </Box>
+
       <Box
         sx={{
+          width: "90%",
           display: "flex",
-          flexWrap: "wrap",
           justifyContent: "center",
-          gap: "8px",
+          marginBottom: "100px",
+          gap: "18px",
           "& > img": {
             flexGrow: 0,
             flexShrink: 0,
@@ -94,16 +114,18 @@ const NewImage: React.FC = () => {
               sm: "calc(50% - 8px)",
               md: "calc(25% - 8px)",
             },
-            maxWidth: "20%",
+            maxWidth: "100%",
             objectFit: "cover",
           },
         }}
       >
-        <Image src={url_1} alt="image" />
-        <Image src={url_2} alt="image" />
-        <Image src={url_3} alt="image" />
-        <Image src={url_4} alt="image" />
+        <Image src={url_1} alt="" />
+        <Image src={url_2} alt="" />
+        <Image src={url_3} alt="" />
+        <Image src={url_4} alt="" />
       </Box>
+      <Copyright />
+      <br />
     </Box>
   );
 };
