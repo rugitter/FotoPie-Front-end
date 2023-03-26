@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
-
+import { useEffect, useState } from "react";
 import Post from "./Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../Loader/Loader";
@@ -9,7 +8,6 @@ import Masonry from "@mui/lab/Masonry";
 import NoMore from "../Loader/NoMore";
 
 interface ImageData {
-  //path: string;
   _id: string;
   filename: string;
   compressFilePath: string;
@@ -19,7 +17,6 @@ export interface PostListProps {
   handleOpen: (filename: string) => void;
 }
 
-// const PostList = () => {
 const PostList = ({ handleOpen }: PostListProps) => {
   const [posts, setPost] = useState<ImageData[]>([]);
   const [page, setPage] = useState(1);
@@ -67,7 +64,6 @@ const PostList = ({ handleOpen }: PostListProps) => {
                 url={post.compressFilePath}
                 filename={post.filename}
                 key={post._id}
-                // handleOpen={handleOpen}
                 handleOpen={() => handleOpen(post.filename)}
               />
             ))}

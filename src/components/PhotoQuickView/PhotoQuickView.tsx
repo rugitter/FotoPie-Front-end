@@ -2,28 +2,24 @@ import { useEffect, FC } from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { NextRouter } from "next/router";
-import DownloadImage from "./DownloadImage";
+import { useDispatch, useSelector } from "react-redux";
 import { getInitialData } from "../../axiosRequest/api/photoQuickView";
 import { AppDispatch, RootState } from "../../../store/store";
-import { useDispatch, useSelector } from "react-redux";
 import { setQuickViewData } from "../../../store/photoQuickView/quickViewSlice";
+import DownloadImage from "./DownloadImage";
 import PostImage from "./PostImage";
 import CollectButton from "./CollectButton";
 import LikeButton from "./LikeButton";
 import UserName from "./UserName";
 
-interface MainBodyProps {
+interface PhotoQuickViewProps {
   filename: string | string[] | undefined;
   router: NextRouter;
 }
-// interface MainBodyProps {
-//   filenameString: string | string[] | undefined;
-//   router: NextRouter;
-// }
 
-// Define a main body component that renders the main part
-const MainBody: FC<MainBodyProps> = ({ filename, router }) => {
-  // const MainBody: FC<MainBodyProps> = ({ filenameString, router }) => {
+// Define a main body component that renders the Photo Quick View part
+const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
+  //Redux toolkit
   const {
     isAuthenticated,
     userName,
@@ -46,15 +42,13 @@ const MainBody: FC<MainBodyProps> = ({ filename, router }) => {
     const fetchData = async () => {
       try {
         const response = await getInitialData(filename);
-        // const response = await getInitialData(filenameString);
         dispatch(setQuickViewData(response.data));
       } catch (error: any) {
-        return error.message;
+        console.error(error);
       }
     };
     fetchData();
   }, [filename, dispatch]);
-  // }, [filenameString, dispatch]);
 
   return (
     <>
@@ -106,7 +100,6 @@ const MainBody: FC<MainBodyProps> = ({ filename, router }) => {
               <CollectButton
                 isAuthenticated={isAuthenticated}
                 filenameString={filename}
-                // filenameString={filenameString}
                 userCollects={userCollects}
                 collected={collected}
                 router={router}
@@ -115,17 +108,14 @@ const MainBody: FC<MainBodyProps> = ({ filename, router }) => {
               <LikeButton
                 isAuthenticated={isAuthenticated}
                 filenameString={filename}
-                // filenameString={filenameString}
                 userLikes={userLikes}
                 liked={liked}
                 router={router}
               />
 
-              {/* to be updated */}
               <DownloadImage
                 isAuthenticated={isAuthenticated}
                 filenameString={filename}
-                // filenameString={filenameString}
                 router={router}
               />
             </Stack>
@@ -139,4 +129,4 @@ const MainBody: FC<MainBodyProps> = ({ filename, router }) => {
   );
 };
 
-export default MainBody;
+export default PhotoQuickView;
