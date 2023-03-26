@@ -1,14 +1,17 @@
-import React from "react";
-import Link from "../../utils/Link";
 import styles from "../../styles/post.module.css";
 
-const Post = ({ url, filename }: { url: string; filename: string }) => {
+export interface PostProps {
+  url: string;
+  filename: string;
+  handleOpen: (filename: string) => void;
+}
+
+const Post = ({ url, filename, handleOpen }: PostProps) => {
   return (
-    <Link href={`/photo-quick-view/${filename}`}>
+    <div onClick={() => handleOpen(filename)}>
       <div className={styles.container}>
         <img
           src={url}
-          //srcSet={`${url}?w=100%&fit=crop&auto=format&dpr=2 2x`}
           alt=""
           loading="lazy"
           width={"100%"}
@@ -16,7 +19,7 @@ const Post = ({ url, filename }: { url: string; filename: string }) => {
         />
         <div className={styles.background}></div>
       </div>
-    </Link>
+    </div>
   );
 };
 
