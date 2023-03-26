@@ -15,6 +15,7 @@ const NewImage: React.FC = () => {
   const [url_2, setUrl_2] = useState("");
   const [url_3, setUrl_3] = useState("");
   const [url_4, setUrl_4] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -22,6 +23,7 @@ const NewImage: React.FC = () => {
 
   const handleClick = async () => {
     try {
+      setIsLoading(true);
       const response = await createImage({
         prompt: inputValue,
       });
@@ -33,6 +35,8 @@ const NewImage: React.FC = () => {
       }
     } catch (error) {
       console.error("Error fetching URLs", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -120,10 +124,22 @@ const NewImage: React.FC = () => {
           },
         }}
       >
-        <Image src={url_1} alt="" />
-        <Image src={url_2} alt="" />
-        <Image src={url_3} alt="" />
-        <Image src={url_4} alt="" />
+        {isLoading ? (
+          <div className={styles.container}>
+            <div className={styles.loader}>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        ) : (
+          <>
+            <Image src={url_1} alt="" />
+            <Image src={url_2} alt="" />
+            <Image src={url_3} alt="" />
+            <Image src={url_4} alt="" />
+          </>
+        )}
       </Box>
       <Copyright />
       <br />
