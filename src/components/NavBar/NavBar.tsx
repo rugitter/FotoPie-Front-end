@@ -52,11 +52,13 @@ export default function Navbar({
     }
   }, [isAuthenticated]);
 
+
   //Mark all new notifications as read when click notification icon
   const router = useRouter()
   const handleNotificationClick = async () => {
     try {
       setNewNotificationCount(0);
+      
       await router.push("/notification");
   
       router.events.on("routeChangeComplete", async () => {
@@ -248,7 +250,6 @@ export default function Navbar({
             setNewNotificationCount={setNewNotificationCount}
             newNotificationCount={newNotificationCount}
             avatarPath={avatarPath}
-            handleProfileMenuOpen={handleProfileMenuOpen}
             handleMobileLogout={handleMobileLogout}
             handleNotificationClick={handleNotificationClick}
           />

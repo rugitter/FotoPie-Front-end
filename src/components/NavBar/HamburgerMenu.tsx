@@ -10,9 +10,9 @@ import UploadIcon from "@mui/icons-material/Upload";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Avatar from "@mui/material/Avatar";
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 interface hamburgerMenuProps {
-  handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
   mobileMoreAnchorEl: null | HTMLElement;
   isMobileMenuOpen: boolean;
   handleMobileMenuClose: () => void;
@@ -32,7 +32,6 @@ export default function hamburgerMenu({
   setNewNotificationCount,
   newNotificationCount,
   avatarPath,
-  handleProfileMenuOpen,
   handleMobileLogout,
   handleNotificationClick,
 }: hamburgerMenuProps) {
@@ -70,14 +69,25 @@ export default function hamburgerMenu({
             </IconButton>
             <p>Notifications</p>
           </MenuItem>
-          <MenuItem>
+          <MenuItem
+            href="/profile"
+          >
             <Avatar
               alt="Avatar"
               src={avatarPath}
-              onClick={handleProfileMenuOpen}
               sx={{ width: 40, height: 40, marginRight: 1 }}
             />
             <p>Profile</p>
+          </MenuItem>
+          <MenuItem>
+            <IconButton 
+              href="/edituserprofile"
+              size="large" 
+              color="inherit"
+            >
+              <ManageAccountsIcon />
+            </IconButton>
+            <p>Edit Profile</p>
           </MenuItem>
           <MenuItem>
             <IconButton 
