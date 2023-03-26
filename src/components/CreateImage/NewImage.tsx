@@ -47,6 +47,7 @@ const NewImage: React.FC = () => {
       }}
     >
       <Box
+        className={styles.imageSection}
         sx={{
           display: "flex",
           flexDirection: "row",

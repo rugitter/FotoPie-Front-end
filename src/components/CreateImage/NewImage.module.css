@@ -1,6 +1,5 @@
 .bgImage {
-  width: auto;
-  height: auto;
+  width: 100%;
 }
 
 .bgText {
@@ -23,4 +22,10 @@
   -moz-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+@media (max-width: 900px) {
+  .imageSection {
+    flex-direction: column;
+  }
 }
