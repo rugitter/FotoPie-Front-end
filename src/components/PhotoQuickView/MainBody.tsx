@@ -13,12 +13,17 @@ import LikeButton from "./LikeButton";
 import UserName from "./UserName";
 
 interface MainBodyProps {
-  filenameString: string | string[] | undefined;
+  filename: string | string[] | undefined;
   router: NextRouter;
 }
+// interface MainBodyProps {
+//   filenameString: string | string[] | undefined;
+//   router: NextRouter;
+// }
 
 // Define a main body component that renders the main part
-const MainBody: FC<MainBodyProps> = ({ filenameString, router }) => {
+const MainBody: FC<MainBodyProps> = ({ filename, router }) => {
+  // const MainBody: FC<MainBodyProps> = ({ filenameString, router }) => {
   const {
     isAuthenticated,
     userName,
@@ -40,14 +45,16 @@ const MainBody: FC<MainBodyProps> = ({ filenameString, router }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getInitialData(filenameString);
+        const response = await getInitialData(filename);
+        // const response = await getInitialData(filenameString);
         dispatch(setQuickViewData(response.data));
       } catch (error: any) {
         return error.message;
       }
     };
     fetchData();
-  }, [filenameString, dispatch]);
+  }, [filename, dispatch]);
+  // }, [filenameString, dispatch]);
 
   return (
     <>
@@ -78,7 +85,7 @@ const MainBody: FC<MainBodyProps> = ({ filenameString, router }) => {
             display="flex"
             justifyContent="space-between"
             position="relative"
-            sx={{ m: 1, mt: 3 }}
+            sx={{ m: 1, mt: 3, mb: 3 }}
           >
             {/* Avatar and username */}
             <Stack>
@@ -98,7 +105,8 @@ const MainBody: FC<MainBodyProps> = ({ filenameString, router }) => {
             >
               <CollectButton
                 isAuthenticated={isAuthenticated}
-                filenameString={filenameString}
+                filenameString={filename}
+                // filenameString={filenameString}
                 userCollects={userCollects}
                 collected={collected}
                 router={router}
@@ -106,7 +114,8 @@ const MainBody: FC<MainBodyProps> = ({ filenameString, router }) => {
 
               <LikeButton
                 isAuthenticated={isAuthenticated}
-                filenameString={filenameString}
+                filenameString={filename}
+                // filenameString={filenameString}
                 userLikes={userLikes}
                 liked={liked}
                 router={router}
@@ -115,7 +124,8 @@ const MainBody: FC<MainBodyProps> = ({ filenameString, router }) => {
               {/* to be updated */}
               <DownloadImage
                 isAuthenticated={isAuthenticated}
-                filenameString={filenameString}
+                filenameString={filename}
+                // filenameString={filenameString}
                 router={router}
               />
             </Stack>

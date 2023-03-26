@@ -15,7 +15,12 @@ interface ImageData {
   compressFilePath: string;
 }
 
-const PostList = () => {
+export interface PostListProps {
+  handleOpen: (filename: string) => void;
+}
+
+// const PostList = () => {
+const PostList = ({ handleOpen }: PostListProps) => {
   const [posts, setPost] = useState<ImageData[]>([]);
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
@@ -62,6 +67,8 @@ const PostList = () => {
                 url={post.compressFilePath}
                 filename={post.filename}
                 key={post._id}
+                // handleOpen={handleOpen}
+                handleOpen={() => handleOpen(post.filename)}
               />
             ))}
           </Masonry>

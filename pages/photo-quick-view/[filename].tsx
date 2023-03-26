@@ -10,34 +10,38 @@ const PhotoQuickView = () => {
   useCheckToken();
   const router = useRouter();
   const { filename } = router.query;
-  const [filenameString, setFilenameString] = useState<
-    string | string[] | undefined
-  >("");
-  useEffect(() => {
-    if (router.isReady && filename) {
-      setFilenameString(filename);
-    }
-  }, [filename, router.isReady]);
+  // const [filenameString, setFilenameString] = useState<
+  //   string | string[] | undefined
+  // >("");
+  // useEffect(() => {
+  //   if (router.isReady && filename) {
+  //     setFilenameString(filename);
+  //   }
+  // }, [filename, router.isReady]);
 
   return (
+    // <Layout>
     <Stack
-      sx={{
-        width: "100vw",
-        height: "100vh",
-        minWidth: "500px",
-        bgcolor: "rgba(0,0,0,0.8)",
-        position: "relative",
-        m: "auto",
-      }}
+    // sx={{
+    //   width: "80vw",
+    //   height: "100vh",
+    //   minWidth: "500px",
+    //   bgcolor: "rgba(0,0,0,0.8)",
+    //   position: "relative",
+    //   m: "auto",
+    // }}
     >
       {/*  close button */}
-      <CloseButton />
+      {/* <CloseButton /> */}
 
       {/* main body */}
-      {filenameString && (
-        <MainBody filenameString={filenameString} router={router} />
+      {filename && (
+        <MainBody filename={filename} router={router} />
+        // {filenameString && (
+        //   <MainBody filenameString={filenameString} router={router} />
       )}
     </Stack>
+    // </Layout>
   );
 };
 
