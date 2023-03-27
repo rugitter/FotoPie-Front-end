@@ -2,7 +2,6 @@ import { getAccessToken, getRefreshToken } from "./../../src/utils/token";
 import { createSlice } from "@reduxjs/toolkit";
 import { login, logout } from "./authAciton";
 import { AuthState } from "./types";
-import { access } from "fs";
 
 const initialState: AuthState = {
   isAuthenticated: false,
