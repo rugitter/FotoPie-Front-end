@@ -8,6 +8,8 @@ export interface Notification {
 
 export interface NotificationState {
     notifications: Notification[];
+    notificationCount: number;
+    notificationStatus: boolean;
     status:'idle'| 'loading' | 'succeeded' | 'failed';
     error: string | null;
 }

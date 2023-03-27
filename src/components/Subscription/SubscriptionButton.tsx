@@ -1,4 +1,3 @@
-import axiosRequest from "../../utils/axiosRequest";
 import { Button } from "@mui/material";
 import { createCheckoutSession } from "../../axiosRequest/api/subscription";
 

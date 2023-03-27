@@ -1,25 +1,21 @@
-import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { useCheckToken } from "../../hooks/useCheckToken";
+import { AppDispatch, RootState } from "../../../store/store";
+import { logout } from "../../../store/auth/authAciton";
 
 //Render header part of admin manager page
 const Header = () => {
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useCheckToken();
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    const accessToken = window.localStorage.getItem("accessToken");
-    accessToken !== null ? setIsLoggedIn(true) : setIsLoggedIn(false);
-  }, []);
-
-  //remover access token to redirect to admin sign in page
-  const logOutHandler = () => {
-    window.localStorage.removeItem("accessToken");
-    setIsLoggedIn(false);
-    //redirect to admin sign in page
-    router.push("/admin-signin");
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   return (
@@ -40,7 +36,7 @@ const Header = () => {
             FotoPie Admin Manager
           </Typography>
         </Box>
-        {isLoggedIn ? (
+        {isAuthenticated ? (
           <Box
             sx={{
               display: "flex",
@@ -50,7 +46,7 @@ const Header = () => {
               mr: "30px",
             }}
           >
-            <Button variant="outlined" onClick={logOutHandler}>
+            <Button variant="outlined" onClick={handleLogout}>
               Logout
             </Button>
           </Box>
@@ -64,7 +60,10 @@ const Header = () => {
               mr: "30px",
             }}
           >
-            <Button variant="outlined" onClick={logOutHandler}>
+            <Button
+              variant="outlined"
+              onClick={() => router.push("/admin-signin")}
+            >
               Login
             </Button>
           </Box>

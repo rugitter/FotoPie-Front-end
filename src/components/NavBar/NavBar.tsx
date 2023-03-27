@@ -18,6 +18,7 @@ import { logout } from "../../../store/auth/authAciton";
 import { useCheckToken } from "../../hooks/useCheckToken";
 import { useRouter } from "next/router"
 import UserIcons from "./UserIcons";
+import { getNotificationCount, fetchNotificationStatus } from "../../../store/notification/notifyAction";
 
 interface NavbarProps {
   isFixed: boolean;
@@ -35,7 +36,10 @@ export default function Navbar({
   const dispatch = useDispatch<AppDispatch>();
   const [avatarPath, setAvatarPath] = useState("");
   const [id, setId] = useState("");
-  const [newNotificationCount, setNewNotificationCount] = useState(0);
+  const newNotificationCount = useSelector(
+    (state: RootState) => state.notifySlice.notificationCount
+  );
+  // const [newNotificationCount, setNewNotificationCount] = useState(0);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -46,23 +50,24 @@ export default function Navbar({
       });
 
       // Get new notification count
-      getNewNotificationCount().then((res) => {
-        setNewNotificationCount(res.data.count);
-      });
+      dispatch(getNotificationCount()); 
+      // getNewNotificationCount().then((res) => {
+      //   setNewNotificationCount(res.data.count);
+      // });
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, dispatch]);
 
 
   //Mark all new notifications as read when click notification icon
   const router = useRouter()
   const handleNotificationClick = async () => {
+
     try {
-      setNewNotificationCount(0);
-      
       await router.push("/notification");
   
       router.events.on("routeChangeComplete", async () => {
-        await markNotificationRead();
+        await dispatch(fetchNotificationStatus());
+      
       });
     } catch (error) {
       console.error(error);
@@ -247,7 +252,7 @@ export default function Navbar({
             mobileMoreAnchorEl={mobileMoreAnchorEl}
             handleMobileMenuClose={handleMobileMenuClose}
             isAuthenticated={isAuthenticated}
-            setNewNotificationCount={setNewNotificationCount}
+            // setNewNotificationCount={setNewNotificationCount}
             newNotificationCount={newNotificationCount}
             avatarPath={avatarPath}
             handleMobileLogout={handleMobileLogout}
