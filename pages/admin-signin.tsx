@@ -112,15 +112,15 @@ export default function AdminSignIn() {
             <Grid container>
               {/* Forgot password? */}
               <Grid item xs>
-                <Link href="reset-password/reset-request" variant="body2">
-                  Forgot password?
+                <Link href="/reset/reset-request" variant="body2">
+                  Forgot Password?
                 </Link>
               </Grid>
 
               {/* Don't have an account? Sign Up */}
               <Grid item>
-                <Link href="signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/" variant="body2">
+                  {"Go to Home Page"}
                 </Link>
               </Grid>
             </Grid>
