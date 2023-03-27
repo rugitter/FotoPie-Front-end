@@ -6,6 +6,7 @@ import Loader from "../Loader/Loader";
 import Masonry from "@mui/lab/Masonry";
 import NoMore from "../Loader/NoMore";
 import { profileCollection } from "../../axiosRequest/api/userCollection";
+import ErrorAlert from "../LoginForm/ErrorAlert";
 
 interface CollectionPostsProps {
   id: string;
@@ -30,7 +31,7 @@ const PostList = ({id, handleOpen}: CollectionPostsProps) => {
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
 
-  const [Error, setError] = useState(null);
+  const [error, setError] = useState(null);
 
   let limit = 10;
 
@@ -57,6 +58,7 @@ const PostList = ({id, handleOpen}: CollectionPostsProps) => {
   return (
     <>
       {/*<h2>{props.id}</h2>*/}
+      {error && <ErrorAlert error={error}></ErrorAlert>}
       <Box
         sx={{
           width: "100%",

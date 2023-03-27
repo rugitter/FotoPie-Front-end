@@ -7,6 +7,7 @@ import Masonry from "@mui/lab/Masonry";
 import Box from "@mui/material/Box";
 import { categoryPosts } from "../../axiosRequest/api/category";
 import { ResponseImageData } from "../../../pages/category/[tag]";
+import ErrorAlert from "../LoginForm/ErrorAlert";
 
 
 interface CategoryInsidePostsProps {
@@ -17,7 +18,7 @@ interface CategoryInsidePostsProps {
   setPage: Dispatch<SetStateAction<number>>;
   loaderHandler: boolean;
   setLoaderHandler: Dispatch<SetStateAction<boolean>>;
-  Error: null;
+  error: null;
   setError: Dispatch<SetStateAction<null>>;
   handleOpen: (filename: string) => void;
 }
@@ -30,7 +31,7 @@ const PostList = ({
   setPage,
   loaderHandler,
   setLoaderHandler,
-  Error,
+  error,
   setError,
   handleOpen
 }: CategoryInsidePostsProps) => {
@@ -59,6 +60,7 @@ const PostList = ({
 
   return (
     <>
+      {error && <ErrorAlert error={error}></ErrorAlert>}
       <Box
         sx={{
           width: "100%",

@@ -32,7 +32,7 @@ export default function CategoryInsidePage() {
   const [category, setCategory] = useState<ResponseImageData[]>([]);
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
-  const [Error, setError] = useState(null);
+  const [error, setError] = useState(null);
   const [links, setLinks] = useState([]);
   const [prevUrl, setPrevUrl] = useState("");
   //define necessary states for quick-view modal
@@ -151,7 +151,7 @@ export default function CategoryInsidePage() {
         setPage={setPage}
         loaderHandler={loaderHandler}
         setLoaderHandler={setLoaderHandler}
-        Error={Error}
+        error={error}
         setError={setError}
         handleOpen={handleOpen}
       />
