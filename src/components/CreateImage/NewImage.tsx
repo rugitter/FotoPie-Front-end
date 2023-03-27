@@ -50,6 +50,7 @@ const NewImage: React.FC = () => {
         width: "100%",
       }}
     >
+      {/* Text and Image section */}
       <Box
         className={styles.imageSection}
         sx={{
@@ -71,6 +72,7 @@ const NewImage: React.FC = () => {
         <img src="/create-image.jpg" alt="" className={styles.bgImage} />
       </Box>
 
+      {/* Input field and generate button section */}
       <Box
         sx={{
           display: "flex",
@@ -104,6 +106,7 @@ const NewImage: React.FC = () => {
         </Button>
       </Box>
 
+      {/* Generated photos section */}
       <Box
         sx={{
           width: "90%",
