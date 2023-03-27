@@ -34,6 +34,8 @@ import { uploadPhoto, uploadPost } from "../src/axiosRequest/api/posts";
 import { imageVariations } from "../src/axiosRequest/api/imageVariations";
 import LinearProgress from "@mui/material/LinearProgress";
 import Image from "mui-image";
+//import Image from "next/image";
+
 
 interface MouseEvent {
   target: EventTarget;
@@ -310,14 +312,17 @@ export default function imageVariation() {
               </Container>
             ) : (
               <>
-                {/* <img
+                <img
                   src={image1}
                   alt=""
-                  style={{ marginRight: "16px", width: "50%" }}
+                  style={{
+                    marginRight: "16px",
+                    width: "50%",
+                  }}
                 />
-                <img src={image2} alt="" style={{ width: "50%" }} /> */}
-                <Image src={image1} alt="" />
-                <Image src={image2} alt="" />
+                <img src={image2} alt="" style={{ width: "50%" }} />
+                {/* <Image src={image1} alt="" />
+                <Image src={image2} alt="" /> */}
               </>
             )}
           </Box>
