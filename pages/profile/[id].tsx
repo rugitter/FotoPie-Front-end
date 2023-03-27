@@ -21,6 +21,14 @@ export default function ProfilePage() {
   const { id } = router.query;
 
   useEffect(() => {
+    if (!router.isReady || !id || user) return;
+    setProfileUserId(id);
+    getUserInfo(profileUserId).then(({ data }) => {
+      setUser(data);
+    });
+  }, [profileUserId, router.isReady]);
+
+  useEffect(() => {
     if (!router.isReady) return;
     setProfileUserId(id);
     getUserInfo(profileUserId).then(({ data }) => {
