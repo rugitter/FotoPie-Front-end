@@ -1,25 +1,27 @@
 import { useEffect, useState } from "react";
-import Post from "./Post";
+import Box from "@mui/material/Box";
+import Post from "../PostList/Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../Loader/Loader";
-import Box from "@mui/material/Box";
-import axiosRequest from "../../utils/axiosRequest";
 import Masonry from "@mui/lab/Masonry";
 import NoMore from "../Loader/NoMore";
-import { getPhotoWall } from "../../axiosRequest/api/photowall";
+import { profileCollection } from "../../axiosRequest/api/userCollection";
 
-interface ImageData {
+interface CollectionPostsProps {
+  id: string;
+}
+
+interface ResponseImageData {
+  collect_user_email: string;
+  collected_user_email: string;
+  compressed_imageUrl: string;
   _id: string;
   filename: string;
-  compressFilePath: string;
 }
 
-export interface PostListProps {
-  handleOpen: (filename: string) => void;
-}
 
-const PostList = ({ handleOpen }: PostListProps) => {
-  const [posts, setPost] = useState<ImageData[]>([]);
+const PostList = (props: CollectionPostsProps) => {
+  const [collection, setCollection] = useState<ResponseImageData[]>([]);
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
 
@@ -27,11 +29,12 @@ const PostList = ({ handleOpen }: PostListProps) => {
 
   let limit = 10;
 
+  let id = props.id;
   const fetchImages = async () => {
     try {
-      const res = await getPhotoWall(page, limit);
+      const res = await profileCollection(id, page, limit);
       if (res.status === 200) {
-        setPost([...posts, ...res.data]);
+        setCollection([...collection, ...res.data]);
         setPage(page + 1);
         if ([...res.data].length === 0) {
           setLoaderHandler(false);
@@ -48,30 +51,21 @@ const PostList = ({ handleOpen }: PostListProps) => {
 
   return (
     <>
-      <p>{Error}</p>
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          overflowY: "scroll",
-          "&::-webkit-scrollbar": {
-            width: 0,
-          },
-        }}
-      >
+      
+      {/*<h2>{props.id}</h2>*/}
+      <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
         <InfiniteScroll
-          dataLength={posts.length}
+          dataLength={collection.length}
           next={fetchImages}
           hasMore={true}
           loader={loaderHandler ? <Loader /> : <NoMore />}
         >
           <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
-            {posts.map((post) => (
+            {collection.map((collection) => (
               <Post
-                url={post.compressFilePath}
-                filename={post.filename}
-                key={post._id}
-                handleOpen={() => handleOpen(post.filename)}
+                url={collection.compressed_imageUrl}
+                filename={collection.filename}
+                key={collection._id}
               />
             ))}
           </Masonry>

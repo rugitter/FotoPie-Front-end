@@ -183,7 +183,7 @@ export default function Navbar({
           <IconButton size="large" color="inherit">
             <LoginIcon />
           </IconButton>
-          <Link href="login" style={{ textDecoration: "none" }}>
+          <Link href="/login"  style={{ textDecoration: "none" }}>
             Log In
           </Link>
         </MenuItem>
@@ -313,7 +313,7 @@ export default function Navbar({
                   bgcolor: fix ? "#F4DADA" : "#FBF1F1",
                 }}
               >
-                <Link href="login" underline="none">
+                <Link href="/login" underline="none">
                   Log In
                 </Link>
               </Button>

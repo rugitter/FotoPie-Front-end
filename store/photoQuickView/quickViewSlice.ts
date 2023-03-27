@@ -28,7 +28,6 @@ export const quickViewSlice = createSlice({
   initialState,
   reducers: {
     setQuickViewData: (state, action) => {
-      // return action.payload;
       state.userName = action.payload.user_name;
       state.userAvatar = action.payload.avatar_url;
       state.postPhoto = action.payload.photo_url;
@@ -45,7 +44,7 @@ export const quickViewSlice = createSlice({
       state.collected = !state.collected;
     });
     builder.addCase(updateLike.fulfilled, (state, action) => {
-      state.userLikes = action.payload;
+      state.userLikes = action.payload.userLikes;
       state.liked = !state.liked;
     });
   },
