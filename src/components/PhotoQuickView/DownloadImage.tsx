@@ -40,6 +40,7 @@ const DownloadButton: NextPage<DownloadImageProps> = ({
         if (error?.response?.status === 403 || 404) {
           router.push("/subscription");
         }
+        console.error("unexpected error: " + error);
       }
     }
   };
