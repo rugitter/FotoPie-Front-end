@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import React, { useState } from "react";
+import React, { useState, useRef} from "react";
 import NavBar from "../src/components/NavBar";
 import Button from "@mui/material/Button";
 import { AttachMoney } from "@mui/icons-material";
@@ -32,6 +32,8 @@ import { faImages } from "@fortawesome/free-solid-svg-icons";
 import axios, { AxiosRequestConfig, Method } from "axios";
 import { uploadPhoto, uploadPost } from "../src/axiosRequest/api/posts";
 import { imageVariations } from "../src/axiosRequest/api/imageVariations";
+import LinearProgress from "@mui/material/LinearProgress";
+import Image from "mui-image";
 
 interface MouseEvent {
   target: EventTarget;
@@ -41,6 +43,12 @@ export default function imageVariation() {
   const [status, setStatus] = useState("");
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  //set necessary states for progress bar
+  const [progress, setProgress] = React.useState(0);
+  const [buffer, setBuffer] = React.useState(10);
+
+  
 
   const handleChangeStatus = (file: IFileWithMeta, status: StatusValue) => {
     testHandleChangeStatus(file, status);
@@ -55,6 +63,7 @@ export default function imageVariation() {
       formData.append("file", file.file);
 
       try {
+        setIsLoading(true);
         const response = await imageVariations(formData);
         console.log(response.data);
         console.log(response.data.urls);
@@ -65,8 +74,10 @@ export default function imageVariation() {
         setImage2(response.data.urls.url_2);
         return { meta: response };
       } catch (error) {
-        console.error(error);
-        return error;
+        console.error("Error fetching URLs", error);
+        //return error;
+      } finally {
+      setIsLoading(false);
       }
     }
   };
@@ -198,6 +209,33 @@ export default function imageVariation() {
       overflow: "hidden",
     },
   };
+
+  //setting up progress bar
+  const progressRef = React.useRef(() => {});
+  React.useEffect(() => {
+    progressRef.current = () => {
+      if (progress > 100) {
+        setProgress(0);
+        setBuffer(10);
+      } else {
+        const diff = Math.random() * 10;
+        const diff2 = Math.random() * 10;
+        setProgress(progress + diff);
+        setBuffer(progress + diff + diff2);
+      }
+    };
+  });
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      progressRef.current();
+    }, 1065);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
     
   return (
     <>
@@ -231,14 +269,11 @@ export default function imageVariation() {
             />
           </div>
         </Box>
-        {/* <div className="container">
-          <img src={image1} alt="" />
-          <img src={image2} alt="" />
-          
-        </div> */}
-
+      </Container>
+      <Container component="main" maxWidth="xs">
         <Box
           sx={{
+            marginTop: 10,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -247,19 +282,44 @@ export default function imageVariation() {
         >
           <Box
             sx={{
-              marginTop: 8,
+              width: "90%",
               display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
               justifyContent: "center",
+              marginBottom: "100px",
+              gap: "18px",
+              "& > img": {
+                flexGrow: 0,
+                flexShrink: 0,
+                flexBasis: {
+                  xs: "calc(100% - 8px)",
+                  sm: "calc(50% - 8px)",
+                  md: "calc(25% - 8px)",
+                },
+                maxWidth: "100%",
+                objectFit: "cover",
+              },
             }}
           >
-            <img
-              src={image1}
-              alt=""
-              style={{ marginRight: "16px", width: "50%" }}
-            />
-            <img src={image2} alt="" style={{ width: "50%" }} />
+            {isLoading ? (
+              <Container component="main" maxWidth="xs">
+                <LinearProgress
+                  variant="buffer"
+                  value={progress}
+                  valueBuffer={buffer}
+                />
+              </Container>
+            ) : (
+              <>
+                {/* <img
+                  src={image1}
+                  alt=""
+                  style={{ marginRight: "16px", width: "50%" }}
+                />
+                <img src={image2} alt="" style={{ width: "50%" }} /> */}
+                <Image src={image1} alt="" />
+                <Image src={image2} alt="" />
+              </>
+            )}
           </Box>
           <Box>
             <button onClick={handleDownload}>Download Images</button>
