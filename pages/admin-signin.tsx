@@ -1,7 +1,5 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "../src/utils/Link";
 import Grid from "@mui/material/Grid";
@@ -15,10 +13,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
 import FormTextField from "../src/components/LoginForm/FormTextField";
 import { useRouter } from "next/router";
-import axiosRequest from "../src/utils/axiosRequest";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
+import ErrorAlert from "../src/components/LoginForm/ErrorAlert";
+import LoginButton from "../src/components/LoginForm/LoginButton";
+import { adminLogin } from "../store/auth/authAciton";
 
 // Define a type with the shape of the form values
-interface IFormInput {
+export interface IFormInput {
   email: string;
   password: string;
 }
@@ -31,8 +33,11 @@ const formSchema: Schema<IFormInput> = object({
 
 // Define a component that renders the form
 export default function AdminSignIn() {
-  const [loginError, setLoginError] = useState(null);
   const router = useRouter();
+  const { loginStatus, error, isAuthenticated } = useSelector(
+    (state: RootState) => state.adminSlice
+  );
+  const dispatch = useDispatch<AppDispatch>();
 
   // Use the useForm hook to create a form controller
   const methods = useForm<IFormInput>({
@@ -40,50 +45,45 @@ export default function AdminSignIn() {
   });
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-    try {
-      const response = await axiosRequest(
-        "/api/admin-auth/login",
-        "POST",
-        data
-      );
-      console.log(response);
-      if (response.status === 200) {
-        window.localStorage.setItem("accessToken", response.data.access_token);
-
-        // redirect to admin manager page
-        router.push("/admin-manager");
-      }
-      // TODO: handle error and set error type
-    } catch (error: any) {
-      setLoginError(error.message);
-    }
+    dispatch(adminLogin(data));
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/admin-manager");
+    }
+  }, [isAuthenticated]);
 
   return (
     <Container component="main" maxWidth="xs">
-      {/*  TODO: add error message */}
-      <p>{loginError}</p>
+      {/* error handling*/}
+      {error && <ErrorAlert error={error}></ErrorAlert>}
+
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 3,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
+        {/* login icon */}
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
+
         <Typography component="h1" variant="h5">
           Admin Sign In
         </Typography>
 
+        {/* input Form */}
         <FormProvider {...methods}>
           <Box
             component="form"
             onSubmit={methods.handleSubmit(onSubmit)}
             sx={{ mt: 1 }}
           >
+            {/* Email */}
             <FormTextField
               name="email"
               label="Email Address"
@@ -91,6 +91,7 @@ export default function AdminSignIn() {
               autoComplete="email"
             />
 
+            {/* Password */}
             <FormTextField
               name="password"
               label="Password"
@@ -99,22 +100,27 @@ export default function AdminSignIn() {
               autoComplete="current-password"
             />
 
-            <FormControlLabel
+            {/* TODO: add remember checkbox */}
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
+            /> */}
+
+            {/* Button */}
+            <LoginButton loginStatus={loginStatus}></LoginButton>
+
             <Grid container>
+              {/* Forgot password? */}
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="reset-password/reset-request" variant="body2">
                   Forgot password?
+                </Link>
+              </Grid>
+
+              {/* Don't have an account? Sign Up */}
+              <Grid item>
+                <Link href="signup" variant="body2">
+                  {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
