@@ -13,6 +13,9 @@ import Image from "mui-image";
 
 import axiosRequest from "../../src/utils/axiosRequest";
 import Link from "../../src/utils/Link";
+import Comment from "../../src/components/Comment/Comment";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 // Define a component that renders the page
 const PhotoQuickView = () => {
@@ -25,6 +28,8 @@ const PhotoQuickView = () => {
 
   const [collected, setCollected] = useState(false);
   const [liked, setLiked] = useState(false);
+
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   // const [requestError, setRequestError] = useState();
 
   const router = useRouter();
@@ -234,6 +239,8 @@ const PhotoQuickView = () => {
             style={{ objectFit: "contain" }}
           />
         </Box>
+
+        <Comment />
       </Stack>
     </Stack>
   );

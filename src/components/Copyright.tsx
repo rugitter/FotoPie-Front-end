@@ -10,8 +10,8 @@ export default function Copyright(props: any) {
       {...props}
     >
       {"Copyright © "}
-      <MuiLink color="inherit" href="https://mui.com/">
-        FotoPie
+      <MuiLink color="inherit" href="/">
+        FotoPie Inc. All rights reserved.
       </MuiLink>{" "}
       {new Date().getFullYear()}
       {"."}

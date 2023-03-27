@@ -1,48 +1,60 @@
-import { Button, Container, Grid } from "@mui/material";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Post from "../../src/components/PostList/Post";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Loader from "../../src/components/Loader/Loader";
-import Masonry from "@mui/lab/Masonry";
-import NoMore from "../../src/components/Loader/NoMore";
 import { categoryPosts } from "../../src/axiosRequest/api/category";
 import NavBar from "../../src/components/NavBar";
-import Stack from "@mui/material/Stack";
-import Link from "next/link";
+import CategoryHeader from "../../src/components/CategoryInside/CategoryHeader";
+import PostList from "../../src/components/CategoryInside/CategoryInsidePosts";
+import CategoryButton from "../../src/components/CategoryInside/CategoryButton";
+import { getSynonymsAPI } from "../../src/axiosRequest/api/getSynonyms";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import { PhotoQuickViewStyles } from "../../src/components/PhotoQuickView/PhotoQuickView.style";
+import PhotoQuickView from "../../src/components/PhotoQuickView/PhotoQuickView";
 
-interface ResponseImageData {
+
+export interface ResponseImageData {
   _id: string;
   price: number;
-  tag: string;
+  tag: string | string[] | undefined;
   userEmail: string;
-  imageUrl: string;
+  compressed_imageUrl: string;
   description: string;
+  filename: string;
 }
 
+
+
+// Set all necessary states for rendering post lists and related category buttons
 export default function CategoryInsidePage() {
   const router = useRouter();
   const { tag } = router.query;
-  const tagString = tag as string;
-
+  const [tagString, setTagString] = useState<string | string[] | undefined>("");
   const [category, setCategory] = useState<ResponseImageData[]>([]);
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
-  const [Error, setError] = useState(null);
+  const [error, setError] = useState(null);
   const [links, setLinks] = useState([]);
   const [prevUrl, setPrevUrl] = useState("");
+  //define necessary states for quick-view modal
+  const [selectedFilename, setSelectedFilename] = useState<
+    string | undefined
+  >();
+  const [open, setOpen] = useState(false);
 
+  //If the router is ready save the tag value from query to tagString state
+  useEffect(() => {
+    if (router.isReady && tag) {
+      setTagString(tag);
+    }
+  }, [tag, router.isReady]);
+
+  //Set the maximum number of posts per page
   let limit = 10;
 
+  //Call the API to retrieve post data corresponding to input tag query
   const fetchImages = async () => {
     try {
-      
-      //console.log(tag, 'axiosrequestTag')
-      //console.log(page, "axiosrequestPage");
       const res = await categoryPosts(tag, page, limit);
-      
       if (res.status === 200) {
         setCategory([...category, ...res.data]);
         setPage(page + 1);
@@ -55,26 +67,20 @@ export default function CategoryInsidePage() {
     }
   };
 
-  const resetCategoryState = async (newTag: string) => {
+  //Reset and clear stored posts if user clicks on a new category tag
+  const resetCategoryStateHandler = async (newTag: string) => {
     setCategory([]);
     setPage(1);
     setLoaderHandler(true);
     router.push(`/category/${newTag}`);
-    
-    
   };
 
-  
-
-  const getSynonyms = async (word: string) => {
+  //Call the API to retrieve a list of synonyms for our initial category query
+  const getSynonyms = async (tagString: string | string[] | undefined) => {
     try {
-      const response = await fetch(
-        `https://words.bighugelabs.com/api/2/3f3f84727a0ebebcff3c969e871a286a/${word}/json`
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
+      //const key = process.env.Get_Synonyms_API_Key;
+      const response = await getSynonymsAPI(tagString);
+      const data = response.data;
       const synonyms = data?.noun?.syn || data?.verb?.syn || [];
       // check if the response contains synonyms for the noun or verb form of the word, otherwise return an empty array
       return synonyms;
@@ -83,10 +89,21 @@ export default function CategoryInsidePage() {
       return [];
     }
   };
+
+  //open modal popup window
+  const handleOpen = (filename: string) => {
+    setSelectedFilename(filename);
+    setOpen(true);
+  };
+  //close modal popup window
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  //This part handles the case when user clicks on 'back' button in browser
   useEffect(() => {
     // Save the previous URL when the component mounts
     setPrevUrl(window.location.href);
-
     const handlePopstate = () => {
       // Check if the user has navigated back
       if (window.location.href === prevUrl) {
@@ -112,72 +129,42 @@ export default function CategoryInsidePage() {
 
   useEffect(() => {
     if (!router.isReady) return;
-    getSynonyms(tagString).then((result) => {
-      //console.log(result);
-      setLinks(result);
+    getSynonyms(tagString).then((response) => {
+      setLinks(response);
     });
     fetchImages();
-    
-  }, [tag]);
+  }, [tagString, router.isReady]);
 
   return (
     <>
       <NavBar isFixed={false} color="#000000" />
-      <Typography
-        variant="h3"
-        sx={{
-          ml: 5,
-          mt: 5,
-          fontWeight: 500,
-        }}
+      <CategoryHeader tagString={tagString} />
+      <CategoryButton
+        links={links}
+        resetCategoryState={resetCategoryStateHandler}
+      />
+      <PostList
+        tagString={tagString as string | string[] | undefined}
+        category={category}
+        setCategory={setCategory}
+        page={page}
+        setPage={setPage}
+        loaderHandler={loaderHandler}
+        setLoaderHandler={setLoaderHandler}
+        error={error}
+        setError={setError}
+        handleOpen={handleOpen}
+      />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
-        Category: '{tag} image'
-      </Typography>
-      <Stack
-        direction={{ xs: "column", sm: "row" }}
-        spacing={{ xs: 1, sm: 4, md: 6 }}
-        sx={{ ml: 5, mt: 7 }}
-      >
-        {links.map((link) => (
-          //<Link key={link} href={`/category/${link}`} passHref>
-          <Button
-            key={link}
-            variant="outlined"
-            //href="#contained-buttons"
-            color="primary"
-            onClick={() => {
-              resetCategoryState(link);
-            }}
-          >
-            {link}
-          </Button>
-          //</Link>
-        ))}
-      </Stack>
-      {/*<h1>Category: '{tag} image'</h1>*/}
-      <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
-        <InfiniteScroll
-          dataLength={category.length}
-          next={fetchImages}
-          hasMore={true}
-          loader={loaderHandler ? <Loader /> : <NoMore />}
-          //scrollThreshold={0.9}
-        >
-          <Masonry
-            columns={{ sm: 2, md: 3 }}
-            spacing={2}
-            sx={{ m: "auto", mt: 15 }}
-          >
-            {category.map((category) => (
-              <Post
-                url={category.imageUrl}
-                filename={category.imageUrl}
-                key={category._id}
-              />
-            ))}
-          </Masonry>
-        </InfiniteScroll>
-      </Box>
+        <Box sx={PhotoQuickViewStyles}>
+          <PhotoQuickView filename={selectedFilename} router={router} />
+        </Box>
+      </Modal>
     </>
   );
 }

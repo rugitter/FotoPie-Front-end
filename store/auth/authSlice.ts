@@ -1,4 +1,4 @@
-import { getAccessToken } from "./../../src/utils/token";
+import { getAccessToken, getRefreshToken } from "./../../src/utils/token";
 import { createSlice } from "@reduxjs/toolkit";
 import { login, logout } from "./authAciton";
 import { AuthState } from "./types";
@@ -15,8 +15,17 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     checkToken: (state) => {
+      const refreshToken = getRefreshToken();
       const accessToken = getAccessToken();
-      state.isAuthenticated = !!accessToken;
+
+      // If refresh token is expired, but access token is not expired, user is still authenticated
+      if (accessToken && !refreshToken) {
+        state.isAuthenticated = true;
+        return;
+      }
+
+      // If refresh token is expired, and access token is expired, user is not authenticated
+      state.isAuthenticated = !!refreshToken;
     },
   },
   extraReducers: (builder) => {
@@ -45,8 +54,6 @@ const authSlice = createSlice({
       });
   },
 });
-export const {
-  checkToken,
-} = authSlice.actions;
+export const { checkToken } = authSlice.actions;
 
 export default authSlice.reducer;
