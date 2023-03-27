@@ -3,6 +3,7 @@ import axiosConfig from "./config";
 import {
   getAccessToken,
   getRefreshToken,
+  removeRefreshToken,
   setAccessToken,
 } from "../utils/token";
 import { refreshAccessToken } from "./api/auth";
@@ -56,6 +57,7 @@ axiosInstance.interceptors.response.use(
               return axiosInstance(originalRequest);
             } catch (error) {
               message = "Please login!";
+              removeRefreshToken();
             }
           }
           break;
