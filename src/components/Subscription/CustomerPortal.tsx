@@ -8,7 +8,7 @@ const clickToPortal = async () => {
     const response = await createPortalSession();
 
     const portalSession_url = response.data.portalSession_url;
-    console.log(portalSession_url);
+
     // Jump to customer portal page
     window.location.href = portalSession_url;
   } catch (error) {

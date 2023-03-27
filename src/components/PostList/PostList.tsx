@@ -49,7 +49,16 @@ const PostList = ({ handleOpen }: PostListProps) => {
   return (
     <>
       <p>{Error}</p>
-      <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          overflowY: "scroll",
+          "&::-webkit-scrollbar": {
+            width: 0,
+          },
+        }}
+      >
         <InfiniteScroll
           dataLength={posts.length}
           next={fetchImages}
