@@ -1,11 +1,7 @@
-import styles from "../../styles/nomore.module.css";
+import Divider from "@mui/material/Divider";
 
 const NoMore = () => {
-  return (
-    <div className={styles.container}>
-      <h1>No more images</h1>
-    </div>
-  );
+  return <Divider light variant="middle" />;
 };
 
 export default NoMore;
