@@ -17,9 +17,12 @@ export default function ProfilePage() {
   const [profileUserId, setProfileUserId] = useState<
     string | string[] | undefined
   >("");
+
   const router = useRouter();
   const { id } = router.query;
 
+
+ 
   useEffect(() => {
     if (!router.isReady) return;
     setProfileUserId(id);

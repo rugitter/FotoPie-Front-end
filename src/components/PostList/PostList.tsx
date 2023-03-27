@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
-
+import { useEffect, useState } from "react";
 import Post from "./Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../Loader/Loader";
@@ -7,15 +6,19 @@ import Box from "@mui/material/Box";
 import axiosRequest from "../../utils/axiosRequest";
 import Masonry from "@mui/lab/Masonry";
 import NoMore from "../Loader/NoMore";
+import { getPhotoWall } from "../../axiosRequest/api/photowall";
 
 interface ImageData {
-  //path: string;
   _id: string;
   filename: string;
   compressFilePath: string;
 }
 
-const PostList = () => {
+export interface PostListProps {
+  handleOpen: (filename: string) => void;
+}
+
+const PostList = ({ handleOpen }: PostListProps) => {
   const [posts, setPost] = useState<ImageData[]>([]);
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
@@ -26,10 +29,7 @@ const PostList = () => {
 
   const fetchImages = async () => {
     try {
-      const res = await axiosRequest(
-        `/api/posts?page=${page}&limit=${limit}`,
-        "GET"
-      );
+      const res = await getPhotoWall(page, limit);
       if (res.status === 200) {
         setPost([...posts, ...res.data]);
         setPage(page + 1);
@@ -49,7 +49,16 @@ const PostList = () => {
   return (
     <>
       <p>{Error}</p>
-      <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          overflowY: "scroll",
+          "&::-webkit-scrollbar": {
+            width: 0,
+          },
+        }}
+      >
         <InfiniteScroll
           dataLength={posts.length}
           next={fetchImages}
@@ -62,6 +71,7 @@ const PostList = () => {
                 url={post.compressFilePath}
                 filename={post.filename}
                 key={post._id}
+                handleOpen={() => handleOpen(post.filename)}
               />
             ))}
           </Masonry>

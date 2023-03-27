@@ -36,8 +36,11 @@ const DownloadButton: NextPage<DownloadImageProps> = ({
         link.download = `${filenameString}`;
         link.click();
         URL.revokeObjectURL(url);
-      } catch (error) {
-        router.push("/subscription");
+      } catch (error: any) {
+        if (error?.response?.status === 403 || 404) {
+          router.push("/subscription");
+        }
+        console.error("unexpected error: " + error);
       }
     }
   };

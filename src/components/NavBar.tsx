@@ -22,6 +22,7 @@ import { AppDispatch, RootState } from "../../store/store";
 import { getMe } from "../axiosRequest/api/editUser";
 import { logout } from "../../store/auth/authAciton";
 import { useCheckToken } from "../hooks/useCheckToken";
+import { useRouter } from "next/router";
 
 interface NavbarProps {
   isFixed: boolean;
@@ -39,13 +40,17 @@ export default function Navbar({
   const dispatch = useDispatch<AppDispatch>();
   const [avatarPath, setAvatarPath] = useState("");
   const [id, setId] = useState("");
-
+  const router = useRouter();
   useEffect(() => {
     if (isAuthenticated) {
-      getMe().then((res) => {
-        setAvatarPath(res.data["avatarPath"]);
-        setId(res.data.id);
-      });
+      getMe()
+        .then((res) => {
+          setAvatarPath(res.data["avatarPath"]);
+          setId(res.data.id);
+        })
+        .catch((err) => {
+          router.push("/login");
+        });
     }
   }, [isAuthenticated]);
 
