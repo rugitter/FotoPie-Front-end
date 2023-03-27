@@ -1,6 +1,11 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import axiosConfig from "./config";
-import { getAccessToken } from "../utils/token";
+import {
+  getAccessToken,
+  getRefreshToken,
+  setAccessToken,
+} from "../utils/token";
+import { refreshAccessToken } from "./api/auth";
 
 const axiosInstance = axios.create({
   timeout: axiosConfig.timeOut as number | undefined,
@@ -23,17 +28,12 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   function (response) {
     console.log("✅response:", response);
-    const { status } = response;
-
-    if (status === 200) {
-      return Promise.resolve(response);
-    } else if (status === 401) {
-      return Promise.reject(response);
-    } else {
-      return Promise.reject(response);
-    }
+    return Promise.resolve(response);
   },
-  function (error) {
+  async function (error) {
+    const refreshToken = getRefreshToken();
+    const originalRequest = error.config;
+
     let message = "";
     if (error && error.response) {
       console.log("❌Error!", error);
@@ -45,7 +45,19 @@ axiosInstance.interceptors.response.use(
           message = "Bad request!";
           break;
         case 401:
-          message = "Please login!";
+          if (!originalRequest._retry && refreshToken) {
+            originalRequest._retry = true;
+            try {
+              // refresh access token
+              const accessToken = await refreshAccessToken(refreshToken);
+              setAccessToken(accessToken);
+
+              // retry request
+              return axiosInstance(originalRequest);
+            } catch (error) {
+              message = "Please login!";
+            }
+          }
           break;
         case 403:
           message = "Forbidden!";

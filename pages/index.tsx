@@ -2,10 +2,30 @@ import Container from "@mui/material/Container";
 import NavBar from "../src/components/NavBar";
 import Header from "../src/components/Header";
 import Box from "@mui/material/Box";
-import { useState } from "react";
 import PostList from "../src/components/PostList/PostList";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import Modal from "@mui/material/Modal";
+import { PhotoQuickViewStyles } from "../src/components/PhotoQuickView/PhotoQuickView.style";
+import PhotoQuickView from "../src/components/PhotoQuickView/PhotoQuickView";
 
 export default function Home() {
+  const router = useRouter();
+  const [selectedFilename, setSelectedFilename] = useState<
+    string | undefined
+  >();
+
+  const [open, setOpen] = useState(false);
+  //open modal popup window
+  const handleOpen = (filename: string) => {
+    setSelectedFilename(filename);
+    setOpen(true);
+  };
+  //close modal popup window
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Container>
       <Box
@@ -17,28 +37,30 @@ export default function Home() {
             ),
             url(../../background.jpg)`,
 
-          backgroundSize:'cover',
-          // position: 'absolute',
-          // top: 0,
-          // left: 0,
-          // right: 0,
+          backgroundSize: "cover",
           margin: 0,
           padding: 0,
-          // overflow: 'hidden'
-
         }}
       >
-
-        <div 
-        style={{ maxWidth: '1200px', margin: '0 auto' }}
-        > 
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <NavBar isFixed={true} />
           <Header />
         </div>
-
       </Box>
 
-      <PostList />
+      <PostList handleOpen={handleOpen} />
+
+      {/* Modal popup window -- Photo Quick View page*/}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={PhotoQuickViewStyles}>
+          <PhotoQuickView filename={selectedFilename} router={router} />
+        </Box>
+      </Modal>
     </Container>
   );
 }

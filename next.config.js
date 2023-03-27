@@ -5,7 +5,12 @@ module.exports = {
     return [
       {
         source: "/api/:path*",
-        destination: `${process.env.BACKEND_API}${process.env.BACKEND_PORT}/api/:path*`, // http://localhost:9090/ => api/
+        destination: `${process.env.BACKEND_API}${process.env.BACKEND_PORT}/api/:path*`, // http://localhost:9090/ => /api/
+      },
+
+      {
+        source: "/:tagString",
+        destination: `${process.env.Get_Synonyms_API_Prefix}/:tagString/json`,
       },
     ];
   },

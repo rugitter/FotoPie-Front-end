@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
-
+import { useEffect, useState } from "react";
 import Post from "./Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../Loader/Loader";
@@ -10,13 +9,16 @@ import NoMore from "../Loader/NoMore";
 import { getPhotoWall } from "../../axiosRequest/api/photowall";
 
 interface ImageData {
-  //path: string;
   _id: string;
   filename: string;
   compressFilePath: string;
 }
 
-const PostList = () => {
+export interface PostListProps {
+  handleOpen: (filename: string) => void;
+}
+
+const PostList = ({ handleOpen }: PostListProps) => {
   const [posts, setPost] = useState<ImageData[]>([]);
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
@@ -60,6 +62,7 @@ const PostList = () => {
                 url={post.compressFilePath}
                 filename={post.filename}
                 key={post._id}
+                handleOpen={() => handleOpen(post.filename)}
               />
             ))}
           </Masonry>
