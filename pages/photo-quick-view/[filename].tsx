@@ -16,6 +16,7 @@ import Link from "../../src/utils/Link";
 import Comment from "../../src/components/Comment/Comment";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import DeletePostButton from "../../src/components/PostDelete/DeletePost";
 
 // Define a component that renders the page
 const PhotoQuickView = () => {
@@ -239,7 +240,6 @@ const PhotoQuickView = () => {
             style={{ objectFit: "contain" }}
           />
         </Box>
-
         <Comment />
       </Stack>
     </Stack>

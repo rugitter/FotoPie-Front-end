@@ -17,19 +17,16 @@ export default function ProfilePage() {
   const [profileUserId, setProfileUserId] = useState<
     string | string[] | undefined
   >("");
-
   const router = useRouter();
   const { id } = router.query;
 
-
- 
   useEffect(() => {
-    if (!router.isReady) return;
+    if (!router.isReady || !id || user) return;
     setProfileUserId(id);
     getUserInfo(profileUserId).then(({ data }) => {
       setUser(data);
     });
-  }, [profileUserId, user, router.isReady]);
+  }, [profileUserId, router.isReady]);
 
   return (
     <>

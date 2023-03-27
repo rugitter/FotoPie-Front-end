@@ -12,22 +12,9 @@ const ProfileGalleryAndCollection: FC<ProfileGalleryAndCollectionProps> = ({
   profileUserId,
   isGallery,
 }: ProfileGalleryAndCollectionProps) => {
-  const [selectedFilename, setSelectedFilename] = useState<
-    string | undefined
-  >();
-  const [open, setOpen] = useState(false);
-  //open modal popup window
-  const handleOpen = (filename: string) => {
-    setSelectedFilename(filename);
-    setOpen(true);
-  };
-  //close modal popup window
-  const handleClose = () => {
-    setOpen(false);
-  };
   return (
     <Grid sx={{ m: 5 }}>
-      {isGallery ? <Gallery handleOpen={handleOpen} profileUserId={profileUserId} /> : <Collection profileUserId={profileUserId} />}
+      {isGallery ? <Gallery profileUserId={profileUserId} /> : <Collection profileUserId={profileUserId} />}
     </Grid>
   );
 };
