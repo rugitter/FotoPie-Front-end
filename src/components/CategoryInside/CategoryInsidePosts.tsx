@@ -19,6 +19,7 @@ interface CategoryInsidePostsProps {
   setLoaderHandler: Dispatch<SetStateAction<boolean>>;
   Error: null;
   setError: Dispatch<SetStateAction<null>>;
+  handleOpen: (filename: string) => void;
 }
 
 const PostList = ({
@@ -31,6 +32,7 @@ const PostList = ({
   setLoaderHandler,
   Error,
   setError,
+  handleOpen
 }: CategoryInsidePostsProps) => {
 
   let limit = 10;
@@ -57,7 +59,16 @@ const PostList = ({
 
   return (
     <>
-      <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          overflowY: "scroll",
+          "&::-webkit-scrollbar": {
+            width: 0,
+          },
+        }}
+      >
         <InfiniteScroll
           dataLength={category.length}
           next={fetchImages}
@@ -74,6 +85,7 @@ const PostList = ({
                 url={category.compressed_imageUrl}
                 filename={category.filename}
                 key={category._id}
+                handleOpen={() => handleOpen(category.filename)}
               />
             ))}
           </Masonry>
