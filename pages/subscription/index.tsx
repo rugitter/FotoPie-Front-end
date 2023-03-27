@@ -1,18 +1,14 @@
 import SubscriptionButton from "../../src/components/Subscription/SubscriptionButton";
 import Copyright from "../../src/components/Copyright";
-import CustomerPortal from "../../src/components/Subscription/CustomerPortal";
+import CustomerPortal from "../../src/components/Subscription/CustomerPortalButton";
 import Navbar from "../../src/components/NavBar";
+import SubscriptionComponent from "../../src/components/Subscription/SubscriptionComponent";
 
 export default function SubscriptionPage() {
   return (
     <>
       <Navbar isFixed={true} />
-      <h1>Click Here to Subscribe</h1>
-      <SubscriptionButton />
-      <br />
-      <br />
-      <br />
-      <CustomerPortal />
+      <SubscriptionComponent />
       <Copyright />
     </>
   );
