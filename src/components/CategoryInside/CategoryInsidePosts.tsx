@@ -39,6 +39,7 @@ const PostList = ({
   let limit = 10;
 
   const fetchImages = async () => {
+    
     try {
       const res = await categoryPosts(tagString, page, limit);
 
@@ -55,6 +56,9 @@ const PostList = ({
   };
 
   useEffect(() => {
+    if (!tagString) {
+      return
+    };
     fetchImages();
   }, [tagString]);
 
