@@ -6,6 +6,10 @@ import CategoryHeader from "../../src/components/CategoryInside/CategoryHeader";
 import PostList from "../../src/components/CategoryInside/CategoryInsidePosts";
 import CategoryButton from "../../src/components/CategoryInside/CategoryButton";
 import { getSynonymsAPI } from "../../src/axiosRequest/api/getSynonyms";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import { PhotoQuickViewStyles } from "../../src/components/PhotoQuickView/PhotoQuickView.style";
+import PhotoQuickView from "../../src/components/PhotoQuickView/PhotoQuickView";
 
 
 export interface ResponseImageData {
@@ -28,20 +32,25 @@ export default function CategoryInsidePage() {
   const [category, setCategory] = useState<ResponseImageData[]>([]);
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
-  const [Error, setError] = useState(null);
+  const [error, setError] = useState(null);
   const [links, setLinks] = useState([]);
   const [prevUrl, setPrevUrl] = useState("");
+  //define necessary states for quick-view modal
+  const [selectedFilename, setSelectedFilename] = useState<
+    string | undefined
+  >();
+  const [open, setOpen] = useState(false);
 
   //If the router is ready save the tag value from query to tagString state
   useEffect(() => {
     if (router.isReady && tag) {
       setTagString(tag);
-      }
-    }, [tag, router.isReady]);
-  
+    }
+  }, [tag, router.isReady]);
+
   //Set the maximum number of posts per page
   let limit = 10;
-  
+
   //Call the API to retrieve post data corresponding to input tag query
   const fetchImages = async () => {
     try {
@@ -63,15 +72,14 @@ export default function CategoryInsidePage() {
     setCategory([]);
     setPage(1);
     setLoaderHandler(true);
-    router.push(`/category/${newTag}`);    
+    router.push(`/category/${newTag}`);
   };
 
   //Call the API to retrieve a list of synonyms for our initial category query
   const getSynonyms = async (tagString: string | string[] | undefined) => {
     try {
-      
       //const key = process.env.Get_Synonyms_API_Key;
-      const response= await getSynonymsAPI(tagString);
+      const response = await getSynonymsAPI(tagString);
       const data = response.data;
       const synonyms = data?.noun?.syn || data?.verb?.syn || [];
       // check if the response contains synonyms for the noun or verb form of the word, otherwise return an empty array
@@ -80,6 +88,16 @@ export default function CategoryInsidePage() {
       console.error("Error fetching synonyms:", error);
       return [];
     }
+  };
+
+  //open modal popup window
+  const handleOpen = (filename: string) => {
+    setSelectedFilename(filename);
+    setOpen(true);
+  };
+  //close modal popup window
+  const handleClose = () => {
+    setOpen(false);
   };
 
   //This part handles the case when user clicks on 'back' button in browser
@@ -121,7 +139,10 @@ export default function CategoryInsidePage() {
     <>
       <NavBar isFixed={false} color="#000000" />
       <CategoryHeader tagString={tagString} />
-      <CategoryButton links={links} resetCategoryState={ resetCategoryStateHandler} />
+      <CategoryButton
+        links={links}
+        resetCategoryState={resetCategoryStateHandler}
+      />
       <PostList
         tagString={tagString as string | string[] | undefined}
         category={category}
@@ -130,9 +151,20 @@ export default function CategoryInsidePage() {
         setPage={setPage}
         loaderHandler={loaderHandler}
         setLoaderHandler={setLoaderHandler}
-        Error={Error}
+        error={error}
         setError={setError}
+        handleOpen={handleOpen}
       />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={PhotoQuickViewStyles}>
+          <PhotoQuickView filename={selectedFilename} router={router} />
+        </Box>
+      </Modal>
     </>
   );
 }

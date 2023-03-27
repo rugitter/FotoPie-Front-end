@@ -7,6 +7,7 @@ import Masonry from "@mui/lab/Masonry";
 import Box from "@mui/material/Box";
 import { categoryPosts } from "../../axiosRequest/api/category";
 import { ResponseImageData } from "../../../pages/category/[tag]";
+import ErrorAlert from "../LoginForm/ErrorAlert";
 
 
 interface CategoryInsidePostsProps {
@@ -17,8 +18,9 @@ interface CategoryInsidePostsProps {
   setPage: Dispatch<SetStateAction<number>>;
   loaderHandler: boolean;
   setLoaderHandler: Dispatch<SetStateAction<boolean>>;
-  Error: null;
+  error: null;
   setError: Dispatch<SetStateAction<null>>;
+  handleOpen: (filename: string) => void;
 }
 
 const PostList = ({
@@ -29,13 +31,15 @@ const PostList = ({
   setPage,
   loaderHandler,
   setLoaderHandler,
-  Error,
+  error,
   setError,
+  handleOpen
 }: CategoryInsidePostsProps) => {
 
   let limit = 10;
 
   const fetchImages = async () => {
+    
     try {
       const res = await categoryPosts(tagString, page, limit);
 
@@ -52,12 +56,25 @@ const PostList = ({
   };
 
   useEffect(() => {
+    if (!tagString) {
+      return
+    };
     fetchImages();
   }, [tagString]);
 
   return (
     <>
-      <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
+      {error && <ErrorAlert error={error}></ErrorAlert>}
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          overflowY: "scroll",
+          "&::-webkit-scrollbar": {
+            width: 0,
+          },
+        }}
+      >
         <InfiniteScroll
           dataLength={category.length}
           next={fetchImages}
@@ -74,6 +91,7 @@ const PostList = ({
                 url={category.compressed_imageUrl}
                 filename={category.filename}
                 key={category._id}
+                handleOpen={() => handleOpen(category.filename)}
               />
             ))}
           </Masonry>
