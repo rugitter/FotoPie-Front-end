@@ -6,9 +6,11 @@ import Loader from "../Loader/Loader";
 import Masonry from "@mui/lab/Masonry";
 import NoMore from "../Loader/NoMore";
 import { profileCollection } from "../../axiosRequest/api/userCollection";
+import ErrorAlert from "../LoginForm/ErrorAlert";
 
 interface CollectionPostsProps {
   id: string;
+  handleOpen: (filename: string) => void;
 }
 
 interface ResponseImageData {
@@ -19,17 +21,21 @@ interface ResponseImageData {
   filename: string;
 }
 
+// export interface PostListProps {
+//   handleOpen: (filename: string) => void;
+// }
 
-const PostList = (props: CollectionPostsProps) => {
+
+const PostList = ({id, handleOpen}: CollectionPostsProps) => {
   const [collection, setCollection] = useState<ResponseImageData[]>([]);
   const [page, setPage] = useState(1);
   const [loaderHandler, setLoaderHandler] = useState(true);
 
-  const [Error, setError] = useState(null);
+  const [error, setError] = useState(null);
 
   let limit = 10;
 
-  let id = props.id;
+  
   const fetchImages = async () => {
     try {
       const res = await profileCollection(id, page, limit);
@@ -51,9 +57,18 @@ const PostList = (props: CollectionPostsProps) => {
 
   return (
     <>
-      
       {/*<h2>{props.id}</h2>*/}
-      <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
+      {error && <ErrorAlert error={error}></ErrorAlert>}
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          overflowY: "scroll",
+          "&::-webkit-scrollbar": {
+            width: 0,
+          },
+        }}
+      >
         <InfiniteScroll
           dataLength={collection.length}
           next={fetchImages}
@@ -66,6 +81,7 @@ const PostList = (props: CollectionPostsProps) => {
                 url={collection.compressed_imageUrl}
                 filename={collection.filename}
                 key={collection._id}
+                handleOpen={() => handleOpen(collection.filename)}
               />
             ))}
           </Masonry>
