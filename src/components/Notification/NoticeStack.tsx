@@ -1,5 +1,4 @@
-import { useCallback } from "react";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchNotifications } from "../../../store/notification/notifyAction";
 import { AppDispatch, RootState } from "../../../store/store";
