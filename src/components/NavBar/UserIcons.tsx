@@ -35,6 +35,21 @@ export default function UserIcons ({
         alignItems: "center",
       }}
     >
+      {/* FotoPie+ */}
+      <Button
+        variant="contained"
+        sx={{
+          bgcolor: fix ? "#F4DADA" : "#FBF1F1",
+          "&:hover": {
+            backgroundColor: "#F4DADA",        
+          },
+          textTransform: "none",
+        }}
+      >
+        <Link href="/subscription" underline="none">
+          FotoPie+
+        </Link>
+      </Button>
       {/* notifications */}
       <IconButton
         size="large"
@@ -63,6 +78,7 @@ export default function UserIcons ({
           height: 40,
           "&:hover": {
             opacity: 0.8,
+            cursor: 'pointer'
           },
         }}
       />

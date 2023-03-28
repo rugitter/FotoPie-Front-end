@@ -11,6 +11,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Avatar from "@mui/material/Avatar";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import LoyaltyIcon from '@mui/icons-material/Loyalty';
 
 interface hamburgerMenuProps {
   mobileMoreAnchorEl: null | HTMLElement;
@@ -28,7 +29,6 @@ export default function hamburgerMenu({
   mobileMoreAnchorEl,
   handleMobileMenuClose,
   isAuthenticated,
-  // setNewNotificationCount,
   notificationCount,
   avatarPath,
   handleMobileLogout,
@@ -97,6 +97,16 @@ export default function hamburgerMenu({
               <UploadIcon />
             </IconButton>
             <p>Upload</p>
+          </MenuItem>
+          <MenuItem>
+            <IconButton 
+              href="/subscription"
+              size="large" 
+              color="inherit"
+            >
+              <LoyaltyIcon />
+            </IconButton>
+            <p>FotoPie+</p>
           </MenuItem>
           <MenuItem onClick={handleMobileLogout}>
             <IconButton size="large" color="inherit">

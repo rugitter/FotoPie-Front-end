@@ -248,7 +248,6 @@ export default function Navbar({
             mobileMoreAnchorEl={mobileMoreAnchorEl}
             handleMobileMenuClose={handleMobileMenuClose}
             isAuthenticated={isAuthenticated}
-            // setNewNotificationCount={setNewNotificationCount}
             notificationCount={notificationCount}
             avatarPath={avatarPath}
             handleMobileLogout={handleMobileLogout}
