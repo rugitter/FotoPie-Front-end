@@ -1,5 +1,9 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import PersonIcon from '@mui/icons-material/Person';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 interface avatarMenuProps {
   isMenuOpen: boolean;
@@ -28,15 +32,57 @@ export default function avatarMenu({
         horizontal: "right",
       }}
       id={menuId}
-      keepMounted
+      PaperProps={{
+        elevation: 0,
+        sx: {
+          overflow: 'visible',
+          filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+          mt: 1.5,
+          '& .MuiAvatar-root': {
+            width: 32,
+            height: 32,
+            ml: -0.5,
+            mr: 1,
+          },
+          '&:before': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            top: 0,
+            right: 14,
+            width: 10,
+            height: 10,
+            bgcolor: 'background.paper',
+            transform: 'translateY(-50%) rotate(45deg)',
+            zIndex: 0,
+          },
+        },
+      }}
       transformOrigin={{
         vertical: "top",
         horizontal: "right",
       }}
     >
-      <MenuItem component="a" href={`/profile/${id}`} onClick={handleMenuClose}>My Profile</MenuItem>
-      <MenuItem component="a" href="/edituserprofile" onClick={handleMenuClose}>Edit Profile</MenuItem>
-      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      <MenuItem component="a" href={`/profile/${id}`} onClick={handleMenuClose}>
+        <ListItemIcon>
+          <PersonIcon />
+        </ListItemIcon>
+        My Profile
+      </MenuItem>
+
+      <MenuItem component="a" href="/edituserprofile" onClick={handleMenuClose}>
+        <ListItemIcon>
+          <ManageAccountsIcon />
+        </ListItemIcon>
+        Edit Profile
+      </MenuItem>
+
+      <MenuItem onClick={handleLogout}>
+        <ListItemIcon>
+          <LogoutOutlinedIcon />
+        </ListItemIcon>
+        Logout
+      </MenuItem>
     </Menu>
   );
 }

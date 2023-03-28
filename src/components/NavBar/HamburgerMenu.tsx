@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Link from "../../utils/Link";
@@ -96,10 +95,9 @@ export default function hamburgerMenu({
               <UploadIcon />
             </IconButton>
             <p>Upload</p>
-          </MenuItem>
-          <MenuItem>
+          </MenuItem >
+          <MenuItem component="a" href="/subscription">
             <IconButton 
-              href="/subscription"
               size="large" 
               color="inherit"
             >

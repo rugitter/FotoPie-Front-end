@@ -40,9 +40,10 @@ export default function Home() {
           backgroundSize: "cover",
           margin: 0,
           padding: 0,
+          backgroundPosition: "center", 
         }}
       >
-        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
           <NavBar isFixed={true} />
           <Header />
         </div>
@@ -56,7 +57,7 @@ export default function Home() {
           marginRight: "auto",
         }}
       >
-        <Box sx={{ marginLeft: "30px", marginRight: "50px" }}>
+        <Box sx={{ marginLeft: "30px", marginRight: "30px" }}>
           <PostList handleOpen={handleOpen} />
         </Box>
       </Box>
