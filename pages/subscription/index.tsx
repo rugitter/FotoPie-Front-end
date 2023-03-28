@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Copyright from "../../src/components/Copyright";
-import Navbar from "../../src/components/NavBar";
+import Navbar from "../../src/components/NavBar/NavBar";
 import SubscriptionComponent from "../../src/components/Subscription/SubscriptionComponent";
 import CustomerPortalComponent from "../../src/components/Subscription/CustomerPortalComponent";
 import { getSubscriptionStatus } from "../../src/axiosRequest/api/subscription";

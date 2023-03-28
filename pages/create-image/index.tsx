@@ -1,5 +1,5 @@
 import NewImage from "../../src/components/CreateImage/NewImage";
-import Navbar from "../../src/components/NavBar";
+import Navbar from "../../src/components/NavBar/NavBar";
 
 export default function CreateImage() {
   return (

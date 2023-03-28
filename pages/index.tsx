@@ -1,5 +1,5 @@
 import Container from "@mui/material/Container";
-import NavBar from "../src/components/NavBar";
+import NavBar from "../src/components/NavBar/NavBar";
 import Header from "../src/components/Header";
 import Box from "@mui/material/Box";
 import PostList from "../src/components/PostList/PostList";
@@ -31,11 +31,11 @@ export default function Home() {
       <Box
         sx={{
           backgroundImage: `
-            linear-gradient(
-              rgba(0, 0, 0, 0.1),
-              rgba(0, 0, 0, 0.1)
-            ),
-            url(../../background.jpg)`,
+              linear-gradient(
+                rgba(0, 0, 0, 0.1),
+                rgba(0, 0, 0, 0.1)
+              ),
+              url(../../background.jpg)`,
 
           backgroundSize: "cover",
           margin: 0,
