@@ -1,11 +1,11 @@
-import styles from "./";
+import styles from "./Subscription.module.css";
 import SubscriptionButton from "./SubscriptionButton";
 import Box from "@mui/material/Box";
-import Image from "mui-image";
 
 export default function SubscriptionComponent() {
   return (
     <Box
+      className={styles.imageSection}
       sx={{
         display: "flex",
         flexDirection: "row",
@@ -18,16 +18,30 @@ export default function SubscriptionComponent() {
         marginLeft: "auto",
       }}
     >
-      <Box sx={{ marginRight: "30px" }}>
+      <Box
+        sx={{
+          p: "40px",
+        }}
+      >
         <h1>
           Upgrade to <span className={styles.gradientText}>FotoPie+</span> and
           start creating with exclusive, royalty-free images.
         </h1>
-        <ul>
-          <li>Unlimited royalty-free downloads</li>
-          <li>Exclusive AI image creating</li>
-          <li>Enhanced photo viewing experience</li>
-        </ul>
+
+        <Box sx={{ lineHeight: 2.5 }}>
+          <ul>
+            <li>
+              <strong>Unlimited royalty-free downloads</strong>
+            </li>
+            <li>
+              <strong>Exclusive AI image creating</strong>
+            </li>
+            <li>
+              <strong>Using AI to generate similar photos of yours</strong>
+            </li>
+          </ul>
+        </Box>
+        <br />
         <SubscriptionButton />
       </Box>
 

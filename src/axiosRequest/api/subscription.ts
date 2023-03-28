@@ -14,3 +14,10 @@ export const createPortalSession = () => {
     method: "post",
   });
 };
+
+export const getSubscriptionStatus = () => {
+  return axiosInstance({
+    url: "/api/subscription/get-subscription-status",
+    method: "get",
+  });
+};
