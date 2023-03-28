@@ -35,3 +35,4 @@ export const removeRefreshToken = () => {
 export const getAccessTokenExpiration = () => {
   return cookies.get("accessToken").expires * 1000;
 };
+
