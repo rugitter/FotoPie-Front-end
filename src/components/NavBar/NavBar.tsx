@@ -55,11 +55,14 @@ export default function Navbar({
         .catch((err) => {
           router.push("/login");
         });
-
-      // Get new notification count
-      dispatch(getNotificationCountAction());
     }
-  }, [isAuthenticated, dispatch, isNotificationRead]);
+  }, [isAuthenticated, dispatch]);
+
+  useEffect(() => {
+    // Get new notification count
+    if (!isNotificationRead) return;
+    dispatch(getNotificationCountAction());
+  }, [dispatch, isNotificationRead]);
 
   //Mark all new notifications as read when click notification icon
   const handleNotificationClick = () => {
