@@ -28,6 +28,14 @@ export default function ProfilePage() {
     });
   }, [profileUserId, router.isReady]);
 
+  useEffect(() => {
+    if (!router.isReady) return;
+    setProfileUserId(id);
+    getUserInfo(profileUserId).then(({ data }) => {
+      setUser(data);
+    });
+  }, [profileUserId, router.isReady]);
+
   return (
     <>
       <NavBar isFixed={false} color="#000000" bgColor="#f8f8ff" />
