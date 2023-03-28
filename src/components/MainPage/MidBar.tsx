@@ -1,26 +1,66 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import Link from "@mui/material/Link";
+import styles from "./MainPage.module.css";
+import { Box } from "@mui/system";
 
 export default function MidBar() {
   return (
-    <ButtonGroup variant="contained" aria-label="outlined primary button group">
-      <Button>
-        <Link href="#" underline="none">
+    <Box>
+      <Button
+        variant="outlined"
+        sx={{
+          fontSize: "16px",
+          borderRadius: 10,
+          p: 1.7,
+          pl: 6,
+          pr: 6,
+          ":hover": { bgcolor: "#8777D9", border: "none" },
+          textTransform: "none",
+          backgroundColor: "#8777D9",
+          border: "none",
+        }}
+        size="large"
+      >
+        <Link href="/" underline="none">
           Home
         </Link>
       </Button>
-      <Button>
-        <Link href="#" underline="none">
+      <Button
+        variant="outlined"
+        sx={{
+          fontSize: "16px",
+          borderRadius: 10,
+          p: 1.7,
+          pl: 5,
+          pr: 5,
+          ":hover": { bgcolor: "#EAE6FF", border: "none" },
+          textTransform: "none",
+          border: "none",
+        }}
+        size="large"
+      >
+        <Link href="/category/category-main-page" underline="none">
           Explore
         </Link>
       </Button>
-      <Button>
-        <Link href="#" underline="none">
-          AI Image
+      <Button
+        variant="outlined"
+        sx={{
+          fontSize: "16px",
+          borderRadius: 10,
+          p: 1.7,
+          pl: 5,
+          pr: 5,
+          ":hover": { bgcolor: "#EAE6FF", border: "none" },
+          textTransform: "none",
+          border: "none",
+        }}
+        size="large"
+      >
+        <Link href="/subscription" underline="none">
+          <span className={styles.gradientText}>FotoPie+</span>
         </Link>
       </Button>
-    </ButtonGroup>
+    </Box>
   );
 }
