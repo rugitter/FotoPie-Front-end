@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { categoryPosts } from "../../src/axiosRequest/api/category";
-import NavBar from "../../src/components/NavBar";
+import NavBar from "../../src/components/NavBar/NavBar";
 import CategoryHeader from "../../src/components/CategoryInside/CategoryHeader";
 import PostList from "../../src/components/CategoryInside/CategoryInsidePosts";
 import CategoryButton from "../../src/components/CategoryInside/CategoryButton";

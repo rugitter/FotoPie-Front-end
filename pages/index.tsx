@@ -1,5 +1,5 @@
 import Container from "@mui/material/Container";
-import NavBar from "../src/components/NavBar";
+import NavBar from "../src/components/NavBar/NavBar";
 import Header from "../src/components/Header";
 import Box from "@mui/material/Box";
 import PostList from "../src/components/PostList/PostList";
@@ -27,15 +27,15 @@ export default function Home() {
   };
 
   return (
-    <Container>
+    <Box>
       <Box
         sx={{
           backgroundImage: `
-            linear-gradient(
-              rgba(0, 0, 0, 0.1),
-              rgba(0, 0, 0, 0.1)
-            ),
-            url(../../background.jpg)`,
+              linear-gradient(
+                rgba(0, 0, 0, 0.1),
+                rgba(0, 0, 0, 0.1)
+              ),
+              url(../../background.jpg)`,
 
           backgroundSize: "cover",
           margin: 0,
@@ -48,8 +48,18 @@ export default function Home() {
         </div>
       </Box>
 
-      <PostList handleOpen={handleOpen} />
-
+      <Box
+        sx={{
+          maxWidth: "1440px",
+          display: "block",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <Box sx={{ marginLeft: "30px", marginRight: "50px" }}>
+          <PostList handleOpen={handleOpen} />
+        </Box>
+      </Box>
       {/* Modal popup window -- Photo Quick View page*/}
       <Modal
         open={open}
@@ -61,6 +71,6 @@ export default function Home() {
           <PhotoQuickView filename={selectedFilename} router={router} />
         </Box>
       </Modal>
-    </Container>
+    </Box>
   );
 }
