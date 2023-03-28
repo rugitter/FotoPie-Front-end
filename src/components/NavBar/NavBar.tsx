@@ -253,6 +253,7 @@ export default function Navbar({
             avatarPath={avatarPath}
             handleMobileLogout={handleMobileLogout}
             handleNotificationClick={handleNotificationClick}
+            id={id}
           />
         }
 
@@ -262,6 +263,7 @@ export default function Navbar({
             anchorEl={anchorEl}
             handleMenuClose={handleMenuClose}
             handleLogout={handleLogout}
+            id={id}
           />
         }
       </>

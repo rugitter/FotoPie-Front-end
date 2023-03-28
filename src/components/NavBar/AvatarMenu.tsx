@@ -6,6 +6,7 @@ interface avatarMenuProps {
   anchorEl: null | HTMLElement;
   handleMenuClose: () => void;
   handleLogout: () => void;
+  id: string;
 }
 
 export default function avatarMenu({
@@ -13,6 +14,7 @@ export default function avatarMenu({
   anchorEl,
   handleMenuClose,
   handleLogout,
+  id,
 }: avatarMenuProps) {
   const menuId = "primary-search-account-menu";
 
@@ -32,9 +34,8 @@ export default function avatarMenu({
         horizontal: "right",
       }}
     >
-      {/* router.push(`profile/${id}`) */}
-      <MenuItem onClick={handleMenuClose}>My Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Edit Profile</MenuItem>
+      <MenuItem component="a" href={`/profile/${id}`} onClick={handleMenuClose}>My Profile</MenuItem>
+      <MenuItem component="a" href="/edituserprofile" onClick={handleMenuClose}>Edit Profile</MenuItem>
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
