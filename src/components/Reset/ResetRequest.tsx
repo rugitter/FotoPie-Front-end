@@ -8,13 +8,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Router from "next/router";
 import { createResetRequest } from "../../axiosRequest/api/reset";
 import Link from "../../utils/Link";
-import ErrorAlert from "../LoginForm/ErrorAlert";
 
 interface FormData {
   email: string;
@@ -103,7 +102,7 @@ function ResetRequest() {
 
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <p>Please click on the link in the verification email</p>
+              <p>Please click the link in the email to verify your identity</p>
             </Grid>
           </Grid>
 
