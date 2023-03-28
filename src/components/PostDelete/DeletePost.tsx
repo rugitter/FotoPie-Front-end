@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from "@mui/material";
 import { useRouter } from "next/router";
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useSelector } from "react-redux";
@@ -32,6 +32,7 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
     const [isDeleting, setIsDeleting] = useState(false);
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
     const [isCurrentUserId, setIsCurrentUserId] = useState<boolean>(false);
+    const [isDeleteSuccessful, setIsDeleteSuccessful] = useState(false);
     // const [currentUserId, setCurrentUserId] = useState<string | null>(null);
     const router = useRouter();
 
@@ -71,20 +72,21 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
         setIsDeleting(true);
         try {
             const response = await deletePost(filenameString);
-
-
+            setIsDeleteSuccessful(true);
+            setTimeout(() => {
+                setIsDeleteSuccessful(false);
+                setIsConfirmationOpen(false);
+                router.push(`/profile/${userID}`);
+            }, 2000);
         } catch (error) {
             setIsDeleting(false);
-        } finally {
-            setIsConfirmationOpen(false);
-            router.push(`/profile/${userID}`);
         }
     };
 
     const deleteBoxStyles = {
         display: "flex",
         justifyContent: "center",
-        marginTop:"5px",
+        marginTop: "5px",
     }
 
     return (
@@ -102,7 +104,13 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
                 <Dialog open={isConfirmationOpen} onClose={handleConfirmationCancel}>
                     <DialogTitle>Confirm Deletion</DialogTitle>
                     <DialogContent>
-                        Are you sure you want to delete this post?
+                        {isDeleteSuccessful ? (
+                            <DialogContentText>
+                                Delete successful! Redirecting...
+                            </DialogContentText>
+                        ) : (
+                            "Are you sure you want to delete this post?"
+                        )}
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleConfirmationCancel} color="primary">
