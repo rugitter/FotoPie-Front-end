@@ -13,6 +13,8 @@ const initialState: NotificationState = {
   getNotificationCountStatus: "idle",
   markNotificationReadStatus: "idle",
   status: "idle",
+  getNotificationCountError: null,
+  markNotificationReadError: null,
   error: null,
 };
 
@@ -45,7 +47,8 @@ const notificationSlice = createSlice({
       })
       .addCase(getNotificationCountAction.rejected, (state, action) => {
         state.getNotificationCountStatus = "failed";
-        state.error = action.error.message ?? "Unknown error";
+        state.getNotificationCountError =
+          action.error.message ?? "Unknown error";
       })
 
       //fetchNotificationStatus
@@ -58,7 +61,8 @@ const notificationSlice = createSlice({
       })
       .addCase(markNotificationReadAction.rejected, (state, action) => {
         state.markNotificationReadStatus = "failed";
-        state.error = action.error.message ?? "Unknown error";
+        state.markNotificationReadError =
+          action.error.message ?? "Unknown error";
       });
   },
 });

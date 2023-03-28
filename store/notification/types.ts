@@ -13,5 +13,7 @@ export interface NotificationState {
   getNotificationCountStatus: "idle" | "loading" | "succeeded" | "failed";
   markNotificationReadStatus: "idle" | "loading" | "succeeded" | "failed";
   status: "idle" | "loading" | "succeeded" | "failed";
+  getNotificationCountError: string | null;
+  markNotificationReadError: string | null;
   error: string | null;
 }
