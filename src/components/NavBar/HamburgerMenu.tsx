@@ -22,6 +22,7 @@ interface hamburgerMenuProps {
   avatarPath: string;
   handleMobileLogout: () => void;
   handleNotificationClick: () => void;
+  id: string
 }
 
 export default function hamburgerMenu({
@@ -33,6 +34,7 @@ export default function hamburgerMenu({
   avatarPath,
   handleMobileLogout,
   handleNotificationClick,
+  id,
 }: hamburgerMenuProps) {
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -55,12 +57,11 @@ export default function hamburgerMenu({
     >
       {isAuthenticated ? (
         <Box>
-          <MenuItem>
+          <MenuItem onClick={handleNotificationClick}>
             <IconButton
               href="/notification"
               size="large"
               color="inherit"
-              onClick={handleNotificationClick}
             >
               <Badge badgeContent={notificationCount} color="error">
                 <NotificationsIcon />
@@ -69,7 +70,7 @@ export default function hamburgerMenu({
             <p>Notifications</p>
           </MenuItem>
           <MenuItem
-            href="/profile"
+            component="a" href={`/profile/${id}`}
           >
             <Avatar
               alt="Avatar"
@@ -78,9 +79,8 @@ export default function hamburgerMenu({
             />
             <p>Profile</p>
           </MenuItem>
-          <MenuItem>
+          <MenuItem component="a" href="/edituserprofile">
             <IconButton 
-              href="/edituserprofile"
               size="large" 
               color="inherit"
             >
@@ -88,9 +88,8 @@ export default function hamburgerMenu({
             </IconButton>
             <p>Edit Profile</p>
           </MenuItem>
-          <MenuItem>
+          <MenuItem component="a" href="/upload">
             <IconButton 
-              href="/upload"
               size="large" 
               color="inherit"
             >

@@ -34,7 +34,7 @@ export default function ProfilePage() {
     getUserInfo(profileUserId).then(({ data }) => {
       setUser(data);
     });
-  }, [profileUserId, user, router.isReady]);
+  }, [profileUserId, router.isReady]);
 
   return (
     <>
