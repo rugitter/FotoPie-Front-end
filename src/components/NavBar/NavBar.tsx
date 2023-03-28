@@ -19,7 +19,7 @@ import UserIcons from "./UserIcons";
 import {
   getNotificationCountAction,
   markNotificationReadAction,
-} from "../../../store/notification/notifyAction";
+} from "../../../store/notificationBell/notificationBellAction";
 
 interface NavbarProps {
   isFixed: boolean;
@@ -36,7 +36,7 @@ export default function Navbar({
   const { isAuthenticated, notificationCount, isNotificationRead } =
     useSelector((state: RootState) => ({
       ...state.auth,
-      ...state.notifySlice,
+      ...state.notificationBellSlice,
     }));
   const dispatch = useDispatch<AppDispatch>();
   const [avatarPath, setAvatarPath] = useState("");
