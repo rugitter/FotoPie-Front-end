@@ -1,6 +1,6 @@
 import { Avatar, Button, Grid, Typography } from "@mui/material";
 import { FC } from "react";
-import { User } from "../../../pages/profile/[id]";
+import { User } from "../../../pages/profile/[profileUserId]";
 
 interface ProfileHeaderProps {
   user: User | null;
@@ -51,7 +51,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({
         <Grid item>
           <Button
             variant={isGallery ? "contained" : "outlined"}
-            sx={{ borderRadius: 10, p: 1.5, pl: 3, pr: 3 }}
+            sx={{ borderRadius: 10, p: 1.5, pl: 3, pr: 3 ,width: 150}}
             size="large"
             onClick={() => {
               setIsGallery(true);
@@ -63,7 +63,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({
         <Grid item>
           <Button
             variant={!isGallery ? "contained" : "outlined"}
-            sx={{ borderRadius: 10, p: 1.5, pl: 3, pr: 3 }}
+            sx={{ borderRadius: 10, p: 1.5, pl: 3, pr: 3,width: 150 }}
             size="large"
             onClick={() => {
               setIsGallery(false);
