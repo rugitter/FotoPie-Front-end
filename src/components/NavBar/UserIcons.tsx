@@ -23,9 +23,15 @@ export default function UserIcons ({
   color="white",
   fix,
 }: userIconsProps) {
-
-  console.log("notificationCount:", notificationCount);
   
+  const gradientText = {
+    backgroundImage: "linear-gradient(45deg, red, orange, green, blue, indigo, violet)",
+    WebkitBackgroundClip: "text",
+    MozBackgroundClip: "text",
+    backgroundClip: "text",
+    color: "transparent",
+  };
+
   return (
     <Box
       sx={{
@@ -47,7 +53,7 @@ export default function UserIcons ({
         }}
       >
         <Link href="/subscription" underline="none">
-          FotoPie+
+          <span style={gradientText}>FotoPie+</span>
         </Link>
       </Button>
       {/* notifications */}
