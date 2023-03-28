@@ -3,7 +3,7 @@ import { createImage } from "../../axiosRequest/api/createImage";
 import Image from "mui-image";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { Box } from "@mui/system";
+import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
 import Copyright from "../Copyright";
 import styles from "./NewImage.module.css";
