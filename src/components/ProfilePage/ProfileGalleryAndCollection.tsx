@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import { FC, useState } from "react";
+import { FC } from "react";
 import Collection from "./Collection";
 import Gallery from "./Gallery";
 
