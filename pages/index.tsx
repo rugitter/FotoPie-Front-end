@@ -40,6 +40,7 @@ export default function Home() {
           backgroundSize: "cover",
           margin: 0,
           padding: 0,
+          height: "400px",
           backgroundPosition: "center", 
         }}
       >
