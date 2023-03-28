@@ -1,7 +1,5 @@
 import NewImage from "../../src/components/CreateImage/NewImage";
-import Navbar from "../../src/components/NavBar";
-import Copyright from "../../src/components/Copyright";
-import { Box } from "@mui/system";
+import Navbar from "../../src/components/NavBar/NavBar";
 
 export default function CreateImage() {
   return (

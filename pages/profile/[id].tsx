@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import NavBar from "../../src/components/NavBar";
+import NavBar from "../../src/components/NavBar/NavBar";
 import { getUserInfo } from "../../src/axiosRequest/api/user";
 import ProfileHeader from "../../src/components/ProfilePage/ProfileHeader";
 import ProfileGalleryAndCollection from "../../src/components/ProfilePage/ProfileGalleryAndCollection";
@@ -21,12 +21,20 @@ export default function ProfilePage() {
   const { id } = router.query;
 
   useEffect(() => {
+    if (!router.isReady || !id || user) return;
+    setProfileUserId(id);
+    getUserInfo(profileUserId).then(({ data }) => {
+      setUser(data);
+    });
+  }, [profileUserId, router.isReady]);
+
+  useEffect(() => {
     if (!router.isReady) return;
     setProfileUserId(id);
     getUserInfo(profileUserId).then(({ data }) => {
       setUser(data);
     });
-  }, [profileUserId, user, router.isReady]);
+  }, [profileUserId, router.isReady]);
 
   return (
     <>

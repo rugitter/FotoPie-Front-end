@@ -5,44 +5,41 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../Loader/Loader";
 import Masonry from "@mui/lab/Masonry";
 import NoMore from "../Loader/NoMore";
-import { profileCollection } from "../../axiosRequest/api/userCollection";
+import { getUserPosts } from "../../axiosRequest/api/user-post";
 import ErrorAlert from "../LoginForm/ErrorAlert";
 
-interface CollectionPostsProps {
-  id: string;
+interface GalleryPostsProps {
+  profileUserId: string | string[] | undefined;
   handleOpen: (filename: string) => void;
 }
 
 interface ResponseImageData {
-  collect_user_email: string;
-  collected_user_email: string;
-  compressed_imageUrl: string;
   _id: string;
+  price: number;
+  tag: string;
+  userEmail: string;
+  compressFilePath: string;
   filename: string;
 }
-
 // export interface PostListProps {
 //   handleOpen: (filename: string) => void;
 // }
 
 
-const PostList = ({id, handleOpen}: CollectionPostsProps) => {
-  const [collection, setCollection] = useState<ResponseImageData[]>([]);
-  const [page, setPage] = useState(1);
+const GalleryPost = ({ profileUserId, handleOpen }: GalleryPostsProps) => {
+  const [galleryFilePath, setGalleryFilePath] = useState<ResponseImageData[]>([]);
   const [loaderHandler, setLoaderHandler] = useState(true);
-
   const [error, setError] = useState(null);
 
   let limit = 10;
 
-  
+
   const fetchImages = async () => {
     try {
-      const res = await profileCollection(id, page, limit);
+      const res = await getUserPosts(profileUserId);
       if (res.status === 200) {
-        setCollection([...collection, ...res.data]);
-        setPage(page + 1);
-        if ([...res.data].length === 0) {
+        setGalleryFilePath(res.data);
+        if (res.data.length === 0) {
           setLoaderHandler(false);
         }
       }
@@ -52,8 +49,9 @@ const PostList = ({id, handleOpen}: CollectionPostsProps) => {
   };
 
   useEffect(() => {
+    if(!profileUserId) return
     fetchImages();
-  }, []);
+  }, [profileUserId]);
 
   return (
     <>
@@ -69,26 +67,19 @@ const PostList = ({id, handleOpen}: CollectionPostsProps) => {
           },
         }}
       >
-        <InfiniteScroll
-          dataLength={collection.length}
-          next={fetchImages}
-          hasMore={true}
-          loader={loaderHandler ? <Loader /> : <NoMore />}
-        >
-          <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
-            {collection.map((collection) => (
-              <Post
-                url={collection.compressed_imageUrl}
-                filename={collection.filename}
-                key={collection._id}
-                handleOpen={() => handleOpen(collection.filename)}
-              />
-            ))}
-          </Masonry>
-        </InfiniteScroll>
+        <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
+          {galleryFilePath.map((gallery) => (
+            <Post
+              url={gallery.compressFilePath}
+              filename={gallery.filename}
+              key={gallery._id}
+              handleOpen={() => handleOpen(gallery.filename)}
+            />
+          ))}
+        </Masonry>
       </Box>
     </>
   );
 };
 
-export default PostList;
+export default GalleryPost;
