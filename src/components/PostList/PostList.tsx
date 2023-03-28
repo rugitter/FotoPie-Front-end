@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import axiosRequest from "../../utils/axiosRequest";
 import Masonry from "@mui/lab/Masonry";
 import NoMore from "../Loader/NoMore";
+import { getPhotoWall } from "../../axiosRequest/api/photowall";
 
 interface ImageData {
   _id: string;
@@ -28,10 +29,7 @@ const PostList = ({ handleOpen }: PostListProps) => {
 
   const fetchImages = async () => {
     try {
-      const res = await axiosRequest(
-        `/api/posts?page=${page}&limit=${limit}`,
-        "GET"
-      );
+      const res = await getPhotoWall(page, limit);
       if (res.status === 200) {
         setPost([...posts, ...res.data]);
         setPage(page + 1);
@@ -51,7 +49,16 @@ const PostList = ({ handleOpen }: PostListProps) => {
   return (
     <>
       <p>{Error}</p>
-      <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          overflowY: "scroll",
+          "&::-webkit-scrollbar": {
+            width: 0,
+          },
+        }}
+      >
         <InfiniteScroll
           dataLength={posts.length}
           next={fetchImages}

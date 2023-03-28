@@ -1,6 +1,6 @@
 import { getAccessToken, getRefreshToken } from "./../../src/utils/token";
 import { createSlice } from "@reduxjs/toolkit";
-import { login, logout } from "./authAciton";
+import { adminLogin, logout } from "./authAciton";
 import { AuthState } from "./types";
 
 const initialState: AuthState = {
@@ -10,8 +10,8 @@ const initialState: AuthState = {
   logoutStatus: "idle",
 };
 
-const authSlice = createSlice({
-  name: "auth",
+const adminSlice = createSlice({
+  name: "admin",
   initialState,
   reducers: {
     checkToken: (state) => {
@@ -30,14 +30,14 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state) => {
+      .addCase(adminLogin.pending, (state) => {
         state.loginStatus = "loading";
       })
-      .addCase(login.fulfilled, (state) => {
+      .addCase(adminLogin.fulfilled, (state) => {
         state.loginStatus = "success";
         state.isAuthenticated = true;
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(adminLogin.rejected, (state, action) => {
         state.loginStatus = "failed";
         state.error = action.payload as string;
       })
@@ -54,6 +54,6 @@ const authSlice = createSlice({
       });
   },
 });
-export const { checkToken } = authSlice.actions;
+export const { checkToken } = adminSlice.actions;
 
-export default authSlice.reducer;
+export default adminSlice.reducer;

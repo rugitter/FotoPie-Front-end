@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PhotoCategory from "../../src/components/Category/PhotoCategory";
 import CategoryHeader from "../../src/components/Category/CategoryHeader";
 import Copyright from "../../src/components/Copyright";
-import NavBar from "../../src/components/NavBar";
+import NavBar from "../../src/components/NavBar/NavBar";
 
 const CategoryMainPage: React.FC = () => {
   return (

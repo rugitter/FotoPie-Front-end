@@ -1,4 +1,3 @@
-import axiosRequest from "../../utils/axiosRequest";
 import { Button } from "@mui/material";
 import { createCheckoutSession } from "../../axiosRequest/api/subscription";
 
@@ -20,7 +19,7 @@ const clickToSubscribe = async () => {
 export default function SubscriptionButton() {
   return (
     <Button type="submit" variant="contained" onClick={clickToSubscribe}>
-      Subscribe
+      Get FotoPie+ $16.99/month
     </Button>
   );
 }
