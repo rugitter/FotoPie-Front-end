@@ -3,8 +3,6 @@ import NavBar from "../src/components/NavBar/NavBar";
 import Header from "../src/components/Header";
 import Box from "@mui/material/Box";
 import PostList from "../src/components/PostList/PostList";
-import { useCheckToken } from "../src/hooks/useCheckToken";
-import { MemoryRouter } from "react-router";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
@@ -29,11 +27,10 @@ export default function Home() {
   };
 
   return (
-    <MemoryRouter>
-      <Container>
-        <Box
-          sx={{
-            backgroundImage: `
+    <Container>
+      <Box
+        sx={{
+          backgroundImage: `
               linear-gradient(
                 rgba(0, 0, 0, 0.1),
                 rgba(0, 0, 0, 0.1)
@@ -65,6 +62,5 @@ export default function Home() {
         </Box>
       </Modal>
     </Container>
-    </MemoryRouter>
   );
 }

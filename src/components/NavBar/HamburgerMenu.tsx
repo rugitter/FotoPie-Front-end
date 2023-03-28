@@ -18,7 +18,7 @@ interface hamburgerMenuProps {
   handleMobileMenuClose: () => void;
   isAuthenticated: boolean;
   // setNewNotificationCount: React.Dispatch<React.SetStateAction<number>>;
-  newNotificationCount: number;
+  notificationCount: number;
   avatarPath: string;
   handleMobileLogout: () => void;
   handleNotificationClick: () => void;
@@ -30,7 +30,7 @@ export default function hamburgerMenu({
   handleMobileMenuClose,
   isAuthenticated,
   // setNewNotificationCount,
-  newNotificationCount,
+  notificationCount,
   avatarPath,
   handleMobileLogout,
   handleNotificationClick,
@@ -63,7 +63,7 @@ export default function hamburgerMenu({
               color="inherit"
               onClick={handleNotificationClick}
             >
-              <Badge badgeContent={newNotificationCount} color="error">
+              <Badge badgeContent={notificationCount} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>

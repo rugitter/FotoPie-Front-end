@@ -5,20 +5,21 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import Link from "../../utils/Link";
-import { useState, useEffect  } from "react";
+import { useState, useEffect } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { getMe } from "../../axiosRequest/api/editUser";
-import { getNewNotificationCount } from "../../axiosRequest/api/notification";
-import { markNotificationRead } from "../../axiosRequest/api/notification";
 import HamburgerMenu from "./HamburgerMenu";
 import AvatarMenu from "./AvatarMenu";
 import { logout } from "../../../store/auth/authAciton";
 import { useCheckToken } from "../../hooks/useCheckToken";
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
 import UserIcons from "./UserIcons";
-import { getNotificationCount, fetchNotificationStatus } from "../../../store/notification/notifyAction";
+import {
+  getNotificationCountAction,
+  markNotificationReadAction,
+} from "../../../store/notification/notifyAction";
 
 interface NavbarProps {
   isFixed: boolean;
@@ -32,46 +33,48 @@ export default function Navbar({
   bgColor,
 }: NavbarProps) {
   useCheckToken();
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated, notificationCount, isNotificationRead } =
+    useSelector((state: RootState) => ({
+      ...state.auth,
+      ...state.notifySlice,
+    }));
   const dispatch = useDispatch<AppDispatch>();
   const [avatarPath, setAvatarPath] = useState("");
   const [id, setId] = useState("");
-  const newNotificationCount = useSelector(
-    (state: RootState) => state.notifySlice.notificationCount
-  );
+  // const newNotificationCount = useSelector(
+  //   (state: RootState) => state.notifySlice.notificationCount
+  // );
+  const router = useRouter();
   // const [newNotificationCount, setNewNotificationCount] = useState(0);
 
   useEffect(() => {
     if (isAuthenticated) {
       // Get user info
-      getMe().then((res) => {
-        setAvatarPath(res.data["avatarPath"]);
-        setId(res.data.id);
-      });
+      getMe()
+        .then((res) => {
+          setAvatarPath(res.data["avatarPath"]);
+          setId(res.data.id);
+        })
+        .catch((err) => {
+          router.push("/login");
+        });
 
       // Get new notification count
-      dispatch(getNotificationCount()); 
+      dispatch(getNotificationCountAction());
       // getNewNotificationCount().then((res) => {
       //   setNewNotificationCount(res.data.count);
       // });
     }
-  }, [isAuthenticated, dispatch]);
-
+  }, [isAuthenticated, dispatch, isNotificationRead]);
 
   //Mark all new notifications as read when click notification icon
-  const router = useRouter()
-  const handleNotificationClick = async () => {
 
-    try {
-      await router.push("/notification");
-  
-      router.events.on("routeChangeComplete", async () => {
-        await dispatch(fetchNotificationStatus());
-      
-      });
-    } catch (error) {
-      console.error(error);
-    }
+  const handleNotificationClick = () => {
+    if (!router.isReady) return;
+    router.push("/notification");
+    router.events.on("routeChangeComplete", () => {
+      dispatch(markNotificationReadAction());
+    });
   };
 
   // set fixed navbar when scroll down
@@ -212,13 +215,13 @@ export default function Navbar({
             >
               {isAuthenticated ? (
                 <UserIcons
-                handleProfileMenuOpen={handleProfileMenuOpen}
-                newNotificationCount={newNotificationCount}
-                avatarPath={avatarPath}
-                handleNotificationClick={handleNotificationClick}
-                color={color}
-                fix={fix}
-              />
+                  handleProfileMenuOpen={handleProfileMenuOpen}
+                  notificationCount={notificationCount}
+                  avatarPath={avatarPath}
+                  handleNotificationClick={handleNotificationClick}
+                  color={color}
+                  fix={fix}
+                />
               ) : (
                 <Button
                   variant="contained"
@@ -253,7 +256,7 @@ export default function Navbar({
             handleMobileMenuClose={handleMobileMenuClose}
             isAuthenticated={isAuthenticated}
             // setNewNotificationCount={setNewNotificationCount}
-            newNotificationCount={newNotificationCount}
+            notificationCount={notificationCount}
             avatarPath={avatarPath}
             handleMobileLogout={handleMobileLogout}
             handleNotificationClick={handleNotificationClick}

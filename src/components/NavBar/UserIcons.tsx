@@ -8,7 +8,7 @@ import Avatar from "@mui/material/Avatar";
 
 interface userIconsProps {
   handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
-  newNotificationCount: number;
+  notificationCount: number;
   avatarPath: string;
   handleNotificationClick: () => void;
   color?: string;
@@ -16,7 +16,7 @@ interface userIconsProps {
 }
 
 export default function UserIcons ({
-  newNotificationCount,
+  notificationCount,
   avatarPath,
   handleProfileMenuOpen,
   handleNotificationClick,
@@ -24,7 +24,7 @@ export default function UserIcons ({
   fix,
 }: userIconsProps) {
 
-  console.log("newNotificationCount:", newNotificationCount);
+  console.log("notificationCount:", notificationCount);
   
   return (
     <Box
@@ -41,7 +41,7 @@ export default function UserIcons ({
         color="inherit"
         onClick={handleNotificationClick}
       >
-        <Badge badgeContent={newNotificationCount} color="error">
+        <Badge badgeContent={notificationCount} color="error">
           <NotificationsIcon
             sx={{
               color: fix ? "black" : color,

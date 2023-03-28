@@ -1,13 +1,13 @@
 import axiosInstance from "../index";
 
-export const getNewNotificationCount = () => {
+export const getNotificationCountRequest = () => {
   return axiosInstance({
     url: "/api/notification/count",
     method: "get",
   });
 };
 
-export const markNotificationRead = () => {
+export const markNotificationReadRequest = () => {
   return axiosInstance({
     url: "/api/notification/mark-read",
     method: "post",
