@@ -10,11 +10,18 @@ export default function Copyright(props: any) {
       {...props}
     >
       {"Copyright © "}
-      <MuiLink color="inherit" href="/">
-        FotoPie Inc. All rights reserved.
-      </MuiLink>{" "}
-      {new Date().getFullYear()}
-      {"."}
+      <MuiLink
+        color="inherit"
+        href="/"
+        sx={{
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "none",
+          },
+        }}
+      >
+        2023 FotoPie Inc. All rights reserved.
+      </MuiLink>
     </Typography>
   );
 }

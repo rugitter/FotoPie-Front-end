@@ -27,7 +27,7 @@ export default function Home() {
   };
 
   return (
-    <Container>
+    <Box>
       <Box
         sx={{
           backgroundImage: `
@@ -48,8 +48,18 @@ export default function Home() {
         </div>
       </Box>
 
-      <PostList handleOpen={handleOpen} />
-
+      <Box
+        sx={{
+          maxWidth: "1440px",
+          display: "block",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <Box sx={{ marginLeft: "30px", marginRight: "50px" }}>
+          <PostList handleOpen={handleOpen} />
+        </Box>
+      </Box>
       {/* Modal popup window -- Photo Quick View page*/}
       <Modal
         open={open}
@@ -61,6 +71,6 @@ export default function Home() {
           <PhotoQuickView filename={selectedFilename} router={router} />
         </Box>
       </Modal>
-    </Container>
+    </Box>
   );
 }
