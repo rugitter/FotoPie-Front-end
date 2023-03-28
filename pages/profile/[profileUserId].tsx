@@ -14,15 +14,12 @@ export interface User {
 export default function ProfilePage() {
   const [user, setUser] = useState<User | null>(null);
   const [isGallery, setIsGallery] = useState(true);
-  const [profileUserId, setProfileUserId] = useState<
-    string | string[] | undefined
-  >("");
   const router = useRouter();
-  const { id } = router.query;
+  const { profileUserId } = router.query;
 
   useEffect(() => {
-    if (!router.isReady || !id || user) return;
-    setProfileUserId(id);
+    if (!router.isReady || !profileUserId || user) return;
+
     getUserInfo(profileUserId).then(({ data }) => {
       setUser(data);
     });
