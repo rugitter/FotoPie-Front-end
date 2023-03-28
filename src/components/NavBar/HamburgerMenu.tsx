@@ -17,7 +17,6 @@ interface hamburgerMenuProps {
   isMobileMenuOpen: boolean;
   handleMobileMenuClose: () => void;
   isAuthenticated: boolean;
-  // setNewNotificationCount: React.Dispatch<React.SetStateAction<number>>;
   notificationCount: number;
   avatarPath: string;
   handleMobileLogout: () => void;

@@ -41,11 +41,8 @@ export default function Navbar({
   const dispatch = useDispatch<AppDispatch>();
   const [avatarPath, setAvatarPath] = useState("");
   const [id, setId] = useState("");
-  // const newNotificationCount = useSelector(
-  //   (state: RootState) => state.notifySlice.notificationCount
-  // );
+
   const router = useRouter();
-  // const [newNotificationCount, setNewNotificationCount] = useState(0);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -61,14 +58,10 @@ export default function Navbar({
 
       // Get new notification count
       dispatch(getNotificationCountAction());
-      // getNewNotificationCount().then((res) => {
-      //   setNewNotificationCount(res.data.count);
-      // });
     }
   }, [isAuthenticated, dispatch, isNotificationRead]);
 
   //Mark all new notifications as read when click notification icon
-
   const handleNotificationClick = () => {
     if (!router.isReady) return;
     router.push("/notification");

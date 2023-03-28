@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import NavBar from "../../src/components/NavBar";
+import NavBar from "../../src/components/NavBar/NavBar";
 import { getUserInfo } from "../../src/axiosRequest/api/user";
 import ProfileHeader from "../../src/components/ProfilePage/ProfileHeader";
 import ProfileGalleryAndCollection from "../../src/components/ProfilePage/ProfileGalleryAndCollection";

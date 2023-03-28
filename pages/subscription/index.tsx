@@ -1,7 +1,7 @@
 import SubscriptionButton from "../../src/components/Subscription/SubscriptionButton";
 import Copyright from "../../src/components/Copyright";
 import CustomerPortal from "../../src/components/Subscription/CustomerPortal";
-import Navbar from "../../src/components/NavBar";
+import Navbar from "../../src/components/NavBar/NavBar";
 
 export default function SubscriptionPage() {
   return (
