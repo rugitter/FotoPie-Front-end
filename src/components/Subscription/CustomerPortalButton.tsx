@@ -1,4 +1,3 @@
-import axiosRequest from "../../utils/axiosRequest";
 import { Button } from "@mui/material";
 import { createPortalSession } from "../../axiosRequest/api/subscription";
 
@@ -16,7 +15,7 @@ const clickToPortal = async () => {
   }
 };
 
-export default function CustomerPortal() {
+export default function CustomerPortalButton() {
   return (
     <Button type="submit" variant="contained" onClick={clickToPortal}>
       Manage Your Subscription
