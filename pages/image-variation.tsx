@@ -272,7 +272,7 @@ export default function imageVariation() {
           </div>
         </Box>
       </Container>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" sx={{maxWidth:"80%"}}>
         <Box
           sx={{
             marginTop: 10,
@@ -312,7 +312,7 @@ export default function imageVariation() {
               </Container>
             ) : (
               <>
-                <img
+                {/* <img
                   src={image1}
                   alt=""
                   style={{
@@ -320,9 +320,9 @@ export default function imageVariation() {
                     width: "50%",
                   }}
                 />
-                <img src={image2} alt="" style={{ width: "50%" }} />
-                {/* <Image src={image1} alt="" />
-                <Image src={image2} alt="" /> */}
+                <img src={image2} alt="" style={{ width: "50%" }} /> */}
+                <Image src={image1} alt="" />
+                <Image src={image2} alt="" />
               </>
             )}
           </Box>
