@@ -23,10 +23,10 @@ function EmailSent() {
           <Button
             variant="contained"
             sx={{
-              bgcolor: "#2196f3", // Set background color
+              bgcolor: "#8777D9", // Set background color
               color: "#fff", // Set text color
               "&:hover": {
-                bgcolor: "#1976d2", // Set background color on hover
+                bgcolor: "#8000ff", // Set background color on hover
               },
             }}
           >
