@@ -75,19 +75,19 @@ export default function Header() {
         >
           <span style={{ fontSize: 18, opacity:0.7}}>Trending:</span>
           <Box component="span" sx={{ ml: 0.5 }}>
-            <Link href="/category/flowers" color="inherit">
+            <Link href="/category/food" color="inherit">
               Food,
             </Link>
-            <Link href="#" color="inherit">
+            <Link href="/category/cars" color="inherit">
               Cars,
             </Link>
-            <Link href="#" color="inherit">
+            <Link href="/category/building" color="inherit">
               Building,
             </Link>
-            <Link href="#" color="inherit">
+            <Link href="/category/city" color="inherit">
               City,
             </Link>
-            <Link href="#" color="inherit">
+            <Link href="/category/nature" color="inherit">
               Nature
             </Link>
           </Box>
