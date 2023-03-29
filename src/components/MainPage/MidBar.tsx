@@ -21,7 +21,7 @@ export default function MidBar() {
         }}
         size="large"
       >
-        <Link href="/" underline="none" sx={{ color: "black" }}>
+        <Link href="/" underline="none" sx={{ color: "white" }}>
           Home
         </Link>
       </Button>
@@ -42,7 +42,7 @@ export default function MidBar() {
         <Link
           href="/category/category-main-page"
           underline="none"
-          sx={{ color: "black" }}
+          sx={{ color: "primary.main" }}
         >
           Explore
         </Link>
