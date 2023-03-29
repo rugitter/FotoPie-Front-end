@@ -21,6 +21,8 @@ import Box from "@mui/material/Box";
 import React, { useState, useEffect, useRef } from "react";
 import Copyright from "../Copyright";
 import LinearProgress from "@mui/material/LinearProgress";
+import styles from "./NewVariation.module.css";
+import Button from "@mui/material/Button";
 
 const NewVariation =(props: Partial<DropzoneProps>)=> {
   const theme = useMantineTheme();
@@ -45,25 +47,23 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
     );
   });
 
-  const handleDownload = async () => {
-    const returned_urls = [image1, image2];
-    returned_urls.forEach(async (returned_url, i) => {
-      // use proxy url to download image
-      const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
-        returned_url
-      )}`;
+  // 
+  const handleDownload = async (imageUrl, filename) => {
+    const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
+      imageUrl
+    )}`;
 
-      const res = await fetch(proxyUrl);
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
+    const res = await fetch(proxyUrl);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
 
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `image${i + 1}.png`;
-      link.click();
-      URL.revokeObjectURL(url);
-    });
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
   };
+
 
   //define the component for progress bar
   const progressRef = useRef(() => {});
@@ -93,7 +93,6 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
 
   return (
     <>
-      
       <Container component="main" maxWidth="md">
         <Dropzone
           onDrop={async (files) => {
@@ -250,14 +249,34 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
                   }}
                 />
                 <img src={image2} alt="" style={{ width: "50%" }} /> */}
-                <Image src={image1} alt="" />
-                <Image src={image2} alt="" />
+
+                {/* <Image src={image1} alt="" />
+                <Image src={image2} alt="" /> */}
+
+                <div className={styles.imageContainer}>
+                  <Button
+                    className={styles.downloadButton}
+                    onClick={() => handleDownload(image1, "image1.png")}
+                  >
+                    Download
+                  </Button>
+                  <Image src={image1} alt="" />
+                </div>
+                <div className={styles.imageContainer}>
+                  <Button
+                    className={styles.downloadButton}
+                    onClick={() => handleDownload(image2, "image2.png")}
+                  >
+                    Download
+                  </Button>
+                  <Image src={image2} alt="" />
+                </div>
               </>
             )}
           </Box>
-          <Box>
+          {/* <Box>
             <button onClick={handleDownload}>Download Images</button>
-          </Box>
+          </Box> */}
         </Box>
         <Copyright sx={{ mt: 6 }} />
       </Container>

@@ -1,0 +1,21 @@
+.imageContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.downloadButton {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.imageContainer:hover .downloadButton {
+  display: block;
+}
+
+.imageContainer:hover img {
+  opacity: 0.8;
+}
