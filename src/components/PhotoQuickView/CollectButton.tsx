@@ -33,12 +33,15 @@ const CollectButton = ({
     <>
       <Button
         variant="outlined"
+        color="info"
         sx={{
           opacity: { xs: 0, sm: 0, md: 1 },
-          color: collected ? "orange" : "primary.main",
+          color: collected ? "orange" : "black"
         }}
         onClick={addToCollection}
-        startIcon={<AddToPhotosIcon />}
+        startIcon={
+          <AddToPhotosIcon sx={{ color: collected ? "orange" : "grey" }} />
+        }
       >
         {collected
           ? "Collected" + " " + `${userCollects}`

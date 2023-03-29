@@ -68,6 +68,5 @@ export default function Header() {
           </Paper>
         </Box>
       </Stack>
-
   )
 }
