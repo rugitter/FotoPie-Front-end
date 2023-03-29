@@ -27,12 +27,12 @@ const Header = () => {
           alignItems: "center",
           textAlign: "center",
           minHeight: "80px",
-          bgcolor: "secondary.main",
+          bgcolor: "primary.main",
           color: "primary",
         }}
       >
         <Box sx={{ ml: "30px" }}>
-          <Typography variant="h5" sx={{ minWidth: 100 }}>
+          <Typography variant="h5" sx={{ minWidth: 100, color: "white" }}>
             FotoPie Admin Manager
           </Typography>
         </Box>
@@ -46,7 +46,15 @@ const Header = () => {
               mr: "30px",
             }}
           >
-            <Button variant="outlined" onClick={handleLogout}>
+            <Button
+              variant="contained"
+              onClick={handleLogout}
+              sx={{
+                bgcolor: "white",
+                color: "black",
+                ":hover": { bgcolor: "#EAE6FF" },
+              }}
+            >
               Logout
             </Button>
           </Box>
@@ -61,6 +69,11 @@ const Header = () => {
             }}
           >
             <Button
+              sx={{
+                bgcolor: "white",
+                color: "black",
+                ":hover": { bgcolor: "#EAE6FF" },
+              }}
               variant="outlined"
               onClick={() => router.push("/admin-signin")}
             >

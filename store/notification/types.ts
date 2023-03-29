@@ -8,12 +8,6 @@ export interface Notification {
 
 export interface NotificationState {
   notifications: Notification[];
-  notificationCount: number;
-  isNotificationRead: boolean;
-  getNotificationCountStatus: "idle" | "loading" | "succeeded" | "failed";
-  markNotificationReadStatus: "idle" | "loading" | "succeeded" | "failed";
   status: "idle" | "loading" | "succeeded" | "failed";
-  getNotificationCountError: string | null;
-  markNotificationReadError: string | null;
   error: string | null;
 }

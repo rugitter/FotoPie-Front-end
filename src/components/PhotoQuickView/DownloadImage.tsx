@@ -50,7 +50,7 @@ const DownloadButton: NextPage<DownloadImageProps> = ({
         variant="contained"
         sx={{
           opacity: { xs: 0, sm: 1 },
-          bgcolor: "secondary.main",
+          bgcolor: "primary.main",
         }}
         startIcon={<DownloadIcon />}
         onClick={downLoadImages}

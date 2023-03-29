@@ -9,7 +9,7 @@ export default function MidBar() {
       <Button
         variant="outlined"
         sx={{
-          fontSize: "16px",
+          fontSize: "17px",
           borderRadius: 10,
           p: 1.7,
           pl: 6,
@@ -21,14 +21,14 @@ export default function MidBar() {
         }}
         size="large"
       >
-        <Link href="/" underline="none" sx={{ color: "black" }}>
+        <Link href="/" underline="none" sx={{ color: "white" }}>
           Home
         </Link>
       </Button>
       <Button
         variant="outlined"
         sx={{
-          fontSize: "16px",
+          fontSize: "17px",
           borderRadius: 10,
           p: 1.7,
           pl: 5,
@@ -50,7 +50,7 @@ export default function MidBar() {
       <Button
         variant="outlined"
         sx={{
-          fontSize: "16px",
+          fontSize: "17px",
           borderRadius: 10,
           p: 1.7,
           pl: 5,
