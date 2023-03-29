@@ -19,7 +19,7 @@ import UserIcons from "./UserIcons";
 import {
   getNotificationCountAction,
   markNotificationReadAction,
-} from "../../../store/notification/notifyAction";
+} from "../../../store/notificationBell/notificationBellAction";
 
 interface NavbarProps {
   isFixed: boolean;
@@ -36,7 +36,7 @@ export default function Navbar({
   const { isAuthenticated, notificationCount, isNotificationRead } =
     useSelector((state: RootState) => ({
       ...state.auth,
-      ...state.notifySlice,
+      ...state.notificationBellSlice,
     }));
   const dispatch = useDispatch<AppDispatch>();
   const [avatarPath, setAvatarPath] = useState("");
@@ -55,11 +55,14 @@ export default function Navbar({
         .catch((err) => {
           router.push("/login");
         });
-
-      // Get new notification count
-      dispatch(getNotificationCountAction());
     }
-  }, [isAuthenticated, dispatch, isNotificationRead]);
+  }, [isAuthenticated, dispatch]);
+
+  useEffect(() => {
+    // Get new notification count
+    if (!isNotificationRead) return;
+    dispatch(getNotificationCountAction());
+  }, [dispatch, isNotificationRead]);
 
   //Mark all new notifications as read when click notification icon
   const handleNotificationClick = () => {
@@ -148,15 +151,15 @@ export default function Navbar({
           sx={{
             position: fix ? "fixed" : "relative",
             bgcolor: bgColor || (fix ? "#f8f8ff" : "transparent"),
-            '::after': {
+            "::after": {
               content: '""',
-              height: '8px',
-              position: 'absolute',
-              top: '100%',
-              right: '0px',
-              left: '0px',
+              height: "8px",
+              position: "absolute",
+              top: "100%",
+              right: "0px",
+              left: "0px",
               background:
-                'linear-gradient(rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px)',
+                "linear-gradient(rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px)",
             },
           }}
         >
@@ -226,17 +229,9 @@ export default function Navbar({
                   fix={fix}
                 />
               ) : (
-                <Button
-                  variant="contained"
-                  color="success"
-                  sx={{
-                    bgcolor: fix ? "#F4DADA" : "#FBF1F1",
-                  }}
-                >
-                  <Link href="/login" underline="none">
-                    Log In
-                  </Link>
-                </Button>
+                <Link href="/login" underline="none">
+                  <Button variant="contained">Log In</Button>
+                </Link>
               )}
             </Box>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -258,7 +253,6 @@ export default function Navbar({
             mobileMoreAnchorEl={mobileMoreAnchorEl}
             handleMobileMenuClose={handleMobileMenuClose}
             isAuthenticated={isAuthenticated}
-            // setNewNotificationCount={setNewNotificationCount}
             notificationCount={notificationCount}
             avatarPath={avatarPath}
             handleMobileLogout={handleMobileLogout}

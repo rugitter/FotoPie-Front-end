@@ -35,11 +35,10 @@ export default function Header() {
             align='center' 
             display='inline'  
             color='#FFFFFF'
-            sx={{ fontSize: 22, fontFamily: 'inherit', textAlign: 'left'}}
+            sx={{ fontSize: 26, fontFamily: 'inherit', textAlign: 'left'}}
           >
-            Start shining.<br/>
-            Start earning.<br/>
-            With your beloved shots.
+            Discover moments.<br/>
+            Find inspiration.
           </Typography>
           
           <Paper
@@ -52,7 +51,7 @@ export default function Header() {
               mb: 15, 
               mt:2,
               '@media (min-width: 600px)': {
-                width: 500,
+                width: 600,
               }
             }}
           >
