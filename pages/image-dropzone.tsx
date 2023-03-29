@@ -6,7 +6,6 @@ import {
   Image,
   SimpleGrid,
   MantineTheme,
-  
 } from "@mantine/core";
 import { IconUpload, IconPhoto, IconX } from "@tabler/icons-react";
 import {
@@ -14,14 +13,12 @@ import {
   DropzoneProps,
   IMAGE_MIME_TYPE,
   FileWithPath,
-  
-  
 } from "@mantine/dropzone";
 import { imageVariations } from "../src/axiosRequest/api/imageVariations";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 //import Image from "mui-image";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../src/components/NavBar";
 import Copyright from "../src/components/Copyright";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -35,8 +32,8 @@ export default function BaseDemo(props: Partial<DropzoneProps>) {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   //set necessary states for progress bar
-  const [progress, setProgress] = React.useState(0);
-  const [buffer, setBuffer] = React.useState(10);
+  const [progress, setProgress] = useState(0);
+  const [buffer, setBuffer] = useState(10);
 
   const previews = files.map((file, index) => {
     const imageUrl = URL.createObjectURL(file);
@@ -70,8 +67,9 @@ export default function BaseDemo(props: Partial<DropzoneProps>) {
     });
   };
 
-  const progressRef = React.useRef(() => {});
-  React.useEffect(() => {
+  //define the component for progress bar
+  const progressRef = useRef(() => {});
+  useEffect(() => {
     progressRef.current = () => {
       if (progress > 100) {
         setProgress(0);
@@ -85,7 +83,7 @@ export default function BaseDemo(props: Partial<DropzoneProps>) {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setInterval(() => {
       progressRef.current();
     }, 1065);
@@ -117,7 +115,6 @@ export default function BaseDemo(props: Partial<DropzoneProps>) {
               setImage1(response.data.urls.url_1);
               setImage2(response.data.urls.url_2);
 
-              //return { meta: response };
             } catch (error) {
               console.error("Error fetching URLs", error);
               //return error;
@@ -141,7 +138,6 @@ export default function BaseDemo(props: Partial<DropzoneProps>) {
             border: 10,
             marginLeft: "auto",
             marginRight: "auto",
-
             backgroundColor:
               theme.colorScheme === "dark"
                 ? theme.colors.dark[6]
@@ -172,18 +168,18 @@ export default function BaseDemo(props: Partial<DropzoneProps>) {
               <IconUpload
                 size="3.2rem"
                 stroke={1.5}
-                // color={
-                //   theme.colors[theme.primaryColor][
-                //     theme.colorScheme === "dark" ? 4 : 6
-                //   ]
-                // }
+                color={
+                  theme.colors[theme.primaryColor][
+                    theme.colorScheme === "dark" ? 4 : 6
+                  ]
+                }
               />
             </Dropzone.Accept>
             <Dropzone.Reject>
               <IconX
                 size="3.2rem"
                 stroke={1.5}
-                // color={theme.colors.red[theme.colorScheme === "dark" ? 4 : 6]}
+                color={theme.colors.red[theme.colorScheme === "dark" ? 4 : 6]}
               />
             </Dropzone.Reject>
             <Dropzone.Idle>
@@ -206,13 +202,6 @@ export default function BaseDemo(props: Partial<DropzoneProps>) {
                 {previews}
               </SimpleGrid>
             </Container>
-            {/* <SimpleGrid
-            cols={1}
-            breakpoints={[{ maxWidth: "sm", cols: 1 }]}
-            mt={previews.length > 0 ? "xl" : 0}
-          >
-            {previews}
-          </SimpleGrid> */}
           </Group>
         </Dropzone>
       </Container>
