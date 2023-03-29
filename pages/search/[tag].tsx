@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { categoryPosts } from "../../src/axiosRequest/api/category";
 import NavBar from "../../src/components/NavBar/NavBar";
 import CategoryHeader from "../../src/components/CategoryInside/CategoryHeader";
-import PostList from "../../src/components/CategoryInside/CategoryInsidePosts";
+import PostList from "../../src/components/Search/SearchInsidePosts";
 import CategoryButton from "../../src/components/CategoryInside/CategoryButton";
 import { getSynonymsAPI } from "../../src/axiosRequest/api/getSynonyms";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { PhotoQuickViewStyles } from "../../src/components/PhotoQuickView/PhotoQuickView.style";
 import PhotoQuickView from "../../src/components/PhotoQuickView/PhotoQuickView";
+import { searchPosts } from "../../src/axiosRequest/api/search";
 
 
 export interface ResponseImageData {
@@ -25,7 +26,7 @@ export interface ResponseImageData {
 
 
 // Set all necessary states for rendering post lists and related category buttons
-export default function CategoryInsidePage() {
+export default function searchPage() {
   const router = useRouter();
   const { tag } = router.query;
   const [tagString, setTagString] = useState<string | string[] | undefined>("");
@@ -54,7 +55,7 @@ export default function CategoryInsidePage() {
   //Call the API to retrieve post data corresponding to input tag query
   const fetchImages = async () => {
     try {
-      const res = await categoryPosts(tag, page, limit);
+      const res = await searchPosts(tag, page, limit);
       if (res.status === 200) {
         setCategory([...category, ...res.data]);
         setPage(page + 1);
@@ -72,7 +73,7 @@ export default function CategoryInsidePage() {
     setCategory([]);
     setPage(1);
     setLoaderHandler(true);
-    router.push(`/category/${newTag}`);
+    router.push(`/search/${newTag}`);
   };
 
   //Call the API to retrieve a list of synonyms for our initial category query

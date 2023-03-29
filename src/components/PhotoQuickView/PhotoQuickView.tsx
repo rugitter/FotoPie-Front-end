@@ -11,6 +11,7 @@ import PostImage from "./PostImage";
 import CollectButton from "./CollectButton";
 import LikeButton from "./LikeButton";
 import UserName from "./UserName";
+import DeletePostButton from "../PostDelete/DeletePost";
 
 interface PhotoQuickViewProps {
   filename: string | string[] | undefined;
@@ -124,6 +125,7 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
           {/* Post image */}
           {postPhoto && <PostImage postPhoto={postPhoto} />}
         </Stack>
+        <DeletePostButton filenameString={filename} />
       </Box>
     </>
   );

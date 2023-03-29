@@ -1,47 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import GalleryPost from "./GalleryPosts";
 import Box from "@mui/material/Box";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import axiosRequest from "../../utils/axiosRequest";
-import { getUserPosts } from "../../axiosRequest/api/user-post";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import Modal from "@mui/material/Modal";
+import { PhotoQuickViewStyles } from "../PhotoQuickView/PhotoQuickView.style";
+import PhotoQuickView from "../PhotoQuickView/PhotoQuickView";
 
 interface GalleryProps {
   profileUserId: string | string[] | undefined;
 }
-
-interface ResponseImageData {
-  _id: string;
-  price: number;
-  tag: string;
-  userEmail: string;
-  imageUrl: string;
-}
-
 export default function Gallery(props: GalleryProps) {
-  const [galleryPosts, setGalleryPosts] = useState([]);
 
-  useEffect(() => {
-    getUserPosts(props.profileUserId).then((res) => {
-      const image = res.data.map((image: ResponseImageData) => image.imageUrl);
-      setGalleryPosts(image);
-    });
-  }, [props.profileUserId]);
+  //define necessary states for quick-view modal
+  const router = useRouter();
+  const [selectedFilename, setSelectedFilename] = useState<
+    string | undefined
+  >();
+
+  const [open, setOpen] = useState(false);
+  //open modal popup window
+  const handleOpen = (filename: string) => {
+    setSelectedFilename(filename);
+    setOpen(true);
+  };
+  //close modal popup window
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
-      <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
-        <ImageList
-          sx={{ columnCount: { sm: `2 !important`, md: `3 !important` } }}
-          variant="masonry"
-          gap={8}
-        >
-          {galleryPosts.map((imageUrl, i) => (
-            <ImageListItem key={i}>
-              <img src={`${imageUrl}?w=500`} loading="lazy" />
-            </ImageListItem>
-          ))}
-        </ImageList>
-      </Box>
+      <GalleryPost profileUserId={props.profileUserId} handleOpen={handleOpen} />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={PhotoQuickViewStyles}>
+          <PhotoQuickView filename={selectedFilename} router={router} />
+        </Box>
+      </Modal>
     </>
   );
 }

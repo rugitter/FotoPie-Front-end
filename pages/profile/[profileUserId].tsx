@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import NavBar from "../../src/components/NavBar";
+import NavBar from "../../src/components/NavBar/NavBar";
 import { getUserInfo } from "../../src/axiosRequest/api/user";
 import ProfileHeader from "../../src/components/ProfilePage/ProfileHeader";
 import ProfileGalleryAndCollection from "../../src/components/ProfilePage/ProfileGalleryAndCollection";
@@ -14,27 +14,16 @@ export interface User {
 export default function ProfilePage() {
   const [user, setUser] = useState<User | null>(null);
   const [isGallery, setIsGallery] = useState(true);
-  const [profileUserId, setProfileUserId] = useState<
-    string | string[] | undefined
-  >("");
   const router = useRouter();
-  const { id } = router.query;
+  const { profileUserId } = router.query;
 
   useEffect(() => {
-    if (!router.isReady || !id || user) return;
-    setProfileUserId(id);
+    if (!router.isReady || !profileUserId || user) return;
+
     getUserInfo(profileUserId).then(({ data }) => {
       setUser(data);
     });
   }, [profileUserId, router.isReady]);
-
-  useEffect(() => {
-    if (!router.isReady) return;
-    setProfileUserId(id);
-    getUserInfo(profileUserId).then(({ data }) => {
-      setUser(data);
-    });
-  }, [profileUserId, user, router.isReady]);
 
   return (
     <>
