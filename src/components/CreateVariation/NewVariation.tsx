@@ -113,7 +113,7 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
               {" "}
               a crafted fine touch
             </span>{" "}
-            powered by AI
+            powered by FotoPie+
           </h2>
           <img src="/create-variation.jpg" alt="" className={styles.bgImage} />
         </Box>

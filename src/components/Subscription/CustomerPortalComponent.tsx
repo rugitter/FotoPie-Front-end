@@ -67,7 +67,7 @@ export default function CustomerPortalComponent() {
                   color: "white",
                 }}
               >
-                <a href="/create-image">AI image simulation</a>
+                <a href="/create-variation">AI image simulation</a>
               </Button>
             </li>
           </ul>
