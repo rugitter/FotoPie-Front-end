@@ -19,3 +19,29 @@
 .imageContainer:hover img {
   opacity: 0.8;
 }
+.bgImage {
+  width: 55%;
+  opacity:0.9;
+}
+
+.bgText {
+  margin-right: 5%;
+  color: rgb(41, 40, 40);
+}
+
+.gradientText {
+  background-image: linear-gradient(
+    45deg,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

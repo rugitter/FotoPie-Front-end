@@ -93,7 +93,30 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
 
   return (
     <>
-      <Container component="main" maxWidth="md">
+      <Container component="main" maxWidth="lg">
+        <Box
+          className={styles.imageSection}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "90%",
+            marginBottom: "60px",
+            marginTop: "30px",
+          }}
+        >
+          <h2 className={styles.bgText}>
+            Enter a new realm of visual possibilities, enjoy
+            <span className={styles.gradientText}>
+              {" "}
+              a crafted fine touch
+            </span>{" "}
+            powered by AI
+          </h2>
+          <img src="/create-variation.jpg" alt="" className={styles.bgImage} />
+        </Box>
         <Dropzone
           onDrop={async (files) => {
             console.log("accepted files", files);
@@ -125,7 +148,7 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
           //autoFocus={true}
           radius="xl"
           sx={(theme) => ({
-            minHeight: rem(120),
+            minHeight: rem(100),
             maxWidth: rem(800),
             display: "flex",
             justifyContent: "center",
@@ -157,7 +180,7 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
           <Group
             position="center"
             spacing="xl"
-            style={{ minHeight: rem(220), pointerEvents: "none" }}
+            style={{ minHeight: rem(120), pointerEvents: "none" }}
           >
             <Dropzone.Accept>
               <IconUpload
