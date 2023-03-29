@@ -13,6 +13,7 @@ import {
   DropzoneProps,
   IMAGE_MIME_TYPE,
   FileWithPath,
+  
 } from "@mantine/dropzone";
 import { imageVariations } from "../src/axiosRequest/api/imageVariations";
 import Container from "@mui/material/Container";
