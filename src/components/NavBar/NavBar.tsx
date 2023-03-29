@@ -63,6 +63,7 @@ export default function Navbar({
 
   useEffect(() => {
     // Get new notification count
+    // if (!isNotificationRead) return;
     dispatch(getNotificationCountAction());
   }, [dispatch, isNotificationRead]);
 
