@@ -5,6 +5,7 @@ import Link from "../../utils/Link";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Avatar from "@mui/material/Avatar";
+import { Typography } from "@mui/material";
 
 interface userIconsProps {
   handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
@@ -23,9 +24,15 @@ export default function UserIcons ({
   color="white",
   fix,
 }: userIconsProps) {
-
-  console.log("notificationCount:", notificationCount);
   
+  const gradientText = {
+    backgroundImage: "linear-gradient(45deg, red, orange, green, blue, indigo)",
+    WebkitBackgroundClip: "text",
+    MozBackgroundClip: "text",
+    backgroundClip: "text",
+    color: "transparent",
+  };
+
   return (
     <Box
       sx={{
@@ -35,15 +42,36 @@ export default function UserIcons ({
         alignItems: "center",
       }}
     >
+      {/* FotoPie+ */}
+      <Typography>
+        <Link
+          variant="h6"
+          underline="none"
+          style={gradientText}
+          href="/subscription"
+          sx={{
+            fontSize: 20,
+            "&:hover": {
+              opacity: 0.9,
+              cursor: 'pointer',
+            },
+          }}
+        >
+          {"FotoPie+"}
+        </Link>
+      </Typography>
+
       {/* notifications */}
       <IconButton
         size="large"
         color="inherit"
         onClick={handleNotificationClick}
+        sx={{height: 45, width: 45}}
       >
         <Badge badgeContent={notificationCount} color="error">
           <NotificationsIcon
             sx={{
+              fontSize: '2rem', 
               color: fix ? "black" : color,
               "&:hover": {
                 opacity: 0.8,
@@ -59,10 +87,11 @@ export default function UserIcons ({
         src={avatarPath}
         onClick={handleProfileMenuOpen}
         sx={{
-          width: 40,
-          height: 40,
+          width: 45,
+          height: 45,
           "&:hover": {
             opacity: 0.8,
+            cursor: 'pointer'
           },
         }}
       />
@@ -74,9 +103,10 @@ export default function UserIcons ({
           "&:hover": {
             backgroundColor: "#F4DADA",
           },
+          height: 45,
         }}
       >
-        <Link href="/upload" underline="none">
+        <Link href="/upload" underline="none" >
           Upload
         </Link>
       </Button>
