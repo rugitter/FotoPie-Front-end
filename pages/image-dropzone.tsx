@@ -1,11 +1,29 @@
-import { Group, Text, useMantineTheme, rem } from "@mantine/core";
+import {
+  Group,
+  Text,
+  useMantineTheme,
+  rem,
+  Image,
+  SimpleGrid,
+  MantineTheme,
+  
+} from "@mantine/core";
 import { IconUpload, IconPhoto, IconX } from "@tabler/icons-react";
-import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from "@mantine/dropzone";
+import {
+  Dropzone,
+  DropzoneProps,
+  IMAGE_MIME_TYPE,
+  FileWithPath,
+  
+  
+} from "@mantine/dropzone";
 import { imageVariations } from "../src/axiosRequest/api/imageVariations";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import Image from "mui-image";
+//import Image from "mui-image";
 import { useState } from "react";
+
+
 
 export default function BaseDemo(props: Partial<DropzoneProps>) {
   const theme = useMantineTheme();
@@ -39,6 +57,7 @@ export default function BaseDemo(props: Partial<DropzoneProps>) {
         accept={IMAGE_MIME_TYPE}
         {...props}
       >
+        
         <Group
           position="center"
           spacing="xl"
@@ -107,14 +126,13 @@ export default function BaseDemo(props: Partial<DropzoneProps>) {
               },
             }}
           >
-            
             <Image src={image1} alt="" />
             <Image src={image2} alt="" />
           </Box>
-          
         </Box>
         {/* <Copyright sx={{ mt: 6 }} /> */}
       </Container>
     </>
   );
 }
+
