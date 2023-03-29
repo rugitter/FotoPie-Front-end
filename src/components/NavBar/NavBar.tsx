@@ -151,15 +151,15 @@ export default function Navbar({
           sx={{
             position: fix ? "fixed" : "relative",
             bgcolor: bgColor || (fix ? "#f8f8ff" : "transparent"),
-            '::after': {
+            "::after": {
               content: '""',
-              height: '8px',
-              position: 'absolute',
-              top: '100%',
-              right: '0px',
-              left: '0px',
+              height: "8px",
+              position: "absolute",
+              top: "100%",
+              right: "0px",
+              left: "0px",
               background:
-                'linear-gradient(rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px)',
+                "linear-gradient(rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px)",
             },
           }}
         >
@@ -229,17 +229,9 @@ export default function Navbar({
                   fix={fix}
                 />
               ) : (
-                <Button
-                  variant="contained"
-                  color="success"
-                  sx={{
-                    bgcolor: fix ? "#F4DADA" : "#FBF1F1",
-                  }}
-                >
-                  <Link href="/login" underline="none">
-                    Log In
-                  </Link>
-                </Button>
+                <Link href="/login" underline="none">
+                  <Button variant="contained">Log In</Button>
+                </Link>
               )}
             </Box>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
