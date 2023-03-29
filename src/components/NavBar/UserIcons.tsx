@@ -61,24 +61,28 @@ export default function UserIcons({
       </Typography>
 
       {/* notifications */}
-      <IconButton
-        size="large"
-        color="inherit"
-        onClick={handleNotificationClick}
-        sx={{ height: 45, width: 45 }}
-      >
-        <Badge badgeContent={notificationCount} color="error">
-          <NotificationsIcon
-            sx={{
-              fontSize: "2rem",
-              color: fix ? "black" : color,
-              "&:hover": {
-                opacity: 0.8,
-              },
-            }}
-          />
-        </Badge>
-      </IconButton>
+      {/* <Link
+        href="/notification"
+      > */}
+        <IconButton
+          size="large"
+          color="inherit"
+          onClick={handleNotificationClick}
+          sx={{ height: 45, width: 45 }}
+        >
+          <Badge badgeContent={notificationCount} color="error">
+            <NotificationsIcon
+              sx={{
+                fontSize: "2rem",
+                color: fix ? "black" : color,
+                "&:hover": {
+                  opacity: 0.8,
+                },
+              }}
+            />
+          </Badge>
+        </IconButton>
+      {/* </Link> */}
 
       {/* User Profile */}
       <Avatar

@@ -20,17 +20,20 @@ import {
   getNotificationCountAction,
   markNotificationReadAction,
 } from "../../../store/notificationBell/notificationBellAction";
+import { NavBarStyles } from "./NavbarBaseline.style";
 
 interface NavbarProps {
   isFixed: boolean;
   color?: string;
   bgColor?: string;
+  baseLine?: any;
 }
 
 export default function Navbar({
   isFixed,
   color = "#FFFFFF",
   bgColor,
+  baseLine,
 }: NavbarProps) {
   useCheckToken();
   const { isAuthenticated, notificationCount, isNotificationRead } =
@@ -60,7 +63,6 @@ export default function Navbar({
 
   useEffect(() => {
     // Get new notification count
-    // if (!isNotificationRead) return;
     dispatch(getNotificationCountAction());
   }, [dispatch, isNotificationRead]);
 
@@ -141,7 +143,7 @@ export default function Navbar({
     handleMenuClose();
   };
   const isMenuOpen = Boolean(anchorEl);
-
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <>
@@ -149,9 +151,12 @@ export default function Navbar({
           color="transparent"
           elevation={0}
           sx={{
-            position: fix ? "fixed" : "relative",
-            bgcolor: bgColor || (fix ? "#f8f8ff" : "transparent"),
-            "::after": {
+            position: fix ? 'fixed' : 'relative',
+            backgroundColor: bgColor || (fix ? '#f8f8ff' : 'transparent'),
+            color: 'transparent',
+            elevation: 0,
+            "::after": baseLine || (fix ?
+            {
               content: '""',
               height: "8px",
               position: "absolute",
@@ -159,8 +164,9 @@ export default function Navbar({
               right: "0px",
               left: "0px",
               background:
-                "linear-gradient(rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px)",
-            },
+              "linear-gradient(rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px)",
+            }
+            : {})
           }}
         >
           <Toolbar
@@ -171,18 +177,19 @@ export default function Navbar({
               justifyContent: "space-between",
             }}
           >
-            {/* Logo  */}
             <Link
               href="/"
+              underline="none"
               sx={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
                 "&:hover": {
-                  opacity: 0.8,
-                },
-              }}
+                  opacity: 0.9,
+                  },
+              }}           
             >
+              {/* Logo  */}
               <img
                 src="/logo.png"
                 style={{ borderRadius: 10 }}
@@ -190,26 +197,21 @@ export default function Navbar({
                 width={45}
                 height={45}
               />
-            </Link>
 
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1, ml: 2 }}
-            >
-              <Link
+              <Typography
                 variant="h6"
-                underline="none"
-                href="/"
-                sx={{
+                component="div"
+                sx={{ 
+                  flexGrow: 1, 
+                  ml: 2,
                   fontSize: 24,
                   fontFamily: "inherit",
                   color: fix ? "#000000" : color,
                 }}
               >
-                {"FotoPie"}
-              </Link>
-            </Typography>
+                  {"FotoPie"}
+              </Typography>
+            </Link>
 
             <Box sx={{ flexGrow: 1 }}></Box>
             <Box

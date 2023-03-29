@@ -208,7 +208,7 @@ export default function Upload() {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" bgColor="#f8f8ff" />
+      <NavBar isFixed={false} color="#000000"/>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{

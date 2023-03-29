@@ -14,6 +14,7 @@ import EditUserProfileHeader from "../src/components/EditUserProfile/EditUserPro
 import AvatarUploadButton from "../src/components/EditUserProfile/AvatarUploadButton";
 import ProfilePicture from "../src/components/EditUserProfile/ProfilePicture";
 import EditUserForm from "../src/components/EditUserProfile/EditUserForm";
+import { truncate } from "fs/promises";
 
 // Define a component that renders the form
 export default function EditUserProfile() {

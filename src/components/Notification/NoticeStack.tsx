@@ -5,6 +5,9 @@ import { AppDispatch, RootState } from "../../../store/store";
 import Loading from "./Loading";
 import NoNotification from "./NoNotification";
 import NotificationList from "./NotificationList";
+import {
+  markNotificationReadAction,
+} from "../../../store/notificationBell/notificationBellAction";
 
 export default function NoticeStack() {
   //RTK Dispatch and fetch data

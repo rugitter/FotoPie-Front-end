@@ -9,7 +9,7 @@ export default function MidBar() {
       <Button
         variant="outlined"
         sx={{
-          fontSize: "16px",
+          fontSize: "17px",
           borderRadius: 10,
           p: 1.7,
           pl: 6,
@@ -28,7 +28,7 @@ export default function MidBar() {
       <Button
         variant="outlined"
         sx={{
-          fontSize: "16px",
+          fontSize: "17px",
           borderRadius: 10,
           p: 1.7,
           pl: 5,
@@ -42,7 +42,7 @@ export default function MidBar() {
         <Link
           href="/category/category-main-page"
           underline="none"
-          sx={{ color: "primary.main" }}
+          sx={{ color: "black" }}
         >
           Explore
         </Link>
@@ -50,7 +50,7 @@ export default function MidBar() {
       <Button
         variant="outlined"
         sx={{
-          fontSize: "16px",
+          fontSize: "17px",
           borderRadius: 10,
           p: 1.7,
           pl: 5,
