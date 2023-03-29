@@ -44,7 +44,7 @@ export default function Home() {
           margin: 0,
           padding: 0,
           height: "400px",
-          backgroundPosition: "center", 
+          backgroundPosition: "center",
         }}
       >
         <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
@@ -82,7 +82,7 @@ export default function Home() {
             fontWeight: "25px",
             marginLeft: "43px",
             marginBottom: "20px",
-            fontFamily: "Roboto",
+            fontFamily: "Work Sans', sans-serif",
           }}
         >
           Trending Photos
