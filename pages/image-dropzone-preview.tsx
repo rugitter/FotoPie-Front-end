@@ -21,7 +21,11 @@ export default function Demo() {
 
   return (
     <div>
-      <Dropzone accept={IMAGE_MIME_TYPE} onDrop={setFiles}>
+      <Dropzone
+        accept={IMAGE_MIME_TYPE}
+        onDrop={setFiles}
+        
+      >
         <Text align="center">Drop images here</Text>
         <Group position="center">
           <Dropzone.Accept>
@@ -63,23 +67,10 @@ export default function Demo() {
               alignItems: "center",
             }}
           >
-            {/* <SimpleGrid
-              cols={5}
-              breakpoints={[{ maxWidth: "sm", cols: 1 }]}
-              mt={previews.length > 0 ? "xl" : 0}
-            >
-              {previews}
-            </SimpleGrid> */}
-            {/* {previews} */}
+        
             <Box width="20%">{previews}</Box>
           </div>
-          {/* <SimpleGrid
-            cols={5}
-            breakpoints={[{ maxWidth: "sm", cols: 5 }]}
-            mt={previews.length > 0 ? "xl" : 0}
-          >
-            {previews}
-          </SimpleGrid> */}
+          
         </Group>
       </Dropzone>
     </div>

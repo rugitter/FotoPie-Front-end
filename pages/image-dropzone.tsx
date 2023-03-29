@@ -30,11 +30,27 @@ export default function BaseDemo(props: Partial<DropzoneProps>) {
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
   
+  const [files, setFiles] = useState<FileWithPath[]>([]);
+
+  const previews = files.map((file, index) => {
+    const imageUrl = URL.createObjectURL(file);
+    return (
+      <Image
+        key={index}
+        src={imageUrl}
+        imageProps={{ onLoad: () => URL.revokeObjectURL(imageUrl) }}
+        sx={{ width: "20%" }}
+      />
+    );
+  });
+
   return (
     <>
       <Dropzone
         onDrop={async (files) => {
           console.log("accepted files", files);
+          setFiles(files);
+
           const formData = new FormData();
           formData.append("file", files[0]);
           try {
@@ -53,11 +69,43 @@ export default function BaseDemo(props: Partial<DropzoneProps>) {
           }
         }}
         onReject={(files) => console.log("rejected files", files)}
-        maxSize={3 * 1024 ** 2}
+        maxSize={4 * 1024 ** 2}
         accept={IMAGE_MIME_TYPE}
+        //accept={["image/png", "image/jpeg", "image/sgv+xml", "image/gif"]}
+        multiple={false}
+        //autoFocus={true}
+        radius="xl"
+        sx={(theme) => ({
+          minHeight: rem(120),
+          maxWidth: rem(800),
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          border: 10,
+          marginLeft: "auto",
+          marginRight: "auto",
+
+          backgroundColor:
+            theme.colorScheme === "dark"
+              ? theme.colors.dark[6]
+              : theme.colors.gray[0],
+
+          "&[data-accept]": {
+            color: theme.white,
+            backgroundColor: theme.colors.blue[6],
+          },
+
+          "&[data-reject]": {
+            color: theme.white,
+            backgroundColor: theme.colors.red[6],
+          },
+          "&[data-idle]": {
+            color: theme.black,
+            backgroundColor: theme.colors.green[2],
+          },
+        })}
         {...props}
       >
-        
         <Group
           position="center"
           spacing="xl"
@@ -67,32 +115,47 @@ export default function BaseDemo(props: Partial<DropzoneProps>) {
             <IconUpload
               size="3.2rem"
               stroke={1.5}
-              color={
-                theme.colors[theme.primaryColor][
-                  theme.colorScheme === "dark" ? 4 : 6
-                ]
-              }
+              // color={
+              //   theme.colors[theme.primaryColor][
+              //     theme.colorScheme === "dark" ? 4 : 6
+              //   ]
+              // }
             />
           </Dropzone.Accept>
           <Dropzone.Reject>
             <IconX
               size="3.2rem"
               stroke={1.5}
-              color={theme.colors.red[theme.colorScheme === "dark" ? 4 : 6]}
+              // color={theme.colors.red[theme.colorScheme === "dark" ? 4 : 6]}
             />
           </Dropzone.Reject>
           <Dropzone.Idle>
             <IconPhoto size="3.2rem" stroke={1.5} />
           </Dropzone.Idle>
-
           <div>
             <Text size="xl" inline>
-              Drag images here or click to select files
+              Drag image here or click to select file
             </Text>
             <Text size="sm" color="dimmed" inline mt={7}>
-              Attach as many files as you like, each file should not exceed 5mb
+              Attach one image file with standard format, size limit 4mb
             </Text>
           </div>
+          <Container maxWidth="xs">
+            <SimpleGrid
+              cols={1}
+              breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+              mt={previews.length > 0 ? "xl" : 0}
+            >
+              {previews}
+            </SimpleGrid>
+          </Container>
+          {/* <SimpleGrid
+            cols={1}
+            breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+            mt={previews.length > 0 ? "xl" : 0}
+          >
+            {previews}
+          </SimpleGrid> */}
         </Group>
       </Dropzone>
 
