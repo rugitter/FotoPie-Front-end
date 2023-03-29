@@ -1,5 +1,6 @@
 import Image from "mui-image";
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 
 export interface PostImageProps {
   postPhoto: string;
@@ -8,20 +9,20 @@ export interface PostImageProps {
 const PostImage = ({ postPhoto }: PostImageProps) => {
   return (
     <>
-      <Box
+      <Container
         sx={{
           m: "auto",
           width: "auto",
-          height: "auto",
+          height: "70vh",
         }}
       >
         <Image
           alt="image"
           src={postPhoto}
-          width="40vw"
+          width="auto"
           style={{ objectFit: "contain" }}
         />
-      </Box>
+      </Container>
     </>
   );
 };
