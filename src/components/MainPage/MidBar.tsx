@@ -62,7 +62,7 @@ export default function MidBar() {
         size="large"
       >
         <Link href="/subscription" underline="none">
-          <span className={styles.gradientText}>FotoPie+</span>
+          <span className={styles.gradientText}>AI Drawing</span>
         </Link>
       </Button>
     </Box>

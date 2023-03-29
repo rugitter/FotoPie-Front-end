@@ -16,17 +16,17 @@ interface userIconsProps {
   fix: boolean;
 }
 
-export default function UserIcons ({
+export default function UserIcons({
   notificationCount,
   avatarPath,
   handleProfileMenuOpen,
   handleNotificationClick,
-  color="white",
+  color = "white",
   fix,
 }: userIconsProps) {
-  
   const gradientText = {
-    backgroundImage: "linear-gradient(45deg, red, orange, green, blue, indigo)",
+    backgroundImage:
+      "linear-gradient(45deg, #ff3300, red, orange, #ff33cc, #1affa3, #33cc33, #1aff66)",
     WebkitBackgroundClip: "text",
     MozBackgroundClip: "text",
     backgroundClip: "text",
@@ -53,7 +53,7 @@ export default function UserIcons ({
             fontSize: 20,
             "&:hover": {
               opacity: 0.9,
-              cursor: 'pointer',
+              cursor: "pointer",
             },
           }}
         >
@@ -66,12 +66,12 @@ export default function UserIcons ({
         size="large"
         color="inherit"
         onClick={handleNotificationClick}
-        sx={{height: 45, width: 45}}
+        sx={{ height: 45, width: 45 }}
       >
         <Badge badgeContent={notificationCount} color="error">
           <NotificationsIcon
             sx={{
-              fontSize: '2rem', 
+              fontSize: "2rem",
               color: fix ? "black" : color,
               "&:hover": {
                 opacity: 0.8,
@@ -91,7 +91,7 @@ export default function UserIcons ({
           height: 45,
           "&:hover": {
             opacity: 0.8,
-            cursor: 'pointer'
+            cursor: "pointer",
           },
         }}
       />
@@ -106,10 +106,10 @@ export default function UserIcons ({
           height: 45,
         }}
       >
-        <Link href="/upload" underline="none" >
+        <Link href="/upload" underline="none">
           Upload
         </Link>
       </Button>
     </Box>
-  )
+  );
 }

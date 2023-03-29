@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./subscription.module.css";
+import styles from "./Subscription.module.css";
 import { Button } from "@mui/material";
 import Link from "next/link";
 
