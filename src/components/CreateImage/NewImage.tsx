@@ -40,7 +40,24 @@ const NewImage: React.FC = () => {
     }
   };
 
+  const handleDownload = async (imageUrl: string, filename: string) => {
+    const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
+      imageUrl
+    )}`;
+
+    const res = await fetch(proxyUrl);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
+    // Page Container
     <Box
       sx={{
         display: "flex",
@@ -56,7 +73,6 @@ const NewImage: React.FC = () => {
         sx={{
           display: "flex",
           flexDirection: "row",
-
           alignItems: "center",
           justifyContent: "space-between",
           width: "90%",
@@ -136,12 +152,60 @@ const NewImage: React.FC = () => {
             </div>
           </div>
         ) : (
-          <>
-            <Image src={url_1} alt="" />
-            <Image src={url_2} alt="" />
-            <Image src={url_3} alt="" />
-            <Image src={url_4} alt="" />
-          </>
+          <Box sx={{ display: "flex" }}>
+            <Box
+              className={styles.imageContainer}
+              sx={{ marginRight: "20px", ":hover": { opacity: 0.8 } }}
+            >
+              <Button
+                className={styles.downloadButton}
+                onClick={() => handleDownload(url_1, "image.png")}
+              >
+                Download
+              </Button>
+
+              <Image src={url_1} alt="" />
+            </Box>
+
+            <Box
+              className={styles.imageContainer}
+              sx={{ marginRight: "20px", ":hover": { opacity: 0.8 } }}
+            >
+              <Button
+                className={styles.downloadButton}
+                onClick={() => handleDownload(url_2, "image.png")}
+              >
+                Download
+              </Button>
+              <Image src={url_2} alt="" />
+            </Box>
+
+            <Box
+              className={styles.imageContainer}
+              sx={{ marginRight: "20px", ":hover": { opacity: 0.8 } }}
+            >
+              <Button
+                className={styles.downloadButton}
+                onClick={() => handleDownload(url_3, "image.png")}
+              >
+                Download
+              </Button>
+              <Image src={url_3} alt="" />
+            </Box>
+
+            <Box
+              className={styles.imageContainer}
+              sx={{ ":hover": { opacity: 0.8 } }}
+            >
+              <Button
+                className={styles.downloadButton}
+                onClick={() => handleDownload(url_4, "image.png")}
+              >
+                Download
+              </Button>
+              <Image src={url_4} alt="" />
+            </Box>
+          </Box>
         )}
       </Box>
       <Copyright />

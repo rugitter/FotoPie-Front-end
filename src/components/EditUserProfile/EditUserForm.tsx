@@ -57,7 +57,7 @@ interface Props {
   lastName: string;
 }
 
-const EditUserForm:React.FC<Props>= ({firstName, lastName}) => {
+const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
   const router = useRouter();
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
@@ -289,7 +289,6 @@ const EditUserForm:React.FC<Props>= ({firstName, lastName}) => {
               <Button
                 type="submit"
                 size="large"
-                color="secondary"
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
@@ -298,11 +297,9 @@ const EditUserForm:React.FC<Props>= ({firstName, lastName}) => {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </FormProvider>
   );
 };
 
 export default EditUserForm;
-

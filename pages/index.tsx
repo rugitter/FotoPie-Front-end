@@ -38,12 +38,11 @@ export default function Home() {
                 rgba(0, 0, 0, 0.1),
                 rgba(0, 0, 0, 0.1)
               ),
-              url(../../background.jpg)`,
-
+              url(https://source.unsplash.com/random)`,
           backgroundSize: "cover",
           margin: 0,
           padding: 0,
-          height: "500px",
+          height: "600px",
           backgroundPosition: "center",
         }}
       >

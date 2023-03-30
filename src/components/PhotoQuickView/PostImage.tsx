@@ -1,5 +1,3 @@
-import Image from "mui-image";
-import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 
 export interface PostImageProps {
@@ -16,11 +14,10 @@ const PostImage = ({ postPhoto }: PostImageProps) => {
           height: "70vh",
         }}
       >
-        <Image
+        <img
           alt="image"
           src={postPhoto}
-          width="auto"
-          style={{ objectFit: "contain" }}
+          style={{ maxWidth: "100%", objectFit: "contain", height: "600px" }}
         />
       </Container>
     </>
