@@ -10,6 +10,7 @@ interface QuickViewState {
   userID: string;
   collected: boolean;
   liked: boolean;
+  isLoading: boolean;
 }
 
 const initialState: QuickViewState = {
@@ -21,6 +22,7 @@ const initialState: QuickViewState = {
   userID: "",
   collected: false,
   liked: false,
+  isLoading: false,
 };
 
 export const quickViewSlice = createSlice({
@@ -37,6 +39,9 @@ export const quickViewSlice = createSlice({
       state.collected = action.payload.collect_status;
       state.liked = action.payload.like_status;
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(updateCollect.fulfilled, (state, action) => {
@@ -49,6 +54,6 @@ export const quickViewSlice = createSlice({
     });
   },
 });
-export const { setQuickViewData } = quickViewSlice.actions;
+export const { setQuickViewData, setLoading } = quickViewSlice.actions;
 
 export default quickViewSlice.reducer;
