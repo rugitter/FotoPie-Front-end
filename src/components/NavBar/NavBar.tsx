@@ -20,7 +20,6 @@ import {
   getNotificationCountAction,
   markNotificationReadAction,
 } from "../../../store/notificationBell/notificationBellAction";
-import { NavBarStyles } from "./NavbarBaseline.style";
 
 interface NavbarProps {
   isFixed: boolean;
@@ -80,7 +79,7 @@ export default function Navbar({
   const [fix, setFix] = useState(false);
 
   const setFixed = () => {
-    if (window.scrollY >= 500) {
+    if (window.scrollY >= 600) {
       setFix(true);
     } else {
       setFix(false);
@@ -144,7 +143,7 @@ export default function Navbar({
     handleMenuClose();
   };
   const isMenuOpen = Boolean(anchorEl);
-  
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <>
@@ -152,25 +151,27 @@ export default function Navbar({
           color="transparent"
           elevation={0}
           sx={{
-            position: fix ? 'fixed' : 'relative',
-            backgroundColor: bgColor || (fix ? '#fff' : 'transparent'),
-            color: 'transparent',
+            position: fix ? "fixed" : "relative",
+            backgroundColor: bgColor || (fix ? "#fff" : "transparent"),
+            color: "transparent",
             height: 80,
             display: "flex",
             justifyContent: "center",
             elevation: 0,
-            "::after": baseLine || (fix ?
-            {
-              content: '""',
-              height: "8px",
-              position: "absolute",
-              top: "100%",
-              right: "0px",
-              left: "0px",
-              background:
-              "linear-gradient(rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px)",
-            }
-            : {})
+            "::after":
+              baseLine ||
+              (fix
+                ? {
+                    content: '""',
+                    height: "8px",
+                    position: "absolute",
+                    top: "100%",
+                    right: "0px",
+                    left: "0px",
+                    background:
+                      "linear-gradient(rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px)",
+                  }
+                : {}),
           }}
         >
           <Toolbar
@@ -194,8 +195,8 @@ export default function Navbar({
                 justifyContent: "space-between",
                 "&:hover": {
                   opacity: 0.9,
-                  },
-              }}           
+                },
+              }}
             >
               {/* Logo  */}
               <img
@@ -209,15 +210,15 @@ export default function Navbar({
               <Typography
                 variant="h6"
                 component="div"
-                sx={{ 
-                  flexGrow: 1, 
+                sx={{
+                  flexGrow: 1,
                   ml: 2,
                   fontSize: 26,
                   fontFamily: "inherit",
                   color: fix ? "#000000" : color,
                 }}
               >
-                  {"FotoPie"}
+                {"FotoPie"}
               </Typography>
             </Link>
 
@@ -241,7 +242,9 @@ export default function Navbar({
                 />
               ) : (
                 <Link href="/login" underline="none">
-                  <Button variant="contained" sx={{p: 1.5, pr: 2,pl: 2}}>Log In</Button>
+                  <Button variant="contained" sx={{ p: 1.5, pr: 2, pl: 2 }}>
+                    Log In
+                  </Button>
                 </Link>
               )}
             </Box>

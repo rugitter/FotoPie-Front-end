@@ -14,7 +14,7 @@ export function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/login", req.nextUrl));
     }
   } else {
-    if (pathname.startsWith("/login")) {
+    if (pathname.startsWith("/login") || pathname.startsWith("/signup")) {
       return NextResponse.redirect(new URL("/", req.nextUrl));
     }
   }
