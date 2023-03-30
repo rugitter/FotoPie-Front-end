@@ -1,4 +1,4 @@
-import { Box, Button, Paper, styled } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Item from "./Notification.style";
 
 const NoNotification = () => {
