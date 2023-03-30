@@ -19,6 +19,8 @@ import { AppDispatch, RootState } from "../store/store";
 import { login } from "../store/auth/authAciton";
 import LoginButton from "../src/components/LoginForm/LoginButton";
 import ErrorAlert from "../src/components/LoginForm/ErrorAlert";
+import NavBar from "../src/components/NavBar/NavBar";
+import { NavBarStyles } from "../src/components/NavBar/NavbarBaseline.style";
 
 // Define a type with the shape of the form values
 export interface IFormInput {
@@ -56,79 +58,74 @@ export default function LogIn() {
   }, [isAuthenticated]);
 
   return (
-    <Container component="main" maxWidth="xs">
-      {/* error handling*/}
-      {error && <ErrorAlert error={error}></ErrorAlert>}
-
-      <Box
-        sx={{
-          marginTop: 3,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        {/* login icon */}
-        <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
-
-        {/* input Form */}
-        <FormProvider {...methods}>
-          <Box
-            component="form"
-            onSubmit={methods.handleSubmit(onSubmit)}
-            sx={{ mt: 1 }}
-          >
-            {/* Email */}
-            <FormTextField
-              name="email"
-              label="Email Address"
-              id="email"
-              autoComplete="email"
-            />
-
-            {/* Password */}
-            <FormTextField
-              name="password"
-              label="Password"
-              id="password"
-              type="password"
-              autoComplete="current-password"
-            />
-
-            {/* TODO: add remember checkbox */}
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
-
-            {/* Button */}
-            <LoginButton loginStatus={loginStatus}></LoginButton>
-
-            <Grid container>
-              {/* Forgot password? */}
-              <Grid item xs>
-                <Link href="/reset/reset-request" variant="body2">
-                  Forgot password?
-                </Link>
+    <>
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
+      <Container component="main" maxWidth="xs" sx={{ mt: 10 }}>
+        {/* error handling*/}
+        {error && <ErrorAlert error={error}></ErrorAlert>}
+        <Box
+          sx={{
+            marginTop: 3,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {/* login icon */}
+          <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Login
+          </Typography>
+          {/* input Form */}
+          <FormProvider {...methods}>
+            <Box
+              component="form"
+              onSubmit={methods.handleSubmit(onSubmit)}
+              sx={{ mt: 1 }}
+            >
+              {/* Email */}
+              <FormTextField
+                name="email"
+                label="Email Address"
+                id="email"
+                autoComplete="email"
+              />
+              {/* Password */}
+              <FormTextField
+                name="password"
+                label="Password"
+                id="password"
+                type="password"
+                autoComplete="current-password"
+              />
+              {/* TODO: add remember checkbox */}
+              {/* <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              /> */}
+              {/* Button */}
+              <LoginButton loginStatus={loginStatus}></LoginButton>
+              <Grid container>
+                {/* Forgot password? */}
+                <Grid item xs>
+                  <Link href="/reset/reset-request" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                {/* Don't have an account? Sign Up */}
+                <Grid item>
+                  <Link href="signup" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
               </Grid>
-
-              {/* Don't have an account? Sign Up */}
-              <Grid item>
-                <Link href="signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </FormProvider>
-      </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
-    </Container>
+            </Box>
+          </FormProvider>
+        </Box>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
+    </>
   );
 }
