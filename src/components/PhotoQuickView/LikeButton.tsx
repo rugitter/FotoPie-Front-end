@@ -33,11 +33,14 @@ const LikeButton = ({
     <>
       <Button
         variant="outlined"
+        color="info"
         sx={{
           opacity: { xs: 0, sm: 0, md: 1 },
-          color: liked ? "secondary.main" : "primary.main",
+          color: liked ? "red" : "black",
         }}
-        startIcon={<FavoriteBorderIcon />}
+        startIcon={
+          <FavoriteBorderIcon sx={{ color: liked ? "red" : "black" }} />
+        }
         onClick={addToLiked}
       >
         {liked

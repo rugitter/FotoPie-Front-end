@@ -20,17 +20,20 @@ import {
   getNotificationCountAction,
   markNotificationReadAction,
 } from "../../../store/notificationBell/notificationBellAction";
+import { NavBarStyles } from "./NavbarBaseline.style";
 
 interface NavbarProps {
   isFixed: boolean;
   color?: string;
   bgColor?: string;
+  baseLine?: any;
 }
 
 export default function Navbar({
   isFixed,
   color = "#FFFFFF",
   bgColor,
+  baseLine,
 }: NavbarProps) {
   useCheckToken();
   const { isAuthenticated, notificationCount, isNotificationRead } =
@@ -77,7 +80,7 @@ export default function Navbar({
   const [fix, setFix] = useState(false);
 
   const setFixed = () => {
-    if (window.scrollY >= 410) {
+    if (window.scrollY >= 500) {
       setFix(true);
     } else {
       setFix(false);
@@ -141,7 +144,7 @@ export default function Navbar({
     handleMenuClose();
   };
   const isMenuOpen = Boolean(anchorEl);
-
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <>
@@ -149,9 +152,15 @@ export default function Navbar({
           color="transparent"
           elevation={0}
           sx={{
-            position: fix ? "fixed" : "relative",
-            bgcolor: bgColor || (fix ? "#f8f8ff" : "transparent"),
-            "::after": {
+            position: fix ? 'fixed' : 'relative',
+            backgroundColor: bgColor || (fix ? '#fff' : 'transparent'),
+            color: 'transparent',
+            height: 80,
+            display: "flex",
+            justifyContent: "center",
+            elevation: 0,
+            "::after": baseLine || (fix ?
+            {
               content: '""',
               height: "8px",
               position: "absolute",
@@ -159,64 +168,66 @@ export default function Navbar({
               right: "0px",
               left: "0px",
               background:
-                "linear-gradient(rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px)",
-            },
+              "linear-gradient(rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px)",
+            }
+            : {})
           }}
         >
           <Toolbar
             sx={{
-              marginTop: 0,
+              mt: 0,
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              width: "100%",
+              maxWidth: 1600,
+              margin: "0 auto",
+              padding: fix ? "0 40px" : 0,
             }}
           >
-            {/* Logo  */}
             <Link
               href="/"
+              underline="none"
               sx={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
                 "&:hover": {
-                  opacity: 0.8,
-                },
-              }}
+                  opacity: 0.9,
+                  },
+              }}           
             >
+              {/* Logo  */}
               <img
                 src="/logo.png"
                 style={{ borderRadius: 10 }}
                 alt="Fotopie_Logo"
-                width={45}
-                height={45}
+                width={50}
+                height={50}
               />
-            </Link>
 
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1, ml: 2 }}
-            >
-              <Link
+              <Typography
                 variant="h6"
-                underline="none"
-                href="/"
-                sx={{
-                  fontSize: 24,
+                component="div"
+                sx={{ 
+                  flexGrow: 1, 
+                  ml: 2,
+                  fontSize: 26,
                   fontFamily: "inherit",
                   color: fix ? "#000000" : color,
                 }}
               >
-                {"FotoPie"}
-              </Link>
-            </Typography>
+                  {"FotoPie"}
+              </Typography>
+            </Link>
 
             <Box sx={{ flexGrow: 1 }}></Box>
             <Box
               sx={{
                 display: { xs: "none", md: "flex" },
                 flexGrow: 0.12,
-                justifyContent: "space-between",
+                justifyContent: "flex-end",
+                alignItems: "center",
               }}
             >
               {isAuthenticated ? (
@@ -230,7 +241,7 @@ export default function Navbar({
                 />
               ) : (
                 <Link href="/login" underline="none">
-                  <Button variant="contained">Log In</Button>
+                  <Button variant="contained" sx={{p: 1.5, pr: 2,pl: 2}}>Log In</Button>
                 </Link>
               )}
             </Box>

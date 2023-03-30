@@ -43,11 +43,11 @@ export default function Home() {
           backgroundSize: "cover",
           margin: 0,
           padding: 0,
-          height: "400px",
+          height: "500px",
           backgroundPosition: "center",
         }}
       >
-        <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+        <div style={{ maxWidth: "1600px", margin: "0 auto" }}>
           <NavBar isFixed={true} />
           <Header />
         </div>

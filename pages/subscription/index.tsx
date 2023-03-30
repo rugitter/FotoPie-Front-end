@@ -3,6 +3,7 @@ import Navbar from "../../src/components/NavBar/NavBar";
 import SubscriptionComponent from "../../src/components/Subscription/SubscriptionComponent";
 import CustomerPortalComponent from "../../src/components/Subscription/CustomerPortalComponent";
 import { getSubscriptionStatus } from "../../src/axiosRequest/api/subscription";
+import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
 
 const CreateImage: React.FC = () => {
   const [status, setStatus] = useState<boolean | null>(null);
@@ -23,7 +24,7 @@ const CreateImage: React.FC = () => {
 
   return (
     <>
-      <Navbar isFixed={false} color="#000000" />
+      <Navbar isFixed={false} color="#000000" baseLine={NavBarStyles}/>
       {status ? <CustomerPortalComponent /> : <SubscriptionComponent />}
     </>
   );
