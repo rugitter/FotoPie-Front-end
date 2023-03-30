@@ -9,8 +9,8 @@ import UploadIcon from "@mui/icons-material/Upload";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Avatar from "@mui/material/Avatar";
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import LoyaltyIcon from '@mui/icons-material/Loyalty';
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import LoyaltyIcon from "@mui/icons-material/Loyalty";
 
 interface hamburgerMenuProps {
   mobileMoreAnchorEl: null | HTMLElement;
@@ -21,7 +21,7 @@ interface hamburgerMenuProps {
   avatarPath: string;
   handleMobileLogout: () => void;
   handleNotificationClick: () => void;
-  id: string
+  id: string;
 }
 
 export default function hamburgerMenu({
@@ -35,7 +35,6 @@ export default function hamburgerMenu({
   handleNotificationClick,
   id,
 }: hamburgerMenuProps) {
-
   const mobileMenuId = "primary-search-account-menu-mobile";
 
   return (
@@ -56,12 +55,11 @@ export default function hamburgerMenu({
     >
       {isAuthenticated ? (
         <Box>
-          <MenuItem onClick={handleNotificationClick}>
-            <IconButton
-              href="/notification"
-              size="large"
-              color="inherit"
-            >
+          <MenuItem
+            onClick={handleNotificationClick}
+            sx={{ ":hover": { bgcolor: "secondary.main" } }}
+          >
+            <IconButton href="/notification" size="large" color="inherit">
               <Badge badgeContent={notificationCount} color="error">
                 <NotificationsIcon />
               </Badge>
@@ -69,7 +67,9 @@ export default function hamburgerMenu({
             <p>Notifications</p>
           </MenuItem>
           <MenuItem
-            component="a" href={`/profile/${id}`}
+            component="a"
+            href={`/profile/${id}`}
+            sx={{ ":hover": { bgcolor: "secondary.main" } }}
           >
             <Avatar
               alt="Avatar"
@@ -78,34 +78,40 @@ export default function hamburgerMenu({
             />
             <p>Profile</p>
           </MenuItem>
-          <MenuItem component="a" href="/edituserprofile">
-            <IconButton 
-              size="large" 
-              color="inherit"
-            >
+          <MenuItem
+            component="a"
+            href="/edituserprofile"
+            sx={{ ":hover": { bgcolor: "secondary.main" } }}
+          >
+            <IconButton size="large" color="inherit">
               <ManageAccountsIcon />
             </IconButton>
             <p>Edit Profile</p>
           </MenuItem>
-          <MenuItem component="a" href="/upload">
-            <IconButton 
-              size="large" 
-              color="inherit"
-            >
+          <MenuItem
+            component="a"
+            href="/upload"
+            sx={{ ":hover": { bgcolor: "secondary.main" } }}
+          >
+            <IconButton size="large" color="inherit">
               <UploadIcon />
             </IconButton>
             <p>Upload</p>
-          </MenuItem >
-          <MenuItem component="a" href="/subscription">
-            <IconButton 
-              size="large" 
-              color="inherit"
-            >
+          </MenuItem>
+          <MenuItem
+            component="a"
+            href="/subscription"
+            sx={{ ":hover": { bgcolor: "secondary.main" } }}
+          >
+            <IconButton size="large" color="inherit">
               <LoyaltyIcon />
             </IconButton>
             <p>FotoPie+</p>
           </MenuItem>
-          <MenuItem onClick={handleMobileLogout}>
+          <MenuItem
+            onClick={handleMobileLogout}
+            sx={{ ":hover": { bgcolor: "secondary.main" } }}
+          >
             <IconButton size="large" color="inherit">
               <LogoutOutlinedIcon />
             </IconButton>

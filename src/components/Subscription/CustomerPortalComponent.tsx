@@ -90,7 +90,7 @@ export default function CustomerPortalComponent() {
                     backgroundColor: "#8777D9",
                   }}
                 >
-                  <Link href="#" sx={{ color: "white" }} underline="none">
+                  <Link href="/create-variation" sx={{ color: "white" }} underline="none">
                     Similar image generation
                   </Link>
                 </Button>

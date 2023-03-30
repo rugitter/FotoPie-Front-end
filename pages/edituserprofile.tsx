@@ -14,6 +14,8 @@ import EditUserProfileHeader from "../src/components/EditUserProfile/EditUserPro
 import AvatarUploadButton from "../src/components/EditUserProfile/AvatarUploadButton";
 import ProfilePicture from "../src/components/EditUserProfile/ProfilePicture";
 import EditUserForm from "../src/components/EditUserProfile/EditUserForm";
+import { truncate } from "fs/promises";
+import { NavBarStyles } from "../src/components/NavBar/NavbarBaseline.style";
 
 // Define a component that renders the form
 export default function EditUserProfile() {
@@ -32,7 +34,7 @@ export default function EditUserProfile() {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" />
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles}/>
       <Container component="main" maxWidth="md">
         {/*Page heading, profile icon and change picture button*/}
         <EditUserProfileHeader />

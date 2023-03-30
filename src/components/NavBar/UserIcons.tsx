@@ -25,8 +25,7 @@ export default function UserIcons({
   fix,
 }: userIconsProps) {
   const gradientText = {
-    backgroundImage:
-      "linear-gradient(45deg, #ff3300, red, orange, #ff33cc, #1affa3, #33cc33, #1aff66)",
+    backgroundImage: "linear-gradient(45deg, red, orange, green, blue, indigo)",
     WebkitBackgroundClip: "text",
     MozBackgroundClip: "text",
     backgroundClip: "text",
@@ -50,7 +49,7 @@ export default function UserIcons({
           style={gradientText}
           href="/subscription"
           sx={{
-            fontSize: 20,
+            fontSize: 22,
             "&:hover": {
               opacity: 0.9,
               cursor: "pointer",
@@ -66,7 +65,7 @@ export default function UserIcons({
         size="large"
         color="inherit"
         onClick={handleNotificationClick}
-        sx={{ height: 45, width: 45 }}
+        sx={{ height: 50, width: 50 }}
       >
         <Badge badgeContent={notificationCount} color="error">
           <NotificationsIcon
@@ -87,8 +86,8 @@ export default function UserIcons({
         src={avatarPath}
         onClick={handleProfileMenuOpen}
         sx={{
-          width: 45,
-          height: 45,
+          width: 50,
+          height: 50,
           "&:hover": {
             opacity: 0.8,
             cursor: "pointer",
@@ -96,20 +95,19 @@ export default function UserIcons({
         }}
       />
 
-      <Button
-        variant="contained"
-        sx={{
-          bgcolor: fix ? "#F4DADA" : "#FBF1F1",
-          "&:hover": {
-            backgroundColor: "#F4DADA",
-          },
-          height: 45,
-        }}
-      >
-        <Link href="/upload" underline="none">
+      <Link href="/upload" underline="none">
+        <Button
+          variant="contained"
+          sx={{
+            p: 1.5,
+            pr: 2,
+            pl: 2,
+          }}
+        >
           Upload
-        </Link>
-      </Button>
+        </Button>
+      </Link>
+      
     </Box>
   );
 }

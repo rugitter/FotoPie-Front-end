@@ -4,6 +4,7 @@ import SubscriptionComponent from "../../src/components/Subscription/Subscriptio
 import CustomerPortalComponent from "../../src/components/Subscription/CustomerPortalComponent";
 import { getSubscriptionStatus } from "../../src/axiosRequest/api/subscription";
 import Loader from "../../src/components/Loader/Loader";
+import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
 
 const CreateImage: React.FC = () => {
   const [status, setStatus] = useState<boolean | null>(null);

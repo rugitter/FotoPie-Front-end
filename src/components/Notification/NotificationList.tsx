@@ -1,22 +1,10 @@
-import {
-  Avatar,
-  Box,
-  Modal,
-  Paper,
-  Stack,
-  styled,
-  Typography,
-} from "@mui/material";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchNotifications } from "../../../store/notification/notifyAction";
-import { AppDispatch, RootState } from "../../../store/store";
+import { Avatar, Box, Button, Modal, Stack, Typography } from "@mui/material";
+import { useState } from "react";
 import { Notification } from "../../../store/notification/types";
 import Item from "./Notification.style";
 import { PhotoQuickViewStyles } from "../PhotoQuickView/PhotoQuickView.style";
 import PhotoQuickView from "../PhotoQuickView/PhotoQuickView";
-import router, { useRouter } from "next/router";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface NotificationListProps {
   notifications: Notification[];
@@ -39,6 +27,11 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
   const handleClose = () => {
     setOpen(false);
   };
+  //homepage button
+
+  const handleClick = () => {
+    router.push("/");
+  };
   return (
     //Notification list
     <Box sx={{ width: "100%", marginTop: 2 }}>
@@ -51,21 +44,25 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
           bgcolor: "secondary",
         }}
       >
+        <Typography sx={{ mt: "0.5%", mb: "-3%" }}>
+          <h2>My Notification</h2>
+        </Typography>
         <Box
           sx={{
-            width: "90%",
+            width: "70%",
             display: "flex",
             flexDirection: "column",
             alignItem: "center",
             justifyContent: "center",
+            border: "1px solid #EAE6FF",
+            backgroundColor: "#EAE6FF",
+            borderRadius: "20px",
+            pt: "10px",
+            pb: "10px",
           }}
         >
           {/* to get notification mapped into Stack  */}
           {notifications.map((notification) => (
-            // <a
-            //   href={`/photo-quick-view/${notification.directFilename}`}
-            //   style={{ textDecoration: "none" }}
-            // >
             <>
               <Modal
                 open={open}
@@ -74,10 +71,7 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                 aria-describedby="modal-modal-description"
               >
                 <Box sx={PhotoQuickViewStyles}>
-                  <PhotoQuickView
-                    filename={selectedFilename}
-                    router={router}
-                  />
+                  <PhotoQuickView filename={selectedFilename} router={router} />
                 </Box>
               </Modal>
               <div onClick={() => handleOpen(notification.directFilename)}>
@@ -90,36 +84,50 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                       display: "flex",
                       justifyContent: "space-evenly",
                       alignItems: "center",
-                      width: "70%",
+                      width: "80%",
+                      maxWidth: "90%",
                       color: "primary",
-                      margin: "2px",
+                      margin: "5px",
+                      borderRadius: "20px",
+                      cursor: "pointer",
                     }}
                   >
                     <Box
                       sx={{
-                        display: "flexbox",
-                        flexDirection: "row",
-                        alignItem: "center",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                         color: "primary",
                       }}
                     >
-                      <Avatar alt="avatar" src={notification.userAvatar} />
-                      <Typography>{notification.userName}</Typography>
+                      <Avatar
+                        alt="avatar"
+                        src={notification.userAvatar}
+                        sx={{ width: 70, height: 70 }}
+                      />
                     </Box>
-                    <Typography>Liked Your Post</Typography>
+                    <Typography sx={{ fontSize: "1.2rem" }}>
+                      {notification.userName} Liked Your Post
+                    </Typography>
                     <img
                       alt="image"
                       src={notification.post}
-                      width={50}
-                      height={45}
+                      width={70}
+                      height={65}
                     />
                   </Item>
                 </Box>
               </div>
             </>
-            // </a>
           ))}
         </Box>
+        <Button
+          onClick={handleClick}
+          variant="contained"
+          sx={{ fontSize: "1rem", borderRadius: "10px", p: 1.5, pr: 2, pl: 2 }}
+        >
+          Homepage
+        </Button>
       </Stack>
     </Box>
   );

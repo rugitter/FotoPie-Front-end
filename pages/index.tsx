@@ -38,16 +38,15 @@ export default function Home() {
                 rgba(0, 0, 0, 0.1),
                 rgba(0, 0, 0, 0.1)
               ),
-              url(../../background.jpg)`,
-
+              url(https://source.unsplash.com/random)`,
           backgroundSize: "cover",
           margin: 0,
           padding: 0,
-          height: "400px",
+          height: "600px",
           backgroundPosition: "center",
         }}
       >
-        <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+        <div style={{ maxWidth: "1600px", margin: "0 auto" }}>
           <NavBar isFixed={true} />
           <Header />
         </div>
