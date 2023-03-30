@@ -32,6 +32,7 @@ export default function avatarMenu({
         horizontal: "right",
       }}
       id={menuId}
+      // sx={{ position: 'absolute' }}
       PaperProps={{
         elevation: 0,
         sx: {
