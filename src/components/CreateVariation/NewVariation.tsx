@@ -48,7 +48,7 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
   });
 
   // 
-  const handleDownload = async (imageUrl, filename) => {
+  const handleDownload = async (imageUrl:string, filename:string) => {
     const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
       imageUrl
     )}`;
@@ -93,7 +93,20 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
 
   return (
     <>
-      <Container component="main" maxWidth="lg">
+      <Box
+        component="main"
+        //maxWidth="xl"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          marginLeft: "0",
+          marginRight: "0",
+          height: "auto",
+          width :"100%",
+        }}
+      >
         <Box
           className={styles.imageSection}
           sx={{
@@ -105,6 +118,8 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
             width: "90%",
             marginBottom: "60px",
             marginTop: "30px",
+            // marginLeft: "0",
+            // marginRight: "0",
           }}
         >
           <h2 className={styles.bgText}>
@@ -222,7 +237,7 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
             </Container>
           </Group>
         </Dropzone>
-      </Container>
+      </Box>
       <Container component="main" sx={{ maxWidth: "60%" }}>
         <Box
           sx={{
