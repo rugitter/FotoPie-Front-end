@@ -49,7 +49,7 @@ const DownloadButton: NextPage<DownloadImageProps> = ({
       <Button
         variant="contained"
         sx={{
-          opacity: { xs: 0, sm: 1 },
+          // opacity: { xs: 0, sm: 1 },
           bgcolor: "primary.main",
         }}
         startIcon={<DownloadIcon />}

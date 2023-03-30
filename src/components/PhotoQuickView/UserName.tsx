@@ -12,7 +12,10 @@ const UserName = ({ userID, userName, userAvatar }: UserNameProps) => {
   return (
     <>
       <Stack>
-        <Stack display="flex" direction="row">
+        <Stack
+          display={{ xs: "none", sm: "none", md: "flex" }}
+          flexDirection="row"
+        >
           <Button>
             <Link href={`/profile/${userID}`}>
               {<Avatar alt="avatar" src={userAvatar}></Avatar>}

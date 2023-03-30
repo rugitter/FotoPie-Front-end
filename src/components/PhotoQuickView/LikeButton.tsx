@@ -35,7 +35,7 @@ const LikeButton = ({
         variant="outlined"
         color="info"
         sx={{
-          opacity: { xs: 0, sm: 0, md: 1 },
+          display: { xs: "none", sm: "none", md: "flex" },
           color: liked ? "red" : "black",
         }}
         startIcon={
@@ -47,6 +47,18 @@ const LikeButton = ({
           ? "Unlike" + " " + `${userLikes}`
           : "Like" + " " + `${userLikes}`}
       </Button>
+      <Button
+        variant="outlined"
+        color="info"
+        sx={{
+          display: { xs: "flex", sm: "flex", md: "none" },
+          color: liked ? "red" : "black",
+        }}
+        startIcon={
+          <FavoriteBorderIcon sx={{ color: liked ? "red" : "black" }} />
+        }
+        onClick={addToLiked}
+      ></Button>
     </>
   );
 };
