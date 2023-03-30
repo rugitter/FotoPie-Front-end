@@ -289,7 +289,6 @@ const EditUserForm:React.FC<Props>= ({firstName, lastName}) => {
               <Button
                 type="submit"
                 size="large"
-                color="secondary"
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
