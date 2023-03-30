@@ -31,6 +31,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImages } from "@fortawesome/free-solid-svg-icons";
 import axios, { AxiosRequestConfig, Method } from "axios";
 import { uploadPhoto, uploadPost } from "../src/axiosRequest/api/posts";
+import { NavBarStyles } from "../src/components/NavBar/NavbarBaseline.style";
 
 interface IFormInput {
   description: string;
@@ -208,7 +209,7 @@ export default function Upload() {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000"/>
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles}/>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{

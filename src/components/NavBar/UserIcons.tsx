@@ -49,7 +49,7 @@ export default function UserIcons({
           style={gradientText}
           href="/subscription"
           sx={{
-            fontSize: 20,
+            fontSize: 22,
             "&:hover": {
               opacity: 0.9,
               cursor: "pointer",
@@ -61,28 +61,24 @@ export default function UserIcons({
       </Typography>
 
       {/* notifications */}
-      {/* <Link
-        href="/notification"
-      > */}
-        <IconButton
-          size="large"
-          color="inherit"
-          onClick={handleNotificationClick}
-          sx={{ height: 45, width: 45 }}
-        >
-          <Badge badgeContent={notificationCount} color="error">
-            <NotificationsIcon
-              sx={{
-                fontSize: "2rem",
-                color: fix ? "black" : color,
-                "&:hover": {
-                  opacity: 0.8,
-                },
-              }}
-            />
-          </Badge>
-        </IconButton>
-      {/* </Link> */}
+      <IconButton
+        size="large"
+        color="inherit"
+        onClick={handleNotificationClick}
+        sx={{ height: 50, width: 50 }}
+      >
+        <Badge badgeContent={notificationCount} color="error">
+          <NotificationsIcon
+            sx={{
+              fontSize: "2rem",
+              color: fix ? "black" : color,
+              "&:hover": {
+                opacity: 0.8,
+              },
+            }}
+          />
+        </Badge>
+      </IconButton>
 
       {/* User Profile */}
       <Avatar
@@ -90,8 +86,8 @@ export default function UserIcons({
         src={avatarPath}
         onClick={handleProfileMenuOpen}
         sx={{
-          width: 45,
-          height: 45,
+          width: 50,
+          height: 50,
           "&:hover": {
             opacity: 0.8,
             cursor: "pointer",
@@ -111,6 +107,7 @@ export default function UserIcons({
           Upload
         </Button>
       </Link>
+      
     </Box>
   );
 }

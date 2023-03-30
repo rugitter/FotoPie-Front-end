@@ -80,7 +80,7 @@ export default function Navbar({
   const [fix, setFix] = useState(false);
 
   const setFixed = () => {
-    if (window.scrollY >= 410) {
+    if (window.scrollY >= 500) {
       setFix(true);
     } else {
       setFix(false);
@@ -153,8 +153,11 @@ export default function Navbar({
           elevation={0}
           sx={{
             position: fix ? 'fixed' : 'relative',
-            backgroundColor: bgColor || (fix ? '#f8f8ff' : 'transparent'),
+            backgroundColor: bgColor || (fix ? '#fff' : 'transparent'),
             color: 'transparent',
+            height: 80,
+            display: "flex",
+            justifyContent: "center",
             elevation: 0,
             "::after": baseLine || (fix ?
             {
@@ -172,10 +175,14 @@ export default function Navbar({
         >
           <Toolbar
             sx={{
-              marginTop: 0,
+              mt: 0,
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              width: "100%",
+              maxWidth: 1600,
+              margin: "0 auto",
+              padding: fix ? "0 40px" : 0,
             }}
           >
             <Link
@@ -195,8 +202,8 @@ export default function Navbar({
                 src="/logo.png"
                 style={{ borderRadius: 10 }}
                 alt="Fotopie_Logo"
-                width={45}
-                height={45}
+                width={50}
+                height={50}
               />
 
               <Typography
@@ -205,7 +212,7 @@ export default function Navbar({
                 sx={{ 
                   flexGrow: 1, 
                   ml: 2,
-                  fontSize: 24,
+                  fontSize: 26,
                   fontFamily: "inherit",
                   color: fix ? "#000000" : color,
                 }}
@@ -219,7 +226,8 @@ export default function Navbar({
               sx={{
                 display: { xs: "none", md: "flex" },
                 flexGrow: 0.12,
-                justifyContent: "space-between",
+                justifyContent: "flex-end",
+                alignItems: "center",
               }}
             >
               {isAuthenticated ? (
@@ -233,7 +241,7 @@ export default function Navbar({
                 />
               ) : (
                 <Link href="/login" underline="none">
-                  <Button variant="contained">Log In</Button>
+                  <Button variant="contained" sx={{p: 1.5, pr: 2,pl: 2}}>Log In</Button>
                 </Link>
               )}
             </Box>

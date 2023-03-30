@@ -14,7 +14,6 @@ export default function Header() {
       component='div'
       sx={{
         flexGrow: 1,
-        Height: 300,
         width: "100%",
       }}
     >
@@ -35,7 +34,7 @@ export default function Header() {
           align='center'
           display='inline'
           color='#FFFFFF'
-          sx={{ fontSize: 22, fontFamily: 'inherit', textAlign: 'left' }}
+          sx={{ fontSize: 26, fontFamily: 'inherit', textAlign: 'left' }}
         >
           Discover moments.
           <br />
@@ -46,10 +45,9 @@ export default function Header() {
           sx={{
             p: '2px 4px',
             width: '100%',
-            // mb: 15,
             mt: 2,
             '@media (min-width: 600px)': {
-              width: 500,
+              width: 600,
             }
           }}
         >
