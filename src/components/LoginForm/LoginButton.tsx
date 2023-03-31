@@ -11,7 +11,7 @@ const LoginButton: FC<LoginButtonProps> = ({
 }: LoginButtonProps) => {
   return (
     <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-      {loginStatus === "loading" ? "Loading..." : "Log In"}
+      {loginStatus === "loading" ? "Loading..." : "Sign In"}
     </Button>
   );
 };
