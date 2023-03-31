@@ -35,8 +35,8 @@ export default function Home() {
         sx={{
           backgroundImage: `
               linear-gradient(
-                rgba(0, 0, 0, 0.1),
-                rgba(0, 0, 0, 0.1)
+                rgba(0, 0, 0, 0.5),
+                rgba(0, 0, 0, 0.3)
               ),
               url(https://source.unsplash.com/random)`,
           backgroundSize: "cover",
