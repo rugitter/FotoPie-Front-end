@@ -4,6 +4,7 @@ import NavBar from "../../src/components/NavBar/NavBar";
 import { getUserInfo } from "../../src/axiosRequest/api/user";
 import ProfileHeader from "../../src/components/ProfilePage/ProfileHeader";
 import ProfileGalleryAndCollection from "../../src/components/ProfilePage/ProfileGalleryAndCollection";
+import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
 
 export interface User {
   firstName: string;
@@ -27,7 +28,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" bgColor="#f8f8ff" />
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
 
       {user && (
         <ProfileHeader

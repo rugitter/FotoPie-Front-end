@@ -1,5 +1,3 @@
-import React from "react";
-import Link from "../../utils/Link";
 import styles from "./post.module.css";
 
 export interface PostProps {

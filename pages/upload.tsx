@@ -147,7 +147,7 @@ export default function Upload(props: Partial<DropzoneProps>) {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" bgColor="#f8f8ff" />
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles}/>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{

@@ -3,7 +3,6 @@ import Post from "./Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../Loader/Loader";
 import Box from "@mui/material/Box";
-import axiosRequest from "../../utils/axiosRequest";
 import Masonry from "@mui/lab/Masonry";
 import NoMore from "../Loader/NoMore";
 import { getPhotoWall } from "../../axiosRequest/api/photowall";
