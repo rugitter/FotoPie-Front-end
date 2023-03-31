@@ -5,6 +5,7 @@ import Item from "./Notification.style";
 import { PhotoQuickViewStyles } from "../PhotoQuickView/PhotoQuickView.style";
 import PhotoQuickView from "../PhotoQuickView/PhotoQuickView";
 import { useRouter } from "next/router";
+import Image from "mui-image";
 
 interface NotificationListProps {
   notifications: Notification[];
@@ -34,9 +35,9 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
   };
   return (
     //Notification list
-    <Box sx={{ width: "100%", marginTop: 2 }}>
+    <Box sx={{ width: "100%", mt: 2, mb: 2 }}>
       <Stack
-        spacing={5}
+        spacing={2}
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -44,8 +45,15 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
           bgcolor: "secondary",
         }}
       >
-        <Typography sx={{ mt: "0.5%", mb: "-3%" }}>
-          <h2>My Notification</h2>
+        <Typography
+          variant="h2"
+          sx={{
+            mt: { xs: 1, md: 3 },
+            fontSize: { xs: "1.5rem", md: "2.5rem" },
+            fontWeight: 700,
+          }}
+        >
+          My Notification
         </Typography>
         <Box
           sx={{
@@ -86,8 +94,12 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                       alignItems: "center",
                       width: "80%",
                       maxWidth: "90%",
+                      height: { xs: 50, md: 100 },
                       color: "primary",
                       margin: "5px",
+                      p: 2,
+                      // pt: { xs: -2, md: 2 },
+                      // pb: { xs: -2, md: 2 },
                       borderRadius: "20px",
                       cursor: "pointer",
                     }}
@@ -103,17 +115,27 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                       <Avatar
                         alt="avatar"
                         src={notification.userAvatar}
-                        sx={{ width: 70, height: 70 }}
+                        sx={{
+                          width: { xs: 30, md: 70 },
+                          height: { xs: 30, md: 70 },
+                        }}
                       />
                     </Box>
-                    <Typography sx={{ fontSize: "1.2rem" }}>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "0.5rem", md: "1.2rem" },
+                        width: { xs: "9rem", md: "15rem" },
+                      }}
+                    >
                       {notification.userName} Liked Your Post
                     </Typography>
                     <img
                       alt="image"
                       src={notification.post}
-                      width={70}
-                      height={65}
+                      style={{
+                        objectFit: "contain",
+                        width: "5rem",
+                      }}
                     />
                   </Item>
                 </Box>
@@ -121,10 +143,17 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
             </>
           ))}
         </Box>
+
         <Button
           onClick={handleClick}
           variant="contained"
-          sx={{ fontSize: "1rem", borderRadius: "10px", p: 1.5, pr: 2, pl: 2 }}
+          sx={{
+            fontSize: { xs: "0.5rem", md: "1rem" },
+            borderRadius: "10px",
+            p: { xs: 1.2, md: 1.5 },
+            pr: { xs: 1.7, md: 2 },
+            pl: { xs: 1.7, md: 2 },
+          }}
         >
           Homepage
         </Button>
