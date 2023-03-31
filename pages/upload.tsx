@@ -106,7 +106,7 @@ export default function Upload(props: Partial<DropzoneProps>) {
       console.log(response);
 
       if (response.status === 201) {
-        router.push("/upload-new");
+        router.push("/upload");
       }
     } catch (error) {
       console.log(error);
@@ -163,116 +163,121 @@ export default function Upload(props: Partial<DropzoneProps>) {
               onSubmit={methods.handleSubmit(onSubmit)}
               sx={{
                 mt: 2,
+
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-end",
               }}
             >
-              <Dropzone
-                onDrop={async (files) => {
-                  console.log("accepted files", files);
-                  setFiles(files);
+              <Box sx={{ mb: 2 }}>
+                <Dropzone
+                  onDrop={async (files) => {
+                    console.log("accepted files", files);
+                    setFiles(files);
 
-                  const formData = new FormData();
-                  formData.append("file", files[0]);
-                  try {
-                    const response = await uploadPhoto(formData);
-                    console.log(
-                      response.data.filename,
-                      response.data.original_path,
-                      response.data.compression_path
-                    );
-                    setUploadfileName(response.data.filename);
-                    setOrginalFilePath(response.data.original_path);
-                    setCompressFilePath(response.data.compression_path);
-                    return { meta: response };
-                  } catch (error) {
-                    console.error(error);
-                    return error;
-                  }
-                }}
-                onReject={(files) => console.log("rejected files", files)}
-                maxSize={4 * 1024 ** 2}
-                accept={IMAGE_MIME_TYPE}
-                //accept={["image/png", "image/jpeg", "image/sgv+xml", "image/gif"]}
-                multiple={false}
-                //autoFocus={true}
-                radius="xl"
-                sx={(theme) => ({
-                  minHeight: rem(100),
-                  maxWidth: rem(800),
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  border: 10,
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  backgroundColor:
-                    theme.colorScheme === "dark"
-                      ? theme.colors.dark[6]
-                      : theme.colors.gray[0],
+                    const formData = new FormData();
+                    formData.append("file", files[0]);
+                    try {
+                      const response = await uploadPhoto(formData);
+                      console.log(
+                        response.data.filename,
+                        response.data.original_path,
+                        response.data.compression_path
+                      );
+                      setUploadfileName(response.data.filename);
+                      setOrginalFilePath(response.data.original_path);
+                      setCompressFilePath(response.data.compression_path);
+                      return { meta: response };
+                    } catch (error) {
+                      console.error(error);
+                      return error;
+                    }
+                  }}
+                  onReject={(files) => console.log("rejected files", files)}
+                  maxSize={4 * 1024 ** 2}
+                  accept={IMAGE_MIME_TYPE}
+                  //accept={["image/png", "image/jpeg", "image/sgv+xml", "image/gif"]}
+                  multiple={false}
+                  //autoFocus={true}
+                  radius="xl"
+                  sx={(theme) => ({
+                    minHeight: rem(100),
+                    maxWidth: rem(800),
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    border: 10,
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    backgroundColor:
+                      theme.colorScheme === "dark"
+                        ? theme.colors.dark[6]
+                        : theme.colors.gray[0],
 
-                  "&[data-accept]": {
-                    color: theme.white,
-                    backgroundColor: theme.colors.blue[6],
-                  },
+                    "&[data-accept]": {
+                      color: theme.white,
+                      backgroundColor: theme.colors.blue[6],
+                    },
 
-                  "&[data-reject]": {
-                    color: theme.white,
-                    backgroundColor: theme.colors.red[6],
-                  },
-                  "&[data-idle]": {
-                    color: theme.black,
-                    backgroundColor: theme.colors.green[2],
-                  },
-                })}
-                {...props}
-              >
-                <Group
-                  position="center"
-                  spacing="xl"
-                  style={{ minHeight: rem(120), pointerEvents: "none" }}
+                    "&[data-reject]": {
+                      color: theme.white,
+                      backgroundColor: theme.colors.red[6],
+                    },
+                    "&[data-idle]": {
+                      color: theme.black,
+                      backgroundColor: "#eae6ff",
+                    },
+                  })}
+                  {...props}
                 >
-                  <Dropzone.Accept>
-                    <IconUpload
-                      size="3.2rem"
-                      stroke={1.5}
-                      color={
-                        theme.colors[theme.primaryColor][
-                          theme.colorScheme === "dark" ? 4 : 6
-                        ]
-                      }
-                    />
-                  </Dropzone.Accept>
-                  <Dropzone.Reject>
-                    <IconX
-                      size="3.2rem"
-                      stroke={1.5}
-                      color={theme.colors.red[theme.colorScheme === "dark" ? 4 : 6]}
-                    />
-                  </Dropzone.Reject>
-                  <Dropzone.Idle>
-                    <IconPhoto size="3.2rem" stroke={1.5} />
-                  </Dropzone.Idle>
-                  <div>
-                    <Text size="xl" inline>
-                      Drag image here or click to select file
-                    </Text>
-                    <Text size="sm" color="dimmed" inline mt={7}>
-                      Attach one image file with a standard format
-                    </Text>
-                  </div>
-                  <Container maxWidth="xs">
-                    <SimpleGrid
-                      cols={1}
-                      breakpoints={[{ maxWidth: "sm", cols: 1 }]}
-                      mt={previews.length > 0 ? "xl" : 0}
-                    >
-                      {previews}
-                    </SimpleGrid>
-                  </Container>
-                </Group>
-              </Dropzone>
+                  <Group
+                    position="center"
+                    spacing="xl"
+                    style={{ minHeight: rem(120), pointerEvents: "none" }}
+                  >
+                    <Dropzone.Accept>
+                      <IconUpload
+                        size="3.2rem"
+                        stroke={1.5}
+                        color={
+                          theme.colors[theme.primaryColor][
+                            theme.colorScheme === "dark" ? 4 : 6
+                          ]
+                        }
+                      />
+                    </Dropzone.Accept>
+                    <Dropzone.Reject>
+                      <IconX
+                        size="3.2rem"
+                        stroke={1.5}
+                        color={
+                          theme.colors.red[theme.colorScheme === "dark" ? 4 : 6]
+                        }
+                      />
+                    </Dropzone.Reject>
+                    <Dropzone.Idle>
+                      <IconPhoto size="3.2rem" stroke={1.5} />
+                    </Dropzone.Idle>
+                    <div>
+                      <Text size="xl" inline>
+                        Drag image here or click to select file
+                      </Text>
+                      <Text size="sm" color="dimmed" inline mt={7}>
+                        Attach one image file with a standard format
+                      </Text>
+                    </div>
+                    <Container maxWidth="xs">
+                      <SimpleGrid
+                        cols={1}
+                        breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+                        mt={previews.length > 0 ? "xl" : 0}
+                      >
+                        {previews}
+                      </SimpleGrid>
+                    </Container>
+                  </Group>
+                </Dropzone>
+              </Box>
 
               <FormTextField
                 name="description"

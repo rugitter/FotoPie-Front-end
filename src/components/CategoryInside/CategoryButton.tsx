@@ -10,7 +10,7 @@ const CategoryButton = ({ links, resetCategoryState }: CategoryButtonProps) => {
   return (
     <Stack
       direction={{ xs: "column", sm: "row" }}
-      spacing={{ xs: 1, sm: 4, md: 6 }}
+      spacing={{ xs: 1, sm: 2, md: 3 }}
       sx={{ ml: 5, mt: 7 }}
     >
       {links.map((link) => (
