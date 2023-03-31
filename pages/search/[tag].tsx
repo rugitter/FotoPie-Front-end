@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { categoryPosts } from "../../src/axiosRequest/api/category";
 import NavBar from "../../src/components/NavBar/NavBar";
-import CategoryHeader from "../../src/components/CategoryInside/CategoryHeader";
 import PostList from "../../src/components/Search/SearchInsidePosts";
 import CategoryButton from "../../src/components/CategoryInside/CategoryButton";
 import { getSynonymsAPI } from "../../src/axiosRequest/api/getSynonyms";
@@ -12,6 +11,7 @@ import { PhotoQuickViewStyles } from "../../src/components/PhotoQuickView/PhotoQ
 import PhotoQuickView from "../../src/components/PhotoQuickView/PhotoQuickView";
 import { searchPosts } from "../../src/axiosRequest/api/search";
 import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
+import SearchHeader from "../../src/components/Search/SearchHeader";
 
 
 export interface ResponseImageData {
@@ -140,7 +140,7 @@ export default function searchPage() {
   return (
     <>
       <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
-      <CategoryHeader tagString={tagString} />
+      <SearchHeader tagString={tagString} />
       <CategoryButton
         links={links}
         resetCategoryState={resetCategoryStateHandler}
