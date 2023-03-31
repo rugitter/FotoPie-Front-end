@@ -4,6 +4,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import { useState } from "react";
 
 interface avatarMenuProps {
   isMenuOpen: boolean;
@@ -25,14 +26,13 @@ export default function avatarMenu({
   return (
     <Menu
       anchorEl={anchorEl}
+      onMouseLeave={handleMenuClose}
       open={isMenuOpen}
-      onClose={handleMenuClose}
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "right",
       }}
       id={menuId}
-      // sx={{ position: 'absolute' }}
       PaperProps={{
         elevation: 0,
         sx: {
@@ -64,6 +64,7 @@ export default function avatarMenu({
         horizontal: "right",
       }}
     >
+      <div onMouseLeave={handleMenuClose}>
       <MenuItem
         component="a"
         href={`/profile/${id}`}
@@ -97,6 +98,8 @@ export default function avatarMenu({
         </ListItemIcon>
         Logout
       </MenuItem>
+      </div>
     </Menu>
+    
   );
 }

@@ -28,7 +28,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles}/>
 
       {user && (
         <ProfileHeader

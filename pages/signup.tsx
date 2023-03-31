@@ -28,10 +28,10 @@ interface IFormInput {
 
 // Define a schema for the form values
 const formSchema: Schema<IFormInput> = object({
-  firstName: string().max(15).required(),
-  lastName: string().max(15).required(),
-  email: string().email().required(),
-  password: string().min(2).max(20).required(),
+  firstName: string().max(15).required("First Name is a required field."),
+  lastName: string().max(15).required("Last Name is a required field."),
+  email: string().email().required("Email is a required field."),
+  password: string().min(2).max(20).required("Password is a required field."),
 });
 
 // Define a component that renders the form
@@ -72,7 +72,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign Up
           </Typography>
           <FormProvider {...methods}>
             <Box

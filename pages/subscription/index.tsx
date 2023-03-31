@@ -32,14 +32,14 @@ const CreateImage: React.FC = () => {
   } else if (status === false) {
     return (
       <>
-        <Navbar isFixed={false} color="#000000" />
+        <Navbar isFixed={false} color="#000000" baseLine={NavBarStyles}/>
         <SubscriptionComponent />
       </>
     );
   } else {
     return (
       <>
-        <Navbar isFixed={false} color="#000000" />
+        <Navbar isFixed={false} color="#000000" baseLine={NavBarStyles}/>
         <CustomerPortalComponent />
       </>
     );
