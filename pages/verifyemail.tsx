@@ -1,4 +1,3 @@
-import React from 'react'
 import Link from 'next/link'
 import { Alert } from '@mui/material'
 import Typography from "@mui/material/Typography";
