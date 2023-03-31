@@ -6,6 +6,7 @@ import { PhotoQuickViewStyles } from "../PhotoQuickView/PhotoQuickView.style";
 import PhotoQuickView from "../PhotoQuickView/PhotoQuickView";
 import { useRouter } from "next/router";
 import Image from "mui-image";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface NotificationListProps {
   notifications: Notification[];
@@ -28,11 +29,13 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
   const handleClose = () => {
     setOpen(false);
   };
-  //homepage button
 
+  //homepage button
   const handleClick = () => {
     router.push("/");
   };
+
+  const matches = useMediaQuery("(min-width:600px)");
   return (
     //Notification list
     <Box sx={{ width: "100%", mt: 2, mb: 2 }}>
@@ -94,12 +97,10 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                       alignItems: "center",
                       width: "80%",
                       maxWidth: "90%",
-                      height: { xs: 50, md: 100 },
+                      height: { xs: 50, sm: 100, md: 120 },
                       color: "primary",
                       margin: "5px",
                       p: 2,
-                      // pt: { xs: -2, md: 2 },
-                      // pb: { xs: -2, md: 2 },
                       borderRadius: "20px",
                       cursor: "pointer",
                     }}
@@ -116,26 +117,28 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                         alt="avatar"
                         src={notification.userAvatar}
                         sx={{
-                          width: { xs: 30, md: 70 },
-                          height: { xs: 30, md: 70 },
+                          width: { xs: 30, sm: 70 },
+                          height: { xs: 30, sm: 70 },
                         }}
                       />
                     </Box>
+
                     <Typography
                       sx={{
-                        fontSize: { xs: "0.5rem", md: "1.2rem" },
-                        width: { xs: "9rem", md: "15rem" },
+                        fontSize: { xs: "0.5rem", sm: "1rem", md: "1.5rem" },
+                        width: { xs: "9rem", sm: "15rem" },
                       }}
                     >
                       {notification.userName} Liked Your Post
                     </Typography>
-                    <img
+
+                    <Image
                       alt="image"
                       src={notification.post}
-                      style={{
-                        objectFit: "contain",
-                        width: "5rem",
-                      }}
+                      fit="contain"
+                      {...(matches
+                        ? { width: 100, height: 80 }
+                        : { width: 50, height: 30 })}
                     />
                   </Item>
                 </Box>
