@@ -62,13 +62,17 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
   const methods = useForm<IFormInput>({
     resolver: yupResolver(formSchema),
   });
+  //define a success state for submission alert
+  const [success, setSuccess] = useState(false);
 
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+    
     try {
       const response = await updateName(data);
 
       if (response.status === 200) {
+        setSuccess(true);
         router.push("/edituserprofile");
       }
     } catch (error) {
@@ -311,6 +315,16 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
               >
                 Save Profile
               </Button>
+            </Grid>
+            <Grid
+              container
+              justifyContent="center"
+            >
+              {success && <Alert severity="success">
+                <AlertTitle>Success</AlertTitle>
+                User information updated successfully —{" "}
+                <strong>check it out!</strong>
+              </Alert>}
             </Grid>
           </Box>
         </Box>
