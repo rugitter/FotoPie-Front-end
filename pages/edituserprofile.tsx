@@ -34,19 +34,22 @@ export default function EditUserProfile() {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles}/>
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
       <Container component="main" maxWidth="md">
         {/*Page heading, profile icon and change picture button*/}
         <EditUserProfileHeader />
         {/*change avatar button*/}
-        <Grid container spacing={10}>
-          <Grid item xs={2}>
-            {avatar ? <ProfilePicture avatar={avatar} /> : null}
+        <Container maxWidth="md">
+          <Grid container spacing={4}>
+            <Grid item md={2}>
+              {avatar ? <ProfilePicture avatar={avatar} /> : null}
+            </Grid>
+            <Grid item md={3}>
+              <AvatarUploadButton setAvatar={setAvatar} />
+            </Grid>
           </Grid>
-          <Grid item xs={10}>
-            <AvatarUploadButton setAvatar={setAvatar} />
-          </Grid>
-        </Grid>
+        </Container>
+
         <EditUserForm firstName={firstName} lastName={lastName} />
         <Copyright sx={{ mt: 5 }} />
       </Container>

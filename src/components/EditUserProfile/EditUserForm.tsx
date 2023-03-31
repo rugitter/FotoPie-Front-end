@@ -94,7 +94,7 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
           {/*First input grid*/}
 
           <Grid container spacing={8}>
-            <Grid item xs={6}>
+            <Grid item xs={6} md={6}>
               <Typography variant="h6">First Name*</Typography>
               <FormTextField
                 name="firstName"
@@ -104,7 +104,7 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={6} md={6}>
               <Typography variant="h6">Last Name*</Typography>
               <FormTextField
                 name="lastName"
@@ -123,7 +123,7 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
 
           <Box component="form" sx={{ mt: 3 }}>
             <Typography component="h1" variant="h6">
-              password
+              Password
             </Typography>
 
             <Button
@@ -133,7 +133,7 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
               color="secondary"
               sx={{ mt: 3, mb: 2 }}
             >
-              <Link href="reset-request" color="inherit" underline="none">
+              <Link href="reset/reset-request" color="inherit" underline="none">
                 Reset Password
               </Link>
             </Button>
@@ -141,35 +141,41 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
 
           {/*Box for writing bio*/}
 
-          <Box
-            sx={{
-              width: 850,
-              height: 250,
-            }}
+          <Grid
+            container
+            // sx={{
+            //   width: 850,
+            //   height: 250,
+            // }}
           >
-            <Typography component="h1" variant="h4">
-              Recognition
-            </Typography>
-
-            <TextField
-              sx={{
-                width: 850,
-              }}
-              InputProps={{ sx: { height: 150 } }}
-              name="bio"
-              label="Write a short bio for your profile"
-              id="bio"
-              autoComplete="bio"
-            />
-            <Typography variant="body1" color="grey" align="right">
-              0/130
-            </Typography>
-          </Box>
+            <Grid item md={12}>
+              <Typography component="h1" variant="h4">
+                Recognition
+              </Typography>
+            </Grid>
+            <Grid item md={12} xs={12}>
+              <TextField
+                sx={{
+                  width: "100%",
+                }}
+                InputProps={{ sx: { height: 150 } }}
+                name="bio"
+                label="Write a short bio for your profile"
+                id="bio"
+                autoComplete="bio"
+              />
+            </Grid>
+            <Grid item md={12} xs={12}>
+              <Typography variant="body1" color="grey" align="right">
+                0/130
+              </Typography>
+            </Grid>
+          </Grid>
 
           {/*Second input grid*/}
 
           <Grid container spacing={8}>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="h6">Location</Typography>
               <FormTextField
                 name="location"
@@ -183,7 +189,7 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
               </Typography>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="h6">Website</Typography>
               <FormTextField
                 name="website"
@@ -196,7 +202,7 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
               </Typography>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="h6">Twitter</Typography>
               <FormTextField
                 name="twitter"
@@ -206,7 +212,7 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="h6">Instagram</Typography>
               <FormTextField
                 name="instagram"
@@ -216,7 +222,7 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="h6">Youtube</Typography>
               <FormTextField
                 name="youtube"
@@ -226,7 +232,7 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="h6">TikTok</Typography>
               <FormTextField
                 name="tiktok"
@@ -239,45 +245,56 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
 
           <Box>
             {/*Message notification setting*/}
-            <Box
+            <Grid
+              container
               sx={{
                 marginTop: 8,
-                width: 850,
+                //width: 850,
                 height: 150,
               }}
             >
-              <Typography component="h1" variant="h4">
-                Message notification
-              </Typography>
+              <Grid item md={12}>
+                <Typography component="h1" variant="h4">
+                  Message notification
+                </Typography>
 
-              <Typography component="h1" variant="h6">
-                Fotopie moderates all messages to prevent spam.
-              </Typography>
-
-              <FormControlLabel
-                control={<Checkbox value="showMessageButton" color="primary" />}
-                label="Show message button on my profile"
-              />
-            </Box>
+                <Typography component="h1" variant="h6">
+                  Fotopie moderates all messages to prevent spam.
+                </Typography>
+              </Grid>
+              <Grid item md={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox value="showMessageButton" color="primary" />
+                  }
+                  label="Show message button on my profile"
+                />
+              </Grid>
+            </Grid>
 
             {/*Other setting*/}
-            <Box
+            <Grid
+              container
               sx={{
                 marginTop: 8,
-                width: 850,
+                //width: 850,
                 height: 150,
               }}
             >
-              <Typography variant="h4">Other settings</Typography>
-
-              <Typography variant="h6" color="grey">
-                Delete account and all data
-              </Typography>
-
-              <Link href="delete account" variant="h6">
-                delete account
-              </Link>
-            </Box>
+              <Grid item md={12}>
+                <Typography variant="h4">Other settings</Typography>
+              </Grid>
+              <Grid item md={12}>
+                <Typography variant="h6" color="grey">
+                  Delete account and all data
+                </Typography>
+              </Grid>
+              <Grid item md={12}>
+                <Link href="delete account" variant="h6">
+                  delete account
+                </Link>
+              </Grid>
+            </Grid>
 
             {/*change name button*/}
             <Grid
