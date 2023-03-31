@@ -116,7 +116,7 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
                         <Button onClick={handleConfirmationCancel} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={handleConfirmationConfirm} color="secondary" autoFocus>
+                        <Button onClick={handleConfirmationConfirm} color="primary" autoFocus>
                             Delete
                         </Button>
                     </DialogActions>
