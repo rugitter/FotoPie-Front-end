@@ -11,13 +11,14 @@ const CategoryButton = ({ links, resetCategoryState }: CategoryButtonProps) => {
     <Stack
       direction={{ xs: "column", sm: "row" }}
       spacing={{ xs: 1, sm: 2, md: 3 }}
-      sx={{ ml: 5, mt: 7 }}
+      sx={{ ml: 5, mt: 7, mr: 3 }}
     >
       {links.map((link) => (
         <Button
           key={link}
           variant="outlined"
           color="primary"
+          size="small"
           onClick={() => {
             resetCategoryState(link);
           }}
