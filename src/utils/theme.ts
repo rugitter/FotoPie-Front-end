@@ -38,11 +38,25 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: "'Work Sans', sans-serif",
-    fontSize: 14,
+    fontSize: 16,
     fontWeightLight: 300, // Work Sans
     fontWeightRegular: 400, // Work Sans
     fontWeightMedium: 700, // Roboto Condensed
   },
 });
+
+theme.typography.h1 = {
+  fontSize: "4rem",
+  fontWeight: 400,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "2rem",
+  },
+  [theme.breakpoints.up("sm")]: {
+    fontSize: "2.5rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "4rem",
+  },
+};
 
 export default theme;
