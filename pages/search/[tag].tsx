@@ -11,6 +11,7 @@ import Modal from "@mui/material/Modal";
 import { PhotoQuickViewStyles } from "../../src/components/PhotoQuickView/PhotoQuickView.style";
 import PhotoQuickView from "../../src/components/PhotoQuickView/PhotoQuickView";
 import { searchPosts } from "../../src/axiosRequest/api/search";
+import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
 
 
 export interface ResponseImageData {
@@ -138,7 +139,7 @@ export default function searchPage() {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" />
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
       <CategoryHeader tagString={tagString} />
       <CategoryButton
         links={links}
