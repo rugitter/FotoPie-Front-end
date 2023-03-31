@@ -6,6 +6,7 @@ import { Box } from "@mui/system";
 export default function MidBar() {
   return (
     <Box>
+      {/* Home button */}
       <Button
         variant="outlined"
         sx={{
@@ -25,6 +26,8 @@ export default function MidBar() {
           Home
         </Link>
       </Button>
+
+      {/* Explore button */}
       <Button
         variant="outlined"
         sx={{
@@ -47,6 +50,8 @@ export default function MidBar() {
           Explore
         </Link>
       </Button>
+
+      {/* AI Creating button */}
       <Button
         variant="outlined"
         sx={{
@@ -61,8 +66,28 @@ export default function MidBar() {
         }}
         size="large"
       >
-        <Link href="/subscription" underline="none">
-          <span className={styles.gradientText}>AI Drawing</span>
+        <Link href="/create-image" underline="none">
+          <span className={styles.gradientText}>AI Creating</span>
+        </Link>
+      </Button>
+
+      {/* AI Simulating button */}
+      <Button
+        variant="outlined"
+        sx={{
+          fontSize: "17px",
+          borderRadius: 10,
+          p: 1.7,
+          pl: 5,
+          pr: 5,
+          ":hover": { bgcolor: "#EAE6FF", border: "none" },
+          textTransform: "none",
+          border: "none",
+        }}
+        size="large"
+      >
+        <Link href="/create-variation" underline="none">
+          <span className={styles.gradientText}>AI Simulating</span>
         </Link>
       </Button>
     </Box>

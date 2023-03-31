@@ -30,14 +30,14 @@ const PaymentSuccessful: React.FC = () => {
             Enjoy your journey to splendid photos
           </p>
           <br />
-          <Link href="/" passHref>
+          <Link href="/" passHref style={{ textDecoration: "none" }}>
             <Button
               variant="contained"
               sx={{
-                backgroundColor: "#2196f3",
-                color: "#ffffff",
+                backgroundColor: "primary.main",
+                color: "white",
                 "&:hover": {
-                  backgroundColor: "#1976d2",
+                  backgroundColor: "primary.dark",
                 },
               }}
             >

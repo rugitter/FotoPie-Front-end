@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../../src/components/NavBar/NavBar";
+import NavBar from "../../src/components/NavBar/NavBar";
 import SubscriptionComponent from "../../src/components/Subscription/SubscriptionComponent";
 import CustomerPortalComponent from "../../src/components/Subscription/CustomerPortalComponent";
 import { getSubscriptionStatus } from "../../src/axiosRequest/api/subscription";
@@ -32,14 +32,14 @@ const CreateImage: React.FC = () => {
   } else if (status === false) {
     return (
       <>
-        <Navbar isFixed={false} color="#000000" />
+        <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
         <SubscriptionComponent />
       </>
     );
   } else {
     return (
       <>
-        <Navbar isFixed={false} color="#000000" />
+        <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
         <CustomerPortalComponent />
       </>
     );

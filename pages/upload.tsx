@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import NavBar from "../src/components/NavBar/NavBar";
-
+import { NavBarStyles } from "../src/components/NavBar/NavbarBaseline.style";
 import { AttachMoney } from "@mui/icons-material";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -80,8 +80,6 @@ export default function Upload(props: Partial<DropzoneProps>) {
       />
     );
   });
- 
-
 
   const formSchema = yup.object().shape({
     description: yup.string().max(50),
@@ -113,10 +111,6 @@ export default function Upload(props: Partial<DropzoneProps>) {
     }
   };
 
-  
-
-  
-
   // const priceInputProps = {
   //   startAdornment: (
   //     <InputAdornment position="start">
@@ -147,7 +141,7 @@ export default function Upload(props: Partial<DropzoneProps>) {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles}/>
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
       <Container component="main" maxWidth="xs">
         <Box
           sx={{

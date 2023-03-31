@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
 import Copyright from "../Copyright";
 import styles from "./NewImage.module.css";
+import Grid from "@mui/material/Grid";
 
 // Create the component
 const NewImage: React.FC = () => {
@@ -152,60 +153,68 @@ const NewImage: React.FC = () => {
             </div>
           </div>
         ) : (
-          <Box sx={{ display: "flex" }}>
-            <Box
-              className={styles.imageContainer}
-              sx={{ marginRight: "20px", ":hover": { opacity: 0.8 } }}
-            >
-              <Button
-                className={styles.downloadButton}
-                onClick={() => handleDownload(url_1, "image.png")}
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6} md={3}>
+              <Box
+                className={styles.imageContainer}
+                sx={{ marginRight: "20px", ":hover": { opacity: 0.8 } }}
               >
-                Download
-              </Button>
+                <Button
+                  className={styles.downloadButton}
+                  onClick={() => handleDownload(url_1, "image.png")}
+                >
+                  Download
+                </Button>
 
-              <Image src={url_1} alt="" />
-            </Box>
+                <Image src={url_1} alt="" />
+              </Box>
+            </Grid>
 
-            <Box
-              className={styles.imageContainer}
-              sx={{ marginRight: "20px", ":hover": { opacity: 0.8 } }}
-            >
-              <Button
-                className={styles.downloadButton}
-                onClick={() => handleDownload(url_2, "image.png")}
+            <Grid item xs={12} sm={6} md={3}>
+              <Box
+                className={styles.imageContainer}
+                sx={{ marginRight: "20px", ":hover": { opacity: 0.8 } }}
               >
-                Download
-              </Button>
-              <Image src={url_2} alt="" />
-            </Box>
+                <Button
+                  className={styles.downloadButton}
+                  onClick={() => handleDownload(url_2, "image.png")}
+                >
+                  Download
+                </Button>
+                <Image src={url_2} alt="" />
+              </Box>
+            </Grid>
 
-            <Box
-              className={styles.imageContainer}
-              sx={{ marginRight: "20px", ":hover": { opacity: 0.8 } }}
-            >
-              <Button
-                className={styles.downloadButton}
-                onClick={() => handleDownload(url_3, "image.png")}
+            <Grid item xs={12} sm={6} md={3}>
+              <Box
+                className={styles.imageContainer}
+                sx={{ marginRight: "20px", ":hover": { opacity: 0.8 } }}
               >
-                Download
-              </Button>
-              <Image src={url_3} alt="" />
-            </Box>
+                <Button
+                  className={styles.downloadButton}
+                  onClick={() => handleDownload(url_3, "image.png")}
+                >
+                  Download
+                </Button>
+                <Image src={url_3} alt="" />
+              </Box>
+            </Grid>
 
-            <Box
-              className={styles.imageContainer}
-              sx={{ ":hover": { opacity: 0.8 } }}
-            >
-              <Button
-                className={styles.downloadButton}
-                onClick={() => handleDownload(url_4, "image.png")}
+            <Grid item xs={12} sm={6} md={3}>
+              <Box
+                className={styles.imageContainer}
+                sx={{ ":hover": { opacity: 0.8 } }}
               >
-                Download
-              </Button>
-              <Image src={url_4} alt="" />
-            </Box>
-          </Box>
+                <Button
+                  className={styles.downloadButton}
+                  onClick={() => handleDownload(url_4, "image.png")}
+                >
+                  Download
+                </Button>
+                <Image src={url_4} alt="" />
+              </Box>
+            </Grid>
+          </Grid>
         )}
       </Box>
       <Copyright />
