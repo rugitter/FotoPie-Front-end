@@ -13,6 +13,7 @@ interface NotificationListProps {
 }
 
 const NotificationList = ({ notifications }: NotificationListProps) => {
+  console.log(notifications);
   const router = useRouter();
 
   const [selectedFilename, setSelectedFilename] = useState<
@@ -74,7 +75,7 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
         >
           {/* to get notification mapped into Stack  */}
           {notifications.map((notification) => (
-            <>
+            <div key={notification.id}>
               <Modal
                 open={open}
                 onClose={handleClose}
@@ -86,10 +87,7 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                 </Box>
               </Modal>
               <div onClick={() => handleOpen(notification.directFilename)}>
-                <Box
-                  key={notification.id}
-                  sx={{ display: "flex", justifyContent: "center" }}
-                >
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
                   <Item
                     sx={{
                       display: "flex",
@@ -114,7 +112,7 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                       }}
                     >
                       <Avatar
-                        alt="avatar"
+                        alt={notification.directFilename}
                         src={notification.userAvatar}
                         sx={{
                           width: { xs: 30, sm: 70 },
@@ -136,6 +134,7 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                       alt="image"
                       src={notification.post}
                       fit="contain"
+                      duration={0.5}
                       {...(matches
                         ? { width: 100, height: 80 }
                         : { width: 50, height: 30 })}
@@ -143,7 +142,7 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                   </Item>
                 </Box>
               </div>
-            </>
+            </div>
           ))}
         </Box>
 
