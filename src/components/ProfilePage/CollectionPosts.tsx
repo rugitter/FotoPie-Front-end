@@ -7,6 +7,8 @@ import Masonry from "@mui/lab/Masonry";
 import NoMore from "../Loader/NoMore";
 import { profileCollection } from "../../axiosRequest/api/userCollection";
 import ErrorAlert from "../LoginForm/ErrorAlert";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 interface CollectionPostsProps {
   id: string;
@@ -59,6 +61,15 @@ const PostList = ({id, handleOpen}: CollectionPostsProps) => {
     <>
       {/*<h2>{props.id}</h2>*/}
       {error && <ErrorAlert error={error}></ErrorAlert>}
+      <Grid container justifyContent="center">
+        <Grid item >
+          {[...collection].length === 0 ? (
+            <Typography variant="h4">
+              You have not collected any posts yet
+            </Typography>
+          ) : null}
+        </Grid>
+      </Grid>
       <Box
         sx={{
           width: "100%",
