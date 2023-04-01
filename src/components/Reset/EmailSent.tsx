@@ -38,7 +38,6 @@ function EmailSent() {
         <br />
         <br />
         <br />
-        <Copyright />
       </Box>
     </Box>
   );
