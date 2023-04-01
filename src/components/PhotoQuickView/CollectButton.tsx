@@ -35,8 +35,7 @@ const CollectButton = ({
         variant="outlined"
         color="info"
         sx={{
-          opacity: { xs: 0, sm: 0, md: 1 },
-          color: collected ? "orange" : "black"
+          color: collected ? "orange" : "black",
         }}
         onClick={addToCollection}
         startIcon={

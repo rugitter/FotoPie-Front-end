@@ -35,7 +35,6 @@ const LikeButton = ({
         variant="outlined"
         color="info"
         sx={{
-          opacity: { xs: 0, sm: 0, md: 1 },
           color: liked ? "red" : "black",
         }}
         startIcon={
