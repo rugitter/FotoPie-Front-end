@@ -15,3 +15,19 @@ export const uploadPost = <T>(data: T) => {
     data,
   });
 };
+
+export const uploadPhotoNew = <T>(data: T) => {
+  return axiosInstance({
+    url: `api/postsnew/upload`,
+    method: "patch",
+    data,
+  });
+};
+
+export const uploadPostNew = <T>(data: T) => {
+  return axiosInstance({
+    url: `/api/postsnew/sent`,
+    method: "post",
+    data,
+  });
+};
