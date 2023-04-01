@@ -19,6 +19,9 @@ const UserName = ({ userID, userName, userAvatar }: UserNameProps) => {
             sx={{
               width: { xs: 20, md: 50 },
               height: { xs: 20, md: 50 },
+              ":hover": {
+                opacity: 0.8,
+              },
             }}
           ></Avatar>
         </Link>
@@ -33,8 +36,11 @@ const UserName = ({ userID, userName, userAvatar }: UserNameProps) => {
                 sm: "1rem",
                 md: "1.2rem",
               }}
-              color={"black"}
-              fontWeight={400}
+              color={"primary"}
+              fontWeight={700}
+              sx={{
+                ":hover": { color: "primary.light" },
+              }}
             >
               {userName}
             </Typography>
