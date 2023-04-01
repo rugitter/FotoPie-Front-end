@@ -76,7 +76,7 @@ export default function LogIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Login
+            Sign In
           </Typography>
           {/* input Form */}
           <FormProvider {...methods}>

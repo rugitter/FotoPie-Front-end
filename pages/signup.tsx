@@ -14,9 +14,9 @@ import FormTextField from "../src/components/LoginForm/FormTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
 import { useRouter } from "next/router";
-import axiosRequest from "../src/utils/axiosRequest";
 import NavBar from "../src/components/NavBar/NavBar";
 import { NavBarStyles } from "../src/components/NavBar/NavbarBaseline.style";
+import { signUp } from "../src/axiosRequest/api/user";
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -28,10 +28,10 @@ interface IFormInput {
 
 // Define a schema for the form values
 const formSchema: Schema<IFormInput> = object({
-  firstName: string().max(15).required(),
-  lastName: string().max(15).required(),
-  email: string().email().required(),
-  password: string().min(2).max(20).required(),
+  firstName: string().max(15).required("First Name is a required field."),
+  lastName: string().max(15).required("Last Name is a required field."),
+  email: string().email().required("Email is a required field."),
+  password: string().min(2).max(20).required("Password is a required field."),
 });
 
 // Define a component that renders the form
@@ -44,15 +44,13 @@ export default function SignUp() {
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
-      const response = await axiosRequest("/api/user/create", "POST", data);
-      console.log(response);
+      const response = await signUp(data);
 
       if (response.status === 200) {
         router.push("verifyemail");
       }
     } catch (error) {
       alert("Email is already been used,please go to the login page.");
-      console.log(error);
     }
   };
 
@@ -72,7 +70,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign Up
           </Typography>
           <FormProvider {...methods}>
             <Box

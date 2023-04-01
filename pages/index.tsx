@@ -1,4 +1,3 @@
-import Container from "@mui/material/Container";
 import NavBar from "../src/components/NavBar/NavBar";
 import Header from "../src/components/Header";
 import Box from "@mui/material/Box";
@@ -35,8 +34,8 @@ export default function Home() {
         sx={{
           backgroundImage: `
               linear-gradient(
-                rgba(0, 0, 0, 0.1),
-                rgba(0, 0, 0, 0.1)
+                rgba(0, 0, 0, 0.5),
+                rgba(0, 0, 0, 0.3)
               ),
               url(https://source.unsplash.com/random)`,
           backgroundSize: "cover",

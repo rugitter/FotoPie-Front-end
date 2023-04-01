@@ -36,9 +36,10 @@ export default function UserIcons({
     <Box
       sx={{
         display: { xs: "none", md: "flex" },
-        flexGrow: 1,
         justifyContent: "space-between",
         alignItems: "center",
+        width: "350px",
+        position: "sticky",
       }}
     >
       {/* FotoPie+ */}
@@ -84,7 +85,7 @@ export default function UserIcons({
       <Avatar
         alt="Avatar"
         src={avatarPath}
-        onClick={handleProfileMenuOpen}
+        onMouseEnter={handleProfileMenuOpen}
         sx={{
           width: 50,
           height: 50,
@@ -93,6 +94,7 @@ export default function UserIcons({
             cursor: "pointer",
           },
         }}
+        
       />
 
       <Link href="/upload" underline="none">

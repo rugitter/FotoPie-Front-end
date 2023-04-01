@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
-import React, { useState } from "react";
 import NavBar from "../src/components/NavBar/NavBar";
-import Button from "@mui/material/Button";
+
 import { AttachMoney } from "@mui/icons-material";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -10,15 +9,12 @@ import FormGroup from "@mui/material";
 import FormHelperText from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import {
   useForm,
   SubmitHandler,
   FormState,
   FormProvider,
 } from "react-hook-form";
-import Copyright from "../src/components/Copyright";
 import FormTextField from "../src/components/LoginForm/FormTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
@@ -26,11 +22,37 @@ import InputAdornment from "@mui/material/InputAdornment";
 import * as yup from "yup";
 import axiosRequest from "../src/utils/axiosRequest";
 import "react-dropzone-uploader/dist/styles.css";
-import Dropzone, { IFileWithMeta, StatusValue } from "react-dropzone-uploader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImages } from "@fortawesome/free-solid-svg-icons";
 import axios, { AxiosRequestConfig, Method } from "axios";
 import { uploadPhoto, uploadPost } from "../src/axiosRequest/api/posts";
+import {
+  Group,
+  Text,
+  useMantineTheme,
+  rem,
+  Image,
+  SimpleGrid,
+  MantineTheme,
+} from "@mantine/core";
+import { IconUpload, IconPhoto, IconX } from "@tabler/icons-react";
+import {
+  Dropzone,
+  DropzoneProps,
+  IMAGE_MIME_TYPE,
+  FileWithPath,
+} from "@mantine/dropzone";
+
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+//import Image from "mui-image";
+import React, { useState, useEffect, useRef } from "react";
+import Copyright from "../src/components/Copyright";
+import LinearProgress from "@mui/material/LinearProgress";
+import styles from "./NewVariation.module.css";
+import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import { NavBarStyles } from "../src/components/NavBar/NavbarBaseline.style";
 
 interface IFormInput {
@@ -40,51 +62,29 @@ interface IFormInput {
 }
 
 // Define a component that renders the form
-export default function Upload() {
+export default function Upload(props: Partial<DropzoneProps>) {
+  const theme = useMantineTheme();
   const [tagValue, setTagValue] = useState("");
-  const [priceValue, setPriceValue] = useState("");
+  // const [priceValue, setPriceValue] = useState("");
   const [desValue, setDesValue] = useState("");
   const [filename, setUploadfileName] = useState({});
   const [OrginalFilePath, setOrginalFilePath] = useState({});
   const [CompressFilePath, setCompressFilePath] = useState({});
-  const [status, setStatus] = useState("");
+  const [files, setFiles] = useState<FileWithPath[]>([]);
+  //define a success state for submission alert
+  const [success, setSuccess] = useState(false);
 
-  const handleChangeStatus = (file: IFileWithMeta, status: StatusValue) => {
-    testhandleChangeStatus(file, status);
-  };
-
-  const testhandleChangeStatus = async (
-    file: IFileWithMeta,
-    status: StatusValue
-  ) => {
-    const { meta } = file;
-    console.log(status, meta);
-    setStatus(status);
-    if (status === "done") {
-      const formData = new FormData();
-      formData.append("file", file.file);
-
-      try {
-        const response = await uploadPhoto(formData);
-        console.log(
-          response.data.filename,
-          response.data.original_path,
-          response.data.compression_path
-        );
-        setUploadfileName(response.data.filename);
-        setOrginalFilePath(response.data.original_path);
-        setCompressFilePath(response.data.compression_path);
-        return { meta: response };
-      } catch (error) {
-        console.error(error);
-        return error;
-      }
-    }
-  };
-
-  // const getUploadParams = () => {
-  //   return { url: 'http://localhost:3000/upload' }
-  // }
+  const previews = files.map((file, index) => {
+    const imageUrl = URL.createObjectURL(file);
+    return (
+      <Image
+        key={index}
+        src={imageUrl}
+        imageProps={{ onLoad: () => URL.revokeObjectURL(imageUrl) }}
+        sx={{ width: "20%" }}
+      />
+    );
+  });
 
   const formSchema = yup.object().shape({
     description: yup.string().max(50),
@@ -108,86 +108,24 @@ export default function Upload() {
       });
       console.log(response);
 
-      if (response.status === 200) {
-        router.push("verifyemail");
+      if (response.status === 201) {
+        setSuccess(true);
+        router.push("/upload");
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const styles = {
-    dropzone: {
-      width: 650,
-      height: 300,
-      border: "4px dashed grey", // set border style
-      borderRadius: "10px", // set border radius
-      padding: "20px",
-      overflow: "hidden",
-    },
-    dropzoneActive: { borderColor: "green" },
-    inputLabel: { color: "#424242" },
-    submitButtonContainer: { display: "none" },
-    input: {
-      display: "none",
-    },
-    previewImage: {
-      maxWidth: "100%",
-      maxHeight: "100%",
-      display: "block",
-      margin: "0 auto",
-    },
-    previewContainer: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      width: "100%",
-      height: "100%",
-      borderBottom: "1px solid #ccc",
-      overflow: "hidden",
-    },
-    progressBar: {
-      backgroundColor: "black",
-      color: "black",
-    },
-    preview: {
-      width: "100%",
-      height: "100%",
-      overflow: "hidden",
-    },
-  };
-
-  const inputContentWithIcon = (
-    <div
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
-      <FontAwesomeIcon
-        icon={faImages}
-        style={{ marginBottom: "10px", transform: "scale(3)" }}
-      />
-      <div
-        style={{
-          margin: "30px 0",
-          fontSize: "20px",
-          fontWeight: "bold",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <span>Drop files here or click to upload</span>
-      </div>
-    </div>
-  );
-
-  const priceInputProps = {
-    startAdornment: (
-      <InputAdornment position="start">
-        <AttachMoney />
-        {priceValue ? null : "Enter Price"}
-      </InputAdornment>
-    ),
-    onChange: (e: any) => setPriceValue(e.target.value),
-  };
+  // const priceInputProps = {
+  //   startAdornment: (
+  //     <InputAdornment position="start">
+  //       <AttachMoney />
+  //       {priceValue ? null : "Enter Price"}
+  //     </InputAdornment>
+  //   ),
+  //   onChange: (e: any) => setPriceValue(e.target.value),
+  // };
 
   const tagInputProps = {
     startAdornment: (
@@ -209,11 +147,11 @@ export default function Upload() {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles}/>
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 0,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -224,32 +162,122 @@ export default function Upload() {
               component="form"
               onSubmit={methods.handleSubmit(onSubmit)}
               sx={{
-                mt: 5,
+                mt: 2,
+
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-end",
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "35vh",
-                }}
-              >
+              <Box sx={{ mb: 2 }}>
                 <Dropzone
-                  onChangeStatus={handleChangeStatus}
-                  maxFiles={1}
+                  onDrop={async (files) => {
+                    console.log("accepted files", files);
+                    setFiles(files);
+
+                    const formData = new FormData();
+                    formData.append("file", files[0]);
+                    try {
+                      const response = await uploadPhoto(formData);
+                      console.log(
+                        response.data.filename,
+                        response.data.original_path,
+                        response.data.compression_path
+                      );
+                      setUploadfileName(response.data.filename);
+                      setOrginalFilePath(response.data.original_path);
+                      setCompressFilePath(response.data.compression_path);
+                      return { meta: response };
+                    } catch (error) {
+                      console.error(error);
+                      return error;
+                    }
+                  }}
+                  onReject={(files) => console.log("rejected files", files)}
+                  maxSize={4 * 1024 ** 2}
+                  accept={IMAGE_MIME_TYPE}
+                  //accept={["image/png", "image/jpeg", "image/sgv+xml", "image/gif"]}
                   multiple={false}
-                  canCancel={false}
-                  inputContent={inputContentWithIcon}
-                  // inputContainerStyle={{ border: "none" }}
-                  // getUploadParams={getUploadParams}
-                  accept="image/*"
-                  styles={styles}
-                />
-              </div>
+                  //autoFocus={true}
+                  radius="xl"
+                  sx={(theme) => ({
+                    minHeight: rem(100),
+                    maxWidth: rem(800),
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    border: 10,
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    backgroundColor:
+                      theme.colorScheme === "dark"
+                        ? theme.colors.dark[6]
+                        : theme.colors.gray[0],
+
+                    "&[data-accept]": {
+                      color: theme.white,
+                      backgroundColor: theme.colors.blue[6],
+                    },
+
+                    "&[data-reject]": {
+                      color: theme.white,
+                      backgroundColor: theme.colors.red[6],
+                    },
+                    "&[data-idle]": {
+                      color: theme.black,
+                      backgroundColor: "#eae6ff",
+                    },
+                  })}
+                  {...props}
+                >
+                  <Group
+                    position="center"
+                    spacing="xl"
+                    style={{ minHeight: rem(120), pointerEvents: "none" }}
+                  >
+                    <Dropzone.Accept>
+                      <IconUpload
+                        size="3.2rem"
+                        stroke={1.5}
+                        color={
+                          theme.colors[theme.primaryColor][
+                            theme.colorScheme === "dark" ? 4 : 6
+                          ]
+                        }
+                      />
+                    </Dropzone.Accept>
+                    <Dropzone.Reject>
+                      <IconX
+                        size="3.2rem"
+                        stroke={1.5}
+                        color={
+                          theme.colors.red[theme.colorScheme === "dark" ? 4 : 6]
+                        }
+                      />
+                    </Dropzone.Reject>
+                    <Dropzone.Idle>
+                      <IconPhoto size="3.2rem" stroke={1.5} />
+                    </Dropzone.Idle>
+                    <div>
+                      <Text size="xl" inline>
+                        Drag image here or click to select file
+                      </Text>
+                      <Text size="sm" color="dimmed" inline mt={7}>
+                        Attach one image file with a standard format
+                      </Text>
+                    </div>
+                    <Container maxWidth="xs">
+                      <SimpleGrid
+                        cols={1}
+                        breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+                        mt={previews.length > 0 ? "xl" : 0}
+                      >
+                        {previews}
+                      </SimpleGrid>
+                    </Container>
+                  </Group>
+                </Dropzone>
+              </Box>
 
               <FormTextField
                 name="description"
@@ -267,14 +295,14 @@ export default function Upload() {
                 InputProps={tagInputProps}
               />
 
-              <FormTextField
+              {/* <FormTextField
                 name="price"
                 label="Price(optional)"
                 id="price"
                 type="number"
                 autoComplete="price"
                 InputProps={priceInputProps}
-              />
+              /> */}
 
               <FormControlLabel
                 style={{ marginTop: "16px" }}
@@ -305,8 +333,16 @@ export default function Upload() {
                 {/* <Link href="verifyemail"></Link> */}
               </Button>
 
-              <Grid container justifyContent="flex-end">
-                <Grid item></Grid>
+              <Grid container justifyContent="center">
+                <Grid item>
+                  {success && (
+                    <Alert severity="success">
+                      <AlertTitle>Success</AlertTitle>
+                      User post submitted successfully —{" "}
+                      <strong>check it out!</strong>
+                    </Alert>
+                  )}
+                </Grid>
               </Grid>
             </Box>
           </FormProvider>

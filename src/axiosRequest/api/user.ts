@@ -6,3 +6,11 @@ export const getUserInfo = <T>(params: T) => {
     method: "get",
   });
 };
+
+export const signUp = <T>(data: T) => {
+  return axiosInstance({
+    url: "/api/user/create",
+    method: "post",
+    data,
+  });
+};

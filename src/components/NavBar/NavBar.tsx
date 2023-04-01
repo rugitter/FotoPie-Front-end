@@ -26,6 +26,7 @@ interface NavbarProps {
   color?: string;
   bgColor?: string;
   baseLine?: any;
+  position?: "fixed" | "absolute" | "relative" | "static" | "sticky";
 }
 
 export default function Navbar({
@@ -33,6 +34,7 @@ export default function Navbar({
   color = "#FFFFFF",
   bgColor,
   baseLine,
+  position,
 }: NavbarProps) {
   useCheckToken();
   const { isAuthenticated, notificationCount, isNotificationRead } =
@@ -120,6 +122,7 @@ export default function Navbar({
   const handleMobileLogout = () => {
     dispatch(logout());
     handleMenuCloseInMobileMenu();
+    router.push("/");
   };
 
   //////////////////////////////////////////////////////////////////////////////
@@ -137,6 +140,7 @@ export default function Navbar({
   const handleLogout = () => {
     dispatch(logout());
     handleMenuClose();
+    router.push("/");
   };
   const isMenuOpen = Boolean(anchorEl);
 
@@ -151,6 +155,7 @@ export default function Navbar({
             backgroundColor: bgColor || (fix ? "#fff" : "transparent"),
             color: "transparent",
             height: 80,
+            width: "100%",
             display: "flex",
             justifyContent: "center",
             elevation: 0,
@@ -187,6 +192,7 @@ export default function Navbar({
               underline="none"
               sx={{
                 display: "flex",
+                ml: 2,
                 alignItems: "center",
                 justifyContent: "space-between",
                 "&:hover": {
@@ -219,14 +225,7 @@ export default function Navbar({
             </Link>
 
             <Box sx={{ flexGrow: 1 }}></Box>
-            <Box
-              sx={{
-                display: { xs: "none", md: "flex" },
-                flexGrow: 0.12,
-                justifyContent: "flex-end",
-                alignItems: "center",
-              }}
-            >
+            <Box>
               {isAuthenticated ? (
                 <UserIcons
                   handleProfileMenuOpen={handleProfileMenuOpen}

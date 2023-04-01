@@ -5,12 +5,9 @@ import NoMore from "../Loader/NoMore";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Masonry from "@mui/lab/Masonry";
 import Box from "@mui/material/Box";
-import { categoryPosts } from "../../axiosRequest/api/category";
 import { ResponseImageData } from "../../../pages/category/[tag]";
 import ErrorAlert from "../LoginForm/ErrorAlert";
 import { searchPosts } from "../../axiosRequest/api/search";
-
-
 
 interface CategoryInsidePostsProps {
   tagString: string | string[] | undefined;
@@ -35,13 +32,11 @@ const PostList = ({
   setLoaderHandler,
   error,
   setError,
-  handleOpen
+  handleOpen,
 }: CategoryInsidePostsProps) => {
-
   let limit = 10;
 
   const fetchImages = async () => {
-    
     try {
       const res = await searchPosts(tagString, page, limit);
 
@@ -59,8 +54,8 @@ const PostList = ({
 
   useEffect(() => {
     if (!tagString) {
-      return
-    };
+      return;
+    }
     fetchImages();
   }, [tagString]);
 
