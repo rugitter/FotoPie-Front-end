@@ -5,6 +5,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
+
 interface avatarMenuProps {
   isMenuOpen: boolean;
   anchorEl: null | HTMLElement;
@@ -25,8 +26,8 @@ export default function avatarMenu({
   return (
     <Menu
       anchorEl={anchorEl}
+      onMouseLeave={handleMenuClose}
       open={isMenuOpen}
-      onClose={handleMenuClose}
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "right",
@@ -63,6 +64,7 @@ export default function avatarMenu({
         horizontal: "right",
       }}
     >
+      <div onMouseLeave={handleMenuClose}>
       <MenuItem
         component="a"
         href={`/profile/${id}`}
@@ -96,6 +98,8 @@ export default function avatarMenu({
         </ListItemIcon>
         Logout
       </MenuItem>
+      </div>
     </Menu>
+    
   );
 }

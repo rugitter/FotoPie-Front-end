@@ -1,5 +1,4 @@
 import EmailSent from "../../src/components/Reset/EmailSent";
-import Copyright from "../../src/components/Copyright";
 import NavBar from "../../src/components/NavBar/NavBar";
 import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
 

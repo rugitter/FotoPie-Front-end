@@ -1,8 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { categoryPosts } from "../../src/axiosRequest/api/category";
 import NavBar from "../../src/components/NavBar/NavBar";
-import CategoryHeader from "../../src/components/CategoryInside/CategoryHeader";
 import PostList from "../../src/components/Search/SearchInsidePosts";
 import CategoryButton from "../../src/components/CategoryInside/CategoryButton";
 import { getSynonymsAPI } from "../../src/axiosRequest/api/getSynonyms";
@@ -11,6 +9,8 @@ import Modal from "@mui/material/Modal";
 import { PhotoQuickViewStyles } from "../../src/components/PhotoQuickView/PhotoQuickView.style";
 import PhotoQuickView from "../../src/components/PhotoQuickView/PhotoQuickView";
 import { searchPosts } from "../../src/axiosRequest/api/search";
+import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
+import SearchHeader from "../../src/components/Search/SearchHeader";
 
 
 export interface ResponseImageData {
@@ -138,8 +138,8 @@ export default function searchPage() {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" />
-      <CategoryHeader tagString={tagString} />
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
+      <SearchHeader tagString={tagString} />
       <CategoryButton
         links={links}
         resetCategoryState={resetCategoryStateHandler}

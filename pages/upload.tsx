@@ -51,6 +51,9 @@ import Copyright from "../src/components/Copyright";
 import LinearProgress from "@mui/material/LinearProgress";
 import styles from "./NewVariation.module.css";
 import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import { NavBarStyles } from "../src/components/NavBar/NavbarBaseline.style";
 
 interface IFormInput {
   description: string;
@@ -68,6 +71,8 @@ export default function Upload(props: Partial<DropzoneProps>) {
   const [OrginalFilePath, setOrginalFilePath] = useState({});
   const [CompressFilePath, setCompressFilePath] = useState({});
   const [files, setFiles] = useState<FileWithPath[]>([]);
+  //define a success state for submission alert
+  const [success, setSuccess] = useState(false);
 
   const previews = files.map((file, index) => {
     const imageUrl = URL.createObjectURL(file);
@@ -104,6 +109,7 @@ export default function Upload(props: Partial<DropzoneProps>) {
       console.log(response);
 
       if (response.status === 201) {
+        setSuccess(true);
         router.push("/upload");
       }
     } catch (error) {
@@ -327,8 +333,16 @@ export default function Upload(props: Partial<DropzoneProps>) {
                 {/* <Link href="verifyemail"></Link> */}
               </Button>
 
-              <Grid container justifyContent="flex-end">
-                <Grid item></Grid>
+              <Grid container justifyContent="center">
+                <Grid item>
+                  {success && (
+                    <Alert severity="success">
+                      <AlertTitle>Success</AlertTitle>
+                      User post submitted successfully —{" "}
+                      <strong>check it out!</strong>
+                    </Alert>
+                  )}
+                </Grid>
               </Grid>
             </Box>
           </FormProvider>

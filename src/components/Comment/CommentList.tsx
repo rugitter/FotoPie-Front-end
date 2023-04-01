@@ -1,6 +1,5 @@
-import React from "react";
 import Container from "@mui/material/Container";
-import { Avatar, Button, TextField, Grid } from "@mui/material";
+import { Avatar, Grid } from "@mui/material";
 const CommentList = () => {
   return (
     <Container

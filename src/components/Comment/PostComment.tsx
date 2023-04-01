@@ -1,4 +1,3 @@
-import React from "react";
 import { Avatar, Button, TextField, Grid } from "@mui/material";
 import Container from "@mui/material/Container";
 import { object, Schema, string } from "yup";
