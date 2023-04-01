@@ -20,7 +20,6 @@ import Hidden from "@mui/material/Hidden";
 import HamburgerMenu from "./HamburgerMenu";
 import { Grid } from "@mui/material";
 
-
 interface PhotoQuickViewProps {
   filename: string | string[] | undefined;
   router: NextRouter;
@@ -76,7 +75,7 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
           alignItems="center"
           spacing={2}
         >
-          <Grid xs={4} item width="100%">
+          <Grid item xs={2} md={4} width="100%">
             {/* User infos and buttons */}
             <Grid
               container
@@ -149,12 +148,12 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
           </Grid>
 
           {/* Post image */}
-          <Grid item xs={6}>
+          <Grid item xs={8} md={6}>
             {postPhoto && <PostImage postPhoto={postPhoto} />}
           </Grid>
 
           {/* Delete post button */}
-          <Grid item xs={2}>
+          <Grid item xs={2} md={2}>
             <DeletePostButton filenameString={filename} />
           </Grid>
         </Grid>

@@ -9,5 +9,8 @@ export const PhotoQuickViewStyles = {
   boxSizing: "border-box",
   borderRadius: "10px",
   boxShadow: 24,
-  p: 4,
+  p: { xs: 1, sm: 2, md: 4 },
+  // pl: { xs: 2, sm: 3, md: 4 },
+  // pr: { xs: 2, sm: 3, md: 4 },
+ 
 };

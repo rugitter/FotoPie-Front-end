@@ -13,7 +13,7 @@ const PostImage = ({ postPhoto }: PostImageProps) => {
   const matches1200px = useMediaQuery("(min-width:1200px)");
   let imageHeight = 0;
   if (matches1200px) {
-    imageHeight = 700;
+    imageHeight = 600;
   } else if (matches900px) {
     imageHeight = 500;
   } else if (matches750px) {
@@ -40,42 +40,3 @@ const PostImage = ({ postPhoto }: PostImageProps) => {
 };
 
 export default PostImage;
-
-////////////////////////////////////////////////////////////////
-// import React, { useState } from "react";
-// import Container from "@mui/material/Container";
-
-// export interface PostImageProps {
-//   postPhoto: string;
-// }
-
-// const PostImage = ({ postPhoto }: PostImageProps) => {
-//   const [height, setHeight] = useState<number>(0);
-
-//   const handleImageLoad = (
-//     event: React.SyntheticEvent<HTMLImageElement, Event>
-//   ) => {
-//     const target = event.target as HTMLImageElement;
-//     setHeight(target.offsetHeight);
-//   };
-
-//   return (
-//     <Container
-//       sx={{
-//         m: "auto",
-//         p: "0",
-//         width: "auto",
-//         height: height ? `${height}px` : "70vh",
-//       }}
-//     >
-//       <img
-//         alt="image"
-//         src={postPhoto}
-//         style={{ maxWidth: "100%", objectFit: "contain", height: "100%" }}
-//         onLoad={handleImageLoad}
-//       />
-//     </Container>
-//   );
-// };
-
-// export default PostImage;
