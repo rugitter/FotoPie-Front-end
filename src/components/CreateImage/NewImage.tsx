@@ -157,7 +157,7 @@ const NewImage: React.FC = () => {
             <Grid item xs={12} sm={6} md={3}>
               <Box
                 className={styles.imageContainer}
-                sx={{ marginRight: "20px", ":hover": { opacity: 0.8 } }}
+                sx={{ ":hover": { opacity: 0.8 } }}
               >
                 <Button
                   className={styles.downloadButton}
@@ -173,7 +173,7 @@ const NewImage: React.FC = () => {
             <Grid item xs={12} sm={6} md={3}>
               <Box
                 className={styles.imageContainer}
-                sx={{ marginRight: "20px", ":hover": { opacity: 0.8 } }}
+                sx={{ ":hover": { opacity: 0.8 } }}
               >
                 <Button
                   className={styles.downloadButton}
@@ -188,7 +188,7 @@ const NewImage: React.FC = () => {
             <Grid item xs={12} sm={6} md={3}>
               <Box
                 className={styles.imageContainer}
-                sx={{ marginRight: "20px", ":hover": { opacity: 0.8 } }}
+                sx={{ ":hover": { opacity: 0.8 } }}
               >
                 <Button
                   className={styles.downloadButton}
