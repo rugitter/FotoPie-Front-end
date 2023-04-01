@@ -4,8 +4,6 @@ export const PhotoQuickViewStyles = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "85%",
-  // height: "50%",
-  height: { xs: "50vh", sm: "90%", md: "90%" },
   bgcolor: "background.paper",
   outline: "none",
   boxSizing: "border-box",

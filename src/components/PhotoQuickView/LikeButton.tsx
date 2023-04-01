@@ -36,6 +36,7 @@ const LikeButton = ({
         color="info"
         sx={{
           color: liked ? "red" : "black",
+          textTransform: "none",
         }}
         startIcon={
           <FavoriteBorderIcon sx={{ color: liked ? "red" : "black" }} />

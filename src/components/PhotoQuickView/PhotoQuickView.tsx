@@ -18,6 +18,8 @@ import DeletePostButton from "../PostDelete/DeletePost";
 import Loader from "../Loader/Loader";
 import Hidden from "@mui/material/Hidden";
 import HamburgerMenu from "./HamburgerMenu";
+import { Grid } from "@mui/material";
+
 
 interface PhotoQuickViewProps {
   filename: string | string[] | undefined;
@@ -67,95 +69,95 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
       {isLoading ? (
         <Loader />
       ) : (
-        <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            overflowY: "auto",
-            overflowX: "hidden",
-            m: "0",
-            p: "0",
-          }}
+        <Grid
+          container
+          direction="column"
+          justifyContent="space-evenly"
+          alignItems="center"
+          spacing={2}
         >
-          <Stack
-            display="flex"
-            sx={{
-              width: "75vw",
-              height: "auto",
-              minWidth: "50vw",
-              borderRadius: "10px",
-              m: "auto",
-              bgcolor: "#fff",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
+          <Grid xs={4} item width="100%">
             {/* User infos and buttons */}
-            <Stack
+            <Grid
+              container
               direction="row"
-              display="flex"
-              justifyContent="space-between"
-              position="relative"
-              sx={{ m: 1, mt: 3, mb: 3 }}
+              justifyContent="space-around"
+              alignItems="center"
             >
               {/* Avatar and username */}
-              <Stack>
+              <Grid item xs={8} md={4}>
                 <UserName
                   userID={userID}
                   userAvatar={userAvatar}
                   userName={userName}
                 />
-              </Stack>
+              </Grid>
               {/* Collect, like, download buttons */}
-              <Stack
-                display="flex"
-                direction="row"
-                justifyContent="space-around"
-                spacing={2}
-                sx={{ mr: 2 }}
-              >
+              <Grid item xs={4} md={8}>
+                {/* HamburgerMenu or collect like download button */}
+                {/* desktop */}
                 <Hidden mdDown>
-                  <CollectButton
-                    isAuthenticated={isAuthenticated}
-                    filenameString={filename}
-                    userCollects={userCollects}
-                    collected={collected}
-                    router={router}
-                  />
-
-                  <LikeButton
-                    isAuthenticated={isAuthenticated}
-                    filenameString={filename}
-                    userLikes={userLikes}
-                    liked={liked}
-                    router={router}
-                  />
-
-                  <DownloadImage
-                    isAuthenticated={isAuthenticated}
-                    filenameString={filename}
-                    router={router}
-                  />
+                  <Grid container justifyContent="flex-end" spacing={2}>
+                    {/* collect button */}
+                    <Grid item>
+                      <CollectButton
+                        isAuthenticated={isAuthenticated}
+                        filenameString={filename}
+                        userCollects={userCollects}
+                        collected={collected}
+                        router={router}
+                      />
+                    </Grid>
+                    {/* like button */}
+                    <Grid item>
+                      <LikeButton
+                        isAuthenticated={isAuthenticated}
+                        filenameString={filename}
+                        userLikes={userLikes}
+                        liked={liked}
+                        router={router}
+                      />
+                    </Grid>
+                    {/* down button */}
+                    <Grid item>
+                      <DownloadImage
+                        isAuthenticated={isAuthenticated}
+                        filenameString={filename}
+                        router={router}
+                      />
+                    </Grid>
+                  </Grid>
                 </Hidden>
+                {/* mobile */}
                 <Hidden mdUp>
-                  <HamburgerMenu
-                    isAuthenticated={isAuthenticated}
-                    filenameString={filename}
-                    userCollects={userCollects}
-                    collected={collected}
-                    userLikes={userLikes}
-                    liked={liked}
-                    router={router}
-                  />
+                  <Grid container justifyContent="flex-end">
+                    <Grid item>
+                      <HamburgerMenu
+                        isAuthenticated={isAuthenticated}
+                        filenameString={filename}
+                        userCollects={userCollects}
+                        collected={collected}
+                        userLikes={userLikes}
+                        liked={liked}
+                        router={router}
+                      />
+                    </Grid>
+                  </Grid>
                 </Hidden>
-              </Stack>
-            </Stack>
+              </Grid>
+            </Grid>
+          </Grid>
 
-            {/* Post image */}
+          {/* Post image */}
+          <Grid item xs={6}>
             {postPhoto && <PostImage postPhoto={postPhoto} />}
-          </Stack>
-          <DeletePostButton filenameString={filename} />
-        </Box>
+          </Grid>
+
+          {/* Delete post button */}
+          <Grid item xs={2}>
+            <DeletePostButton filenameString={filename} />
+          </Grid>
+        </Grid>
       )}
     </>
   );

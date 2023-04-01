@@ -36,6 +36,7 @@ const CollectButton = ({
         color="info"
         sx={{
           color: collected ? "orange" : "black",
+          textTransform: "none",
         }}
         onClick={addToCollection}
         startIcon={
