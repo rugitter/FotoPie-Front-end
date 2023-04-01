@@ -20,7 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
 import InputAdornment from "@mui/material/InputAdornment";
 import * as yup from "yup";
-import axiosRequest from "../src/utils/axiosRequest";
+
 import "react-dropzone-uploader/dist/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImages } from "@fortawesome/free-solid-svg-icons";
@@ -53,7 +53,6 @@ import styles from "./NewVariation.module.css";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import { NavBarStyles } from "../src/components/NavBar/NavbarBaseline.style";
 
 interface IFormInput {
   description: string;
