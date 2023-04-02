@@ -1,4 +1,3 @@
-import Container from "@mui/material/Container";
 import NavBar from "../src/components/NavBar/NavBar";
 import Header from "../src/components/Header";
 import Box from "@mui/material/Box";
@@ -6,7 +5,6 @@ import PostList from "../src/components/PostList/PostList";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
-import { PhotoQuickViewStyles } from "../src/components/PhotoQuickView/PhotoQuickView.style";
 import PhotoQuickView from "../src/components/PhotoQuickView/PhotoQuickView";
 import MidBar from "../src/components/MainPage/MidBar";
 import Typography from "@mui/material/Typography";
@@ -98,9 +96,7 @@ export default function Home() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={PhotoQuickViewStyles}>
-          <PhotoQuickView filename={selectedFilename} router={router} />
-        </Box>
+        <PhotoQuickView filename={selectedFilename} router={router} />
       </Modal>
     </Box>
   );

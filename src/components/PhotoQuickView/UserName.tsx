@@ -1,6 +1,5 @@
-import Stack from "@mui/material/Stack";
 import Link from "../../utils/Link";
-import { Button, Avatar, Typography } from "@mui/material";
+import { Avatar, Typography, Grid } from "@mui/material";
 
 export interface UserNameProps {
   userID: string;
@@ -10,22 +9,49 @@ export interface UserNameProps {
 
 const UserName = ({ userID, userName, userAvatar }: UserNameProps) => {
   return (
-    <>
-      <Stack>
-        <Stack display="flex" direction="row">
-          <Button>
-            <Link href={`/profile/${userID}`}>
-              {<Avatar alt="avatar" src={userAvatar}></Avatar>}
-            </Link>
-          </Button>
-          <Button>
-            <Link href={`/profile/${userID}`} sx={{ textDecoration: "none" }}>
-              {<Typography variant="body1">{userName}</Typography>}
-            </Link>
-          </Button>
-        </Stack>
-      </Stack>
-    </>
+    <Grid
+      container
+      justifyContent="flex-start"
+      alignItems="center"
+      columnSpacing={{ xs: 1, md: 2 }}
+    >
+      <Grid item>
+        <Link href={`/profile/${userID}`}>
+          <Avatar
+            alt={`${userID}`}
+            src={userAvatar}
+            sx={{
+              width: { xs: 20, md: 50 },
+              height: { xs: 20, md: 50 },
+              ":hover": {
+                opacity: 0.8,
+              },
+            }}
+          ></Avatar>
+        </Link>
+      </Grid>
+      <Grid item>
+        <Link href={`/profile/${userID}`} sx={{ textDecoration: "none" }}>
+          {
+            <Typography
+              variant="h2"
+              fontSize={{
+                xs: "0.7rem",
+                sm: "1rem",
+                md: "1.2rem",
+              }}
+              color={"primary"}
+              fontWeight={700}
+              sx={{
+                ":hover": { color: "primary.light" },
+              }}
+            >
+              {userName}
+            </Typography>
+          }
+        </Link>
+      </Grid>
+    </Grid>
   );
 };
 

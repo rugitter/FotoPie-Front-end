@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "../src/utils/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";

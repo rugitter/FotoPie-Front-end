@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import Avatar from "@mui/material/Avatar";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -9,14 +8,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {
-  useForm,
-  SubmitHandler,
-  FormState,
-  FormProvider,
-} from "react-hook-form";
-import Copyright from "../Copyright";
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import FormTextField from "../LoginForm/FormTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object, mixed } from "yup";
@@ -24,7 +16,6 @@ import { useRouter } from "next/router";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import { updateName } from "../../axiosRequest/api/editUser";
-//import { formSchema } from "../../../pages/edituserprofile";
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -67,7 +58,6 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
 
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-    
     try {
       const response = await updateName(data);
 
@@ -316,15 +306,14 @@ const EditUserForm: React.FC<Props> = ({ firstName, lastName }) => {
                 Save Profile
               </Button>
             </Grid>
-            <Grid
-              container
-              justifyContent="center"
-            >
-              {success && <Alert severity="success">
-                <AlertTitle>Success</AlertTitle>
-                User information updated successfully —{" "}
-                <strong>check it out!</strong>
-              </Alert>}
+            <Grid container justifyContent="center">
+              {success && (
+                <Alert severity="success">
+                  <AlertTitle>Success</AlertTitle>
+                  User information updated successfully —{" "}
+                  <strong>check it out!</strong>
+                </Alert>
+              )}
             </Grid>
           </Box>
         </Box>
