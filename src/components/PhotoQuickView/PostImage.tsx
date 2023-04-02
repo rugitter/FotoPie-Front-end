@@ -13,7 +13,7 @@ const PostImage = ({ postPhoto }: PostImageProps) => {
   const matches1536px = useMediaQuery("(min-width:1536px)");
   let imageHeight = 0;
   if (matches1536px) {
-    imageHeight = 800;
+    imageHeight = 650;
   } else if (matches1200px) {
     imageHeight = 600;
   } else if (matches900px) {

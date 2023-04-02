@@ -5,11 +5,9 @@ import PostList from "../src/components/PostList/PostList";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
-import { PhotoQuickViewStyles } from "../src/components/PhotoQuickView/PhotoQuickView.style";
 import PhotoQuickView from "../src/components/PhotoQuickView/PhotoQuickView";
 import MidBar from "../src/components/MainPage/MidBar";
 import Typography from "@mui/material/Typography";
-import { Container, Grid } from "@mui/material";
 
 export default function Home() {
   const router = useRouter();
