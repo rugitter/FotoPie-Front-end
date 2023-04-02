@@ -9,6 +9,7 @@ import {
 import { refreshAccessToken } from "./api/auth";
 
 const axiosInstance = axios.create({
+  // baseURL: axiosConfig.baseURL,
   timeout: axiosConfig.timeOut as number | undefined,
   withCredentials: true,
 });

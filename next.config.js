@@ -5,7 +5,8 @@ module.exports = {
     return [
       {
         source: "/api/:path*",
-        destination: `${process.env.BACKEND_API}/api/:path*`, // http://localhost:9090/ => /api/
+        destination:
+          "http://fotopieAlb-dev-1588850940.ap-southeast-2.elb.amazonaws.com/api/:path*", // http://localhost:9090/ => /api/
       },
 
       {

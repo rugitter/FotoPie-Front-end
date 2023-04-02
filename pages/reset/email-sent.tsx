@@ -1,6 +1,7 @@
 import EmailSent from "../../src/components/Reset/EmailSent";
 import NavBar from "../../src/components/NavBar/NavBar";
 import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
+import Copyright from "../../src/components/Copyright";
 
 const emailSent: React.FC = () => {
   return (
