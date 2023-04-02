@@ -47,7 +47,7 @@ export default function SignUp() {
       const response = await signUp(data);
 
       if (response.status === 200) {
-        router.push("verifyemail");
+        router.push("/verifyemail");
       }
     } catch (error) {
       alert("Email is already been used,please go to the login page.");
