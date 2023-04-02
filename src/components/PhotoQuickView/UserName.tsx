@@ -10,7 +10,12 @@ export interface UserNameProps {
 
 const UserName = ({ userID, userName, userAvatar }: UserNameProps) => {
   return (
-    <Grid container justifyContent="flex-start" alignItems="center" spacing={2}>
+    <Grid
+      container
+      justifyContent="flex-start"
+      alignItems="center"
+      columnSpacing={{xs: 1, md:2}}
+    >
       <Grid item>
         <Link href={`/profile/${userID}`}>
           <Avatar

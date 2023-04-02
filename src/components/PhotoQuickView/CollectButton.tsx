@@ -30,24 +30,22 @@ const CollectButton = ({
   };
 
   return (
-    <>
-      <Button
-        variant="outlined"
-        color="info"
-        sx={{
-          color: collected ? "orange" : "black",
-          textTransform: "none",
-        }}
-        onClick={addToCollection}
-        startIcon={
-          <AddToPhotosIcon sx={{ color: collected ? "orange" : "grey" }} />
-        }
-      >
-        {collected
-          ? "Collected" + " " + `${userCollects}`
-          : "Collect" + " " + `${userCollects}`}
-      </Button>
-    </>
+    <Button
+      variant="outlined"
+      color="info"
+      sx={{
+        color: collected ? "orange" : "black",
+        textTransform: "none",
+      }}
+      onClick={addToCollection}
+      startIcon={
+        <AddToPhotosIcon sx={{ color: collected ? "orange" : "grey" }} />
+      }
+    >
+      {collected
+        ? "Collected" + " " + `${userCollects}`
+        : "Collect" + " " + `${userCollects}`}
+    </Button>
   );
 };
 

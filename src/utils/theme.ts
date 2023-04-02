@@ -1,7 +1,16 @@
 import { Roboto } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
 import { green, grey, red } from "@mui/material/colors";
-
+declare module "@mui/material/styles" {
+  interface BreakpointOverrides {
+    xs: true;
+    xm: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+  }
+}
 export const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
@@ -42,6 +51,16 @@ const theme = createTheme({
     fontWeightLight: 300, // Work Sans
     fontWeightRegular: 400, // Work Sans
     fontWeightMedium: 700, // Roboto Condensed
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      xm: 390,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
   },
 });
 

@@ -8,16 +8,16 @@ export interface PostImageProps {
 const PostImage = ({ postPhoto }: PostImageProps) => {
   const matches390px = useMediaQuery("(min-width:390px)");
   const matches600px = useMediaQuery("(min-width:600px)");
-  const matches750px = useMediaQuery("(min-width:750px)");
   const matches900px = useMediaQuery("(min-width:900px)");
   const matches1200px = useMediaQuery("(min-width:1200px)");
+  const matches1536px = useMediaQuery("(min-width:1536px)");
   let imageHeight = 0;
-  if (matches1200px) {
+  if (matches1536px) {
+    imageHeight = 800;
+  } else if (matches1200px) {
     imageHeight = 600;
   } else if (matches900px) {
     imageHeight = 500;
-  } else if (matches750px) {
-    imageHeight = 450;
   } else if (matches600px) {
     imageHeight = 350;
   } else if (matches390px) {

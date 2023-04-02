@@ -9,6 +9,7 @@ import { PhotoQuickViewStyles } from "../src/components/PhotoQuickView/PhotoQuic
 import PhotoQuickView from "../src/components/PhotoQuickView/PhotoQuickView";
 import MidBar from "../src/components/MainPage/MidBar";
 import Typography from "@mui/material/Typography";
+import { Container, Grid } from "@mui/material";
 
 export default function Home() {
   const router = useRouter();
@@ -97,9 +98,7 @@ export default function Home() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={PhotoQuickViewStyles}>
-          <PhotoQuickView filename={selectedFilename} router={router} />
-        </Box>
+        <PhotoQuickView filename={selectedFilename} router={router} />
       </Modal>
     </Box>
   );

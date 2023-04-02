@@ -45,19 +45,17 @@ const DownloadButton: NextPage<DownloadImageProps> = ({
     }
   };
   return (
-    <>
-      <Button
-        variant="contained"
-        sx={{
-          bgcolor: "primary.main",
-          textTransform: "none",
-        }}
-        startIcon={<DownloadIcon />}
-        onClick={downLoadImages}
-      >
-        Download
-      </Button>
-    </>
+    <Button
+      variant="contained"
+      sx={{
+        bgcolor: "primary.main",
+        textTransform: "none",
+      }}
+      startIcon={<DownloadIcon />}
+      onClick={downLoadImages}
+    >
+      Download
+    </Button>
   );
 };
 export default DownloadButton;

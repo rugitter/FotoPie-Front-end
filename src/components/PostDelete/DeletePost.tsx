@@ -88,37 +88,30 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
     }
   };
 
-  const deleteBoxStyles = {
-    display: "flex",
-    justifyContent: "center",
-    marginTop: "5px",
-  };
-
   return (
     <>
       {isAuthenticated && isCurrentUserId ? (
-        <div style={deleteBoxStyles}>
+        <div>
           <Button
             variant="contained"
             color="secondary"
             onClick={handleDeleteClick}
             disabled={isDeleting}
-            >
+            sx={{ mt: 2 }}
+          >
             <Typography
               textTransform="none"
               fontWeight={700}
-              p={1}
-              pt={0.2}
-              pb={0.2}
               fontSize={{
                 xs: "0.5rem",
-                sm: "0.8rem",
+                sm: "0.75rem",
                 md: "1rem",
               }}
             >
               {isDeleting ? "Deleting..." : "Delete this post"}
             </Typography>
           </Button>
+
           <Dialog open={isConfirmationOpen} onClose={handleConfirmationCancel}>
             <DialogTitle>Confirm Deletion</DialogTitle>
             <DialogContent>
