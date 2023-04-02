@@ -3,14 +3,12 @@ import Box from "@mui/material/Box";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
-import { PhotoQuickViewStyles } from "../PhotoQuickView/PhotoQuickView.style";
 import PhotoQuickView from "../PhotoQuickView/PhotoQuickView";
 
 interface GalleryProps {
   profileUserId: string | string[] | undefined;
 }
 export default function Gallery(props: GalleryProps) {
-
   //define necessary states for quick-view modal
   const router = useRouter();
   const [selectedFilename, setSelectedFilename] = useState<
@@ -30,16 +28,17 @@ export default function Gallery(props: GalleryProps) {
 
   return (
     <>
-      <GalleryPost profileUserId={props.profileUserId} handleOpen={handleOpen} />
+      <GalleryPost
+        profileUserId={props.profileUserId}
+        handleOpen={handleOpen}
+      />
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={PhotoQuickViewStyles}>
-          <PhotoQuickView filename={selectedFilename} router={router} />
-        </Box>
+        <PhotoQuickView filename={selectedFilename} router={router} />
       </Modal>
     </>
   );

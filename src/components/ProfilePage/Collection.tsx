@@ -1,9 +1,8 @@
 import PostList from "./CollectionPosts";
-import Box from "@mui/material/Box";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
-import { PhotoQuickViewStyles } from "../PhotoQuickView/PhotoQuickView.style";
+
 import PhotoQuickView from "../PhotoQuickView/PhotoQuickView";
 
 interface CollectionProps {
@@ -39,9 +38,7 @@ export default function Collection(props: CollectionProps) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={PhotoQuickViewStyles}>
-          <PhotoQuickView filename={selectedFilename} router={router} />
-        </Box>
+        <PhotoQuickView filename={selectedFilename} router={router} />
       </Modal>
     </>
   );
