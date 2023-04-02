@@ -1,6 +1,5 @@
-import Stack from "@mui/material/Stack";
 import Link from "../../utils/Link";
-import { Button, Avatar, Typography, Grid } from "@mui/material";
+import { Avatar, Typography, Grid } from "@mui/material";
 
 export interface UserNameProps {
   userID: string;
@@ -14,7 +13,7 @@ const UserName = ({ userID, userName, userAvatar }: UserNameProps) => {
       container
       justifyContent="flex-start"
       alignItems="center"
-      columnSpacing={{xs: 1, md:2}}
+      columnSpacing={{ xs: 1, md: 2 }}
     >
       <Grid item>
         <Link href={`/profile/${userID}`}>

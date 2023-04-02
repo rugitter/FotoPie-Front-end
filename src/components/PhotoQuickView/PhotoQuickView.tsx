@@ -1,6 +1,4 @@
 import { useEffect, FC } from "react";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 import { NextRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getInitialData } from "../../axiosRequest/api/photoQuickView";
