@@ -97,7 +97,6 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
             color="secondary"
             onClick={handleDeleteClick}
             disabled={isDeleting}
-            sx={{ mt: 2 }}
           >
             <Typography
               textTransform="none"

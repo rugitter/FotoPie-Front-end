@@ -70,9 +70,9 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
         <Grid
           container
           direction="column"
-          justifyContent="space-between"
+          justifyContent="space-evenly"
           alignItems="center"
-          rowSpacing={{ sx: 1, md: 2 }}
+          rowSpacing={{ xs: 1, md: 2 }}
           sx={PhotoQuickViewStyles}
         >
           {/* User infos and buttons */}
