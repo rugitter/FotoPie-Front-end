@@ -1,10 +1,11 @@
 import NewImage from "../../src/components/CreateImage/NewImage";
-import Navbar from "../../src/components/NavBar/NavBar";
+import NavBar from "../../src/components/NavBar/NavBar";
+import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
 
 export default function CreateImage() {
   return (
     <>
-      <Navbar isFixed={false} color="#000000" />
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
       <NewImage />
     </>
   );
