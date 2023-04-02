@@ -82,9 +82,7 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
               >
-                <Box sx={PhotoQuickViewStyles}>
-                  <PhotoQuickView filename={selectedFilename} router={router} />
-                </Box>
+                <PhotoQuickView filename={selectedFilename} router={router} />
               </Modal>
               <div onClick={() => handleOpen(notification.directFilename)}>
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
