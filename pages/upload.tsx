@@ -56,14 +56,14 @@ import AlertTitle from "@mui/material/AlertTitle";
 
 interface IFormInput {
   description: string;
-  tag: string;
-  price: number;
+  tag: string[];
+  //price: number;
 }
 
 // Define a component that renders the form
 export default function Upload(props: Partial<DropzoneProps>) {
   const theme = useMantineTheme();
-  const [tagValue, setTagValue] = useState("");
+  const [tagValue, setTagValue] = useState<string[]>([]);
   // const [priceValue, setPriceValue] = useState("");
   const [desValue, setDesValue] = useState("");
   const [filename, setUploadfileName] = useState({});
@@ -100,7 +100,9 @@ export default function Upload(props: Partial<DropzoneProps>) {
       console.log(filename);
 
       const response = await uploadPost({
-        ...data,
+        //...data,
+        description: desValue,
+        tag: tagValue,
         filename: filename,
         orginalFilePath: OrginalFilePath,
         compressFilePath: CompressFilePath,
@@ -129,10 +131,15 @@ export default function Upload(props: Partial<DropzoneProps>) {
   const tagInputProps = {
     startAdornment: (
       <InputAdornment position="start">
-        {tagValue ? null : "Enter Tag"}
+        {tagValue.length === 0 ? "Enter Tag" : null}
       </InputAdornment>
     ),
-    onChange: (e: any) => setTagValue(e.target.value),
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(e.target.value);
+      const values = e.target.value.split(","); // Split the input value by comma
+      setTagValue(values.map((value) => value.trim())); // Trim each value and store them as an array
+      console.log(tagValue, "debug");
+    },
   };
 
   const DesInputProps = {
@@ -193,7 +200,7 @@ export default function Upload(props: Partial<DropzoneProps>) {
                     }
                   }}
                   onReject={(files) => console.log("rejected files", files)}
-                  maxSize={4 * 1024 ** 2}
+                  maxSize={30 * 1024 ** 2}
                   accept={IMAGE_MIME_TYPE}
                   //accept={["image/png", "image/jpeg", "image/sgv+xml", "image/gif"]}
                   multiple={false}
