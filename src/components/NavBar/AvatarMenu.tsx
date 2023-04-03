@@ -26,7 +26,7 @@ export default function avatarMenu({
   return (
     <Menu
       anchorEl={anchorEl}
-      onMouseLeave={handleMenuClose}
+      onClick={handleMenuClose}
       open={isMenuOpen}
       anchorOrigin={{
         vertical: "bottom",
@@ -64,7 +64,7 @@ export default function avatarMenu({
         horizontal: "right",
       }}
     >
-      <div onMouseLeave={handleMenuClose}>
+      <div>
       <MenuItem
         component="a"
         href={`/profile/${id}`}
