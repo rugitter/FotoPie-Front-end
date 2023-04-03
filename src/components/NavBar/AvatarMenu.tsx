@@ -4,7 +4,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { useState } from "react";
+
 
 interface avatarMenuProps {
   isMenuOpen: boolean;

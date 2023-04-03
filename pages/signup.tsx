@@ -14,9 +14,9 @@ import FormTextField from "../src/components/LoginForm/FormTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Schema, string, object } from "yup";
 import { useRouter } from "next/router";
-import axiosRequest from "../src/utils/axiosRequest";
 import NavBar from "../src/components/NavBar/NavBar";
 import { NavBarStyles } from "../src/components/NavBar/NavbarBaseline.style";
+import { signUp } from "../src/axiosRequest/api/user";
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -44,15 +44,13 @@ export default function SignUp() {
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
-      const response = await axiosRequest("/api/user/create", "POST", data);
-      console.log(response);
+      const response = await signUp(data);
 
       if (response.status === 200) {
         router.push("verifyemail");
       }
     } catch (error) {
       alert("Email is already been used,please go to the login page.");
-      console.log(error);
     }
   };
 
