@@ -90,7 +90,8 @@ export default function Upload(props: Partial<DropzoneProps>) {
 
   const formSchema = yup.object().shape({
     description: yup.string().max(50),
-    tag: yup.string().max(15),
+    //tag: yup.string().max(15),
+    selected: yup.string().max(50),
     price: yup.number(),
   });
   const router = useRouter();
@@ -297,15 +298,15 @@ export default function Upload(props: Partial<DropzoneProps>) {
                 InputProps={DesInputProps}
               />
 
-              <FormTextField
+              {/* <FormTextField
                 name="tag"
                 label="Tag (optional)"
                 id="Tag"
                 autoComplete="Tag"
                 InputProps={tagInputProps}
-              />
+              /> */}
 
-              <div>
+              <Box sx={{ width: "100%" }}>
                 {/* <h1>Add Fruits</h1>
                 <pre>{JSON.stringify(selected)}</pre> */}
                 <TagsInput
@@ -315,7 +316,7 @@ export default function Upload(props: Partial<DropzoneProps>) {
                   placeHolder="Enter Tags"
                 />
                 <em>press enter to add new tag</em>
-              </div>
+              </Box>
 
               {/* <FormTextField
                 name="price"
