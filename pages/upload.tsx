@@ -53,6 +53,7 @@ import styles from "./NewVariation.module.css";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import { TagsInput } from "react-tag-input-component";
 
 interface IFormInput {
   description: string;
@@ -72,6 +73,8 @@ export default function Upload(props: Partial<DropzoneProps>) {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   //define a success state for submission alert
   const [success, setSuccess] = useState(false);
+  //define a state for tag-input
+  const [selected, setSelected] = useState<string[]>([]);
 
   const previews = files.map((file, index) => {
     const imageUrl = URL.createObjectURL(file);
@@ -87,7 +90,8 @@ export default function Upload(props: Partial<DropzoneProps>) {
 
   const formSchema = yup.object().shape({
     description: yup.string().max(50),
-    tag: yup.string().max(15),
+    //tag: yup.string().max(15),
+    selected: yup.string().max(50),
     price: yup.number(),
   });
   const router = useRouter();
@@ -102,7 +106,8 @@ export default function Upload(props: Partial<DropzoneProps>) {
       const response = await uploadPost({
         //...data,
         description: desValue,
-        tag: tagValue,
+        //tag: tagValue,
+        tag:selected,
         filename: filename,
         orginalFilePath: OrginalFilePath,
         compressFilePath: CompressFilePath,
@@ -293,13 +298,25 @@ export default function Upload(props: Partial<DropzoneProps>) {
                 InputProps={DesInputProps}
               />
 
-              <FormTextField
+              {/* <FormTextField
                 name="tag"
                 label="Tag (optional)"
                 id="Tag"
                 autoComplete="Tag"
                 InputProps={tagInputProps}
-              />
+              /> */}
+
+              <Box sx={{ width: "100%" }}>
+                {/* <h1>Add Fruits</h1>
+                <pre>{JSON.stringify(selected)}</pre> */}
+                <TagsInput
+                  value={selected}
+                  onChange={setSelected}
+                  name="fruits"
+                  placeHolder="Enter Tags"
+                />
+                <em>press enter to add new tag</em>
+              </Box>
 
               {/* <FormTextField
                 name="price"
