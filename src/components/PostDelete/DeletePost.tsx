@@ -14,6 +14,7 @@ import { RootState } from "../../../store/store";
 import { getMe } from "../../axiosRequest/api/editUser";
 import { deletePost } from "../../axiosRequest/api/userPost";
 import { useCheckToken } from "../../hooks/useCheckToken";
+// import {useDeleteSuccessful} from "../../hooks/useDeleteSuccessful";
 
 interface DeletePostButtonProps {
   filenameString: string | string[] | undefined;
@@ -25,7 +26,7 @@ const currentLoginUserId = async () => {
     const response = await getMe();
     const { id } = response.data;
     return id;
-  } catch (error) {}
+  } catch (error) { }
 };
 const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
   useCheckToken();
@@ -34,6 +35,8 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
     ...state.auth,
     ...state.quickView,
   }));
+  // const {isDeleteSuccessful, updateIsDeleteSuccessful} = useDeleteSuccessful();
+
   const [isDeleting, setIsDeleting] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isCurrentUserId, setIsCurrentUserId] = useState<boolean>(false);
@@ -47,9 +50,14 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
       const isMatch = trueUser === userID;
       setIsCurrentUserId(isMatch);
     };
-
     fetchUserId();
-  }, [userID]);
+    if (isDeleteSuccessful) {
+      setTimeout(() => {
+        window.location.reload();
+      },2000)
+    }
+
+  }, [userID, isDeleteSuccessful]);
 
   //useMemo (chatgpt optimization)
   // useEffect(() => {
@@ -75,14 +83,11 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
 
   const handleConfirmationConfirm = async () => {
     setIsDeleting(true);
+    setIsConfirmationOpen(false);
     try {
       const response = await deletePost(filenameString);
+      setIsConfirmationOpen(true);
       setIsDeleteSuccessful(true);
-      setTimeout(() => {
-        setIsDeleteSuccessful(false);
-        setIsConfirmationOpen(false);
-        router.push(`/profile/${userID}`);
-      }, 2000);
     } catch (error) {
       setIsDeleting(false);
     }
@@ -113,6 +118,8 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
 
           <Dialog open={isConfirmationOpen} onClose={handleConfirmationCancel}>
             <DialogTitle>Confirm Deletion</DialogTitle>
+
+            {/* dialog content body */}
             <DialogContent>
               {isDeleteSuccessful ? (
                 <DialogContentText>
@@ -122,10 +129,13 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
                 "Are you sure you want to delete this post?"
               )}
             </DialogContent>
-            <DialogActions>
+
+            {/* first dialog button */}
+            {isDeleteSuccessful ? null : <DialogActions>
               <Button onClick={handleConfirmationCancel} color="primary">
                 Cancel
               </Button>
+              {/* click this button will call delete api and will popup second dialog*/}
               <Button
                 onClick={handleConfirmationConfirm}
                 color="primary"
@@ -133,7 +143,7 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
               >
                 Delete
               </Button>
-            </DialogActions>
+            </DialogActions>}
           </Dialog>
         </div>
       ) : null}
