@@ -53,6 +53,7 @@ import styles from "./NewVariation.module.css";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import { TagsInput } from "react-tag-input-component";
 
 interface IFormInput {
   description: string;
@@ -72,6 +73,8 @@ export default function Upload(props: Partial<DropzoneProps>) {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   //define a success state for submission alert
   const [success, setSuccess] = useState(false);
+  //define a state for tag-input
+  const [selected, setSelected] = useState<string[]>([]);
 
   const previews = files.map((file, index) => {
     const imageUrl = URL.createObjectURL(file);
@@ -102,7 +105,8 @@ export default function Upload(props: Partial<DropzoneProps>) {
       const response = await uploadPost({
         //...data,
         description: desValue,
-        tag: tagValue,
+        //tag: tagValue,
+        tag:selected,
         filename: filename,
         orginalFilePath: OrginalFilePath,
         compressFilePath: CompressFilePath,
@@ -300,6 +304,18 @@ export default function Upload(props: Partial<DropzoneProps>) {
                 autoComplete="Tag"
                 InputProps={tagInputProps}
               />
+
+              <div>
+                {/* <h1>Add Fruits</h1>
+                <pre>{JSON.stringify(selected)}</pre> */}
+                <TagsInput
+                  value={selected}
+                  onChange={setSelected}
+                  name="fruits"
+                  placeHolder="Enter Tags"
+                />
+                <em>press enter to add new tag</em>
+              </div>
 
               {/* <FormTextField
                 name="price"
