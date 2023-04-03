@@ -25,7 +25,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({
       {/* avatar */}
       <Grid item>
         <Avatar
-          alt="avatar"
+          alt={avatarPath}
           src={avatarPath}
           sx={{ width: { xs: 140, md: 180 }, height: { xs: 140, md: 180 } }}
         />
@@ -33,12 +33,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({
 
       {/* name */}
       <Grid item>
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          spacing={2}
-        >
+        <Grid container direction="row" justifyContent="center" spacing={2}>
           <Grid item>
             <Typography variant="h1">{firstName}</Typography>
           </Grid>

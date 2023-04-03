@@ -81,16 +81,19 @@ export default function Header() {
               City,
             </Link>
             <Link href="/category/nature" color="inherit">
-              Nature
+              Nature,
             </Link>
           </Box>
           <Box
-            display="inline-flex"
-            alignItems="center"
-            sx={{ marginLeft: "2px" }}
+            sx={{
+              display: "inline-flex",
+              alignItems: "flex-end",
+            }}
           >
             <Link href="/category/category-main-page" color="inherit">
-              <MoreHorizIcon />
+              <Typography variant="h6">
+                {"..."}
+              </Typography>
             </Link>
           </Box>
         </Typography>
