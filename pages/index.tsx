@@ -42,7 +42,7 @@ export default function Home() {
           padding: 0,
           height: "600px",
           backgroundPosition: "center",
-          overflow: "hidden",
+          // overflow: "auto",
         }}
       >
         <div style={{ maxWidth: "1600px", margin: "0 auto" }}>
