@@ -225,7 +225,7 @@ export default function Navbar({
             </Link>
 
             <Box sx={{ flexGrow: 1 }}></Box>
-            <Box>
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               {isAuthenticated ? (
                 <UserIcons
                   handleProfileMenuOpen={handleProfileMenuOpen}

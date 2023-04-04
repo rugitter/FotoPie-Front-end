@@ -15,6 +15,8 @@ export default function EditUserProfile() {
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [avatar, setAvatar] = useState("");
+  const array = [1, 2, 3, 4];
+  console.log(array);
 
   useEffect(() => {
     getMe().then((res) => {
