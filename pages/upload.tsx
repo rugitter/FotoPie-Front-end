@@ -53,17 +53,18 @@ import styles from "./NewVariation.module.css";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import { TagsInput } from "react-tag-input-component";
 
 interface IFormInput {
   description: string;
-  tag: string;
-  price: number;
+  tag: string[];
+  //price: number;
 }
 
 // Define a component that renders the form
 export default function Upload(props: Partial<DropzoneProps>) {
   const theme = useMantineTheme();
-  const [tagValue, setTagValue] = useState("");
+  const [tagValue, setTagValue] = useState<string[]>([]);
   // const [priceValue, setPriceValue] = useState("");
   const [desValue, setDesValue] = useState("");
   const [filename, setUploadfileName] = useState({});
@@ -72,6 +73,8 @@ export default function Upload(props: Partial<DropzoneProps>) {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   //define a success state for submission alert
   const [success, setSuccess] = useState(false);
+  //define a state for tag-input
+  const [selected, setSelected] = useState<string[]>([]);
 
   const previews = files.map((file, index) => {
     const imageUrl = URL.createObjectURL(file);
@@ -87,7 +90,8 @@ export default function Upload(props: Partial<DropzoneProps>) {
 
   const formSchema = yup.object().shape({
     description: yup.string().max(50),
-    tag: yup.string().max(15),
+    //tag: yup.string().max(15),
+    selected: yup.string().max(50),
     price: yup.number(),
   });
   const router = useRouter();
@@ -100,7 +104,10 @@ export default function Upload(props: Partial<DropzoneProps>) {
       console.log(filename);
 
       const response = await uploadPost({
-        ...data,
+        //...data,
+        description: desValue,
+        //tag: tagValue,
+        tag:selected,
         filename: filename,
         orginalFilePath: OrginalFilePath,
         compressFilePath: CompressFilePath,
@@ -129,10 +136,15 @@ export default function Upload(props: Partial<DropzoneProps>) {
   const tagInputProps = {
     startAdornment: (
       <InputAdornment position="start">
-        {tagValue ? null : "Enter Tag"}
+        {tagValue.length === 0 ? "Enter Tag" : null}
       </InputAdornment>
     ),
-    onChange: (e: any) => setTagValue(e.target.value),
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(e.target.value);
+      const values = e.target.value.split(","); // Split the input value by comma
+      setTagValue(values.map((value) => value.trim())); // Trim each value and store them as an array
+      console.log(tagValue, "debug");
+    },
   };
 
   const DesInputProps = {
@@ -193,7 +205,7 @@ export default function Upload(props: Partial<DropzoneProps>) {
                     }
                   }}
                   onReject={(files) => console.log("rejected files", files)}
-                  maxSize={4 * 1024 ** 2}
+                  maxSize={30 * 1024 ** 2}
                   accept={IMAGE_MIME_TYPE}
                   //accept={["image/png", "image/jpeg", "image/sgv+xml", "image/gif"]}
                   multiple={false}
@@ -286,13 +298,25 @@ export default function Upload(props: Partial<DropzoneProps>) {
                 InputProps={DesInputProps}
               />
 
-              <FormTextField
+              {/* <FormTextField
                 name="tag"
                 label="Tag (optional)"
                 id="Tag"
                 autoComplete="Tag"
                 InputProps={tagInputProps}
-              />
+              /> */}
+
+              <Box sx={{ width: "100%" }}>
+                {/* <h1>Add Fruits</h1>
+                <pre>{JSON.stringify(selected)}</pre> */}
+                <TagsInput
+                  value={selected}
+                  onChange={setSelected}
+                  name="fruits"
+                  placeHolder="Enter Tags"
+                />
+                <em>press enter to add new tag</em>
+              </Box>
 
               {/* <FormTextField
                 name="price"

@@ -6,6 +6,7 @@ import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Avatar from "@mui/material/Avatar";
 import { Typography } from "@mui/material";
+import AvatarMenu from "./AvatarMenu";
 
 interface userIconsProps {
   handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
@@ -85,7 +86,7 @@ export default function UserIcons({
       <Avatar
         alt="Avatar"
         src={avatarPath}
-        onMouseEnter={handleProfileMenuOpen}
+        onClick={handleProfileMenuOpen}
         sx={{
           width: 50,
           height: 50,
@@ -94,7 +95,6 @@ export default function UserIcons({
             cursor: "pointer",
           },
         }}
-        
       />
 
       <Link href="/upload" underline="none">
