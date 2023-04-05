@@ -316,7 +316,7 @@ export default function Upload(props: Partial<DropzoneProps>) {
                               />
                 
                 <Typography variant="caption" component="em">
-                                  press enter to add new tag
+                                  press "Enter" to add new tag
                 </Typography>
               </Box>
 
