@@ -153,7 +153,11 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
           </Grid>
 
           {/* Post image */}
-          <Grid item xs="auto">
+          <Grid
+            item
+            xs="auto"
+            height={{ xs: "30vh", sm: "50vh", md: "80vh", xl: "85vh" }}
+          >
             {postPhoto && <PostImage postPhoto={postPhoto} />}
           </Grid>
 

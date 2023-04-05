@@ -11,6 +11,6 @@ export const PhotoQuickViewStyles = {
   boxShadow: 24,
   pt: { xs: 0.5, sm: 2, md: 4 },
   pb: { xs: 2, sm: 2, md: 4 },
-  pl:{ xs: 2, sm: 3, md: 4 },
-  pr:{ xs: 2, sm: 3, md: 4 },
+  pl: { xs: 2, sm: 3, md: 4 },
+  pr: { xs: 2, sm: 3, md: 4 },
 };

@@ -33,7 +33,7 @@ const PostImage = ({ postPhoto }: PostImageProps) => {
         src={postPhoto}
         fit="contain"
         duration={0.5}
-        height={imageHeight}
+        height="100%"
       />
     </>
   );
