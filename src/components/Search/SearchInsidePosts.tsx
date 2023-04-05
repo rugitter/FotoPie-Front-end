@@ -38,15 +38,17 @@ const PostList = ({
 
   const fetchImages = async () => {
     try {
+      setLoaderHandler(true);
       const res = await searchPosts(tagString, page, limit);
 
       if (res.status === 200) {
         setCategory([...category, ...res.data]);
         setPage(page + 1);
         if ([...res.data].length === 0) {
-          setLoaderHandler(false);
+          //setLoaderHandler(false);
         }
       }
+      setLoaderHandler(false);
     } catch (error: any) {
       setError(error.message);
     }
@@ -61,7 +63,7 @@ const PostList = ({
 
   return (
     <>
-      {error && <ErrorAlert error={error}></ErrorAlert>}
+      {/* {error && <ErrorAlert error={error}></ErrorAlert>} */}
       <Box
         sx={{
           width: "100%",
