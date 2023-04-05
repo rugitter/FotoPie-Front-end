@@ -47,7 +47,7 @@ export default function LogIn() {
     resolver: yupResolver(formSchema),
   });
   // Define a submit handler for the form
-  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
     dispatch(login(data));
   };
 
@@ -62,7 +62,7 @@ export default function LogIn() {
       <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
       <Container component="main" maxWidth="xs" sx={{ mt: 10 }}>
         {/* error handling*/}
-        {error && <ErrorAlert error={error}></ErrorAlert>}
+        {error && <ErrorAlert error={error} />}
         <Box
           sx={{
             marginTop: 3,
