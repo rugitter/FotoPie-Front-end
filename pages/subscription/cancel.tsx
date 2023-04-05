@@ -4,7 +4,6 @@ import NavBar from "../../src/components/NavBar/NavBar";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import Box from "@mui/material/Box";
-import Image from "mui-image";
 
 export default function SubscriptionPage() {
   return (
@@ -19,8 +18,15 @@ export default function SubscriptionPage() {
           justifyContent: "center",
         }}
       >
-        <Box sx={{ width: "30%" }}>
-          <Image src="/payment-cancelled.jpg" alt=""></Image>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "30%",
+          }}
+        >
+          <img src="/payment-cancelled.jpg" alt=""></img>
         </Box>
         <h1>Payment Cancelled</h1>
         <br />
