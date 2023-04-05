@@ -1,34 +1,39 @@
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import React, { useState } from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
-import CssBaseline from "@mui/material/CssBaseline";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import Router from "next/router";
 import { createResetPassword } from "../../axiosRequest/api/reset";
+import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
+import { Schema, string, object } from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import FormTextField from "../LoginForm/FormTextField";
+import ErrorAlert from "../LoginForm/ErrorAlert";
+import SuccessAlert from "../LoginForm/SuccessAlert";
 
-interface FormData {
+interface IFormPassword {
   password: string;
 }
 
-function ResetPassword() {
-  const [password, setPassword] = useState("");
-
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
+const ResetPassword = () => {
   const router = useRouter();
-  const { token } = router.query;
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const formSchema: Schema<IFormPassword> = object({
+    password: string().min(2).max(20).required(),
+  });
+
+  const methods = useForm<IFormPassword>({
+    resolver: yupResolver(formSchema),
+  });
+
+  const onSubmit: SubmitHandler<IFormPassword> = async (data) => {
+    const { password } = data;
     try {
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get("token");
@@ -37,29 +42,20 @@ function ResetPassword() {
         password,
         token,
       });
-
+      setSuccessMessage(response.data.message);
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
       //redirecting page based on server response code
-      switch (response.status) {
-        case 200:
-          Router.push("/login");
-          break;
-        case 401:
-          Router.push("/reset/invalid-token");
-          break;
-      }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      setErrorMessage(error.response.data.message);
     }
   };
 
-  const {
-    register,
-    formState: { errors },
-  } = useForm<FormData>();
-
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
+      {errorMessage && <ErrorAlert error={errorMessage} />}
+      {successMessage && <SuccessAlert message={successMessage} />}
       <Box
         sx={{
           marginTop: 8,
@@ -74,38 +70,42 @@ function ResetPassword() {
         <Typography component="h1" variant="h5">
           Create New Password
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="new-password"
-                value={password}
-                onChange={handleEmailChange}
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+
+        <FormProvider {...methods}>
+          <Box
+            component="form"
+            onSubmit={methods.handleSubmit(onSubmit)}
+            sx={{ mt: 3 }}
           >
-            Submit
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <p>Please create a new password and keep it safely</p>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <FormTextField
+                  name="password"
+                  label="Password"
+                  id="password"
+                  type="password"
+                  autoComplete="current-password"
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Submit
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <p>Please create a new password and keep it safely</p>
+              </Grid>
+            </Grid>
+          </Box>
+        </FormProvider>
       </Box>
     </Container>
   );
-}
+};
 
 export default ResetPassword;
