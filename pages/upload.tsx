@@ -101,26 +101,21 @@ export default function Upload(props: Partial<DropzoneProps>) {
   // Define a submit handler for the form
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
-      console.log(filename);
-
       const response = await uploadPost({
         //...data,
         description: desValue,
         //tag: tagValue,
-        tag:selected,
+        tag: selected,
         filename: filename,
         orginalFilePath: OrginalFilePath,
         compressFilePath: CompressFilePath,
       });
-      console.log(response);
 
       if (response.status === 201) {
         setSuccess(true);
         router.push("/upload");
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   // const priceInputProps = {
@@ -140,10 +135,8 @@ export default function Upload(props: Partial<DropzoneProps>) {
       </InputAdornment>
     ),
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(e.target.value);
       const values = e.target.value.split(","); // Split the input value by comma
       setTagValue(values.map((value) => value.trim())); // Trim each value and store them as an array
-      console.log(tagValue, "debug");
     },
   };
 
@@ -190,11 +183,7 @@ export default function Upload(props: Partial<DropzoneProps>) {
                     formData.append("file", files[0]);
                     try {
                       const response = await uploadPhoto(formData);
-                      console.log(
-                        response.data.filename,
-                        response.data.original_path,
-                        response.data.compression_path
-                      );
+
                       setUploadfileName(response.data.filename);
                       setOrginalFilePath(response.data.original_path);
                       setCompressFilePath(response.data.compression_path);
