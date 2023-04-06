@@ -191,7 +191,6 @@ export default function Navbar({
               underline="none"
               sx={{
                 display: "flex",
-                ml: 2,
                 alignItems: "center",
                 justifyContent: "space-between",
                 "&:hover": {
@@ -214,8 +213,9 @@ export default function Navbar({
                 sx={{
                   flexGrow: 1,
                   ml: 2,
+                  mt: 0.5,
                   fontSize: 26,
-                  fontFamily: "inherit",
+                  fontFamily: "'Expletus Sans', swap",
                   color: fix ? "#000000" : color,
                 }}
               >
