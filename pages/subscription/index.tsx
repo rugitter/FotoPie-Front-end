@@ -5,6 +5,8 @@ import CustomerPortalComponent from "../../src/components/Subscription/CustomerP
 import { getSubscriptionStatus } from "../../src/axiosRequest/api/subscription";
 import Loader from "../../src/components/Loader/Loader";
 import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
+import { motion, AnimatePresence } from "framer-motion";
+import Copyright from "../../src/components/Copyright";
 
 const CreateImage: React.FC = () => {
   const [status, setStatus] = useState<boolean | null>(null);
@@ -32,15 +34,35 @@ const CreateImage: React.FC = () => {
   } else if (status === false) {
     return (
       <>
-        <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
-        <SubscriptionComponent />
+        <AnimatePresence mode="wait">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 1 }}
+          >
+            <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
+            <SubscriptionComponent />
+          </motion.div>
+        </AnimatePresence>
+        <Copyright />
       </>
     );
   } else {
     return (
       <>
-        <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
-        <CustomerPortalComponent />
+        <AnimatePresence mode="wait">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 1 }}
+          >
+            <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
+            <CustomerPortalComponent />
+          </motion.div>
+        </AnimatePresence>
+        <Copyright />
       </>
     );
   }

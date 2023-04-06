@@ -54,6 +54,8 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import { TagsInput } from "react-tag-input-component";
+import UploadPage from "../src/components/Upload/UploadPage";
+import Typography from '@mui/material/Typography';
 
 interface IFormInput {
   description: string;
@@ -75,6 +77,8 @@ export default function Upload(props: Partial<DropzoneProps>) {
   const [success, setSuccess] = useState(false);
   //define a state for tag-input
   const [selected, setSelected] = useState<string[]>([]);
+  const [content, setContent] = useState('');
+  const [checked, setChecked] = useState(false);
 
   const previews = files.map((file, index) => {
     const imageUrl = URL.createObjectURL(file);
@@ -88,6 +92,18 @@ export default function Upload(props: Partial<DropzoneProps>) {
     );
   });
 
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        setSuccess(false);
+      }, 2000);
+  
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [success]);
+  
   const formSchema = yup.object().shape({
     description: yup.string().max(50),
     //tag: yup.string().max(15),
@@ -113,32 +129,21 @@ export default function Upload(props: Partial<DropzoneProps>) {
 
       if (response.status === 201) {
         setSuccess(true);
-        router.push("/upload");
+        setContent(''); // Clear the content
+        // Reset other state variables
+        setTagValue([]);
+        setDesValue('');
+        setSelected([]);
+        setFiles([]);
+        setChecked(false);
+        // Reset the form
+        methods.reset();
+        // Redirect
+        router.replace('/upload');
       }
     } catch (error) {}
   };
 
-  // const priceInputProps = {
-  //   startAdornment: (
-  //     <InputAdornment position="start">
-  //       <AttachMoney />
-  //       {priceValue ? null : "Enter Price"}
-  //     </InputAdornment>
-  //   ),
-  //   onChange: (e: any) => setPriceValue(e.target.value),
-  // };
-
-  const tagInputProps = {
-    startAdornment: (
-      <InputAdornment position="start">
-        {tagValue.length === 0 ? "Enter Tag" : null}
-      </InputAdornment>
-    ),
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-      const values = e.target.value.split(","); // Split the input value by comma
-      setTagValue(values.map((value) => value.trim())); // Trim each value and store them as an array
-    },
-  };
 
   const DesInputProps = {
     startAdornment: (
@@ -150,12 +155,12 @@ export default function Upload(props: Partial<DropzoneProps>) {
   };
 
   return (
-    <>
-      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
-      <Container component="main" maxWidth="xs">
+    <UploadPage>
+      <Container component="main" maxWidth="sm">
         <Box
           sx={{
-            marginTop: 0,
+            marginTop: 10,
+            marginBottom: 10,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -167,12 +172,19 @@ export default function Upload(props: Partial<DropzoneProps>) {
               onSubmit={methods.handleSubmit(onSubmit)}
               sx={{
                 mt: 2,
-
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "flex-end",
+                alignItems: "center",
               }}
-            >
+                      >
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    mb: 3,
+        
+                 }}>
               <Box sx={{ mb: 2 }}>
                 <Dropzone
                   onDrop={async (files) => {
@@ -196,19 +208,18 @@ export default function Upload(props: Partial<DropzoneProps>) {
                   onReject={(files) => console.log("rejected files", files)}
                   maxSize={30 * 1024 ** 2}
                   accept={IMAGE_MIME_TYPE}
-                  //accept={["image/png", "image/jpeg", "image/sgv+xml", "image/gif"]}
                   multiple={false}
-                  //autoFocus={true}
                   radius="xl"
                   sx={(theme) => ({
-                    minHeight: rem(100),
-                    maxWidth: rem(800),
+                    minHeight: rem(250),
+                    // minWidth: rem(500),
+                    maxWidth: rem(3000),
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    border: 10,
-                    marginLeft: "auto",
-                    marginRight: "auto",
+                    // border: 10,
+                    // marginLeft: "auto",
+                    // marginRight: "auto",
                     backgroundColor:
                       theme.colorScheme === "dark"
                         ? theme.colors.dark[6]
@@ -277,91 +288,92 @@ export default function Upload(props: Partial<DropzoneProps>) {
                     </Container>
                   </Group>
                 </Dropzone>
-              </Box>
-
-              <FormTextField
+                </Box>
+            </Box>
+            <Box sx={{ textAlign: 'left', width: "100%", mb: 2  }}>
+                <Typography variant="subtitle2">Description</Typography>
+                <TextField
                 name="description"
-                label="Description (optional)"
                 id="Description"
                 autoComplete="Description"
+                size="small"
+                fullWidth
+                value={desValue}
+                onChange={(e: any) => setDesValue(e.target.value)}
                 InputProps={DesInputProps}
-              />
+                />
+             </Box>
 
-              {/* <FormTextField
-                name="tag"
-                label="Tag (optional)"
-                id="Tag"
-                autoComplete="Tag"
-                InputProps={tagInputProps}
-              /> */}
-
-              <Box sx={{ width: "100%" }}>
-                {/* <h1>Add Fruits</h1>
-                <pre>{JSON.stringify(selected)}</pre> */}
+            <Box sx={{ width: "100%", mb: 2 }}>
+            <Typography variant="subtitle2" >
+                Tags
+            </Typography>
                 <TagsInput
                   value={selected}
                   onChange={setSelected}
                   name="fruits"
                   placeHolder="Enter Tags"
-                />
-                <em>press enter to add new tag</em>
+                              />
+                
+                <Typography variant="caption" component="em">
+                                  press "Enter" to add new tag
+                </Typography>
               </Box>
 
-              {/* <FormTextField
-                name="price"
-                label="Price(optional)"
-                id="price"
-                type="number"
-                autoComplete="price"
-                InputProps={priceInputProps}
-              /> */}
-
               <FormControlLabel
-                style={{ marginTop: "16px" }}
-                control={
-                  <Checkbox value="allowExtraEmails" color="primary" required />
-                }
-                label="I understand that only uploaded photos and
-                                 videos that you own the copyright to and that
-                                 I have created myself."
+                 sx={{
+                    mt: 2,
+                    '& .MuiTypography-root': {
+                      fontSize: '0.9rem',
+                    },
+                  }}
+                  control={
+                    <Checkbox
+                      value="allowExtraEmails"
+                      color="primary"
+                      required
+                      checked={checked}
+                      onChange={(e) => setChecked(e.target.checked)}
+                    />
+                  }
+                label="I understand that only uploaded photos that you own the copyright to and that
+                                 I have created myself. I understand that any depicted people or owners of depicted property
+                                 gave you the permission to publish the photos."
               />
 
-              <FormControlLabel
-                style={{ marginTop: "16px" }}
-                control={
-                  <Checkbox value="allowExtraEmails" color="primary" required />
-                }
-                label="I understand that any depicted people or owners of depicted property
-                          gave you the permission to publish the photos and videos."
-              />
+        <Box sx={{ textAlign: 'right', width: '100%' }}>
+            <Button type="submit" variant="contained" sx={{ mt: 4, mb: 2 }} fullWidth>
+          Send
+            </Button>
+        </Box>
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Send
-                {/* <Link href="verifyemail"></Link> */}
-              </Button>
-
-              <Grid container justifyContent="center">
-                <Grid item>
-                  {success && (
-                    <Alert severity="success">
-                      <AlertTitle>Success</AlertTitle>
-                      User post submitted successfully —{" "}
-                      <strong>check it out!</strong>
-                    </Alert>
-                  )}
-                </Grid>
-              </Grid>
+        <Grid container justifyContent="center">
+        <Grid item>
+          {success && (
+            <Alert
+              severity="success"
+              sx={{
+                fontSize: '1.5rem', 
+                padding: '2rem', 
+                '& .MuiAlertTitle-root': { 
+                  fontSize: '2rem', 
+                },
+              }}
+             
+            >
+              <AlertTitle>Success</AlertTitle>
+              User post submitted successfully —{" "}
+              <strong>check it out!</strong>
+            </Alert>
+          )}
+        </Grid>
+      </Grid>
             </Box>
           </FormProvider>
         </Box>
 
         <Copyright sx={{ mt: 5 }} />
       </Container>
-    </>
+      </UploadPage>
   );
 }
