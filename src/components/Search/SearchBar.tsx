@@ -22,7 +22,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ sx }) => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (inputValue.trim() === "") {
-      window.location.reload();
+      router.reload();
     } else {
       await router.push(`/search/${encodeURIComponent(inputValue)}`);
     }
