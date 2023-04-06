@@ -184,7 +184,6 @@ export default function Navbar({
               width: "100%",
               maxWidth: 1600,
               margin: "0 auto",
-              padding: fix ? "0 40px" : 0,
             }}
           >
             <Link
@@ -225,7 +224,7 @@ export default function Navbar({
             </Link>
 
             <Box sx={{ flexGrow: 1 }}></Box>
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
               {isAuthenticated ? (
                 <UserIcons
                   handleProfileMenuOpen={handleProfileMenuOpen}

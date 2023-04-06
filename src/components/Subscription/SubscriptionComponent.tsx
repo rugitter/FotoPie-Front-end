@@ -1,7 +1,6 @@
 import styles from "./Subscription.module.css";
 import SubscriptionButton from "./SubscriptionButton";
 import Box from "@mui/material/Box";
-import Copyright from "../Copyright";
 
 export default function SubscriptionComponent() {
   return (
@@ -49,8 +48,6 @@ export default function SubscriptionComponent() {
 
         <img src="/subscription-image.jpg" alt="" />
       </Box>
-
-      <Copyright />
     </Box>
   );
 }

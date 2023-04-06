@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import NavBar from "../../src/components/NavBar/NavBar";
-import PostList from "../../src/components/Search/SearchInsidePosts";
+import SearchPostList from "../../src/components/Search/SearchInsidePosts";
 import CategoryButton from "../../src/components/CategoryInside/CategoryButton";
 import { getSynonymsAPI } from "../../src/axiosRequest/api/getSynonyms";
 import Box from "@mui/material/Box";
@@ -145,7 +145,7 @@ export default function searchPage() {
         links={links}
         resetCategoryState={resetCategoryStateHandler}
       />
-      <PostList
+      <SearchPostList
         tagString={tagString as string | string[] | undefined}
         category={category}
         setCategory={setCategory}

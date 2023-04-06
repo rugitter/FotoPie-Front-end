@@ -17,6 +17,7 @@ import { AppDispatch, RootState } from "../store/store";
 import ErrorAlert from "../src/components/LoginForm/ErrorAlert";
 import LoginButton from "../src/components/LoginForm/LoginButton";
 import { adminLogin } from "../store/auth/authAciton";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Define a type with the shape of the form values
 export interface IFormInput {
@@ -54,79 +55,90 @@ export default function AdminSignIn() {
   }, [isAuthenticated]);
 
   return (
-    <Container component="main" maxWidth="xs">
-      {/* error handling*/}
-      {error && <ErrorAlert error={error}></ErrorAlert>}
+    <>
+      <AnimatePresence mode="wait">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -50 }}
+          transition={{ duration: 1 }}
+        >
+          <Container component="main" maxWidth="xs">
+            {/* error handling*/}
+            {error && <ErrorAlert error={error}></ErrorAlert>}
 
-      <Box
-        sx={{
-          marginTop: 3,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        {/* login icon */}
-        <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
+            <Box
+              sx={{
+                marginTop: 3,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              {/* login icon */}
+              <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
 
-        <Typography component="h1" variant="h5">
-          Admin Sign In
-        </Typography>
+              <Typography component="h1" variant="h5">
+                Admin Sign In
+              </Typography>
 
-        {/* input Form */}
-        <FormProvider {...methods}>
-          <Box
-            component="form"
-            onSubmit={methods.handleSubmit(onSubmit)}
-            sx={{ mt: 1 }}
-          >
-            {/* Email */}
-            <FormTextField
-              name="email"
-              label="Email Address"
-              id="email"
-              autoComplete="email"
-            />
+              {/* input Form */}
+              <FormProvider {...methods}>
+                <Box
+                  component="form"
+                  onSubmit={methods.handleSubmit(onSubmit)}
+                  sx={{ mt: 1 }}
+                >
+                  {/* Email */}
+                  <FormTextField
+                    name="email"
+                    label="Email Address"
+                    id="email"
+                    autoComplete="email"
+                  />
 
-            {/* Password */}
-            <FormTextField
-              name="password"
-              label="Password"
-              id="password"
-              type="password"
-              autoComplete="current-password"
-            />
+                  {/* Password */}
+                  <FormTextField
+                    name="password"
+                    label="Password"
+                    id="password"
+                    type="password"
+                    autoComplete="current-password"
+                  />
 
-            {/* TODO: add remember checkbox */}
-            {/* <FormControlLabel
+                  {/* TODO: add remember checkbox */}
+                  {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             /> */}
 
-            {/* Button */}
-            <LoginButton loginStatus={loginStatus}></LoginButton>
+                  {/* Button */}
+                  <LoginButton loginStatus={loginStatus}></LoginButton>
 
-            <Grid container>
-              {/* Forgot password? */}
-              <Grid item xs>
-                <Link href="/reset/reset-request" variant="body2">
-                  Forgot Password?
-                </Link>
-              </Grid>
+                  <Grid container>
+                    {/* Forgot password? */}
+                    <Grid item xs>
+                      <Link href="/reset/reset-request" variant="body2">
+                        Forgot Password?
+                      </Link>
+                    </Grid>
 
-              {/* Don't have an account? Sign Up */}
-              <Grid item>
-                <Link href="/" variant="body2">
-                  {"Go to Home Page"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </FormProvider>
-      </Box>
+                    {/* Don't have an account? Sign Up */}
+                    <Grid item>
+                      <Link href="/" variant="body2">
+                        {"Go to Home Page"}
+                      </Link>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </FormProvider>
+            </Box>
+          </Container>
+        </motion.div>
+      </AnimatePresence>
       <Copyright sx={{ mt: 8, mb: 4 }} />
-    </Container>
+    </>
   );
 }

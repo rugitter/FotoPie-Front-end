@@ -13,12 +13,10 @@ import CollectButton from "./CollectButton";
 import LikeButton from "./LikeButton";
 import UserName from "./UserName";
 import DeletePostButton from "../PostDelete/DeletePost";
-import Loader from "../Loader/Loader";
-import Hidden from "@mui/material/Hidden";
-import HamburgerMenu from "./HamburgerMenu";
 import { Grid } from "@mui/material";
 import { PhotoQuickViewStyles } from "./PhotoQuickView.style";
-
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 interface PhotoQuickViewProps {
   filename: string | string[] | undefined;
   router: NextRouter;
@@ -65,7 +63,9 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
     <>
       {/* main body */}
       {isLoading ? (
-        <Loader />
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress />
+        </Box>
       ) : (
         <Grid
           container
@@ -84,7 +84,8 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
               alignItems="center"
             >
               {/* Avatar and username */}
-              <Grid item xs={8} md={4}>
+              <Grid item xs={3} md={4}>
+                {/* <Grid item xs={8} md={4}> */}
                 <UserName
                   userID={userID}
                   userAvatar={userAvatar}
@@ -92,68 +93,52 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
                 />
               </Grid>
               {/* Collect, like, download buttons */}
-              <Grid item xs={4} md={8}>
-                {/* HamburgerMenu or collect like download button */}
-                {/* desktop */}
-                <Hidden mdDown>
-                  <Grid
-                    container
-                    direction="row"
-                    justifyContent="flex-end"
-                    columnSpacing={2}
-                  >
-                    {/* collect button */}
-                    <Grid item>
-                      <CollectButton
-                        isAuthenticated={isAuthenticated}
-                        filenameString={filename}
-                        userCollects={userCollects}
-                        collected={collected}
-                        router={router}
-                      />
-                    </Grid>
-                    {/* like button */}
-                    <Grid item>
-                      <LikeButton
-                        isAuthenticated={isAuthenticated}
-                        filenameString={filename}
-                        userLikes={userLikes}
-                        liked={liked}
-                        router={router}
-                      />
-                    </Grid>
-                    {/* down button */}
-                    <Grid item>
-                      <DownloadImage
-                        isAuthenticated={isAuthenticated}
-                        filenameString={filename}
-                        router={router}
-                      />
-                    </Grid>
+              <Grid item xs={9} md={8}>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="flex-end"
+                  columnSpacing={{ sm: 1, md: 2 }}
+                >
+                  {/* collect button */}
+                  <Grid item>
+                    <CollectButton
+                      isAuthenticated={isAuthenticated}
+                      filenameString={filename}
+                      userCollects={userCollects}
+                      collected={collected}
+                      router={router}
+                    />
                   </Grid>
-                </Hidden>
-                {/* mobile */}
-                <Hidden mdUp>
-                  <Grid container justifyContent="flex-end">
-                    <Grid item>
-                      <HamburgerMenu
-                        isAuthenticated={isAuthenticated}
-                        filenameString={filename}
-                        userCollects={userCollects}
-                        collected={collected}
-                        userLikes={userLikes}
-                        liked={liked}
-                        router={router}
-                      />
-                    </Grid>
+                  {/* like button */}
+                  <Grid item>
+                    <LikeButton
+                      isAuthenticated={isAuthenticated}
+                      filenameString={filename}
+                      userLikes={userLikes}
+                      liked={liked}
+                      router={router}
+                    />
                   </Grid>
-                </Hidden>
+                  {/* down button */}
+                  <Grid item>
+                    <DownloadImage
+                      isAuthenticated={isAuthenticated}
+                      filenameString={filename}
+                      router={router}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
 
           {/* Post image */}
-          <Grid item xs="auto">
+          <Grid
+            item
+            width={{ xs: "70vw", sm: "50vw", md: "auto", xl: "auto" }}
+            height={{ xs: "auto", sm: "auto", md: "60vh", xl: "70vh" }}
+          >
             {postPhoto && <PostImage postPhoto={postPhoto} />}
           </Grid>
 
