@@ -184,7 +184,6 @@ export default function Navbar({
               width: "100%",
               maxWidth: 1600,
               margin: "0 auto",
-              padding: fix ? "0 40px" : 0,
             }}
           >
             <Link
@@ -192,7 +191,6 @@ export default function Navbar({
               underline="none"
               sx={{
                 display: "flex",
-                ml: 2,
                 alignItems: "center",
                 justifyContent: "space-between",
                 "&:hover": {
@@ -215,8 +213,9 @@ export default function Navbar({
                 sx={{
                   flexGrow: 1,
                   ml: 2,
+                  mt: 0.5,
                   fontSize: 26,
-                  fontFamily: "inherit",
+                  fontFamily: "'Expletus Sans', swap",
                   color: fix ? "#000000" : color,
                 }}
               >
@@ -225,7 +224,7 @@ export default function Navbar({
             </Link>
 
             <Box sx={{ flexGrow: 1 }}></Box>
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
               {isAuthenticated ? (
                 <UserIcons
                   handleProfileMenuOpen={handleProfileMenuOpen}

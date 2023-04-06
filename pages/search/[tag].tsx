@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import NavBar from "../../src/components/NavBar/NavBar";
-import PostList from "../../src/components/Search/SearchInsidePosts";
+import SearchPostList from "../../src/components/Search/SearchInsidePosts";
 import CategoryButton from "../../src/components/CategoryInside/CategoryButton";
 import { getSynonymsAPI } from "../../src/axiosRequest/api/getSynonyms";
 import Box from "@mui/material/Box";
@@ -84,7 +84,8 @@ export default function searchPage() {
       const data = response.data;
       const synonyms = data?.noun?.syn || data?.verb?.syn || [];
       // check if the response contains synonyms for the noun or verb form of the word, otherwise return an empty array
-      return synonyms;
+      const synonymslice = synonyms.slice(0, 8);
+      return synonymslice;
     } catch (error) {
       console.error("Error fetching synonyms:", error);
       return [];
@@ -130,8 +131,8 @@ export default function searchPage() {
 
   useEffect(() => {
     if (!router.isReady) return;
-    getSynonyms(tagString).then((response) => {
-      setLinks(response);
+    getSynonyms(tagString).then((synonymslice) => {
+      setLinks(synonymslice);
     });
     fetchImages();
   }, [tagString, router.isReady]);
@@ -144,7 +145,7 @@ export default function searchPage() {
         links={links}
         resetCategoryState={resetCategoryStateHandler}
       />
-      <PostList
+      <SearchPostList
         tagString={tagString as string | string[] | undefined}
         category={category}
         setCategory={setCategory}

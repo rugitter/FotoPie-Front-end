@@ -86,6 +86,7 @@ const NewImage: React.FC = () => {
           surprise you with the
           <span className={styles.gradientText}> astonishing images</span> ...
         </h2>
+
         <img src="/create-image.jpg" alt="" className={styles.bgImage} />
       </Box>
 

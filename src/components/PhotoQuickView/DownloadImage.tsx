@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { NextRouter } from "next/router";
 import { getDownloadImage } from "../../axiosRequest/api/photoQuickView";
 import DownloadIcon from "@mui/icons-material/Download";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 
 export interface DownloadImageProps {
   filenameString: string | string[] | undefined;
@@ -45,17 +45,33 @@ const DownloadButton: NextPage<DownloadImageProps> = ({
     }
   };
   return (
-    <Button
-      variant="contained"
-      sx={{
-        bgcolor: "primary.main",
-        textTransform: "none",
-      }}
-      startIcon={<DownloadIcon />}
-      onClick={downLoadImages}
-    >
-      Download
-    </Button>
+    <>
+      {/* show download button on desktop */}
+      <Button
+        variant="contained"
+        sx={{
+          display: { xs: "none", sm: "none", md: "flex" },
+          bgcolor: "primary.main",
+          textTransform: "none",
+          fontSize: "1.2rem",
+        }}
+        startIcon={<DownloadIcon />}
+        onClick={downLoadImages}
+      >
+        Download
+      </Button>
+
+      {/* show download button on mobile */}
+      <IconButton
+        sx={{
+          display: { xs: "flex", sm: "flex", md: "none" },
+          color: "primary.main",
+        }}
+        onClick={downLoadImages}
+      >
+        {<DownloadIcon />}
+      </IconButton>
+    </>
   );
 };
 export default DownloadButton;

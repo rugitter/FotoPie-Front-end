@@ -39,6 +39,7 @@ export default function hamburgerMenu({
 
   return (
     <Menu
+      disableScrollLock={true}
       anchorEl={mobileMoreAnchorEl}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
