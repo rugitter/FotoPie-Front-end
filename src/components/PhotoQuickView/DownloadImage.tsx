@@ -53,6 +53,7 @@ const DownloadButton: NextPage<DownloadImageProps> = ({
           display: { xs: "none", sm: "none", md: "flex" },
           bgcolor: "primary.main",
           textTransform: "none",
+          fontSize: "1.2rem",
         }}
         startIcon={<DownloadIcon />}
         onClick={downLoadImages}
