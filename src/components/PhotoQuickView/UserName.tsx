@@ -14,6 +14,7 @@ const UserName = ({ userID, userName, userAvatar }: UserNameProps) => {
       justifyContent="flex-start"
       alignItems="center"
       columnSpacing={{ xs: 1, md: 2 }}
+      sx={{ pl: 1 }}
     >
       <Grid item>
         <Link href={`/profile/${userID}`}>

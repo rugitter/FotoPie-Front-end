@@ -8,6 +8,8 @@ import Modal from "@mui/material/Modal";
 import PhotoQuickView from "../src/components/PhotoQuickView/PhotoQuickView";
 import MidBar from "../src/components/MainPage/MidBar";
 import Typography from "@mui/material/Typography";
+import CloseIcon from "@mui/icons-material/Close";
+import Button from "@mui/material/Button";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
@@ -99,14 +101,37 @@ export default function Home() {
                 <PostList handleOpen={handleOpen} />
               </Box>
             </Box>
+
             {/* Modal popup window -- Photo Quick View page*/}
             <Modal
               open={open}
               onClose={handleClose}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
+              sx={{
+                backgroundImage: `
+              linear-gradient(
+                rgba(0, 0, 0, 0.5),
+                rgba(0, 0, 0, 0.3)
+              )`,
+              }}
             >
-              <PhotoQuickView filename={selectedFilename} router={router} />
+              <div>
+                {/* <CloseButton /> */}
+                <Button
+                  sx={{
+                    position: "absolute",
+                    top: 20,
+                    left: 20,
+                    color: "white",
+                  }}
+                  onClick={handleClose}
+                >
+                  {<CloseIcon sx={{ fontSize: 40 }} />}
+                </Button>
+                {/* Photo quick view popup window */}
+                <PhotoQuickView filename={selectedFilename} router={router} />
+              </div>
             </Modal>
           </Box>
         </motion.div>
