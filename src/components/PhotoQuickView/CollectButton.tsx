@@ -38,6 +38,8 @@ const CollectButton = ({
         sx={{
           display: { xs: "none", sm: "none", md: "flex" },
           color: collected ? "orange" : "black",
+          textTransform: "none",
+          fontSize: "1.2rem",
         }}
         onClick={addToCollection}
         startIcon={

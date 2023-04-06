@@ -38,6 +38,8 @@ const LikeButton = ({
         sx={{
           display: { xs: "none", sm: "none", md: "flex" },
           color: liked ? "red" : "black",
+          textTransform: "none",
+          fontSize: "1.2rem",
         }}
         startIcon={
           <FavoriteBorderIcon sx={{ color: liked ? "red" : "black" }} />

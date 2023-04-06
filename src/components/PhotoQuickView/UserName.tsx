@@ -22,8 +22,8 @@ const UserName = ({ userID, userName, userAvatar }: UserNameProps) => {
             alt={`${userID}`}
             src={userAvatar}
             sx={{
-              width: { xs: 20, md: 50 },
-              height: { xs: 20, md: 50 },
+              width: { xs: 30, sm: 40, md: 50 },
+              height: { xs: 30, sm: 40, md: 50 },
               ":hover": {
                 opacity: 0.8,
               },
@@ -37,9 +37,9 @@ const UserName = ({ userID, userName, userAvatar }: UserNameProps) => {
             <Typography
               variant="h2"
               fontSize={{
-                xs: "0.7rem",
-                sm: "1rem",
-                md: "1.2rem",
+                xs: "1rem",
+                sm: "1.2rem",
+                md: "1.4rem",
               }}
               color={"primary"}
               fontWeight={700}
