@@ -61,7 +61,7 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
         </Typography>
         <Box
           sx={{
-            width: "70%",
+            width: "55%",
             display: "flex",
             flexDirection: "column",
             alignItem: "center",
@@ -125,7 +125,7 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                         width: { xs: "9rem", sm: "15rem" },
                       }}
                     >
-                      {notification.userName} Liked Your Post
+                      {notification.userName} liked your post
                     </Typography>
 
                     <Image
