@@ -39,10 +39,10 @@ const AvatarUploadButton: React.FC<Props> = ({ setAvatar }) => {
       size="medium"
       variant="contained"
       color="secondary"
-      sx={{ mt: 5, mb: 8 }}
+      sx={{ mt: '15%', mb: '2%' }}
       component="label"
     >
-      Change Picture
+      Change Image
       <input hidden type="file" accept="image/*" onChange={handleFileUpload} />
     </Button>
   );
