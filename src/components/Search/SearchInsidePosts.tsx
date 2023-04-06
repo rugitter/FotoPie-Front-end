@@ -94,6 +94,7 @@ const SearchPostList = ({
           sx={{
             width: "100%",
             height: "100%",
+            maxWidth: "1600px",
             overflowY: "scroll",
             "&::-webkit-scrollbar": {
               width: 0,
@@ -124,7 +125,7 @@ const SearchPostList = ({
         </Box>
       ) : (
         hasFetched && (
-          <Grid container>
+          <Grid container sx={{ maxWidth: "1600px" }}>
             <Grid
               item
               xs={12}
@@ -136,6 +137,7 @@ const SearchPostList = ({
                 justifyContent: "start",
                 alignItems: "center",
                 ml: "5%",
+                mt: "3%",
               }}
             >
               <Typography variant="h4">
