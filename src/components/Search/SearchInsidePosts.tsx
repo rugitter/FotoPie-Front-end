@@ -99,6 +99,8 @@ const SearchPostList = ({
             "&::-webkit-scrollbar": {
               width: 0,
             },
+            marginLeft: "auto",
+            marginRight: "auto",
           }}
         >
           <InfiniteScroll
@@ -176,7 +178,7 @@ const SearchPostList = ({
                   More photos below:
                 </Typography>
 
-                <Box sx={{ marginLeft: "30px", marginRight: "50px" }}>
+                <Box sx={{ marginLeft: "60px", marginRight: "10px" }}>
                   <PostList handleOpen={handleOpen} />
                 </Box>
               </Box>
