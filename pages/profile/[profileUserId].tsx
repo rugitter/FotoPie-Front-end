@@ -5,6 +5,7 @@ import { getUserInfo } from "../../src/axiosRequest/api/user";
 import ProfileHeader from "../../src/components/ProfilePage/ProfileHeader";
 import ProfileGalleryAndCollection from "../../src/components/ProfilePage/ProfileGalleryAndCollection";
 import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
+import { motion, AnimatePresence } from "framer-motion";
 
 export interface User {
   firstName: string;
@@ -28,22 +29,31 @@ export default function ProfilePage() {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
+      <AnimatePresence mode="wait">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -50 }}
+          transition={{ duration: 1 }}
+        >
+          <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
 
-      {user && (
-        <ProfileHeader
-          user={user}
-          isGallery={isGallery}
-          setIsGallery={setIsGallery}
-        ></ProfileHeader>
-      )}
+          {user && (
+            <ProfileHeader
+              user={user}
+              isGallery={isGallery}
+              setIsGallery={setIsGallery}
+            ></ProfileHeader>
+          )}
 
-      {profileUserId && (
-        <ProfileGalleryAndCollection
-          isGallery={isGallery}
-          profileUserId={profileUserId}
-        ></ProfileGalleryAndCollection>
-      )}
+          {profileUserId && (
+            <ProfileGalleryAndCollection
+              isGallery={isGallery}
+              profileUserId={profileUserId}
+            ></ProfileGalleryAndCollection>
+          )}
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 }
