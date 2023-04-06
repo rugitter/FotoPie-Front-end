@@ -136,7 +136,7 @@ const SearchPostList = ({
                 display: "flex",
                 justifyContent: "start",
                 alignItems: "center",
-                ml: "5%",
+                ml: "2.5%",
                 mt: "3%",
               }}
             >
