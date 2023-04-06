@@ -134,9 +134,6 @@ export default function Home() {
               </div>
             </Modal>
           </Box>
-          <Box sx={{ marginLeft: "30px", marginRight: "50px" }}>
-            <PostList handleOpen={handleOpen} />
-          </Box>
         </motion.div>
       </AnimatePresence>
     </>
