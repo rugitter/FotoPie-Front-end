@@ -84,7 +84,8 @@ export default function CategoryInsidePage() {
       const data = response.data;
       const synonyms = data?.noun?.syn || data?.verb?.syn || [];
       // check if the response contains synonyms for the noun or verb form of the word, otherwise return an empty array
-      return synonyms;
+      const synonymslice = synonyms.slice(0, 8);
+      return synonymslice;
     } catch (error) {
       console.error("Error fetching synonyms:", error);
       return [];
@@ -130,8 +131,8 @@ export default function CategoryInsidePage() {
 
   useEffect(() => {
     if (!router.isReady) return;
-    getSynonyms(tagString).then((response) => {
-      setLinks(response);
+    getSynonyms(tagString).then((synonymslice) => {
+      setLinks(synonymslice);
     });
     fetchImages();
   }, [tagString, router.isReady]);

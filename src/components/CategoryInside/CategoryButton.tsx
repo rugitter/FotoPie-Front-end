@@ -19,6 +19,7 @@ const CategoryButton = ({ links, resetCategoryState }: CategoryButtonProps) => {
           variant="outlined"
           color="primary"
           size="small"
+          sx={{ width: "15%" }}
           onClick={() => {
             resetCategoryState(link);
           }}

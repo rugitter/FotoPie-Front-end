@@ -25,6 +25,7 @@ export default function avatarMenu({
 
   return (
     <Menu
+      disableScrollLock={true}
       anchorEl={anchorEl}
       onClick={handleMenuClose}
       open={isMenuOpen}
