@@ -105,6 +105,7 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
           marginRight: "0",
           height: "auto",
           width :"100%",
+          maxWidth:"1600px",
         }}
       >
         <Box
@@ -142,14 +143,10 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
             try {
               setIsLoading(true);
               const response = await imageVariations(formData);
-              console.log(response.data);
-              console.log(response.data.urls);
-              console.log(response.data.urls.url_1);
-              console.log(response.data.urls.url_2);
               setImage1(response.data.urls.url_1);
               setImage2(response.data.urls.url_2);
             } catch (error) {
-              console.error("Error fetching URLs", error);
+              //console.error("Error fetching URLs", error);
               //return error;
             } finally {
               setIsLoading(false);
@@ -164,7 +161,7 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
           radius="xl"
           sx={(theme) => ({
             minHeight: rem(100),
-            maxWidth: rem(800),
+            maxWidth: rem(1200),
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -278,19 +275,6 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
               </Container>
             ) : (
               <>
-                {/* <img
-                  src={image1}
-                  alt=""
-                  style={{
-                    marginRight: "16px",
-                    width: "50%",
-                  }}
-                />
-                <img src={image2} alt="" style={{ width: "50%" }} /> */}
-
-                {/* <Image src={image1} alt="" />
-                <Image src={image2} alt="" /> */}
-
                 <div className={styles.imageContainer}>
                   <Button
                     className={styles.downloadButton}
@@ -312,9 +296,6 @@ const NewVariation =(props: Partial<DropzoneProps>)=> {
               </>
             )}
           </Box>
-          {/* <Box>
-            <button onClick={handleDownload}>Download Images</button>
-          </Box> */}
         </Box>
         <Copyright sx={{ mt: 6 }} />
       </Container>

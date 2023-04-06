@@ -41,11 +41,11 @@ export default function EditUserProfile() {
             <EditUserProfileHeader />
             {/*change avatar button*/}
             <Container maxWidth="md">
-              <Grid container spacing={4}>
+              <Grid container spacing={20}>
                 <Grid item md={2}>
                   {avatar ? <ProfilePicture avatar={avatar} /> : null}
                 </Grid>
-                <Grid item md={3}>
+                <Grid item md={5}>
                   <AvatarUploadButton setAvatar={setAvatar} />
                 </Grid>
               </Grid>
