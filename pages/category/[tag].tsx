@@ -11,7 +11,8 @@ import Modal from "@mui/material/Modal";
 import { PhotoQuickViewStyles } from "../../src/components/PhotoQuickView/PhotoQuickView.style";
 import PhotoQuickView from "../../src/components/PhotoQuickView/PhotoQuickView";
 import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
-
+import Button from "@mui/material/Button";
+import CloseIcon from "@mui/icons-material/Close";
 
 export interface ResponseImageData {
   _id: string;
@@ -22,8 +23,6 @@ export interface ResponseImageData {
   description: string;
   filename: string;
 }
-
-
 
 // Set all necessary states for rendering post lists and related category buttons
 export default function CategoryInsidePage() {
@@ -138,7 +137,7 @@ export default function CategoryInsidePage() {
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles}/>
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
       <CategoryHeader tagString={tagString} />
       <CategoryButton
         links={links}
@@ -161,10 +160,31 @@ export default function CategoryInsidePage() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx={{
+          backgroundImage: `
+        linear-gradient(
+          rgba(0, 0, 0, 0.5),
+          rgba(0, 0, 0, 0.3)
+        )`,
+        }}
       >
-        <Box sx={PhotoQuickViewStyles}>
-          <PhotoQuickView filename={selectedFilename} router={router} />
-        </Box>
+        <div>
+          {/* <CloseButton /> */}
+          <Button
+            sx={{
+              position: "absolute",
+              top: 20,
+              left: 20,
+              color: "white",
+            }}
+            onClick={handleClose}
+          >
+            {<CloseIcon sx={{ fontSize: 40 }} />}
+          </Button>
+          <Box sx={PhotoQuickViewStyles}>
+            <PhotoQuickView filename={selectedFilename} router={router} />
+          </Box>
+        </div>
       </Modal>
     </>
   );

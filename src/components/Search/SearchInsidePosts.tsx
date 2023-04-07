@@ -14,7 +14,8 @@ import Modal from "@mui/material/Modal";
 import PostList from "../PostList/PostList";
 import PhotoQuickView from "../PhotoQuickView/PhotoQuickView";
 import { useRouter } from "next/router";
-
+import CloseIcon from "@mui/icons-material/Close";
+import Button from "@mui/material/Button";
 interface CategoryInsidePostsProps {
   tagString: string | string[] | undefined;
   category: ResponseImageData[];
@@ -184,8 +185,29 @@ const SearchPostList = ({
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                sx={{
+                  backgroundImage: `
+                  linear-gradient(
+                    rgba(0, 0, 0, 0.5),
+                    rgba(0, 0, 0, 0.3)
+                  )`,
+                }}
               >
-                <PhotoQuickView filename={selectedFilename} router={router} />
+                <div>
+                  {/* <CloseButton /> */}
+                  <Button
+                    sx={{
+                      position: "absolute",
+                      top: 20,
+                      left: 20,
+                      color: "white",
+                    }}
+                    onClick={handleClose}
+                  >
+                    {<CloseIcon sx={{ fontSize: 40 }} />}
+                  </Button>
+                  <PhotoQuickView filename={selectedFilename} router={router} />
+                </div>
               </Modal>
             </Grid>
           </Grid>
