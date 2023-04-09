@@ -13,6 +13,7 @@ import PhotoQuickView from "../../src/components/PhotoQuickView/PhotoQuickView";
 import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
+import { Container } from "@mui/material";
 
 export interface ResponseImageData {
   _id: string;
@@ -168,7 +169,7 @@ export default function CategoryInsidePage() {
         )`,
         }}
       >
-        <div>
+        <Container sx={{ outline: "none" }}>
           {/* <CloseButton /> */}
           <Button
             sx={{
@@ -184,7 +185,7 @@ export default function CategoryInsidePage() {
           <Box sx={PhotoQuickViewStyles}>
             <PhotoQuickView filename={selectedFilename} router={router} />
           </Box>
-        </div>
+        </Container>
       </Modal>
     </>
   );

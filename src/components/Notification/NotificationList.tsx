@@ -1,4 +1,12 @@
-import { Avatar, Box, Button, Modal, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Modal,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { Notification } from "../../../store/notification/types";
 import Item from "./Notification.style";
@@ -74,17 +82,25 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
         >
           {/* to get notification mapped into Stack  */}
           {notifications.map((notification) => (
-            <div
+            <Container
               key={notification.id}
-              style={{ backgroundColor: "background.paper" }}
+              // style={{ backgroundColor: "background.paper" }}
             >
               <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                sx={{
+                  backgroundImage: `
+                    linear-gradient(
+                    rgba(0, 0, 0, 0.5),
+                    rgba(0, 0, 0, 0.3)
+                  )`,
+                  bgcolor: "background.paper",
+                }}
               >
-                <div>
+                <Container sx={{ outline: "none" }}>
                   {/* <CloseButton /> */}
                   <Button
                     sx={{
@@ -98,8 +114,9 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                     {<CloseIcon sx={{ fontSize: 40 }} />}
                   </Button>
                   <PhotoQuickView filename={selectedFilename} router={router} />
-                </div>
+                </Container>
               </Modal>
+
               <div onClick={() => handleOpen(notification.directFilename)}>
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
                   <Item
@@ -156,7 +173,7 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                   </Item>
                 </Box>
               </div>
-            </div>
+            </Container>
           ))}
         </Box>
 

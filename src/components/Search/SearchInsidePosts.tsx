@@ -16,6 +16,7 @@ import PhotoQuickView from "../PhotoQuickView/PhotoQuickView";
 import { useRouter } from "next/router";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
+import { Container } from "@mui/material";
 interface CategoryInsidePostsProps {
   tagString: string | string[] | undefined;
   category: ResponseImageData[];
@@ -193,7 +194,7 @@ const SearchPostList = ({
                   )`,
                 }}
               >
-                <div>
+                <Container sx={{ outline: "none" }}>
                   {/* <CloseButton /> */}
                   <Button
                     sx={{
@@ -207,7 +208,7 @@ const SearchPostList = ({
                     {<CloseIcon sx={{ fontSize: 40 }} />}
                   </Button>
                   <PhotoQuickView filename={selectedFilename} router={router} />
-                </div>
+                </Container>
               </Modal>
             </Grid>
           </Grid>

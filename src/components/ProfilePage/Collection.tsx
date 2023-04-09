@@ -5,6 +5,7 @@ import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import PhotoQuickView from "../PhotoQuickView/PhotoQuickView";
+import { Container } from "@mui/material";
 
 interface CollectionProps {
   profileUserId: string | string[] | undefined;
@@ -46,7 +47,7 @@ export default function Collection(props: CollectionProps) {
         )`,
         }}
       >
-        <div>
+        <Container sx={{ outline: "none" }}>
           {/* <CloseButton /> */}
           <Button
             sx={{
@@ -60,7 +61,7 @@ export default function Collection(props: CollectionProps) {
             {<CloseIcon sx={{ fontSize: 40 }} />}
           </Button>
           <PhotoQuickView filename={selectedFilename} router={router} />
-        </div>
+        </Container>
       </Modal>
     </>
   );
