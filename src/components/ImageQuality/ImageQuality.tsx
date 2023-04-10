@@ -17,6 +17,7 @@ import { useCheckToken } from "../../hooks/useCheckToken";
 // import {useDeleteSuccessful} from "../../hooks/useDeleteSuccessful";
 import { getImageQuality, getToken } from "../../axiosRequest/api/imageQuality";
 import axios from "axios";
+import LinearProgress from "@mui/material/LinearProgress";
 
 interface ImageQualityButtonProps {
   filenameString: string | string[] | undefined;
@@ -45,6 +46,7 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
   const [isSendSuccessful, setIsSendSuccessful] = useState(false);
   // const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [qualityScore, setQualityScore] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -69,18 +71,10 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
     try {
       const response = await getToken();
       console.log(response.data, "debug");
+      //setIsLoading(true);
     } catch (error) {
       console.log(error);
-    }
-
-    // try {
-    //   const response = await getImageQuality(compressed_url);
-    //   console.log(response.data, 'debug');
-      
-    // } catch (error) {
-    //   console.log(error);
-    // }
-
+    } 
     // try {
     //   const response = await getImageQuality(compressed_url);
     //   console.log(response.data, "debug");
@@ -98,16 +92,26 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
       console.log(response.data, "debug1");
     }
 
-    getQuality(compressed_url, { size: "medium" })
-      .then((result) => {
-        setQualityScore(result.quality.score);
-        console.log(result.quality.score);
-      })
+    // getQuality(compressed_url, { size: "medium" })
+    //   .then((result) => {
+    //     setQualityScore(result.quality.score);
+    //     console.log(result.quality.score);
+    //   })
       
-      .catch((error) => {
-        console.error(error);
-      });
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+      
     
+    try {
+      const result = await getQuality(compressed_url, { size: "medium" });
+      setQualityScore(result.quality.score);
+      console.log(result.quality.score);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
 
     
 
@@ -120,13 +124,13 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
   const handleConfirmationConfirm = async () => {
     setIsDeleting(true);
     setIsConfirmationOpen(false);
-    try {
-      const response = await deletePost(filenameString);
-      setIsConfirmationOpen(true);
-      setIsSendSuccessful(true);
-    } catch (error) {
-      setIsDeleting(false);
-    }
+    // try {
+    //   const response = await deletePost(filenameString);
+    //   setIsConfirmationOpen(true);
+    //   setIsSendSuccessful(true);
+    // } catch (error) {
+    //   setIsDeleting(false);
+    // }
   };
 
   return (
@@ -164,8 +168,14 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
               ) : (
                 // "Your photo score is: `${qualityScore}`.Are you sure you want to rank this post?"
                 <DialogContentText>
-                  Your photo score is: "{qualityScore}".Are you sure you want to
-                  rank this post?
+                  {isLoading ? (
+                    <LinearProgress />
+                  ) : (
+                    <DialogContentText>
+                      Your photo score is: "{qualityScore}".Are you sure you
+                      want to rank this post?
+                    </DialogContentText>
+                  )}
                 </DialogContentText>
               )}
             </DialogContent>
