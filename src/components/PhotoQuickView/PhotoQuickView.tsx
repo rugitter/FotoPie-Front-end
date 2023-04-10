@@ -17,6 +17,7 @@ import { Grid } from "@mui/material";
 import { PhotoQuickViewStyles } from "./PhotoQuickView.style";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
+import ImageQualityButton from "../ImageQuality/ImageQuality";
 interface PhotoQuickViewProps {
   filename: string | string[] | undefined;
   router: NextRouter;
@@ -145,6 +146,10 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
           {/* Delete post button */}
           <Grid item xs>
             <DeletePostButton filenameString={filename} />
+          </Grid>
+
+          <Grid item xs>
+            <ImageQualityButton filenameString={filename} />
           </Grid>
         </Grid>
       )}
