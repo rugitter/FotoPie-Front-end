@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, KeyboardEvent } from "react";
 import { createImage } from "../../axiosRequest/api/createImage";
 import Image from "mui-image";
 import TextField from "@mui/material/TextField";
@@ -20,6 +20,12 @@ const NewImage: React.FC = () => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+  };
+
+  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleClick();
+    }
   };
 
   const handleClick = async () => {
@@ -104,17 +110,17 @@ const NewImage: React.FC = () => {
           label="Create anything in your mind.."
           value={inputValue}
           onChange={handleChange}
+          onKeyPress={handleKeyPress}
           variant="outlined"
           sx={{ marginRight: 1, flexGrow: 1 }}
         />
         <Button
           variant="contained"
-          color="primary"
           onClick={handleClick}
-          endIcon={<SendIcon />}
+          // endIcon={<SendIcon />}
           sx={{
-            backgroundColor: "white",
-            color: "purple",
+            backgroundColor: "primary.main",
+            color: "white",
             height: "100%",
             p: 1.7,
           }}
