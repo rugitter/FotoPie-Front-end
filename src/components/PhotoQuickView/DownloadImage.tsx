@@ -15,19 +15,48 @@ const DownloadButton: NextPage<DownloadImageProps> = ({
   router,
   isAuthenticated,
 }) => {
+  // const downLoadImages = async () => {
+  //   if (!isAuthenticated) router.push("/login");
+  //   if (isAuthenticated) {
+  //     try {
+  //       //get presigned url
+  //       const response = await getDownloadImage(filenameString);
+  //       const presignedUrl = response.data.url;
+
+  //       //use proxy url to download image
+  //       const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
+  //         presignedUrl
+  //       )}`;
+  //       const res = await fetch(proxyUrl);
+  //       const blob = await res.blob();
+  //       const url = URL.createObjectURL(blob);
+
+  //       const link = document.createElement("a");
+  //       link.href = url;
+  //       link.download = `${filenameString}`;
+  //       link.click();
+  //       URL.revokeObjectURL(url);
+  //     } catch (error: any) {
+  //       if (error?.response?.status === 403 || 404) {
+  //         router.push("/subscription");
+  //       }
+  //       console.error("unexpected error: " + error);
+  //     }
+  //   }
+  // };
   const downLoadImages = async () => {
     if (!isAuthenticated) router.push("/login");
     if (isAuthenticated) {
       try {
-        //get presigned url
-        const response = await getDownloadImage(filenameString);
+        // Get the presigned URL
+        const response = await getDownloadImage(filenameString as string);
         const presignedUrl = response.data.url;
 
-        //use proxy url to download image
-        const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
+        // Use the streaming serverless function to download the image
+        const streamUrl = `/api/stream-image?presignedUrl=${encodeURIComponent(
           presignedUrl
         )}`;
-        const res = await fetch(proxyUrl);
+        const res = await fetch(streamUrl);
         const blob = await res.blob();
         const url = URL.createObjectURL(blob);
 
@@ -44,6 +73,7 @@ const DownloadButton: NextPage<DownloadImageProps> = ({
       }
     }
   };
+
   return (
     <>
       {/* show download button on desktop */}
