@@ -1,19 +1,26 @@
-import { Avatar, Box, Button, Modal, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Modal,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { Notification } from "../../../store/notification/types";
 import Item from "./Notification.style";
-import { PhotoQuickViewStyles } from "../PhotoQuickView/PhotoQuickView.style";
 import PhotoQuickView from "../PhotoQuickView/PhotoQuickView";
 import { useRouter } from "next/router";
 import Image from "mui-image";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface NotificationListProps {
   notifications: Notification[];
 }
 
 const NotificationList = ({ notifications }: NotificationListProps) => {
-  console.log(notifications);
   const router = useRouter();
 
   const [selectedFilename, setSelectedFilename] = useState<
@@ -75,15 +82,41 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
         >
           {/* to get notification mapped into Stack  */}
           {notifications.map((notification) => (
-            <div key={notification.id}>
+            <Container
+              key={notification.id}
+              // style={{ backgroundColor: "background.paper" }}
+            >
               <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                sx={{
+                  backgroundImage: `
+                    linear-gradient(
+                    rgba(0, 0, 0, 0.5),
+                    rgba(0, 0, 0, 0.3)
+                  )`,
+                  bgcolor: "background.paper",
+                }}
               >
-                <PhotoQuickView filename={selectedFilename} router={router} />
+                <Container sx={{ outline: "none" }}>
+                  {/* <CloseButton /> */}
+                  <Button
+                    sx={{
+                      position: "absolute",
+                      top: 20,
+                      left: 20,
+                      color: "white",
+                    }}
+                    onClick={handleClose}
+                  >
+                    {<CloseIcon sx={{ fontSize: 40 }} />}
+                  </Button>
+                  <PhotoQuickView filename={selectedFilename} router={router} />
+                </Container>
               </Modal>
+
               <div onClick={() => handleOpen(notification.directFilename)}>
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
                   <Item
@@ -140,7 +173,7 @@ const NotificationList = ({ notifications }: NotificationListProps) => {
                   </Item>
                 </Box>
               </div>
-            </div>
+            </Container>
           ))}
         </Box>
 
