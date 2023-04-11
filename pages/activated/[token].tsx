@@ -50,7 +50,7 @@ export default function Activated() {
           Log In
         </Button>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
+      <Copyright  />
     </Container>
   );
 }

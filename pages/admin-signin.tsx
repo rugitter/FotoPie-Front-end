@@ -18,6 +18,7 @@ import ErrorAlert from "../src/components/LoginForm/ErrorAlert";
 import LoginButton from "../src/components/LoginForm/LoginButton";
 import { adminLogin } from "../store/auth/authAciton";
 import { motion, AnimatePresence } from "framer-motion";
+import { CssBaseline } from "@mui/material";
 
 // Define a type with the shape of the form values
 export interface IFormInput {
@@ -56,89 +57,108 @@ export default function AdminSignIn() {
 
   return (
     <>
-      <AnimatePresence mode="wait">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -50 }}
-          transition={{ duration: 1 }}
+
+
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}
+      >
+        <CssBaseline />
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+          }}
         >
-          <Container component="main" maxWidth="xs">
-            {/* error handling*/}
-            {error && <ErrorAlert error={error}></ErrorAlert>}
-
-            <Box
-              sx={{
-                marginTop: 3,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
+          <AnimatePresence mode="wait">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: 1 }}
             >
-              {/* login icon */}
-              <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-                <LockOutlinedIcon />
-              </Avatar>
+              <Container component="main" maxWidth="xs">
+                {/* error handling*/}
+                {error && <ErrorAlert error={error}></ErrorAlert>}
 
-              <Typography component="h1" variant="h5">
-                Admin Sign In
-              </Typography>
-
-              {/* input Form */}
-              <FormProvider {...methods}>
                 <Box
-                  component="form"
-                  onSubmit={methods.handleSubmit(onSubmit)}
-                  sx={{ mt: 1 }}
+                  sx={{
+                    marginTop: 3,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
                 >
-                  {/* Email */}
-                  <FormTextField
-                    name="email"
-                    label="Email Address"
-                    id="email"
-                    autoComplete="email"
-                  />
+                  {/* login icon */}
+                  <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
+                    <LockOutlinedIcon />
+                  </Avatar>
 
-                  {/* Password */}
-                  <FormTextField
-                    name="password"
-                    label="Password"
-                    id="password"
-                    type="password"
-                    autoComplete="current-password"
-                  />
+                  <Typography component="h1" variant="h5">
+                    Admin Sign In
+                  </Typography>
 
-                  {/* TODO: add remember checkbox */}
-                  {/* <FormControlLabel
+                  {/* input Form */}
+                  <FormProvider {...methods}>
+                    <Box
+                      component="form"
+                      onSubmit={methods.handleSubmit(onSubmit)}
+                      sx={{ mt: 1 }}
+                    >
+                      {/* Email */}
+                      <FormTextField
+                        name="email"
+                        label="Email Address"
+                        id="email"
+                        autoComplete="email"
+                      />
+
+                      {/* Password */}
+                      <FormTextField
+                        name="password"
+                        label="Password"
+                        id="password"
+                        type="password"
+                        autoComplete="current-password"
+                      />
+
+                      {/* TODO: add remember checkbox */}
+                      {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             /> */}
 
-                  {/* Button */}
-                  <LoginButton loginStatus={loginStatus}></LoginButton>
+                      {/* Button */}
+                      <LoginButton loginStatus={loginStatus}></LoginButton>
 
-                  <Grid container>
-                    {/* Forgot password? */}
-                    <Grid item xs>
-                      <Link href="/reset/reset-request" variant="body2">
-                        Forgot Password?
-                      </Link>
-                    </Grid>
+                      <Grid container>
+                        {/* Forgot password? */}
+                        <Grid item xs>
+                          <Link href="/reset/reset-request" variant="body2">
+                            Forgot Password?
+                          </Link>
+                        </Grid>
 
-                    {/* Don't have an account? Sign Up */}
-                    <Grid item>
-                      <Link href="/" variant="body2">
-                        {"Go to Home Page"}
-                      </Link>
-                    </Grid>
-                  </Grid>
+                        {/* Don't have an account? Sign Up */}
+                        <Grid item>
+                          <Link href="/" variant="body2">
+                            {"Go to Home Page"}
+                          </Link>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </FormProvider>
                 </Box>
-              </FormProvider>
-            </Box>
-          </Container>
-        </motion.div>
-      </AnimatePresence>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
+              </Container>
+            </motion.div>
+          </AnimatePresence>
+        </Box>
+        <Copyright />
+      </Box>
     </>
   );
 }
