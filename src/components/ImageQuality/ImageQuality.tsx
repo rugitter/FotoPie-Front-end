@@ -172,8 +172,9 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
                     <LinearProgress />
                   ) : (
                     <DialogContentText>
-                      Your photo score is: "{qualityScore}".Are you sure you
-                      want to rank this post?
+                      Your photo score is: "<b>{qualityScore}</b>".
+                      <br></br>
+                      Are you sure you want to rank this post?
                     </DialogContentText>
                   )}
                 </DialogContentText>
