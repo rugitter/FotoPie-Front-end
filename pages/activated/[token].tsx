@@ -1,46 +1,44 @@
-import { Alert } from '@mui/material'
+import { Alert } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Copyright from "../../src/components/Copyright"
-import { activateEmail } from '../../src/axiosRequest/api/user';
+import Copyright from "../../src/components/Copyright";
+import { activateEmail } from "../../src/axiosRequest/api/user";
 
 export default function Activated() {
-    const router = useRouter()
-    // const{token} = router.query.token
-    const { token } = router.query
+  const router = useRouter();
+  // const{token} = router.query.token
+  const { token } = router.query;
 
-    let config = {
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }
+  let config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
 
-    activateEmail({ token })
-      .then(response => response.status)
-      .catch(err => console.log(err))
- 
+  activateEmail({ token })
+    .then((response) => response.status)
+    .catch((err) => console.log(err));
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-        marginTop: 8,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-
         <Typography component="h1" variant="h6">
-          User Activation 
+          User Activation
         </Typography>
-    
-        <Alert severity='success'>
-                  You have been successfully activated. You can login now!
-                  {/* {token} */}
 
+        <Alert severity="success">
+          You have been successfully activated. You can login now!
+          {/* {token} */}
         </Alert>
 
         <Button
@@ -51,9 +49,8 @@ export default function Activated() {
         >
           Log In
         </Button>
-    
       </Box>
       <Copyright sx={{ mt: 5 }} />
     </Container>
-  )
+  );
 }
