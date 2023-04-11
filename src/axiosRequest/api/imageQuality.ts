@@ -13,3 +13,10 @@ export const getImageQuality = <T>(url:string) => {
     method: "get",
   });
 };
+
+export const sendQualityRank = <T>(filenamestring: T,  score: string) => {
+  return axiosInstance({
+    url: `/api/quality/${filenamestring}?score=${score}`,
+    method: "post",
+  });
+};

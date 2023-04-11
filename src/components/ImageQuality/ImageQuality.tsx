@@ -15,7 +15,7 @@ import { getMe } from "../../axiosRequest/api/editUser";
 import { deletePost } from "../../axiosRequest/api/userPost";
 import { useCheckToken } from "../../hooks/useCheckToken";
 // import {useDeleteSuccessful} from "../../hooks/useDeleteSuccessful";
-import { getImageQuality, getToken } from "../../axiosRequest/api/imageQuality";
+import { getImageQuality, getToken, sendQualityRank } from "../../axiosRequest/api/imageQuality";
 import axios from "axios";
 import LinearProgress from "@mui/material/LinearProgress";
 
@@ -40,13 +40,14 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
   }));
   // const {isDeleteSuccessful, updateIsDeleteSuccessful} = useDeleteSuccessful();
 
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isCurrentUserId, setIsCurrentUserId] = useState<boolean>(false);
   const [isSendSuccessful, setIsSendSuccessful] = useState(false);
   // const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [qualityScore, setQualityScore] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  
   const router = useRouter();
 
   useEffect(() => {
@@ -122,15 +123,16 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
   };
 
   const handleConfirmationConfirm = async () => {
-    setIsDeleting(true);
+    setIsSending(true);
     setIsConfirmationOpen(false);
-    // try {
-    //   const response = await deletePost(filenameString);
-    //   setIsConfirmationOpen(true);
-    //   setIsSendSuccessful(true);
-    // } catch (error) {
-    //   setIsDeleting(false);
-    // }
+    try {
+      const response = await sendQualityRank(filenameString, qualityScore);
+
+      setIsConfirmationOpen(true);
+      setIsSendSuccessful(true);
+    } catch (error) {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -141,7 +143,7 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
             variant="contained"
             color="secondary"
             onClick={handleGetQualityClick}
-            disabled={isDeleting}
+            disabled={isSending}
           >
             <Typography
               textTransform="none"
@@ -152,7 +154,7 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
                 md: "1rem",
               }}
             >
-              {isDeleting ? "Sending..." : "Get image quality"}
+              {isSending ? "Sending..." : "Get image quality"}
             </Typography>
           </Button>
 

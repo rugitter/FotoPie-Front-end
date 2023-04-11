@@ -17,7 +17,7 @@ export const signUp = <T>(data: T) => {
 
 export const activateEmail = <T>(data: T) => {
   return axiosInstance({
-    url: "/api/user/singup",
+    url: "/api/user/signup",
     method: "post",
     data,
   });
