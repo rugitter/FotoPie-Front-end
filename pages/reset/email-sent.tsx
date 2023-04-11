@@ -8,7 +8,7 @@ const emailSent: React.FC = () => {
     <>
       <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
       <EmailSent />
-      <Copyright sx={{ mt: 8, mb: 4 }} />
+      <Copyright />
     </>
   );
 };

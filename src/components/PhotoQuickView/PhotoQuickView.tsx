@@ -84,7 +84,7 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
               alignItems="center"
             >
               {/* Avatar and username */}
-              <Grid item xs={6} md={4}>
+              <Grid item xs={5} md={4}>
                 {/* <Grid item xs={8} md={4}> */}
                 <UserName
                   userID={userID}
@@ -93,7 +93,7 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
                 />
               </Grid>
               {/* Collect, like, download buttons */}
-              <Grid item xs={6} md={8}>
+              <Grid item xs={7} md={8}>
                 <Grid
                   container
                   direction="row"
