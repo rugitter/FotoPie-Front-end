@@ -20,3 +20,10 @@ export const sendQualityRank = <T>(filenamestring: T,  score: string) => {
     method: "post",
   });
 };
+
+export const findQualityPosts = <T>(page:Number, limit: Number) => {
+  return axiosInstance({
+    url: `/api/quality/?page=${page}?limit=${limit}`,
+    method: "get",
+  });
+};

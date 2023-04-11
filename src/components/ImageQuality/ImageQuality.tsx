@@ -59,7 +59,8 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
     fetchUserId();
     if (isSendSuccessful) {
       setTimeout(() => {
-        window.location.reload();
+        //window.location.reload();
+        router.push("/quality-posts")
       }, 2000);
     }
   }, [userID, isSendSuccessful]);
