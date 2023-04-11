@@ -15,3 +15,5 @@ export const uploadPost = <T>(data: T) => {
     data,
   });
 };
+
+

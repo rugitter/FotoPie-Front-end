@@ -6,6 +6,7 @@ import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Avatar from "@mui/material/Avatar";
 import { Typography } from "@mui/material";
+import AvatarMenu from "./AvatarMenu";
 
 interface userIconsProps {
   handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
@@ -36,9 +37,10 @@ export default function UserIcons({
     <Box
       sx={{
         display: { xs: "none", md: "flex" },
-        flexGrow: 1,
         justifyContent: "space-between",
         alignItems: "center",
+        width: "350px",
+        position: "sticky",
       }}
     >
       {/* FotoPie+ */}

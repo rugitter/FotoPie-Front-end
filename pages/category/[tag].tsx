@@ -11,7 +11,9 @@ import Modal from "@mui/material/Modal";
 import { PhotoQuickViewStyles } from "../../src/components/PhotoQuickView/PhotoQuickView.style";
 import PhotoQuickView from "../../src/components/PhotoQuickView/PhotoQuickView";
 import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
-
+import Button from "@mui/material/Button";
+import CloseIcon from "@mui/icons-material/Close";
+import { Container } from "@mui/material";
 
 export interface ResponseImageData {
   _id: string;
@@ -22,8 +24,6 @@ export interface ResponseImageData {
   description: string;
   filename: string;
 }
-
-
 
 // Set all necessary states for rendering post lists and related category buttons
 export default function CategoryInsidePage() {
@@ -84,7 +84,8 @@ export default function CategoryInsidePage() {
       const data = response.data;
       const synonyms = data?.noun?.syn || data?.verb?.syn || [];
       // check if the response contains synonyms for the noun or verb form of the word, otherwise return an empty array
-      return synonyms;
+      const synonymslice = synonyms.slice(0, 8);
+      return synonymslice;
     } catch (error) {
       console.error("Error fetching synonyms:", error);
       return [];
@@ -130,15 +131,15 @@ export default function CategoryInsidePage() {
 
   useEffect(() => {
     if (!router.isReady) return;
-    getSynonyms(tagString).then((response) => {
-      setLinks(response);
+    getSynonyms(tagString).then((synonymslice) => {
+      setLinks(synonymslice);
     });
     fetchImages();
   }, [tagString, router.isReady]);
 
   return (
     <>
-      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles}/>
+      <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
       <CategoryHeader tagString={tagString} />
       <CategoryButton
         links={links}
@@ -161,10 +162,31 @@ export default function CategoryInsidePage() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx={{
+          backgroundImage: `
+        linear-gradient(
+          rgba(0, 0, 0, 0.5),
+          rgba(0, 0, 0, 0.3)
+        )`,
+        }}
       >
-        <Box sx={PhotoQuickViewStyles}>
-          <PhotoQuickView filename={selectedFilename} router={router} />
-        </Box>
+        <Container sx={{ outline: "none" }}>
+          {/* <CloseButton /> */}
+          <Button
+            sx={{
+              position: "absolute",
+              top: 20,
+              left: 20,
+              color: "white",
+            }}
+            onClick={handleClose}
+          >
+            {<CloseIcon sx={{ fontSize: 40 }} />}
+          </Button>
+          <Box sx={PhotoQuickViewStyles}>
+            <PhotoQuickView filename={selectedFilename} router={router} />
+          </Box>
+        </Container>
       </Modal>
     </>
   );

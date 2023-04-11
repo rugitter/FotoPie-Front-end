@@ -3,7 +3,6 @@ import styles from "./Subscription.module.css";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
-import Copyright from "../Copyright";
 import Link from "@mui/material/Link";
 
 export default function CustomerPortalComponent() {
@@ -90,7 +89,11 @@ export default function CustomerPortalComponent() {
                     backgroundColor: "#8777D9",
                   }}
                 >
-                  <Link href="/create-variation" sx={{ color: "white" }} underline="none">
+                  <Link
+                    href="/create-variation"
+                    sx={{ color: "white" }}
+                    underline="none"
+                  >
                     Similar image generation
                   </Link>
                 </Button>
@@ -101,8 +104,6 @@ export default function CustomerPortalComponent() {
 
         <img src="/subscription-image.jpg" alt="" />
       </Box>
-
-      <Copyright />
     </Box>
   );
 }

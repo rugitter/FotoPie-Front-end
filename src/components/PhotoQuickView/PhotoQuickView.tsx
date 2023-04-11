@@ -1,6 +1,4 @@
 import { useEffect, FC } from "react";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 import { NextRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getInitialData } from "../../axiosRequest/api/photoQuickView";
@@ -15,8 +13,10 @@ import CollectButton from "./CollectButton";
 import LikeButton from "./LikeButton";
 import UserName from "./UserName";
 import DeletePostButton from "../PostDelete/DeletePost";
-import Loader from "../Loader/Loader";
-
+import { Grid } from "@mui/material";
+import { PhotoQuickViewStyles } from "./PhotoQuickView.style";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 interface PhotoQuickViewProps {
   filename: string | string[] | undefined;
   router: NextRouter;
@@ -63,81 +63,90 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
     <>
       {/* main body */}
       {isLoading ? (
-        <Loader />
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress />
+        </Box>
       ) : (
-        <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            overflowY: "auto",
-          }}
+        <Grid
+          container
+          direction="column"
+          justifyContent="space-evenly"
+          alignItems="center"
+          rowSpacing={{ xs: 1, md: 2 }}
+          sx={PhotoQuickViewStyles}
         >
-          <Stack
-            display="flex"
-            sx={{
-              width: "75vw",
-              height: "auto",
-              minWidth: "50vw",
-              borderRadius: "10px",
-              m: "auto",
-              bgcolor: "#fff",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            {/* User infos and buttons */}
-            <Stack
+          {/* User infos and buttons */}
+          <Grid item xs={1} sm={1.5} md={2} width={1}>
+            <Grid
+              container
               direction="row"
-              display="flex"
-              justifyContent="space-between"
-              position="relative"
-              sx={{ m: 1, mt: 3, mb: 3 }}
+              justifyContent="space-around"
+              alignItems="center"
             >
               {/* Avatar and username */}
-              <Stack>
+              <Grid item xs={5} md={4}>
+                {/* <Grid item xs={8} md={4}> */}
                 <UserName
                   userID={userID}
                   userAvatar={userAvatar}
                   userName={userName}
                 />
-              </Stack>
+              </Grid>
               {/* Collect, like, download buttons */}
-              <Stack
-                display="flex"
-                direction="row"
-                justifyContent="space-around"
-                spacing={2}
-                sx={{ mr: 2 }}
-              >
-                <CollectButton
-                  isAuthenticated={isAuthenticated}
-                  filenameString={filename}
-                  userCollects={userCollects}
-                  collected={collected}
-                  router={router}
-                />
+              <Grid item xs={7} md={8}>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="flex-end"
+                  columnSpacing={{ sm: 1, md: 2 }}
+                >
+                  {/* collect button */}
+                  <Grid item>
+                    <CollectButton
+                      isAuthenticated={isAuthenticated}
+                      filenameString={filename}
+                      userCollects={userCollects}
+                      collected={collected}
+                      router={router}
+                    />
+                  </Grid>
+                  {/* like button */}
+                  <Grid item>
+                    <LikeButton
+                      isAuthenticated={isAuthenticated}
+                      filenameString={filename}
+                      userLikes={userLikes}
+                      liked={liked}
+                      router={router}
+                    />
+                  </Grid>
+                  {/* down button */}
+                  <Grid item>
+                    <DownloadImage
+                      isAuthenticated={isAuthenticated}
+                      filenameString={filename}
+                      router={router}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
 
-                <LikeButton
-                  isAuthenticated={isAuthenticated}
-                  filenameString={filename}
-                  userLikes={userLikes}
-                  liked={liked}
-                  router={router}
-                />
-
-                <DownloadImage
-                  isAuthenticated={isAuthenticated}
-                  filenameString={filename}
-                  router={router}
-                />
-              </Stack>
-            </Stack>
-
-            {/* Post image */}
+          {/* Post image */}
+          <Grid
+            item
+            width={{ xs: "70vw", sm: "50vw", md: "auto", xl: "auto" }}
+            height={{ xs: "auto", sm: "auto", md: "60vh", xl: "70vh" }}
+          >
             {postPhoto && <PostImage postPhoto={postPhoto} />}
-          </Stack>
-          <DeletePostButton filenameString={filename} />
-        </Box>
+          </Grid>
+
+          {/* Delete post button */}
+          <Grid item xs>
+            <DeletePostButton filenameString={filename} />
+          </Grid>
+        </Grid>
       )}
     </>
   );

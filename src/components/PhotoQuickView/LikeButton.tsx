@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { NextRouter } from "next/router";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { updateLike } from "../../../store/photoQuickView/quickViewAciton";
@@ -31,12 +31,15 @@ const LikeButton = ({
 
   return (
     <>
+      {/* show like button on desktop */}
       <Button
         variant="outlined"
         color="info"
         sx={{
           display: { xs: "none", sm: "none", md: "flex" },
           color: liked ? "red" : "black",
+          textTransform: "none",
+          fontSize: "1.2rem",
         }}
         startIcon={
           <FavoriteBorderIcon sx={{ color: liked ? "red" : "black" }} />
@@ -47,6 +50,7 @@ const LikeButton = ({
           ? "Unlike" + " " + `${userLikes}`
           : "Like" + " " + `${userLikes}`}
       </Button>
+<<<<<<< HEAD
       <Button
         variant="outlined"
         color="info"
@@ -59,6 +63,20 @@ const LikeButton = ({
         }
         onClick={addToLiked}
       ></Button>
+||||||| 4de6761
+=======
+
+      {/* show like button on mobile */}
+      <IconButton
+        sx={{
+          display: { xs: "flex", sm: "flex", md: "none" },
+          color: liked ? "red" : "black",
+        }}
+        onClick={addToLiked}
+      >
+        {<FavoriteBorderIcon sx={{ color: liked ? "red" : "black" }} />}
+      </IconButton>
+>>>>>>> dev
     </>
   );
 };

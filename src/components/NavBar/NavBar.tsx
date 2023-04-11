@@ -26,6 +26,7 @@ interface NavbarProps {
   color?: string;
   bgColor?: string;
   baseLine?: any;
+  position?: "fixed" | "absolute" | "relative" | "static" | "sticky";
 }
 
 export default function Navbar({
@@ -33,6 +34,7 @@ export default function Navbar({
   color = "#FFFFFF",
   bgColor,
   baseLine,
+  position,
 }: NavbarProps) {
   useCheckToken();
   const { isAuthenticated, notificationCount, isNotificationRead } =
@@ -57,14 +59,10 @@ export default function Navbar({
         .catch((err) => {
           router.push("/login");
         });
-    }
-  }, [isAuthenticated, dispatch]);
 
-  useEffect(() => {
-    // Get new notification count
-    // if (!isNotificationRead) return;
-    dispatch(getNotificationCountAction());
-  }, [dispatch, isNotificationRead]);
+      dispatch(getNotificationCountAction());
+    }
+  }, [isAuthenticated, isNotificationRead, dispatch]);
 
   //Mark all new notifications as read when click notification icon
   const handleNotificationClick = () => {
@@ -124,6 +122,7 @@ export default function Navbar({
   const handleMobileLogout = () => {
     dispatch(logout());
     handleMenuCloseInMobileMenu();
+    router.push("/");
   };
 
   //////////////////////////////////////////////////////////////////////////////
@@ -141,6 +140,7 @@ export default function Navbar({
   const handleLogout = () => {
     dispatch(logout());
     handleMenuClose();
+    router.push("/");
   };
   const isMenuOpen = Boolean(anchorEl);
 
@@ -155,6 +155,7 @@ export default function Navbar({
             backgroundColor: bgColor || (fix ? "#fff" : "transparent"),
             color: "transparent",
             height: 80,
+            width: "100%",
             display: "flex",
             justifyContent: "center",
             elevation: 0,
@@ -183,7 +184,6 @@ export default function Navbar({
               width: "100%",
               maxWidth: 1600,
               margin: "0 auto",
-              padding: fix ? "0 40px" : 0,
             }}
           >
             <Link
@@ -213,8 +213,9 @@ export default function Navbar({
                 sx={{
                   flexGrow: 1,
                   ml: 2,
+                  mt: 0.5,
                   fontSize: 26,
-                  fontFamily: "inherit",
+                  fontFamily: "'Expletus Sans', swap",
                   color: fix ? "#000000" : color,
                 }}
               >
@@ -223,14 +224,7 @@ export default function Navbar({
             </Link>
 
             <Box sx={{ flexGrow: 1 }}></Box>
-            <Box
-              sx={{
-                display: { xs: "none", md: "flex" },
-                flexGrow: 0.12,
-                justifyContent: "flex-end",
-                alignItems: "center",
-              }}
-            >
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
               {isAuthenticated ? (
                 <UserIcons
                   handleProfileMenuOpen={handleProfileMenuOpen}
