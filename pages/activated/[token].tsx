@@ -53,7 +53,7 @@ export default function Activated() {
         </Button>
     
       </Box>
-      <Copyright sx={{ mt: 5 }} />
+      <Copyright  />
     </Container>
   )
 }

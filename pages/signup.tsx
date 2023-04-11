@@ -18,6 +18,7 @@ import NavBar from "../src/components/NavBar/NavBar";
 import { NavBarStyles } from "../src/components/NavBar/NavbarBaseline.style";
 import { signUp } from "../src/axiosRequest/api/user";
 import { motion, AnimatePresence } from "framer-motion";
+import { CssBaseline } from "@mui/material";
 
 // Define a type with the shape of the form values
 interface IFormInput {
@@ -57,91 +58,107 @@ export default function SignUp() {
 
   return (
     <>
-      <AnimatePresence mode="wait">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -50 }}
-          transition={{ duration: 1 }}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}
+      >
+        <CssBaseline />
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+          }}
         >
-          <div>
-            <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
-            <Container component="main" maxWidth="xs">
-              <Box
-                sx={{
-                  marginTop: 8,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-                  <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                  Sign Up
-                </Typography>
-                <FormProvider {...methods}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: 1 }}
+            >
+              <div>
+                <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
+                <Container component="main" maxWidth="xs">
                   <Box
-                    component="form"
-                    onSubmit={methods.handleSubmit(onSubmit)}
-                    sx={{ mt: 3 }}
+                    sx={{
+                      marginTop: 8,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
                   >
-                    <FormTextField
-                      name="firstName"
-                      label="First Name"
-                      id="firstName"
-                      autoComplete="fistName"
-                    />
-                    <FormTextField
-                      name="lastName"
-                      label="Last Name"
-                      id="lastName"
-                      autoComplete="lastName"
-                    />
-                    <FormTextField
-                      name="email"
-                      label="Email Address"
-                      id="email"
-                      autoComplete="email"
-                    />
-                    <FormTextField
-                      name="password"
-                      label="Password"
-                      id="password"
-                      type="password"
-                      autoComplete="current-password"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox value="allowExtraEmails" color="primary" />
-                      }
-                      label="I want to receive inspiration, marketing promotions and updates via email."
-                    />
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
-                    >
-                      Sign UP
-                      <Link href="verifyemail"></Link>
-                    </Button>
-                    <Grid container justifyContent="flex-end">
-                      <Grid item>
-                        <Link href="login" variant="body2">
-                          Already have an account? Log in
-                        </Link>
-                      </Grid>
-                    </Grid>
+                    <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
+                      <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                      Sign Up
+                    </Typography>
+                    <FormProvider {...methods}>
+                      <Box
+                        component="form"
+                        onSubmit={methods.handleSubmit(onSubmit)}
+                        sx={{ mt: 3 }}
+                      >
+                        <FormTextField
+                          name="firstName"
+                          label="First Name"
+                          id="firstName"
+                          autoComplete="fistName"
+                        />
+                        <FormTextField
+                          name="lastName"
+                          label="Last Name"
+                          id="lastName"
+                          autoComplete="lastName"
+                        />
+                        <FormTextField
+                          name="email"
+                          label="Email Address"
+                          id="email"
+                          autoComplete="email"
+                        />
+                        <FormTextField
+                          name="password"
+                          label="Password"
+                          id="password"
+                          type="password"
+                          autoComplete="current-password"
+                        />
+                        <FormControlLabel
+                          control={
+                            <Checkbox value="allowExtraEmails" color="primary" />
+                          }
+                          label="I want to receive inspiration, marketing promotions and updates via email."
+                        />
+                        <Button
+                          type="submit"
+                          fullWidth
+                          variant="contained"
+                          sx={{ mt: 3, mb: 2 }}
+                        >
+                          Sign UP
+                          <Link href="verifyemail"></Link>
+                        </Button>
+                        <Grid container justifyContent="flex-end">
+                          <Grid item>
+                            <Link href="login" variant="body2">
+                              Already have an account? Log in
+                            </Link>
+                          </Grid>
+                        </Grid>
+                      </Box>
+                    </FormProvider>
                   </Box>
-                </FormProvider>
-              </Box>
-            </Container>
-          </div>
-        </motion.div>
-      </AnimatePresence>
-      <Copyright sx={{ mt: 5 }} />
+                </Container>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </Box>
+        <Copyright />
+      </Box>
     </>
   );
 }

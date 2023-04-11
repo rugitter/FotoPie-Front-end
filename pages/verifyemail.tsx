@@ -45,7 +45,7 @@ export default function VerifyEmail () {
         </Button>
         
       </Box>
-      <Copyright sx={{ mt: 5 }} />
+      <Copyright  />
      </Container>
   )
 }
