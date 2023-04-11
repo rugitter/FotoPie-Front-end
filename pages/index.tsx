@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import { motion, AnimatePresence } from "framer-motion";
+import { Container } from "@mui/material";
 
 export default function Home() {
   const router = useRouter();
@@ -115,7 +116,7 @@ export default function Home() {
               )`,
               }}
             >
-              <div>
+              <Container sx={{ outline: "none" }}>
                 {/* <CloseButton /> */}
                 <Button
                   sx={{
@@ -130,7 +131,7 @@ export default function Home() {
                 </Button>
                 {/* Photo quick view popup window */}
                 <PhotoQuickView filename={selectedFilename} router={router} />
-              </div>
+              </Container>
             </Modal>
           </Box>
         </motion.div>

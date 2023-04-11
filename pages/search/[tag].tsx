@@ -11,7 +11,9 @@ import PhotoQuickView from "../../src/components/PhotoQuickView/PhotoQuickView";
 import { searchPosts } from "../../src/axiosRequest/api/search";
 import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
 import SearchHeader from "../../src/components/Search/SearchHeader";
-
+import CloseIcon from "@mui/icons-material/Close";
+import Button from "@mui/material/Button";
+import { Container } from "@mui/material";
 
 export interface ResponseImageData {
   _id: string;
@@ -22,8 +24,6 @@ export interface ResponseImageData {
   description: string;
   filename: string;
 }
-
-
 
 // Set all necessary states for rendering post lists and related category buttons
 export default function searchPage() {
@@ -162,10 +162,31 @@ export default function searchPage() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx={{
+          backgroundImage: `
+        linear-gradient(
+          rgba(0, 0, 0, 0.5),
+          rgba(0, 0, 0, 0.3)
+        )`,
+        }}
       >
-        <Box sx={PhotoQuickViewStyles}>
-          <PhotoQuickView filename={selectedFilename} router={router} />
-        </Box>
+        <Container sx={{ outline: "none" }}>
+          {/* <CloseButton /> */}
+          <Button
+            sx={{
+              position: "absolute",
+              top: 20,
+              left: 20,
+              color: "white",
+            }}
+            onClick={handleClose}
+          >
+            {<CloseIcon sx={{ fontSize: 40 }} />}
+          </Button>
+          <Box sx={PhotoQuickViewStyles}>
+            <PhotoQuickView filename={selectedFilename} router={router} />
+          </Box>
+        </Container>
       </Modal>
     </>
   );
