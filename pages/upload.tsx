@@ -372,8 +372,10 @@ export default function Upload(props: Partial<DropzoneProps>) {
           </FormProvider>
         </Box>
 
-        <Copyright sx={{ mt: 5 }} />
+      
       </Container>
+      <Copyright />
       </UploadPage>
+       
   );
 }

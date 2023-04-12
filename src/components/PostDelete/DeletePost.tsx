@@ -6,6 +6,7 @@ import {
   DialogActions,
   DialogContentText,
   Typography,
+  IconButton
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { FC, useEffect, useState } from "react";
@@ -14,6 +15,7 @@ import { RootState } from "../../../store/store";
 import { getMe } from "../../axiosRequest/api/editUser";
 import { deletePost } from "../../axiosRequest/api/userPost";
 import { useCheckToken } from "../../hooks/useCheckToken";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 // import {useDeleteSuccessful} from "../../hooks/useDeleteSuccessful";
 
 interface DeletePostButtonProps {
@@ -54,7 +56,7 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
     if (isDeleteSuccessful) {
       setTimeout(() => {
         window.location.reload();
-      },2000)
+      }, 2000)
     }
 
   }, [userID, isDeleteSuccessful]);
@@ -99,9 +101,14 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
         <div>
           <Button
             variant="contained"
-            color="secondary"
             onClick={handleDeleteClick}
             disabled={isDeleting}
+            sx={{
+              display: { xs: "none", sm: "none", md: "flex" },
+              bgcolor: "primary.main",
+              textTransform: "none",
+              fontSize: "1.2rem",
+            }}
           >
             <Typography
               textTransform="none"
@@ -115,7 +122,15 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
               {isDeleting ? "Deleting..." : "Delete this post"}
             </Typography>
           </Button>
-
+          <IconButton
+            sx={{
+              display: { xs: "flex", sm: "flex", md: "none" },
+              color: "primary.main",
+            }}
+            onClick={handleDeleteClick}
+          >
+            {<DeleteOutlineIcon />}
+          </IconButton>
           <Dialog open={isConfirmationOpen} onClose={handleConfirmationCancel}>
             <DialogTitle>Confirm Deletion</DialogTitle>
 
