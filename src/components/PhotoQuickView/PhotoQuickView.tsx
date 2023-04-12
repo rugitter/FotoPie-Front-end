@@ -144,12 +144,24 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
           </Grid>
 
           {/* Delete post button */}
-          <Grid item xs>
+          {/* <Grid item xs>
             <DeletePostButton filenameString={filename} />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs>
             <ImageQualityButton filenameString={filename} />
+          </Grid>
+
+          <Grid
+            item
+            xs
+            sx={{
+              position: "absolute",
+              bottom: "5%",
+              right: "5%",
+            }}
+          >
+            <DeletePostButton filenameString={filename} />
           </Grid>
         </Grid>
       )}

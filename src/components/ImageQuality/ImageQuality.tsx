@@ -12,16 +12,14 @@ import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { getMe } from "../../axiosRequest/api/editUser";
-import { deletePost } from "../../axiosRequest/api/userPost";
 import { useCheckToken } from "../../hooks/useCheckToken";
-// import {useDeleteSuccessful} from "../../hooks/useDeleteSuccessful";
 import { getImageQuality, getToken, sendQualityRank } from "../../axiosRequest/api/imageQuality";
 import axios from "axios";
 import LinearProgress from "@mui/material/LinearProgress";
 
+
 interface ImageQualityButtonProps {
   filenameString: string | string[] | undefined;
-  // userID: string;
 }
 
 const currentLoginUserId = async () => {
@@ -38,7 +36,6 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
     ...state.auth,
     ...state.quickView,
   }));
-  // const {isDeleteSuccessful, updateIsDeleteSuccessful} = useDeleteSuccessful();
 
   const [isSending, setIsSending] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -59,7 +56,6 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
     fetchUserId();
     if (isSendSuccessful) {
       setTimeout(() => {
-        //window.location.reload();
         router.push("/quality-posts")
       }, 2000);
     }
@@ -77,12 +73,7 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
     } catch (error) {
       console.log(error);
     } 
-    // try {
-    //   const response = await getImageQuality(compressed_url);
-    //   console.log(response.data, "debug");
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    
     const API_ENDPOINT = "http://localhost:9090"; 
 
     async function getQuality(url: string, data: Record<string, any>) {
@@ -93,17 +84,6 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
       return response.data;
       console.log(response.data, "debug1");
     }
-
-    // getQuality(compressed_url, { size: "medium" })
-    //   .then((result) => {
-    //     setQualityScore(result.quality.score);
-    //     console.log(result.quality.score);
-    //   })
-      
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-      
     
     try {
       const result = await getQuality(compressed_url, { size: "medium" });
@@ -117,9 +97,6 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
     } finally {
       setIsLoading(false);
     }
-
-    
-
   };
 
   const handleConfirmationCancel = () => {
@@ -139,15 +116,36 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
     }
   };
 
+ 
+
   return (
     <>
       {isAuthenticated && isCurrentUserId ? (
-        <div>
+        <div style={{ textAlign: "center" }}>
+          <Typography
+            style={{
+              fontWeight: "bold",
+              textShadow: "1px 1px 2px rgba(0, 0, 0, 0.3)", 
+              color: "#8a2be2", 
+            }}
+            fontSize={{
+              xs: "0.5rem",
+              sm: "0.75rem",
+              md: "1.2rem",
+            }}
+          >
+            Use AI to generate a score based on photo quality:
+          </Typography>
           <Button
             variant="contained"
             color="secondary"
             onClick={handleGetQualityClick}
             disabled={isSending}
+            sx={{
+              bgcolor: "primary.main",
+              textTransform: "none",
+              fontSize: "1.2rem",
+            }}
           >
             <Typography
               textTransform="none"
@@ -157,6 +155,7 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
                 sm: "0.75rem",
                 md: "1rem",
               }}
+              color="white"
             >
               {isSending ? "Sending..." : "Get image quality"}
             </Typography>
@@ -193,7 +192,7 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
                 <Button onClick={handleConfirmationCancel} color="primary">
                   Cancel
                 </Button>
-                {/* click this button will call delete api and will popup second dialog*/}
+                {/* click this button will call send rank api and will popup second dialog*/}
                 <Button
                   onClick={handleConfirmationConfirm}
                   color="primary"
