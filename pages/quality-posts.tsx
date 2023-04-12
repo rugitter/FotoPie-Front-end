@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { findQualityPosts } from "../src/axiosRequest/api/imageQuality";
 import Box from "@mui/material/Box";
-import Item from "../src/components/Notification/Notification.style";
+//import Item from "../src/components/Notification/Notification.style";
+import Item from "../src/components/QualityPosts/QualityPosts.style";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Image from "mui-image";
@@ -20,6 +21,8 @@ interface QualityPostsData {
   user_email: string;
   filename: string;
   score: string;
+  userName: string;
+  userAvatar: string;
 }
 
 export default function QualityPostsStack() {
@@ -108,7 +111,7 @@ export default function QualityPostsStack() {
             }}
           >
             {/* to get notification mapped into Stack  */}
-            {posts.map((post) => (
+            {posts.map((post,index) => (
               <div key={post._id}>
                 <Modal
                   open={open}
@@ -135,6 +138,14 @@ export default function QualityPostsStack() {
                         cursor: "pointer",
                       }}
                     >
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "0.5rem", sm: "1rem", md: "1.5rem" },
+                          width: { xs: "2rem", sm: "3rem" },
+                        }}
+                      >
+                        {`No.${index + 1}`}
+                      </Typography>
                       <Box
                         sx={{
                           display: "flex",
@@ -144,8 +155,8 @@ export default function QualityPostsStack() {
                         }}
                       >
                         <Avatar
-                          //alt={notification.directFilename}
-                          //src={notification.userAvatar}
+                          alt={post.filename}
+                          src={post.userAvatar}
                           sx={{
                             width: { xs: 30, sm: 70 },
                             height: { xs: 30, sm: 70 },
@@ -159,7 +170,7 @@ export default function QualityPostsStack() {
                           width: { xs: "9rem", sm: "15rem" },
                         }}
                       >
-                        {post.user_email} achieved the score {post.score}
+                        {post.userName} achieved the score {post.score}
                       </Typography>
 
                       <Image
