@@ -7,6 +7,7 @@ import Loader from "../../src/components/Loader/Loader";
 import { NavBarStyles } from "../../src/components/NavBar/NavbarBaseline.style";
 import { motion, AnimatePresence } from "framer-motion";
 import Copyright from "../../src/components/Copyright";
+import { Box, CssBaseline } from "@mui/material";
 
 const CreateImage: React.FC = () => {
   const [status, setStatus] = useState<boolean | null>(null);
@@ -34,35 +35,68 @@ const CreateImage: React.FC = () => {
   } else if (status === false) {
     return (
       <>
-        <AnimatePresence mode="wait">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ duration: 1 }}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '100vh',
+          }}
+        >
+          <CssBaseline />
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+            }}
           >
-            <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
-            <SubscriptionComponent />
-          </motion.div>
-        </AnimatePresence>
-        <Copyright />
+            <AnimatePresence mode="wait">
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 1 }}
+              >
+                <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
+                <SubscriptionComponent />
+              </motion.div>
+            </AnimatePresence>
+          </Box>
+          <Copyright />
+        </Box>
       </>
     );
   } else {
     return (
       <>
-        <AnimatePresence mode="wait">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ duration: 1 }}
+
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '100vh',
+          }}
+        >
+          <CssBaseline />
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+            }}
           >
-            <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
-            <CustomerPortalComponent />
-          </motion.div>
-        </AnimatePresence>
-        <Copyright />
+            <AnimatePresence mode="wait">
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 1 }}
+              >
+                <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
+                <CustomerPortalComponent />
+              </motion.div>
+            </AnimatePresence>
+          </Box>
+          <Copyright />
+        </Box>
       </>
     );
   }
