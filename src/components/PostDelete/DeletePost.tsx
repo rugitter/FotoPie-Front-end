@@ -105,7 +105,9 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
             disabled={isDeleting}
             sx={{
               display: { xs: "none", sm: "none", md: "flex" },
-              bgcolor: "primary.main",
+              //bgcolor: "primary.main",
+              bgcolor: "#E8EAF6",
+              
               textTransform: "none",
               fontSize: "1.2rem",
             }}
@@ -118,6 +120,7 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
                 sm: "0.75rem",
                 md: "1rem",
               }}
+              color="black"
             >
               {isDeleting ? "Deleting..." : "Delete this post"}
             </Typography>
@@ -146,19 +149,21 @@ const DeletePostButton: FC<DeletePostButtonProps> = ({ filenameString }) => {
             </DialogContent>
 
             {/* first dialog button */}
-            {isDeleteSuccessful ? null : <DialogActions>
-              <Button onClick={handleConfirmationCancel} color="primary">
-                Cancel
-              </Button>
-              {/* click this button will call delete api and will popup second dialog*/}
-              <Button
-                onClick={handleConfirmationConfirm}
-                color="primary"
-                autoFocus
-              >
-                Delete
-              </Button>
-            </DialogActions>}
+            {isDeleteSuccessful ? null : (
+              <DialogActions>
+                <Button onClick={handleConfirmationCancel} color="primary">
+                  Cancel
+                </Button>
+                {/* click this button will call delete api and will popup second dialog*/}
+                <Button
+                  onClick={handleConfirmationConfirm}
+                  color="primary"
+                  autoFocus
+                >
+                  Delete
+                </Button>
+              </DialogActions>
+            )}
           </Dialog>
         </div>
       ) : null}
