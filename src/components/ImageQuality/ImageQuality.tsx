@@ -107,8 +107,11 @@ const ImageQualityButton: FC<ImageQualityButtonProps> = ({ filenameString }) => 
     
     try {
       const result = await getQuality(compressed_url, { size: "medium" });
-      setQualityScore(result.quality.score);
-      console.log(result.quality.score);
+      // setQualityScore(result.quality.score);
+      // console.log(result.quality.score);
+      const qualityScore = (result.quality.score * 100).toFixed(2);
+      setQualityScore(qualityScore);
+      console.log(qualityScore);
     } catch (error) {
       console.error(error);
     } finally {
