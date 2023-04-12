@@ -15,35 +15,6 @@ const DownloadButton: NextPage<DownloadImageProps> = ({
   router,
   isAuthenticated,
 }) => {
-  // const downLoadImages = async () => {
-  //   if (!isAuthenticated) router.push("/login");
-  //   if (isAuthenticated) {
-  //     try {
-  //       //get presigned url
-  //       const response = await getDownloadImage(filenameString);
-  //       const presignedUrl = response.data.url;
-
-  //       //use proxy url to download image
-  //       const proxyUrl = `/api/download-image?presignedUrl=${encodeURIComponent(
-  //         presignedUrl
-  //       )}`;
-  //       const res = await fetch(proxyUrl);
-  //       const blob = await res.blob();
-  //       const url = URL.createObjectURL(blob);
-
-  //       const link = document.createElement("a");
-  //       link.href = url;
-  //       link.download = `${filenameString}`;
-  //       link.click();
-  //       URL.revokeObjectURL(url);
-  //     } catch (error: any) {
-  //       if (error?.response?.status === 403 || 404) {
-  //         router.push("/subscription");
-  //       }
-  //       console.error("unexpected error: " + error);
-  //     }
-  //   }
-  // };
   const downLoadImages = async () => {
     if (!isAuthenticated) router.push("/login");
     if (isAuthenticated) {
