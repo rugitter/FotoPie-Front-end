@@ -16,5 +16,6 @@ module.exports = {
   },
   env: {
     REQUEST_TIMEOUT: 30000,
+    UNSPLASH_ACCESS_KEY: "g_b9m5T9XxnYcHvJaH75HmQO5MwwMVDEriErrxBnrBY",
   },
 };

@@ -140,11 +140,16 @@ export default function searchPage() {
   return (
     <>
       <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
-      <SearchHeader tagString={tagString} />
-      <CategoryButton
-        links={links}
-        resetCategoryState={resetCategoryStateHandler}
-      />
+
+      <Box maxWidth={"1600px"} margin={"auto"}>
+        <SearchHeader tagString={tagString} />
+
+        <CategoryButton
+          links={links}
+          resetCategoryState={resetCategoryStateHandler}
+        />
+      </Box>
+
       <SearchPostList
         tagString={tagString as string | string[] | undefined}
         category={category}

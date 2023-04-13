@@ -213,9 +213,8 @@ export default function Navbar({
                 sx={{
                   flexGrow: 1,
                   ml: 2,
-                  mt: 0.5,
                   fontSize: 26,
-                  fontFamily: "'Expletus Sans', swap",
+                  fontFamily: "inherit",
                   color: fix ? "#000000" : color,
                 }}
               >

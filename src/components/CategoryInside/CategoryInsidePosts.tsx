@@ -69,10 +69,13 @@ const PostList = ({
         sx={{
           width: "100%",
           height: "100%",
+          maxWidth: "1600px",
           overflowY: "scroll",
           "&::-webkit-scrollbar": {
             width: 0,
           },
+          marginLeft: "auto",
+          marginRight: "auto",
         }}
       >
         <InfiniteScroll

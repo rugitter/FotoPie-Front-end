@@ -17,6 +17,7 @@ import { Grid } from "@mui/material";
 import { PhotoQuickViewStyles } from "./PhotoQuickView.style";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
+import ImageQualityButton from "../ImageQuality/ImageQuality";
 interface PhotoQuickViewProps {
   filename: string | string[] | undefined;
   router: NextRouter;
@@ -84,7 +85,7 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
               alignItems="center"
             >
               {/* Avatar and username */}
-              <Grid item xs={5} md={4}>
+              <Grid item xs={6} md={4}>
                 {/* <Grid item xs={8} md={4}> */}
                 <UserName
                   userID={userID}
@@ -93,7 +94,7 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
                 />
               </Grid>
               {/* Collect, like, download buttons */}
-              <Grid item xs={7} md={8}>
+              <Grid item xs={6} md={8}>
                 <Grid
                   container
                   direction="row"
@@ -143,7 +144,23 @@ const PhotoQuickView: FC<PhotoQuickViewProps> = ({ filename, router }) => {
           </Grid>
 
           {/* Delete post button */}
+          {/* <Grid item xs>
+            <DeletePostButton filenameString={filename} />
+          </Grid> */}
+
           <Grid item xs>
+            <ImageQualityButton filenameString={filename} />
+          </Grid>
+
+          <Grid
+            item
+            xs
+            sx={{
+              position: "absolute",
+              bottom: "5%",
+              right: "5%",
+            }}
+          >
             <DeletePostButton filenameString={filename} />
           </Grid>
         </Grid>
