@@ -16,11 +16,9 @@ pipeline {
     }
      
     stage('Build Docker image') {
-      when {
-        expression { 
-          return env.BRANCH_NAME == 'WI-66-Ziqi-testing' || env.BRANCH_NAME == 'master' 
-        }
-      }
+       when {
+              expression { BRANCH_NAME ==~ /(WI-66-Ziqi-testing|staging)/ }
+            }
       environment {
         BACKEND_API = credentials('BACKEND_API')
         Get_Synonyms_API_Prefix = credentials('GET_SYNONYMS_API_PREFIX')       
