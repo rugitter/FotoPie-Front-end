@@ -18,7 +18,7 @@ pipeline {
     stage('Build Docker image') {
       when {
         expression { 
-          return env.BRANCH_NAME == 'uat' || env.BRANCH_NAME == 'main' 
+          return env.BRANCH_NAME == 'WI-66-Ziqi-testing' || env.BRANCH_NAME == 'master' 
         }
       }
       environment {
@@ -36,7 +36,7 @@ pipeline {
     stage('Push Docker image to ECR') {
       when {
         expression { 
-          return env.BRANCH_NAME == 'uat' || env.BRANCH_NAME == 'main' 
+          return env.BRANCH_NAME == 'uat' || env.BRANCH_NAME == 'master' 
         }
       }
       environment {
