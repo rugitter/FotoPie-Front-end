@@ -2,10 +2,39 @@ pipeline {
   agent any
 
   stages{
+    stage ('Code vaunerbility check') {
+      steps {
+        echo 'Checking code vaunerbilities'
+        snykSecurity(
+          snykInstallation: 'snyk@latest',
+          snykTokenId: 'snyk-api-token',
+          failOnIssues: 'false',
+          failOnError: 'false',
+          severity: 'high'
+        )
+      }
+    }
+    stage ('Install dependencies'){
+      steps {
+        sh 'npm ci'
+      }
+    }
+    stage ('Code Quality Check') {
+      steps {
+        echo 'Code Quality Check'
+        sh 'npx eslint src'
+      }
+    }
+     stage ('Execute unit test') {
+      steps {
+        echo 'Execute unit test'
+        sh 'npm run test'
+      }
+    }
     stage('Build Docker image') {
       environment {
-        BACKEND_API=credentials('BACKEND_API')
-        Get_Synonyms_API_Prefix=credentials('Get_Synonyms_API_Prefix')       
+        BACKEND_API = credentials('BACKEND_API')
+        Get_Synonyms_API_Prefix = credentials('Get_Synonyms_API_Prefix')       
       }
       steps {
          sh 'docker build \
