@@ -15,17 +15,10 @@ pipeline {
       }
     }
 
-    stage('debug'){
-      steps{
-        sh "echo ${env.BRANCH_NAME}"
-      }
-    }
      
     stage('Build Docker image') {
       when {
-        expression {
-          env.BRANCH_NAME == 'WI-66-Ziqi-testing' || env.BRANCH_NAME == 'master'
-          }
+          branch 'refs/heads/WI-66-Ziqi-testing'
       }
       environment {
         BACKEND_API = credentials('BACKEND_API')
