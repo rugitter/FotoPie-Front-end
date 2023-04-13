@@ -61,7 +61,6 @@ axiosInstance.interceptors.response.use(
           break;
         case 403:
           message = "Forbidden!";
-          break;
         case 404:
           message = `Not found!: ${error.response.config.url}`;
           break;

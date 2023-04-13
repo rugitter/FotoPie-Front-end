@@ -142,11 +142,19 @@ export default function Home({ randomPhoto }: { randomPhoto: string }) {
 }
 
 export async function getStaticProps() {
-  const res = await getRandomPhoto();
-  const randomPhoto = res.data.urls.regular;
-  return {
-    props: {
-      randomPhoto,
-    },
-  };
+  try {
+    const { data } = await getRandomPhoto();
+    const randomPhoto = data.urls.regular;
+    return {
+      props: {
+        randomPhoto,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        randomPhoto: "../../background.jpg",
+      },
+    };
+  }
 }
