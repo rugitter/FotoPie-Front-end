@@ -3,13 +3,15 @@ pipeline {
 
   stages{
     stage('Build Docker image') {
+      environment {
+        BACKEND_API=credentials('BACKEND_API')
+        Get_Synonyms_API_Prefix=credentials('Get_Synonyms_API_Prefix')       
+      }
       steps {
-        withCredentials([string(credentialsId: 'BACKEND_API', variable: 'BACKEND_API'), string(credentialsId: 'Get_Synonyms_API_Prefix', variable: 'Get_Synonyms_API_Prefix')]) {
-          sh 'docker build \
+         sh 'docker build \
           --build-arg BACKEND_API=$BACKEND_API \
           --build-arg Get_Synonyms_API_Prefix=$Get_Synonyms_API_Prefix \
-          -t 123436089261.dkr.ecr.ap-southeast-2.amazonaws.com/fotopie-frontend-uat:latest .'
-        }
+          -t 123436089261.dkr.ecr.ap-southeast-2.amazonaws.com/fotopie-frontend-uat:latest .'  
       }
     }
 
