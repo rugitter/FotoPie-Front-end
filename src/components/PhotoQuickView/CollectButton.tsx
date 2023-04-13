@@ -33,6 +33,7 @@ const CollectButton = ({
     <>
       {/* show collect button on desktop */}
       <Button
+        data-testid="collect-button"
         variant="outlined"
         color="info"
         sx={{
