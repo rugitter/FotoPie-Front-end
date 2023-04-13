@@ -22,7 +22,7 @@ pipeline {
     stage ('Code Quality Check') {
       steps {
         echo 'Code Quality Check'
-        sh 'npm run lint'
+        sh 'yes "Strict (recommended)" | npm run lint'
       }
     }
      
