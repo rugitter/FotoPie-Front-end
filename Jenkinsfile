@@ -16,9 +16,9 @@ pipeline {
     }
      
     stage('Build Docker image') {
-       when {
-              branch 'WI-66-Ziqi-testing'
-            }
+      when {
+          branch 'WI-66-Ziqi-testing'
+      }
       environment {
         BACKEND_API = credentials('BACKEND_API')
         Get_Synonyms_API_Prefix = credentials('GET_SYNONYMS_API_PREFIX')       
@@ -33,10 +33,9 @@ pipeline {
 
     stage('Push Docker image to ECR') {
       when {
-        expression { 
-          return env.BRANCH_NAME == 'uat' || env.BRANCH_NAME == 'master' 
-        }
+          branch 'WI-66-Ziqi-testing'
       }
+    
       environment {
         AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
         AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
