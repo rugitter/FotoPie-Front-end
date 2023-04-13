@@ -126,7 +126,7 @@ jobs:
     - name: Build docker image
       env: 
         BACKEND_API: ${{ secrets.BACKEND_API }}
-        Get_Synonyms_API_Prefix: ${{ secret.Get_Synonyms_API_Prefix }}
+        Get_Synonyms_API_Prefix: ${{ secrets.Get_Synonyms_API_Prefix }}
 
         
       run: |
