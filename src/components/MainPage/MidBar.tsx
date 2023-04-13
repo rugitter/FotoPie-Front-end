@@ -5,9 +5,9 @@ import Grid from "@mui/material/Grid";
 
 export default function MidBar() {
   return (
-    <Grid container sx={{ width: "380px" }}>
+    <Grid container sx={{ width: "480px" }}>
       {/* Home button */}
-      <Grid item xs={3} sm={3} md={3}>
+      <Grid item xs={2.4} sm={2.4} md={2.4}>
         <Button
           variant="outlined"
           sx={{
@@ -29,7 +29,7 @@ export default function MidBar() {
         </Button>
       </Grid>
 
-      <Grid item xs={3} sm={3} md={3}>
+      <Grid item xs={2.4} sm={2.4} md={2.4}>
         {/* Explore button */}
         <Button
           variant="outlined"
@@ -55,7 +55,29 @@ export default function MidBar() {
         </Button>
       </Grid>
 
-      <Grid item xs={3} sm={3} md={3}>
+      <Grid item xs={2.4} sm={2.4} md={2.4}>
+        {/* Explore button */}
+        <Button
+          variant="outlined"
+          sx={{
+            fontSize: "15px",
+            borderRadius: 10,
+            p: 1.7,
+            pl: 2.5,
+            pr: 2.5,
+            ":hover": { bgcolor: "#EAE6FF", border: "none" },
+            textTransform: "none",
+            border: "none",
+          }}
+          size="large"
+        >
+          <Link href="/quality-posts" underline="none" sx={{ color: "black" }}>
+            <span className={styles.gradientText}>AIRanking</span>
+          </Link>
+        </Button>
+      </Grid>
+
+      <Grid item xs={2.4} sm={2.4} md={2.4}>
         {/* AI Creating button */}
         <Button
           variant="outlined"
@@ -77,7 +99,7 @@ export default function MidBar() {
         </Button>
       </Grid>
 
-      <Grid item xs={3} sm={3} md={3}>
+      <Grid item xs={2.4} sm={2.4} md={2.4}>
         {/* AI Simulating button */}
         <Button
           variant="outlined"

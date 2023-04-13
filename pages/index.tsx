@@ -12,8 +12,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@mui/material";
+import { getRandomPhoto } from "../src/axiosRequest/api/unsplashAPI";
 
-export default function Home() {
+export default function Home({ randomPhoto }: { randomPhoto: string }) {
   const router = useRouter();
   const [selectedFilename, setSelectedFilename] = useState<
     string | undefined
@@ -48,7 +49,7 @@ export default function Home() {
                 rgba(0, 0, 0, 0.5),
                 rgba(0, 0, 0, 0.3)
               ),
-              url(https://source.unsplash.com/random)`,
+              url(${randomPhoto})`,
                 backgroundSize: "cover",
                 margin: 0,
                 padding: 0,
@@ -138,4 +139,22 @@ export default function Home() {
       </AnimatePresence>
     </>
   );
+}
+
+export async function getStaticProps() {
+  try {
+    const { data } = await getRandomPhoto();
+    const randomPhoto = data.urls.regular;
+    return {
+      props: {
+        randomPhoto,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        randomPhoto: "../../background.jpg",
+      },
+    };
+  }
 }

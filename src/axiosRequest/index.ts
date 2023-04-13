@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios from "axios";
 import axiosConfig from "./config";
 import {
   getAccessToken,
@@ -10,7 +10,7 @@ import { refreshAccessToken } from "./api/auth";
 
 const axiosInstance = axios.create({
   timeout: axiosConfig.timeOut as number | undefined,
-  withCredentials: true,
+  // withCredentials: true,
 });
 
 // resquest interceptor - before request is sent
@@ -28,7 +28,6 @@ axiosInstance.interceptors.request.use(
 // response interceptor - after response is received
 axiosInstance.interceptors.response.use(
   function (response) {
-    console.log("✅response:", response);
     return Promise.resolve(response);
   },
   async function (error) {
@@ -37,7 +36,6 @@ axiosInstance.interceptors.response.use(
 
     let message = "";
     if (error && error.response) {
-      console.log("❌Error!", error);
       switch (error.response.status) {
         case 302:
           message = "Redirect to other url";
@@ -63,7 +61,6 @@ axiosInstance.interceptors.response.use(
           break;
         case 403:
           message = "Forbidden!";
-          break;
         case 404:
           message = `Not found!: ${error.response.config.url}`;
           break;
