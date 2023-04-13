@@ -23,10 +23,16 @@ export default function MidBar() {
           value=""
           onChange={() => {}}
           displayEmpty
-          inputProps={{ "aria-label": "Menu" }}
+          inputProps={{ roboto: "Menu", fontWeight: "bold" }}
+          sx={{
+            borderRadius: 2,
+            ":hover": { bgcolor: "#EAE6FF", border: "none" },
+            textTransform: "none",
+            border: "none",
+          }}
         >
-          <MenuItem value="">
-            <em>Menu</em>
+          <MenuItem value="" sx={{ fontWeight: "bold" }}>
+            Menu
           </MenuItem>
           <MenuItem value="/category/category-main-page">
             <Link
