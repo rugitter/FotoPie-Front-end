@@ -9,10 +9,10 @@ RUN npm install
 COPY . .
 
 ARG BACKEND_API
-ARG Get_Synonyms_API_Prefix
+ARG GET_SYNONYMS_API_PREFIX
 
 ENV BACKEND_API=${ACKEND_API}
-ENV Get_Synonyms_API_Prefix=${Get_Synonyms_API_Prefix}
+ENV GET_SYNONYMS_API_PREFIX=${GET_SYNONYMS_API_PREFIX}
 
 RUN npm run build
 
