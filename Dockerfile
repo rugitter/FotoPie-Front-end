@@ -11,7 +11,7 @@ COPY . .
 ARG BACKEND_API
 ARG Get_Synonyms_API_Prefix
 
-ENV BACKEND_API=${ACKEND_API}
+ENV BACKEND_API=${BACKEND_API}
 ENV Get_Synonyms_API_Prefix=${Get_Synonyms_API_Prefix}
 
 RUN npm run build
