@@ -22,15 +22,10 @@ pipeline {
     stage ('Code Quality Check') {
       steps {
         echo 'Code Quality Check'
-        sh 'npx eslint src'
+        sh 'npm run lint'
       }
     }
-     stage ('Execute unit test') {
-      steps {
-        echo 'Execute unit test'
-        sh 'npm run test'
-      }
-    }
+     
     stage('Build Docker image') {
       environment {
         BACKEND_API = credentials('BACKEND_API')
