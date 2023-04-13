@@ -2,7 +2,11 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-COPY . /app
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
 
 ARG BACKEND_API
 ARG Get_Synonyms_API_Prefix
@@ -10,8 +14,8 @@ ARG Get_Synonyms_API_Prefix
 ENV BACKEND_API=${BACKEND_API}
 ENV Get_Synonyms_API_Prefix=${Get_Synonyms_API_Prefix}
 
-RUN npm install
-
 RUN npm run build
 
-CMD ["npm", "start"]
+EXPOSE 3000
+
+CMD ["npm", "run", "start"]
