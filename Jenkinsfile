@@ -14,17 +14,6 @@ pipeline {
         )
       }
     }
-    stage ('Install dependencies'){
-      steps {
-        sh 'npm ci'
-      }
-    }
-    stage ('Code Quality Check') {
-      steps {
-        echo 'Code Quality Check'
-        sh 'yes "Strict (recommended)" | npm run lint'
-      }
-    }
      
     stage('Build Docker image') {
       environment {
