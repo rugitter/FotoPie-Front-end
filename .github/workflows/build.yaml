@@ -55,10 +55,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}
-      # ECS_REGISTRY : ${{ secrets.ECS_REGISTRY }}
-      # CLUSTER_NAME_UAT : ${{ vars.CLUSTER_NAME_UAT }}
-      # SERVICE_NAME_UAT : ${{ vars.SERVICE_NAME_UAT }}
-      # TASK_DEFINITION_UAT : ${{ vars.TASK_DEFINITION_UAT }}
+      ECS_REGISTRY : ${{ secrets.ECS_REGISTRY }}
+      CLUSTER_NAME_UAT : ${{ vars.CLUSTER_NAME_UAT }}
+      SERVICE_NAME_UAT : ${{ vars.SERVICE_NAME_UAT }}
+      TASK_DEFINITION_UAT : ${{ vars.TASK_DEFINITION_UAT }}
 
     steps:
     - name: Checkout code
@@ -83,20 +83,20 @@ jobs:
         docker build \
         --build-arg BACKEND_API=$BACKEND_API \
         --build-arg Get_Synonyms_API_Prefix=$Get_Synonyms_API_Prefix \
-        -t 123436089261.dkr.ecr.ap-southeast-2.amazonaws.com/fotopie-frontend-uat:latest .
+        -t 123436089261.dkr.ecr.ap-southeast-2.amazonaws.com/fotopie-fed:latest .
    
     - name: Push docker image to AWS ECR
       run: |
         aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 123436089261.dkr.ecr.ap-southeast-2.amazonaws.com
-        docker push 123436089261.dkr.ecr.ap-southeast-2.amazonaws.com/fotopie-frontend-uat:latest
+        docker push 123436089261.dkr.ecr.ap-southeast-2.amazonaws.com/fotopie-fed:latest
 
-    # - name: Update ECS service
-    #   run: |
-    #       aws ecs update-service \
-    #       --cluster $CLUSTER_NAME_UAT \
-    #       --service $SERVICE_NAME_UAT \
-    #       --task-definition $TASK_DEFINITION_UAT \
-    #       --force-new-deployment
+    - name: Update ECS service
+      run: |
+          aws ecs update-service \
+          --cluster $CLUSTER_NAME_UAT \
+          --service $SERVICE_NAME_UAT \
+          --task-definition $TASK_DEFINITION_UAT \
+          --force-new-deployment
 
   build-and-deploy-prod:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
@@ -133,18 +133,18 @@ jobs:
        docker build \
        --build-arg BACKEND_API=$BACKEND_API \
        --build-arg Get_Synonyms_API_Prefix=$Get_Synonyms_API_Prefix \
-       -t 123436089261.dkr.ecr.ap-southeast-2.amazonaws.com/fotopie-frontend-prod:latest .
+       -t ${{ env.ECS_REGISTRY }}/fotopie-fed-prod:latest .
 
     - name: Push docker image to AWS ECR
       run: |
-        aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 123436089261.dkr.ecr.ap-southeast-2.amazonaws.com
-        docker push 123436089261.dkr.ecr.ap-southeast-2.amazonaws.com/fotopie-frontend-prod:latest
+        aws ecr get-login-password --region ${{ env.AWS_REGION}}  | docker login --username AWS --password-stdin ${{ env.ECS_REGISTRY }}
+        docker push ${{ env.ECS_REGISTRY }}/fotopie-fed-prod:latest
    
-    # - name: Update ECS service
-    #   run: |
-    #       aws ecs update-service \
-    #       --cluster $CLUSTER_NAME_PROD \
-    #       --service $SERVICE_NAME_PROD \
-    #       --task-definition $TASK_DEFINITION_PROD \
-    #       --force-new-deployment
+    - name: Update ECS service
+      run: |
+          aws ecs update-service \
+          --cluster $CLUSTER_NAME_PROD \
+          --service $SERVICE_NAME_PROD \
+          --task-definition $TASK_DEFINITION_PROD \
+          --force-new-deployment
   
