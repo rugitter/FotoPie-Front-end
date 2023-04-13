@@ -23,12 +23,12 @@ pipeline {
       // }
       environment {
         BACKEND_API = credentials('BACKEND_API')
-        GET_SYNONYMS_API_PREFIX = credentials('GET_SYNONYMS_API_PREFIX')       
+        Get_Synonyms_API_Prefix = credentials('GET_SYNONYMS_API_PREFIX')       
       }
       steps {
          sh 'docker build \
           --build-arg BACKEND_API=$BACKEND_API \
-          --build-arg GET_SYNONYMS_API_PREFIX=$GET_SYNONYMS_API_PREFIX \
+          --build-arg Get_Synonyms_API_Prefix=$Get_Synonyms_API_Prefix \
           -t 123436089261.dkr.ecr.ap-southeast-2.amazonaws.com/fotopie-frontend-uat:latest .'  
       }
     }
