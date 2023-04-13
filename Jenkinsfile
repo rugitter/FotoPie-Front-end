@@ -17,7 +17,9 @@ pipeline {
      
     stage('Build Docker image') {
       when {
-          branch 'WI-66-Ziqi-testing'
+        expression {
+          env.BRANCH_NAME == 'WI-66-Ziqi-testing' || env.BRANCH_NAME == 'master'
+          }
       }
       environment {
         BACKEND_API = credentials('BACKEND_API')
