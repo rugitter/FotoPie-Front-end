@@ -13,7 +13,7 @@ import FormHelperText from "@mui/material/FormHelperText/FormHelperText";
 
 export default function MidBar() {
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("lg"));
 
   if (isSmallScreen) {
     return (
@@ -71,7 +71,7 @@ export default function MidBar() {
     );
   } else {
     return (
-      <Grid container sx={{ width: "480px" }}>
+      <Grid container sx={{ width: "35%" }}>
         {/* Home button */}
         <Grid item xs={2.4} sm={2.4} md={2.4}>
           <Button
@@ -122,28 +122,6 @@ export default function MidBar() {
         </Grid>
 
         <Grid item xs={2.4} sm={2.4} md={2.4}>
-          {/* Explore button */}
-          <Button
-            variant="outlined"
-            sx={{
-              fontSize: "15px",
-              borderRadius: 10,
-              p: 1.7,
-              pl: 2.5,
-              pr: 2.5,
-              ":hover": { bgcolor: "#EAE6FF", border: "none" },
-              textTransform: "none",
-              border: "none",
-            }}
-            size="large"
-          >
-            <Link href="/quality-posts" underline="none" sx={{ color: "black" }}>
-              <span className={styles.gradientText}>AIRanking</span>
-            </Link>
-          </Button>
-        </Grid>
-
-        <Grid item xs={2.4} sm={2.4} md={2.4}>
           {/* AI Creating button */}
           <Button
             variant="outlined"
@@ -183,6 +161,32 @@ export default function MidBar() {
           >
             <Link href="/create-variation" underline="none">
               <span className={styles.gradientText}>AICreating</span>
+            </Link>
+          </Button>
+        </Grid>
+
+        <Grid item xs={2.4} sm={2.4} md={2.4}>
+          {/* Explore button */}
+          <Button
+            variant="outlined"
+            sx={{
+              fontSize: "15px",
+              borderRadius: 10,
+              p: 1.7,
+              pl: 2.5,
+              pr: 2.5,
+              ":hover": { bgcolor: "#EAE6FF", border: "none" },
+              textTransform: "none",
+              border: "none",
+            }}
+            size="large"
+          >
+            <Link
+              href="/quality-posts"
+              underline="none"
+              sx={{ color: "black" }}
+            >
+              <span className={styles.gradientText}>AIRanking</span>
             </Link>
           </Button>
         </Grid>
