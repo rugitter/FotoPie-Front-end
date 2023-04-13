@@ -50,21 +50,6 @@ const LikeButton = ({
           ? "Unlike" + " " + `${userLikes}`
           : "Like" + " " + `${userLikes}`}
       </Button>
-<<<<<<< HEAD
-      <Button
-        variant="outlined"
-        color="info"
-        sx={{
-          display: { xs: "flex", sm: "flex", md: "none" },
-          color: liked ? "red" : "black",
-        }}
-        startIcon={
-          <FavoriteBorderIcon sx={{ color: liked ? "red" : "black" }} />
-        }
-        onClick={addToLiked}
-      ></Button>
-||||||| 4de6761
-=======
 
       {/* show like button on mobile */}
       <IconButton
@@ -76,7 +61,6 @@ const LikeButton = ({
       >
         {<FavoriteBorderIcon sx={{ color: liked ? "red" : "black" }} />}
       </IconButton>
->>>>>>> dev
     </>
   );
 };

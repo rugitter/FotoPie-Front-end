@@ -80,13 +80,7 @@ const DownloadButton: NextPage<DownloadImageProps> = ({
       <Button
         variant="contained"
         sx={{
-<<<<<<< HEAD
-          // opacity: { xs: 0, sm: 1 },
-||||||| 4de6761
-          opacity: { xs: 0, sm: 1 },
-=======
           display: { xs: "none", sm: "none", md: "flex" },
->>>>>>> dev
           bgcolor: "primary.main",
           textTransform: "none",
           fontSize: "1.2rem",

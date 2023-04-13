@@ -9,44 +9,6 @@ export interface UserNameProps {
 
 const UserName = ({ userID, userName, userAvatar }: UserNameProps) => {
   return (
-<<<<<<< HEAD
-    <>
-      <Stack>
-        <Stack
-          display={{ xs: "none", sm: "none", md: "flex" }}
-          flexDirection="row"
-        >
-          <Button>
-            <Link href={`/profile/${userID}`}>
-              {<Avatar alt="avatar" src={userAvatar}></Avatar>}
-            </Link>
-          </Button>
-          <Button>
-            <Link href={`/profile/${userID}`} sx={{ textDecoration: "none" }}>
-              {<Typography variant="body1">{userName}</Typography>}
-            </Link>
-          </Button>
-        </Stack>
-      </Stack>
-    </>
-||||||| 4de6761
-    <>
-      <Stack>
-        <Stack display="flex" direction="row">
-          <Button>
-            <Link href={`/profile/${userID}`}>
-              {<Avatar alt="avatar" src={userAvatar}></Avatar>}
-            </Link>
-          </Button>
-          <Button>
-            <Link href={`/profile/${userID}`} sx={{ textDecoration: "none" }}>
-              {<Typography variant="body1">{userName}</Typography>}
-            </Link>
-          </Button>
-        </Stack>
-      </Stack>
-    </>
-=======
     <Grid
       container
       justifyContent="flex-start"
@@ -91,7 +53,6 @@ const UserName = ({ userID, userName, userAvatar }: UserNameProps) => {
         </Link>
       </Grid>
     </Grid>
->>>>>>> dev
   );
 };
 
