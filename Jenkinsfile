@@ -1,7 +1,7 @@
 pipeline {
   agent any
 
-
+  stages{
     stage('Build Docker image') {
       steps {
         withCredentials([string(credentialsId: 'BACKEND_API', variable: 'BACKEND_API'), string(credentialsId: 'Get_Synonyms_API_Prefix', variable: 'Get_Synonyms_API_Prefix')]) {
@@ -25,3 +25,4 @@ pipeline {
       }
     }
   }
+}
