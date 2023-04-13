@@ -14,6 +14,12 @@ pipeline {
         )
       }
     }
+
+    stage('debug'){
+      steps{
+        sh 'echo ${env.BRANCH_NAME}'
+      }
+    }
      
     stage('Build Docker image') {
       when {
