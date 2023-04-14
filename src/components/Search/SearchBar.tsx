@@ -24,7 +24,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ sx }) => {
     if (inputValue.trim() === "") {
       router.reload();
     } else {
-      await router.push(`/search/${encodeURIComponent(inputValue)}`);
+    window.location.href =`/search/${encodeURIComponent(inputValue)}`;
     }
   };
 
