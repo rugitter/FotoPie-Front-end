@@ -3,7 +3,7 @@ import Header from "../src/components/Header";
 import Box from "@mui/material/Box";
 import PostList from "../src/components/PostList/PostList";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import PhotoQuickView from "../src/components/PhotoQuickView/PhotoQuickView";
 import MidBar from "../src/components/MainPage/MidBar";
@@ -14,11 +14,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@mui/material";
 import { getRandomPhoto } from "../src/axiosRequest/api/unsplashAPI";
 
-export default function Home({ randomPhoto }: { randomPhoto: string }) {
+export default function Home() {
   const router = useRouter();
   const [selectedFilename, setSelectedFilename] = useState<
     string | undefined
   >();
+  const [backgroundImage, setBackgroundImage] = useState<string | undefined>(
+    ""
+  );
+  const [hasFetchedPhoto, setHasFetchedPhoto] = useState(false);
 
   const [open, setOpen] = useState(false);
   //open modal popup window
@@ -30,6 +34,16 @@ export default function Home({ randomPhoto }: { randomPhoto: string }) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (backgroundImage || hasFetchedPhoto) return;
+    getRandomPhoto()
+      .then((res) => {
+        setBackgroundImage(res.data.urls.regular);
+        setHasFetchedPhoto(true);
+      })
+      .catch((err) => setBackgroundImage("../../background.jpg"));
+  }, [backgroundImage, hasFetchedPhoto]);
 
   return (
     <>
@@ -49,7 +63,7 @@ export default function Home({ randomPhoto }: { randomPhoto: string }) {
                 rgba(0, 0, 0, 0.5),
                 rgba(0, 0, 0, 0.3)
               ),
-              url(${randomPhoto})`,
+              url(${backgroundImage})`,
                 backgroundSize: "cover",
                 margin: 0,
                 padding: 0,
@@ -141,20 +155,20 @@ export default function Home({ randomPhoto }: { randomPhoto: string }) {
   );
 }
 
-export async function getStaticProps() {
-  try {
-    const { data } = await getRandomPhoto();
-    const randomPhoto = data.urls.regular;
-    return {
-      props: {
-        randomPhoto,
-      },
-    };
-  } catch (err) {
-    return {
-      props: {
-        randomPhoto: "../../background.jpg",
-      },
-    };
-  }
-}
+// export async function getStaticProps() {
+//   try {
+//     const { data } = await getRandomPhoto();
+//     const randomPhoto = data.urls.regular;
+//     return {
+//       props: {
+//         randomPhoto,
+//       },
+//     };
+//   } catch (err) {
+//     return {
+//       props: {
+//         randomPhoto: "../../background.jpg",
+//       },
+//     };
+//   }
+// }
