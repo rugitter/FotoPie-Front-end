@@ -129,7 +129,19 @@ const SearchPostList = ({
         </Box>
       ) : (
         hasFetched && (
-          <Grid container sx={{ maxWidth: "1600px" }}>
+          <Grid
+            container
+            sx={{
+              maxWidth: "1600px",
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              ml: "auto",
+              mr:"auto",
+            }}
+          >
             <Grid
               item
               xs={12}
@@ -162,7 +174,7 @@ const SearchPostList = ({
             >
               <Box
                 sx={{
-                  maxWidth: "1600px",
+                  //maxWidth: "1600px",
                   display: "block",
                   marginLeft: "auto",
                   marginRight: "auto",

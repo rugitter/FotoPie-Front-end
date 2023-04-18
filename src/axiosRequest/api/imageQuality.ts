@@ -9,7 +9,7 @@ export const getToken = () => {
 
 export const getImageQuality = <T>(url:string) => {
   return axiosInstance({
-    url: `/api/everypixel/quality/url=${url}`,
+    url: `/api/everypixel/quality/?url=${url}`,
     method: "get",
   });
 };

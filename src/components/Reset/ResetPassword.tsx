@@ -25,7 +25,14 @@ const ResetPassword = () => {
   const [successMessage, setSuccessMessage] = useState(null);
 
   const formSchema: Schema<IFormPassword> = object({
-    password: string().min(2).max(20).required(),
+    password: string()
+      .min(8)
+      .max(20)
+      .matches(
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
+        "Password must contain numbers, upper and lowercase letters"
+      )
+      .required("Password is required"),
   });
 
   const methods = useForm<IFormPassword>({
