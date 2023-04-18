@@ -34,7 +34,12 @@ export default function MidBar() {
           <MenuItem value="" sx={{ fontWeight: "bold" }}>
             Menu
           </MenuItem>
-          <MenuItem value="/category/category-main-page">
+          <MenuItem
+            value="/category/category-main-page"
+            onClick={() =>
+              (window.location.href = "/category/category-main-page")
+            }
+          >
             <Link
               href="/category/category-main-page"
               underline="none"
@@ -43,27 +48,36 @@ export default function MidBar() {
               Explore
             </Link>
           </MenuItem>
-          <MenuItem value="/quality-posts">
-            <Link
-              href="/quality-posts"
-              underline="none"
-              sx={{ color: "black" }}
-            >
-              <span className={styles.gradientText}>AIRanking</span>
-            </Link>
-          </MenuItem>
-          <MenuItem value="/create-image">
+          <MenuItem
+            value="/create-image"
+            onClick={() => (window.location.href = "/create-image")}
+          >
             <Link href="/create-image" underline="none" sx={{ color: "black" }}>
               <span className={styles.gradientText}>AIDrawing</span>
             </Link>
           </MenuItem>
-          <MenuItem value="/create-variation">
+          <MenuItem
+            value="/create-variation"
+            onClick={() => (window.location.href = "/create-variation")}
+          >
             <Link
               href="/create-variation"
               underline="none"
               sx={{ color: "black" }}
             >
               <span className={styles.gradientText}>AICreating</span>
+            </Link>
+          </MenuItem>
+          <MenuItem
+            value="/quality-posts"
+            onClick={() => (window.location.href = "/quality-posts")}
+          >
+            <Link
+              href="/quality-posts"
+              underline="none"
+              sx={{ color: "black" }}
+            >
+              <span className={styles.gradientText}>AIRanking</span>
             </Link>
           </MenuItem>
         </Select>
@@ -88,6 +102,9 @@ export default function MidBar() {
               border: "none",
             }}
             size="large"
+            onClick={() => {
+              window.location.href = "/";
+            }}
           >
             <Link href="/" underline="none" sx={{ color: "white" }}>
               Home
@@ -110,6 +127,9 @@ export default function MidBar() {
               border: "none",
             }}
             size="large"
+            onClick={() => {
+              window.location.href = "/category/category-main-page";
+            }}
           >
             <Link
               href="/category/category-main-page"
@@ -136,6 +156,9 @@ export default function MidBar() {
               border: "none",
             }}
             size="large"
+            onClick={() => {
+              window.location.href = "/create-image";
+            }}
           >
             <Link href="/create-image" underline="none">
               <span className={styles.gradientText}>AIDrawing</span>
@@ -158,6 +181,9 @@ export default function MidBar() {
               border: "none",
             }}
             size="large"
+            onClick={() => {
+              window.location.href = "/create-variation";
+            }}
           >
             <Link href="/create-variation" underline="none">
               <span className={styles.gradientText}>AICreating</span>
@@ -180,6 +206,9 @@ export default function MidBar() {
               border: "none",
             }}
             size="large"
+            onClick={() => {
+              window.location.href = "/quality-posts";
+            }}
           >
             <Link
               href="/quality-posts"
