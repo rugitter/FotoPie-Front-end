@@ -7,17 +7,35 @@ import {
   setAccessToken,
 } from "../utils/token";
 import { refreshAccessToken } from "./api/auth";
+import { getToken } from "./api/imageQuality";
 
 const axiosInstance = axios.create({
   timeout: axiosConfig.timeOut as number | undefined,
-  // withCredentials: true,
+  //withCredentials: true,
 });
+
+async function getQualityToken() {
+  const quality_token = await getToken();
+  return quality_token;
+}
 
 // resquest interceptor - before request is sent
 axiosInstance.interceptors.request.use(
   function (config: any) {
     const accessToken = getAccessToken();
-    accessToken && (config.headers["Authorization"] = `Bearer ${accessToken}`);
+    if (!config.url.includes("/api/everypixel/quality/")) {
+      accessToken &&
+        (config.headers["Authorization"] = `Bearer ${accessToken}`);
+    }
+    else {
+      return getQualityToken().then((quality_token) => {
+         console.log(quality_token.data,"quality token debug")
+         quality_token &&
+           (config.headers["Authorization"] = `Bearer ${quality_token.data}`);
+         return config;
+       });
+
+    }
     return config;
   },
   function (error) {

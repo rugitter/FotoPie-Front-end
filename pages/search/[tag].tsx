@@ -14,6 +14,8 @@ import SearchHeader from "../../src/components/Search/SearchHeader";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
+import SearchBar from "../../src/components/Search/SearchBar";
+import Paper from "@mui/material/Paper";
 
 export interface ResponseImageData {
   _id: string;
@@ -143,6 +145,20 @@ export default function searchPage() {
 
       <Box maxWidth={"1600px"} margin={"auto"}>
         <SearchHeader tagString={tagString} />
+
+        <Paper
+          sx={{
+            p: "2px 4px",
+            width: "100%",
+            mt: 2,
+            ml: 6,
+            "@media (min-width: 600px)": {
+              width: 600,
+            },
+          }}
+        >
+          <SearchBar sx={{ width: "100%" }} />
+        </Paper>
 
         <CategoryButton
           links={links}

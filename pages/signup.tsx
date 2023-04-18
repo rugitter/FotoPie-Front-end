@@ -30,10 +30,17 @@ interface IFormInput {
 
 // Define a schema for the form values
 const formSchema: Schema<IFormInput> = object({
-  firstName: string().max(15).required("First Name is a required field."),
-  lastName: string().max(15).required("Last Name is a required field."),
-  email: string().email().required("Email is a required field."),
-  password: string().min(2).max(20).required("Password is a required field."),
+  firstName: string().max(15).required("First Name is a required."),
+  lastName: string().max(15).required("Last Name is a required."),
+  email: string().email().required("Email is a required."),
+  password: string()
+    .min(8)
+    .max(20)
+    .matches(
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
+      "Password must contain numbers, upper and lowercase letters"
+    )
+    .required("Password is required"),
 });
 
 // Define a component that renders the form
@@ -60,9 +67,9 @@ export default function SignUp() {
     <>
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '100vh',
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
         }}
       >
         <CssBaseline />
@@ -80,7 +87,11 @@ export default function SignUp() {
               transition={{ duration: 1 }}
             >
               <div>
-                <NavBar isFixed={false} color="#000000" baseLine={NavBarStyles} />
+                <NavBar
+                  isFixed={false}
+                  color="#000000"
+                  baseLine={NavBarStyles}
+                />
                 <Container component="main" maxWidth="xs">
                   <Box
                     sx={{
@@ -129,7 +140,10 @@ export default function SignUp() {
                         />
                         <FormControlLabel
                           control={
-                            <Checkbox value="allowExtraEmails" color="primary" />
+                            <Checkbox
+                              value="allowExtraEmails"
+                              color="primary"
+                            />
                           }
                           label="I want to receive inspiration, marketing promotions and updates via email."
                         />
