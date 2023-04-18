@@ -61,7 +61,7 @@ const GalleryPost = ({ profileUserId, handleOpen }: GalleryPostsProps) => {
     <Grid container justifyContent="center">
       <Grid item>
         <Typography variant="h4">
-          You have not any posts yet
+          You have not posted any photos yet
         </Typography>
       </Grid>
     </Grid>
