@@ -116,11 +116,7 @@ const NewVariation = (props: Partial<DropzoneProps>) => {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              marginLeft: "0",
-              marginRight: "0",
-              height: "auto",
               width: "100%",
-              maxWidth: "1600px",
             }}
           >
             <Box
