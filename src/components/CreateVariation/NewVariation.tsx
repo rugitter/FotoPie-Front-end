@@ -175,7 +175,7 @@ const NewVariation = (props: Partial<DropzoneProps>) => {
               //autoFocus={true}
               radius="xl"
               sx={(theme) => ({
-                minHeight: rem(100),
+                minHeight: rem(120),
                 minWidth: "90%",
                 display: "flex",
                 justifyContent: "center",
@@ -200,7 +200,7 @@ const NewVariation = (props: Partial<DropzoneProps>) => {
                 "&[data-idle]": {
                   color: theme.black,
                   //backgroundColor: theme.colors.green[2],
-                  backgroundColor: "#D7A1F9",
+                  backgroundColor: "#EAE6FF",
                 },
               })}
               {...props}
