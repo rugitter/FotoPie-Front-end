@@ -34,6 +34,7 @@ const PostList = ({id, handleOpen}: CollectionPostsProps) => {
   const [loaderHandler, setLoaderHandler] = useState(true);
 
   const [error, setError] = useState(null);
+  const [hasFetched, setHasFetched] = useState(false);
 
   let limit = 10;
 
@@ -48,56 +49,65 @@ const PostList = ({id, handleOpen}: CollectionPostsProps) => {
           setLoaderHandler(false);
         }
       }
+      setHasFetched(true);
     } catch (error: any) {
       setError(error.message);
     }
   };
 
   useEffect(() => {
+    if (!id) return
     fetchImages();
-  }, []);
+  }, [id]);
 
   return (
     <>
       {/*<h2>{props.id}</h2>*/}
       {error && <ErrorAlert error={error}></ErrorAlert>}
-      <Grid container justifyContent="center">
-        <Grid item >
-          {[...collection].length === 0 ? (
-            <Typography variant="h4">
-              You have not collected any posts yet
-            </Typography>
-          ) : null}
-        </Grid>
-      </Grid>
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          overflowY: "scroll",
-          "&::-webkit-scrollbar": {
-            width: 0,
-          },
-        }}
-      >
-        <InfiniteScroll
-          dataLength={collection.length}
-          next={fetchImages}
-          hasMore={true}
-          loader={loaderHandler ? <Loader /> : <NoMore />}
+      {[...collection].length === 0 ? hasFetched && (
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
-            {collection.map((collection) => (
-              <Post
-                url={collection.compressed_imageUrl}
-                filename={collection.filename}
-                key={collection._id}
-                handleOpen={() => handleOpen(collection.filename)}
-              />
-            ))}
-          </Masonry>
-        </InfiniteScroll>
-      </Box>
+          <Typography variant="h4">
+            You have not collected any posts yet
+          </Typography>
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            overflowY: "scroll",
+            "&::-webkit-scrollbar": {
+              width: 0,
+            },
+          }}
+        >
+          <InfiniteScroll
+            dataLength={collection.length}
+            next={fetchImages}
+            hasMore={true}
+            loader={loaderHandler ? <Loader /> : <NoMore />}
+          >
+            <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
+              {collection.map((collection) => (
+                <Post
+                  url={collection.compressed_imageUrl}
+                  filename={collection.filename}
+                  key={collection._id}
+                  handleOpen={() => handleOpen(collection.filename)}
+                />
+              ))}
+            </Masonry>
+          </InfiniteScroll>
+        </Box>
+      )}
     </>
   );
 };

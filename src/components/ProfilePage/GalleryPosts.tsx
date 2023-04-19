@@ -7,6 +7,8 @@ import Masonry from "@mui/lab/Masonry";
 import NoMore from "../Loader/NoMore";
 import { getUserPosts } from "../../axiosRequest/api/user-post";
 import ErrorAlert from "../LoginForm/ErrorAlert";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 interface GalleryPostsProps {
   profileUserId: string | string[] | undefined;
@@ -30,6 +32,7 @@ const GalleryPost = ({ profileUserId, handleOpen }: GalleryPostsProps) => {
   const [galleryFilePath, setGalleryFilePath] = useState<ResponseImageData[]>([]);
   const [loaderHandler, setLoaderHandler] = useState(true);
   const [error, setError] = useState(null);
+  const [hasFetched, setHasFetched] = useState(false);
 
   let limit = 10;
 
@@ -43,42 +46,67 @@ const GalleryPost = ({ profileUserId, handleOpen }: GalleryPostsProps) => {
           setLoaderHandler(false);
         }
       }
+      setHasFetched(true);
     } catch (error: any) {
       setError(error.message);
     }
   };
 
   useEffect(() => {
-    if(!profileUserId) return
+    if (!profileUserId) return
     fetchImages();
   }, [profileUserId]);
 
+  const noPostsMessage = (
+    <Grid container justifyContent="center">
+      <Grid item>
+        <Typography variant="h4">
+          You have not posted any photos yet
+        </Typography>
+      </Grid>
+    </Grid>
+  );
+
   return (
     <>
-      {/*<h2>{props.id}</h2>*/}
       {error && <ErrorAlert error={error}></ErrorAlert>}
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          overflowY: "scroll",
-          "&::-webkit-scrollbar": {
-            width: 0,
-          },
-        }}
-      >
-        <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
-          {galleryFilePath.map((gallery) => (
-            <Post
-              url={gallery.compressFilePath}
-              filename={gallery.filename}
-              key={gallery._id}
-              handleOpen={() => handleOpen(gallery.filename)}
-            />
-          ))}
-        </Masonry>
-      </Box>
+      {galleryFilePath.length !== 0 ? (
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            overflowY: "scroll",
+            "&::-webkit-scrollbar": {
+              width: 0,
+            }
+          }}
+        >
+          <Masonry columns={{ sm: 2, md: 3 }} spacing={2} sx={{ m: "auto" }}>
+            {galleryFilePath.map((gallery) => (
+              <Post
+                url={gallery.compressFilePath}
+                filename={gallery.filename}
+                key={gallery._id}
+                handleOpen={() => handleOpen(gallery.filename)}
+              />
+            ))}
+          </Masonry>
+        </Box>
+      ) : (
+        hasFetched && <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {noPostsMessage}
+        </Box>
+      )}
     </>
+
   );
 };
 

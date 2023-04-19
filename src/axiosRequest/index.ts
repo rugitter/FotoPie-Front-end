@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios from "axios";
 import axiosConfig from "./config";
 import {
   getAccessToken,
@@ -7,17 +7,35 @@ import {
   setAccessToken,
 } from "../utils/token";
 import { refreshAccessToken } from "./api/auth";
+import { getToken } from "./api/imageQuality";
 
 const axiosInstance = axios.create({
   timeout: axiosConfig.timeOut as number | undefined,
-  withCredentials: true,
+  //withCredentials: true,
 });
+
+async function getQualityToken() {
+  const quality_token = await getToken();
+  return quality_token;
+}
 
 // resquest interceptor - before request is sent
 axiosInstance.interceptors.request.use(
   function (config: any) {
     const accessToken = getAccessToken();
-    accessToken && (config.headers["Authorization"] = `Bearer ${accessToken}`);
+    if (!config.url.includes("/api/everypixel/quality/")) {
+      accessToken &&
+        (config.headers["Authorization"] = `Bearer ${accessToken}`);
+    }
+    else {
+      return getQualityToken().then((quality_token) => {
+         console.log(quality_token.data,"quality token debug")
+         quality_token &&
+           (config.headers["Authorization"] = `Bearer ${quality_token.data}`);
+         return config;
+       });
+
+    }
     return config;
   },
   function (error) {
@@ -28,7 +46,6 @@ axiosInstance.interceptors.request.use(
 // response interceptor - after response is received
 axiosInstance.interceptors.response.use(
   function (response) {
-    console.log("✅response:", response);
     return Promise.resolve(response);
   },
   async function (error) {
@@ -37,7 +54,6 @@ axiosInstance.interceptors.response.use(
 
     let message = "";
     if (error && error.response) {
-      console.log("❌Error!", error);
       switch (error.response.status) {
         case 302:
           message = "Redirect to other url";
@@ -63,7 +79,6 @@ axiosInstance.interceptors.response.use(
           break;
         case 403:
           message = "Forbidden!";
-          break;
         case 404:
           message = `Not found!: ${error.response.config.url}`;
           break;
